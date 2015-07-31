@@ -3,19 +3,20 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        Model::unguard();
+class DatabaseSeeder extends Seeder {
 
-        // $this->call(UserTableSeeder::class);
+	public function run()
+	{
+		Model::unguard();
 
-        Model::reguard();
-    }
+        $this->call('DepartmentTableSeeder');
+        $this->call('JobTableSeeder');
+        $this->call('UserTableSeeder');
+        $this->call('GroupTableSeeder');
+        $this->call('ReviewRequestTableSeeder');
+        $this->call('CommentTableSeeder');
+        $this->call('TagTableSeeder');
+        $this->call('BadgeTableSeeder');
+
+	}
 }
