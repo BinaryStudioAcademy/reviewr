@@ -10,7 +10,6 @@ class CreateReviewRequestUserTable extends Migration {
 		Schema::create('review_request_user', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('status');
 			$table->boolean('isAccepted');
 			$table->integer('review_request_id')->unsigned();
 			$table->integer('user_id')->unsigned();

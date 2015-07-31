@@ -13,6 +13,8 @@ class CreateCommentsTable extends Migration {
 			$table->timestamps();
 			$table->softDeletes();
 			$table->integer('user_id')->unsigned();
+			$table->integer('review_request_id')->unsigned();
+
 		});
 	}
 

@@ -9,13 +9,14 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
-		$this->call('UserTableSeeder');
-		$this->command->info('User table seeded!');
+        $this->call('DepartmentTableSeeder');
+        $this->call('JobTableSeeder');
+        $this->call('UserTableSeeder');
+        $this->call('GroupTableSeeder');
+        $this->call('ReviewRequestTableSeeder');
+        $this->call('CommentTableSeeder');
+        $this->call('TagTableSeeder');
+        $this->call('BadgeTableSeeder');
 
-		$this->call('CommentTableSeeder');
-		$this->command->info('Comment table seeded!');
-
-		$this->call('ReviewRequestTableSeeder');
-		$this->command->info('ReviewRequest table seeded!');
 	}
 }

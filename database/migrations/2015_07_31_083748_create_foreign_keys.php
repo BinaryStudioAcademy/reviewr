@@ -23,6 +23,11 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('restrict');
 		});
+		Schema::table('comments', function(Blueprint $table) {
+			$table->foreign('review_request_id')->references('id')->on('review_requests')
+						->onDelete('restrict')
+						->onUpdate('restrict');
+		});
 		Schema::table('review_requests', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('restrict')
@@ -85,6 +90,9 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('comments', function(Blueprint $table) {
 			$table->dropForeign('comments_user_id_foreign');
+		});
+		Schema::table('comments', function(Blueprint $table) {
+			$table->dropForeign('comments_review_request_id_foreign');
 		});
 		Schema::table('review_requests', function(Blueprint $table) {
 			$table->dropForeign('review_requests_user_id_foreign');

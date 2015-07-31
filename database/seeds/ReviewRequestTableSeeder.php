@@ -2,20 +2,27 @@
 
 use Illuminate\Database\Seeder;
 use App\ReviewRequest;
+use App\User;
+use App\Group;
 
 class ReviewRequestTableSeeder extends Seeder {
 
 	public function run()
 	{
-		//DB::table('review_requests')->delete();
+        $faker = Faker\Factory::create();
 
-		// ReviewRequestTableSeeder
-		ReviewRequest::create(array(
-				'title' => 'Tittle RR',
-				'details' => 'details RR',
-				'reputation' => '3',
-				'user_id' => 1,
-				'group_id' => 1
-			));
+        $userIds = User::lists('id')->toArray();
+        $groupIds = Group::lists('id')->toArray();
+
+        foreach(range(1,50) as $index)
+        {
+            ReviewRequest::create([
+                'title' => $faker->text(25),
+                'details' => $faker->text(300),
+                'reputation' => $faker->randomDigitNotNull,
+                'user_id' => $faker->randomElement($userIds),
+                'group_id' => $faker->randomElement($groupIds)
+            ]);
+        }
 	}
 }
