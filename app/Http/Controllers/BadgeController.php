@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Badge;
+use Illuminate\Support\Facades\Response;
+
 class BadgeController extends Controller {
 
   /**
@@ -9,7 +12,7 @@ class BadgeController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(Badge::all());
   }
 
   /**

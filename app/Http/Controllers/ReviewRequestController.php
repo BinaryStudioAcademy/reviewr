@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\ReviewRequest;
+use Illuminate\Support\Facades\Response;
+
 class ReviewRequestController extends Controller {
 
   /**
@@ -9,7 +12,7 @@ class ReviewRequestController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(ReviewRequest::all());
   }
 
   /**

@@ -1,4 +1,8 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Response;
+use App\User;
 
 class UserController extends Controller {
 
@@ -9,7 +13,7 @@ class UserController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(User::all());
   }
 
   /**

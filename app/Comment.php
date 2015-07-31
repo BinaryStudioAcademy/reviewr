@@ -9,6 +9,7 @@ class Comment extends Model {
 
 	protected $table = 'comments';
 	public $timestamps = true;
+    protected $fillable = ['text'];
 
 	use SoftDeletes;
 

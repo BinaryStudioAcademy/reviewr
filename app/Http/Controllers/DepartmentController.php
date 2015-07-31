@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Department;
+use Illuminate\Support\Facades\Response;
+
 class DepartmentController extends Controller {
 
   /**
@@ -9,7 +12,7 @@ class DepartmentController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(Department::all());
   }
 
   /**

@@ -8,5 +8,6 @@ class Badge extends Model {
 
 	protected $table = 'badges';
 	public $timestamps = true;
+    protected $fillable = ['title', 'icon'];
 
 }

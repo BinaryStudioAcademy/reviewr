@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Tag;
+use Illuminate\Support\Facades\Response;
+
 class TagController extends Controller {
 
   /**
@@ -9,7 +12,7 @@ class TagController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(Tag::all());
   }
 
   /**

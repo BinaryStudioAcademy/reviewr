@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Group;
+use Illuminate\Support\Facades\Response;
+
 class GroupController extends Controller {
 
   /**
@@ -9,7 +12,7 @@ class GroupController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(Group::all());
   }
 
   /**

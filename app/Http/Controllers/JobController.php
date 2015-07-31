@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Job;
+use Illuminate\Support\Facades\Response;
+
 class JobController extends Controller {
 
   /**
@@ -9,7 +12,7 @@ class JobController extends Controller {
    */
   public function index()
   {
-    
+      return Response::json(Job::all());
   }
 
   /**
