@@ -5,19 +5,20 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Comment extends Model {
+class Comment extends Model
+{
 
-	protected $table = 'comments';
-	public $timestamps = true;
+    protected $table = 'comments';
+    public $timestamps = true;
     protected $fillable = ['text'];
 
-	use SoftDeletes;
+    use SoftDeletes;
 
-	protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
-	public function user()
-	{
-		return $this->belongsTo('App\Comment');
-	}
+    public function user()
+    {
+        return $this->belongsTo('App\Comment');
+    }
 
 }

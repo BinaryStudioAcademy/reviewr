@@ -5,16 +5,17 @@ use App\User;
 use App\Job;
 use App\Department;
 
-class UserTableSeeder extends Seeder {
+class UserTableSeeder extends Seeder
+{
 
-	public function run()
-	{
+    public function run()
+    {
         $faker = Faker\Factory::create();
 
         $jobIds = Job::lists('id')->toArray();
         $departmentIds = Department::lists('id')->toArray();
 
-		foreach(range(1,30) as $index)
+        foreach(range(1,30) as $index)
         {
             User::create([
                 'first_name' => $faker->firstName,
@@ -30,5 +31,5 @@ class UserTableSeeder extends Seeder {
             ]);
         }
 
-	}
+    }
 }

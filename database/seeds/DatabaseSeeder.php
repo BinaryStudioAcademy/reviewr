@@ -3,11 +3,12 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder {
+class DatabaseSeeder extends Seeder
+{
 
-	public function run()
-	{
-		Model::unguard();
+    public function run()
+    {
+        Model::unguard();
 
         $this->call('DepartmentTableSeeder');
         $this->call('JobTableSeeder');
@@ -17,6 +18,6 @@ class DatabaseSeeder extends Seeder {
         $this->call('CommentTableSeeder');
         $this->call('TagTableSeeder');
         $this->call('BadgeTableSeeder');
-
-	}
+        
+    }
 }

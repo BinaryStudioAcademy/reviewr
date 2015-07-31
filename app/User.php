@@ -13,22 +13,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     use Authenticatable, CanResetPassword;
 
     protected $table = 'users';
-	public $timestamps = false;
-	protected $fillable = ['first_name', 'last_name', 'email'];
-	protected $hidden = ['password', 'remember_token'];
+    public $timestamps = false;
+    protected $fillable = ['first_name', 'last_name', 'email'];
+    protected $hidden = ['password', 'remember_token'];
 
-	public function comments()
-	{
-		return $this->hasMany('Comment');
-	}
+    public function comments()
+    {
+        return $this->hasMany('Comment');
+    }
 
-	public function job()
-	{
-		return $this->hasOne('Job');
-	}
+    public function job()
+    {
+        return $this->hasOne('Job');
+    }
 
-	public function requests()
-	{
-		return $this->hasMany('ReviewRequest');
-	}
+    public function requests()
+    {
+        return $this->hasMany('ReviewRequest');
+    }
 }
