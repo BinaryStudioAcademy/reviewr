@@ -15,14 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('user', 'UserController');
-Route::resource('comment', 'CommentController');
-Route::resource('job', 'JobController');
-Route::resource('department', 'DepartmentController');
-Route::resource('reviewrequest', 'ReviewRequestController');
-Route::resource('group', 'GroupController');
-Route::resource('tag', 'TagController');
-Route::resource('badge', 'BadgeController');
+Route::group (['prefix' => 'api/v1'], function () {
+    Route::resource('user', 'UserController');
+    Route::resource('comment', 'CommentController');
+    Route::resource('job', 'JobController');
+    Route::resource('department', 'DepartmentController');
+    Route::resource('reviewrequest', 'ReviewRequestController');
+    Route::resource('group', 'GroupController');
+    Route::resource('tag', 'TagController');
+    Route::resource('badge', 'BadgeController');
+});
+
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
