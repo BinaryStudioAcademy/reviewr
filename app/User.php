@@ -14,21 +14,40 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     protected $table = 'users';
     public $timestamps = false;
-    protected $fillable = ['first_name', 'last_name', 'email'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone'];
     protected $hidden = ['password', 'remember_token'];
 
+    public static $rules = array(
+        'first_name'=>'required|min:2|alpha',
+        'last_name'=>'required|min:2|alpha',
+        'email'=>'required|min:2|email',
+        'phone'=>'min:6|max:11|integer'
+
+   );
     public function comments()
     {
-        return $this->hasMany('Comment');
+        return $this->hasMany('App\Comment');
     }
 
     public function job()
     {
-        return $this->hasOne('Job');
+        return $this->hasOne('App\Job');
+    }
+
+    public function department()
+    {
+        return $this->hasOne('App\Department');
     }
 
     public function requests()
     {
-        return $this->hasMany('ReviewRequest');
+        return $this->belongsToMany('App\ReviewRequest')
+                    ->withPivot('isAccepted')
+                    ->withTimestamps();
+    }
+
+    public function badges()
+    {
+        return $this->belongsToMany('App\Badge');
     }
 }

@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('remember_token');
             $table->integer('reputation');
-            $table->integer('job_id')->unsigned();
-            $table->integer('department_id')->unsigned();
+            $table->integer('job_id')->unsigned()->nullable();
+            $table->integer('department_id')->unsigned()->nullable();
         });
     }
 
