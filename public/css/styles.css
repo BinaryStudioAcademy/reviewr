@@ -1,0 +1,42 @@
+.wrapper {
+    margin: 0 auto;
+    width: 900px;
+    text-align: center;
+}
+.user-card {
+    display: inline-block;
+    margin: 10px 15px;
+}
+
+.user-profile {
+    margin-top: 30px;
+    width: 100%;
+    height: 300px;
+    background-color: #e5e5e5;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+.photo {
+    margin-left: 20px;
+}
+.info {
+    margin-top: 15px;
+    margin-left: 250px;
+}
+.user-profile p {
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #b5b5b5;
+}
+
+.request-card {
+    display: inline-block;
+    margin: 10px 15px;
+}
+.user-info {
+    float: right;
+    margin-left: 20px;
+}
+.request-card img {
+    float: left;
+}
