@@ -16,7 +16,7 @@ class CreateReviewRequestsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->integer('user_id')->unsigned();
-            $table->integer('group_id')->unsigned();
+            $table->integer('group_id')->unsigned()->nullable();
         });
     }
 
