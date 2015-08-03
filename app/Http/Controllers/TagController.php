@@ -15,7 +15,7 @@ class TagController extends Controller
      */
     public function index()
     {
-            return Response::json(Tag::all());
+        return Response::json(Tag::all());
     }
 
     /**
