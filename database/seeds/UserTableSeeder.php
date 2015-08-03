@@ -15,14 +15,14 @@ class UserTableSeeder extends Seeder
         $jobIds = Job::lists('id')->toArray();
         $departmentIds = Department::lists('id')->toArray();
 
-        foreach(range(1,30) as $index)
+        foreach(range(1,20) as $index)
         {
             User::create([
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
                 'phone' => $faker->phoneNumber,
-                'avatar' => $faker->imageUrl(80, 80, 'people'),
+                'avatar' => $faker->imageUrl(150, 150, 'abstract'),
                 'address' => $faker->address,
                 'password' => bcrypt('password'),
                 'reputation' => $faker->randomDigitNotNull,

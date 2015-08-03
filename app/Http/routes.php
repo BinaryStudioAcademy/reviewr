@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('application');
 });
 
 Route::group (['prefix' => 'api/v1'], function () {

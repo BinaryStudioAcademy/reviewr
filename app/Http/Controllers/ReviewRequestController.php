@@ -15,7 +15,7 @@ class ReviewRequestController extends Controller
      */
     public function index()
     {
-            return Response::json(['data' => ReviewRequest::all()]);
+            return Response::json(ReviewRequest::all());
     }
 
     /**
@@ -46,7 +46,7 @@ class ReviewRequestController extends Controller
      */
     public function show($id)
     {
-        return Response::json(['data' => ReviewRequest::findOrFail($id)]);
+        return Response::json(ReviewRequest::findOrFail($id));
     }
 
     /**
