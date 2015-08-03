@@ -46,7 +46,7 @@ class ReviewRequestController extends Controller
      */
     public function show($id)
     {
-        
+        return Response::json(ReviewRequest::findOrFail($id));
     }
 
     /**

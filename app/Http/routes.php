@@ -12,21 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('application');
 });
 
-Route::resource('user', 'UserController');
-Route::resource('comment', 'CommentController');
-Route::resource('job', 'JobController');
-Route::resource('department', 'DepartmentController');
-Route::resource('reviewrequest', 'ReviewRequestController');
-Route::resource('group', 'GroupController');
-Route::resource('tag', 'TagController');
-Route::resource('reviewrequestuser', 'ReviewRequestUserController');
-Route::resource('badge', 'BadgeController');
-Route::resource('badgeuser', 'BadgeUserController');
-Route::resource('tagreviewrequest', 'TagReviewRequestController');
-Route::resource('groupuser', 'GroupUserController');
+Route::group (['prefix' => 'api/v1'], function () {
+    Route::resource('user', 'UserController');
+    Route::resource('comment', 'CommentController');
+    Route::resource('job', 'JobController');
+    Route::resource('department', 'DepartmentController');
+    Route::resource('reviewrequest', 'ReviewRequestController');
+    Route::resource('group', 'GroupController');
+    Route::resource('tag', 'TagController');
+    Route::resource('badge', 'BadgeController');
+});
+
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
