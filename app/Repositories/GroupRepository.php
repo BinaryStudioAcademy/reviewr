@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Group;
+use App\Interfaces\GroupRepositoryInterface;
 
-abstract class GroupRepository extend CRUDRepository
+abstract class GroupRepository extend CRUDRepository implements GroupRepositoryInterface
 {}

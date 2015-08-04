@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Badge;
+use App\Interfaces\BadgeRepositoryInterface;
 
-abstract class BadgeRepository exdends CRUDRepository
+abstract class BadgeRepository exdends CRUDRepository implements BadgeRepositoryInterface
 {
 	
 }
+

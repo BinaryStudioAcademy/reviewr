@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use App\User;
+use App\Interfaces\UserRepositoryInterface;
 
-abstract class UserRepository extends CRUDRepository implements RepositoryInterface
+abstract class UserRepository extends CRUDRepository implements UserRepositoryInterface
 {
 
 }

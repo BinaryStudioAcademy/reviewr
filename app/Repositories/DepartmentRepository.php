@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Department;
+use App\Interfaces\DepartmentRepositoryInterface;
 
-abstract class DepartmentRepository exdends CRUDRepository
+abstract class DepartmentRepository exdends CRUDRepository implements DepartmentRepositoryInterface
 {}

@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Request;
+use App\Interfaces\RequestRepositoryInterface;
 
-abstract class RequestRepository extends CRUDRepository implements RepositoryIntarface
+abstract class RequestRepository extends CRUDRepository implements RequestRepositoryInterface
 {
 
 }

@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Repositories;
+use App\Interfaces\CommentRepositoryInterface;
 
-abstract class CommentRepository exdends CRUDRepository
+abstract class CommentRepository exdends CRUDRepository implements CommentRepositoryInterface
 {
 
 }

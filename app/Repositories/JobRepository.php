@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Job;
+use App\Interfaces\JobRepositoryInterface;
 
-abstract class JobRepository exdends CRUDRepository
+abstract class JobRepository exdends CRUDRepository implements JobRepositoryInterface
 {}
