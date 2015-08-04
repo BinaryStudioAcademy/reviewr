@@ -15,7 +15,7 @@ class BadgeController extends Controller
      */
     public function index()
     {
-            return Response::json(Badge::all());
+        return Response::json(Badge::all());
     }
 
     /**
