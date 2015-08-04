@@ -15,7 +15,7 @@ class JobController extends Controller
      */
     public function index()
     {
-            return Response::json(Job::all());
+        return Response::json(Job::all());
     }
 
     /**

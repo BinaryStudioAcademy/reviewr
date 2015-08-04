@@ -15,7 +15,7 @@ class ReviewRequestController extends Controller
      */
     public function index()
     {
-            return Response::json(ReviewRequest::all());
+        return Response::json(ReviewRequest::all());
     }
 
     /**
