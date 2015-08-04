@@ -1,9 +1,13 @@
 App.Router = Backbone.Router.extend({
 
     routes: {
-        "users": "users",
-        "user/:id": "userProfile",
-        "requests": "requests"
+        "!/users": "users",
+        "!/user/:id": "showUserProfile",
+        "!/requests": "requests",
+        "!/request/create": "createRequest",
+        "!/request/:id/offer": "offerRequest",
+        "!/request/:id/accept": "acceptRequest",
+        "!/request/:id/decline": "declineRequest"
     },
 
     users: function() {
@@ -12,21 +16,27 @@ App.Router = Backbone.Router.extend({
         new App.Views.UsersList();
     },
 
-    userProfile: function() {
-        console.log('Route userProfile');
-        users.fetch(); // TODO with id
-        new App.Views.UserProfile();
+    showUserProfile: function(id) {
+        var user = new App.Models.User({id: id});
+        console.log('Route userProfile', id, user.attributes);
+        user.fetch({wait: true}); // with id
+        var userProfile = new App.Views.UserProfile({model: user});
+        user.trigger("change");
     },
 
     requests: function() {
         console.log('Route RequestListView');
         requests.fetch();
         new App.Views.RequestsList();
+    },
+
+    createRequest: function() {
+        (new App.Views.CreateRequestForm()).render();
     }
 
 
 });
 
-new App.Router();
+var router = new App.Router();
 
 Backbone.history.start();

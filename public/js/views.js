@@ -23,14 +23,13 @@ App.Views.User = Backbone.View.extend({
     className: "user-card thumbnail",
     initialize: function(){
         this.template = _.template($('#user-card-template').html());
-        this.templateProfile = _.template($('#user-profile-template').html());
+        //this.templateProfile = _.template($('#user-profile-template').html());
     },
     events: {
         'click .select-user': 'select'
     },
     select: function () {
-        $('#main-content').html('');
-        $('#main-content').html(this.templateProfile( this.model.toJSON() ));
+        router.navigate('!/user/' + this.model.get("id"), true);
         return this;
     },
     render: function(){
@@ -68,18 +67,17 @@ App.Views.UsersList = Backbone.View.extend({
 // Backbone Views for user profile
 
 App.Views.UserProfile = Backbone.View.extend({
-    model: new App.Models.User(),
+    model: user,
     el: '#main-content',
     initialize: function(){
         this.template = _.template($('#user-profile-template').html());
+        this.model.on('change', this.render, this);
     },
     events: {
         'click .cancel-user': 'cancel'
     },
-    // ?????????????
     cancel: function () {
-        $('#main-content').html('');
-        users.render();
+        router.navigate('!/users', true);
         return this;
     },
     render: function(){
@@ -146,5 +144,33 @@ App.Views.RequestsList = Backbone.View.extend({
 
         return this;
     }
+});
+
+// Backbone Views for Review Request Creation Form
+
+App.Views.CreateRequestForm = Backbone.View.extend({
+
+    el: '#main-content',
+    initialize: function() {
+        this.template = _.template($('#create-request-form-template').html());
+    },
+    events: {
+        'submit': 'storeRequest'
+    },
+    storeRequest: function(e) {
+        e.preventDefault();
+        var request = new App.Models.Request({
+            title: $('.title-input').val(),
+            details: $('.details-input').val(),
+            tags: $('.tags-input').val(),
+            group: $('input[name="group-input"]:checked').val()
+        });
+        request.save();
+        // TODO render one request card
+    },
+    render: function() {
+        this.$el.html(this.template);
+    }
+
 });
 
