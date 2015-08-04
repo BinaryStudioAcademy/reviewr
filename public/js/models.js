@@ -19,7 +19,7 @@ App.Models.Request = Backbone.Model.extend({
         title: '',
         details: '',
         tags: '',
-        group: '',
+        group: ''
     }
 });
 

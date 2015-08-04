@@ -104,7 +104,8 @@ App.Views.Request = Backbone.View.extend({
     },
     events: {
         'click .request-accept': 'accept',
-        'click .request-decline': 'decline'
+        'click .request-decline': 'decline',
+        'click .request-details': 'details'
     },
     accept: function () {
 
@@ -112,6 +113,10 @@ App.Views.Request = Backbone.View.extend({
     },
     decline: function () {
 
+        return this;
+    },
+    details: function () {
+        router.navigate('!/request/' + this.model.get("id"), true);
         return this;
     },
     render: function(){
@@ -142,6 +147,29 @@ App.Views.RequestsList = Backbone.View.extend({
             console.log('render Request');
         }, this);
 
+        return this;
+    }
+});
+
+// Backbone Views for Review Request Details
+
+App.Views.RequestDetails = Backbone.View.extend({
+    model: request,
+    el: '#main-content',
+    initialize: function(){
+        this.template = _.template($('#review-request-details-template').html());
+        this.model.on('change', this.render, this);
+    },
+    events: {
+        'click .back-request': 'back'
+    },
+    back: function () {
+        router.navigate('!/requests', true);
+        return this;
+    },
+    render: function(){
+        this.$el.html(this.template( this.model.toJSON() ));
+        console.log('render Request Details');
         return this;
     }
 });

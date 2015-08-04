@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ReviewRequest;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
 
 class ReviewRequestController extends Controller
 {
@@ -33,9 +34,23 @@ class ReviewRequestController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        
+        // Feature Validation
+
+        $review_request = new ReviewRequest();
+
+        $review_request->title = $request->title;
+        $review_request->details = $request->details;
+
+        $review_request->user_id = 1; // TODO use user_ig logined user
+        $review_request->group_id = $request->group;
+
+        $review_request->save();
+
+        $rr_id = $review_request->id;
+
+        return Response::json($review_request);
     }
 
     /**

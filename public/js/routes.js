@@ -5,6 +5,7 @@ App.Router = Backbone.Router.extend({
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
         "!/request/create": "createRequest",
+        "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest"
@@ -32,7 +33,16 @@ App.Router = Backbone.Router.extend({
 
     createRequest: function() {
         (new App.Views.CreateRequestForm()).render();
+    },
+
+    showRequestDetails: function(id) {
+        var request = new App.Models.Request({id: id});
+        console.log('Route requestDetails', id, request.attributes);
+        request.fetch({wait: true}); // with id
+        var requestDetails = new App.Views.RequestDetails({model: request});
+        request.trigger("change");
     }
+
 
 
 });
