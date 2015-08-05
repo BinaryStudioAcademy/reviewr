@@ -18,7 +18,8 @@ App.Models.Request = Backbone.Model.extend({
     defaults: {
         title: '',
         details: '',
-        reputation: ''
+        tags: '',
+        group: ''
     }
 });
 
