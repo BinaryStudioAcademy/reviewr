@@ -5,8 +5,16 @@ namespace App\Http\Controllers;
 use App\Tag;
 use Illuminate\Support\Facades\Response;
 
+use App\Services\Interfaces\RequestServiceInterface;
+
 class TagController extends Controller
 {
+    private $requestService;
+
+    public function __construct(RequestServiceInterface $requestService)
+    {
+        $this->requestService = $requestService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -15,7 +23,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        return Response::json(Tag::all());
+        return Response::json($this->requestService->getAllTags(), 200);
     }
 
     /**

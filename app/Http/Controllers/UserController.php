@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Response;
-use App\User;
+
+use App\Services\Interfaces\RequestServiceInterface;
 
 class UserController extends Controller
 {
+    private $requestService;
+    
+    public function __construct(RequestServiceInterface $requestService)
+    {
+        $this->requestService = $requestService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -15,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Response::json(User::all());
+        return Response::json($this->requestService->getAllUsers(), 200);
     }
 
     /**
