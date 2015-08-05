@@ -136,7 +136,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-       'Illuminate\Html\HtmlServiceProvider', 
+        Illuminate\Html\HtmlServiceProvider::class,
    
         /*
          * Application Service Providers...
@@ -145,6 +145,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+
+        /*
+         * Reviewer New Service Providers
+         */
+        App\Providers\RepositoriesServiceProvider::class,
+        App\Providers\ServicesServiceProvider::class,
 
     ],
 
@@ -175,8 +181,8 @@ return [
         'Event'     => Illuminate\Support\Facades\Event::class,
         'File'      => Illuminate\Support\Facades\File::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
-        'Form'      => 'Illuminate\Html\FormFacade',
-        'Html'      => 'Illuminate\Html\HtmlFacade',
+        'Form'      => Illuminate\Html\FormFacade::class,
+        'Html'      => Illuminate\Html\HtmlFacade::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
         'Inspiring' => Illuminate\Foundation\Inspiring::class,
         'Lang'      => Illuminate\Support\Facades\Lang::class,
