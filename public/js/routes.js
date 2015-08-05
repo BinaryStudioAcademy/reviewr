@@ -21,8 +21,7 @@ App.Router = Backbone.Router.extend({
         var user = new App.Models.User({id: id});
         console.log('Route userProfile', id, user.attributes);
         user.fetch({wait: true}); // with id
-        var userProfile = new App.Views.UserProfile({model: user});
-        user.trigger("change");
+        new App.Views.UserProfile({model: user}).render();
     },
 
     requests: function() {
@@ -37,10 +36,9 @@ App.Router = Backbone.Router.extend({
 
     showRequestDetails: function(id) {
         var request = new App.Models.Request({id: id});
-        console.log('Route requestDetails', id, request.attributes);
+        console.log('Route requestDetails', id, request);
         request.fetch({wait: true}); // with id
-        var requestDetails = new App.Views.RequestDetails({model: request});
-        request.trigger("change");
+        new App.Views.RequestDetails({model: request}).render();
     }
 
 

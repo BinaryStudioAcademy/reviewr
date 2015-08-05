@@ -55,9 +55,9 @@
     <p>Details: <%= details %></p>
     <div class="text-center">
         <p>
-            <a href="" class="request-accept btn btn-primary" role="button">Accept</a>
-            <a href="" class="request-decline btn btn-default" role="button">Decline</a>
-            <a href="" class="request-details btn btn-warning" role="button">Details</a>
+            <button class="request-accept btn btn-primary">Accept</button>
+            <button class="request-decline btn btn-default">Decline</button>
+            <button class="request-details btn btn-warning">Details</button>
         </p>
     </div>
 </script>
@@ -145,11 +145,10 @@
         <div class="row">
             <div class="info col-lg-8 col-md-8 col-sm-8 col-xs-8">
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('#') }}">
-                    <input type="title" class="form-control" name="title" placeholder="title">
-                    <textarea class="form-control" rows="3" placeholder="details"></textarea>
+                    <input type="title" class="form-control" name="title" placeholder="<%= title %>">
+                    <textarea class="form-control" rows="3" placeholder="details"><%= details %></textarea>
                     <input type="text" class="form-control" name="text" placeholder="text">
                     <input type="text" class="form-control" name="text" placeholder="text">
-                    <input type="text" class="form-control" name="tags" placeholder="tags">
                 </form>
                 <p class="rating">RATING</p>
                 <p><a href="" class="btn btn-default" style="width: 100%" role="button">Like</a></p>

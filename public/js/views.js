@@ -23,7 +23,6 @@ App.Views.User = Backbone.View.extend({
     className: "user-card thumbnail",
     initialize: function(){
         this.template = _.template($('#user-card-template').html());
-        //this.templateProfile = _.template($('#user-profile-template').html());
     },
     events: {
         'click .select-user': 'select'
