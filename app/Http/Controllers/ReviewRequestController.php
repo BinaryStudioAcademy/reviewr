@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\ReviewRequest;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 
+use App\Services\Interfaces\RequestServiceInterface;
+
 class ReviewRequestController extends Controller
 {
+    private $requestService;
+
+    public function __construct(RequestServiceInterface $requestService)
+    {
+        $this->requestService = $requestService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -16,7 +23,7 @@ class ReviewRequestController extends Controller
      */
     public function index()
     {
-        return Response::json(ReviewRequest::all());
+        return Response::json($this->requestService->getAllRequests(), 200);
     }
 
     /**
@@ -36,9 +43,9 @@ class ReviewRequestController extends Controller
      */
     public function store(Request $request)
     {
-        // Feature Validation
+        return $this->requestService->createRequest($request);
 
-        $review_request = new ReviewRequest();
+/*        $review_request = new ReviewRequest();
 
         $review_request->title = $request->title;
         $review_request->details = $request->details;
@@ -50,7 +57,7 @@ class ReviewRequestController extends Controller
 
         $rr_id = $review_request->id;
 
-        return Response::json($review_request);
+        return Response::json($review_request);*/
     }
 
     /**
