@@ -30,3 +30,20 @@ App.Collections.Requests = Backbone.Collection.extend({
 //instantiate collection of requests
 
 var requests = new App.Collections.Requests();
+
+
+/*
+ *---------------------------------------------------
+ *  Reviewer Collection
+ *---------------------------------------------------
+ */
+
+App.Collections.Reviewers = Backbone.Collection.extend({
+    url: 'api/v1/reviewer',
+    model: App.Models.Reviewer
+
+});
+
+//instantiate collection of reviewers
+
+var reviewers = new App.Collections.Reviewers();
