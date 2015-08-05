@@ -1,3 +1,9 @@
+/*
+ *---------------------------------------------------
+ *  Users Model
+ *---------------------------------------------------
+ */
+
 App.Models.User = Backbone.Model.extend({
     urlRoot: 'api/v1/user',
     defaults: {
@@ -13,6 +19,13 @@ App.Models.User = Backbone.Model.extend({
 
 var user = new App.Models.User();
 
+
+/*
+ *---------------------------------------------------
+ *  Request Model
+ *---------------------------------------------------
+ */
+
 App.Models.Request = Backbone.Model.extend({
     urlRoot: 'api/v1/reviewrequest',
     defaults: {
@@ -24,3 +37,25 @@ App.Models.Request = Backbone.Model.extend({
 });
 
 var request = new App.Models.Request();
+
+
+/*
+ *---------------------------------------------------
+ *  Reviewer Model
+ *---------------------------------------------------
+ */
+
+App.Models.Reviewer = Backbone.Model.extend({
+    urlRoot: 'api/v1/reviewer',
+    defaults: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        avatar: '',
+        address: '',
+        reputation: ''
+    }
+});
+
+var reviewer = new App.Models.Reviewer();
