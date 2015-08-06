@@ -162,14 +162,11 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
-        var self = this;
         this.$el.html(this.template( this.model.toJSON() ));
 
         // Fetch Request Author
-        var author = new App.Models.User({id: this.model.get('user_id')});
-        author.fetch().then(function(){
-            self.$el.find('.requestor').html((new App.Views.User({model: author})).render().el);
-        });
+        var author = new App.Models.User(this.model.get('user'));
+        this.$el.find('.requestor').html( (new App.Views.User({model: author})).render().el);
 
         // Fetch Request Reviewers
 
