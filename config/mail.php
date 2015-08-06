@@ -45,7 +45,7 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'no-replay@reviewer.com', 'name' => 'admin'],
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
