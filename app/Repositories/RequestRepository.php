@@ -9,7 +9,7 @@ class RequestRepository implements RequestRepositoryInterface
 {
     public function all()
     {
-        return ReviewRequest::all();
+        return ReviewRequest::with('user', 'group')->get();
     }
 
     public function create($data)
