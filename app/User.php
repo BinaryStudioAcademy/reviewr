@@ -31,12 +31,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function job()
     {
-        return $this->hasOne('App\Job');
+        return $this->belongsTo('App\Job');
     }
 
     public function department()
     {
-        return $this->hasOne('App\Department');
+        return $this->belongsTo('App\Department');
     }
 
     public function requests()

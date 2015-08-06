@@ -9,7 +9,7 @@ class RequestRepository implements RequestRepositoryInterface
 {
     public function all()
     {
-        return ReviewRequest::all();
+        return ReviewRequest::with('user', 'group')->get();
     }
 
     public function create($data)
@@ -22,5 +22,12 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request->save();
 
         return $review_request;
+    }
+
+    public function getOffersById($id)
+    {
+        $selection_result = ReviewRequest::with('users')->find($id);
+
+        return $selection_result->users;
     }
 }
