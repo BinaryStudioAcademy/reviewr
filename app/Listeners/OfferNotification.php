@@ -45,7 +45,7 @@ class OfferNotification implements ShouldQueue
            'avatar' => $offer->avatar,
         ];
 
-        Mail::queue('emails.notificationForOffer',  $data, function ($message) use ($data) {
+        Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {
             $message->to($data['email'], $data['first_name'] .' ' . $data['last_name'])->subject('You have a new offer to request!');
         });
     }
