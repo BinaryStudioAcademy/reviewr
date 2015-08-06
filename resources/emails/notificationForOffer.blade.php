@@ -55,7 +55,7 @@ Hello, {{$first_name}} {{$last_name}} . <b>You have a new user, who want to revi
                         <tr>
                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 25px;padding-right: 50px;word-break: break-word;word-wrap: break-word">
                                 <div class="btn" style="Margin-bottom: 24px;text-align: left">
-                                    <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="http://http://" target="_blank">Accepted</
+                                    <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="http://http://" target="_blank">Accepted</a>
                                     <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="http://http://" target="_blank">Declined</a>                             
                                 </div>
                             </td>
