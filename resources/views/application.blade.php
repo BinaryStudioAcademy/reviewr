@@ -119,14 +119,13 @@
                 <p class="status">STATUS</p>
                 <div class="row user-data">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-photo">
-                        <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/150x150.png" class="img-responsive" alt="">
+                        <img src="<%= user.avatar %>" class="img-responsive" alt="">
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-info">
-                        <p>NAME SURNAME</p>
-                        <p>POSITION</p>
-                        <p>COMPANY</p>
-                        <p>EMAIL</p>
-                        <p>PHONE</p>
+                        <p><%= user.first_name + '' + user.last_name%></p>
+                        <p><%= user.email %></p>
+                        <p><%= user.phone %></p>
+                        <p>Group: <%= group.title %></p>
                     </div>
                 </div>
             </div>
@@ -249,29 +248,7 @@
         <hr>
         <div class="reviewers">
             <div class="reviewer thumbnail">
-                <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/100x100.png" alt="">
-                <p>reviewer info</p>
-                <p>reviewer info</p>
-            </div>
-            <div class="reviewer thumbnail">
-                <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/100x100.png" alt="">
-                <p>reviewer info</p>
-                <p>reviewer info</p>
-            </div>
-            <div class="reviewer thumbnail">
-                <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/100x100.png" alt="">
-                <p>reviewer info</p>
-                <p>reviewer info</p>
-            </div>
-            <div class="reviewer thumbnail">
-                <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/100x100.png" alt="">
-                <p>reviewer info</p>
-                <p>reviewer info</p>
-            </div>
-            <div class="reviewer thumbnail">
-                <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/100x100.png" alt="">
-                <p>reviewer info</p>
-                <p>reviewer info</p>
+                No Reviewers
             </div>
         </div>
         <hr>

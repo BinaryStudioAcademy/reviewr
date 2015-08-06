@@ -1,6 +1,7 @@
 App.Router = Backbone.Router.extend({
 
     routes: {
+        "": "home",
         "!/users": "users",
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
@@ -10,7 +11,9 @@ App.Router = Backbone.Router.extend({
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest"
     },
-
+    home: function () {
+        this.navigate('!/requests', true)
+    },
     users: function() {
         console.log('Route usersListView');
         users.fetch();
@@ -38,9 +41,12 @@ App.Router = Backbone.Router.extend({
         var request = new App.Models.Request({id: id});
         console.log('Route requestDetails', id, request);
         request.fetch({wait: true}); // with id
-        new App.Views.RequestDetails({model: request}).render();
-    }
+        reviewers.url = 'api/v1/reviewrequest/' + id + '/offers'
+        reviewers.fetch({wait: true}).then(function(){
+            new App.Views.RequestDetails({model: request}).render();
+        });
 
+    }
 
 
 });

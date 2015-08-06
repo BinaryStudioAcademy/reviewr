@@ -39,7 +39,7 @@ var requests = new App.Collections.Requests();
  */
 
 App.Collections.Reviewers = Backbone.Collection.extend({
-    url: 'api/v1/reviewer',
+    url: 'api/v1/reviewrequest/:id/offers',
     model: App.Models.Reviewer
 
 });

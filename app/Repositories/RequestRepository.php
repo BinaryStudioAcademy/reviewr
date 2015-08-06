@@ -17,7 +17,7 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request = new ReviewRequest;
         $review_request->title = $data->title;
         $review_request->details = $data->details;
-        $review_request->user_id = $data->user_id;
+        $review_request->user_id = 1; // TODO id for login user
         $review_request->group_id = $data->group_id;
         $review_request->save();
 

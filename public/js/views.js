@@ -19,7 +19,7 @@ App.Views.App = Backbone.View.extend({
 // Backbone Views for one user card
 
 App.Views.User = Backbone.View.extend({
-    model: new App.Models.User(),
+    model: user,
     className: "user-card",
     initialize: function(){
         this.template = _.template($('#user-card-template').html());
@@ -54,11 +54,12 @@ App.Views.UsersList = Backbone.View.extend({
     },
     render: function(){
         this.$el.html('');
+        console.log('render UserList starting...');
         _.each(this.model.toArray(), function(user){
             this.$el.append( (new App.Views.User({model: user})).render().el );
             console.log('render User');
         }, this);
-
+        console.log('render UserList end.');
         return this;
     }
 });
@@ -96,10 +97,11 @@ App.Views.UserProfile = Backbone.View.extend({
 // Backbone Views for one request card
 
 App.Views.Request = Backbone.View.extend({
-    model: new App.Models.Request(),
+    model: request,
     className: "col-xs-12 col-sm-6 col-md-4 request",
     initialize: function(){
         this.template = _.template($('#request-card-template').html());
+        this.model.on('change', this.render, this);
     },
     events: {
         'click .request-offers-btn': 'createOffers',
@@ -140,7 +142,6 @@ App.Views.RequestsList = Backbone.View.extend({
             this.$el.append( (new App.Views.Request({model: request})).render().el );
             console.log('render Request');
         }, this);
-
         return this;
     }
 });
@@ -169,8 +170,12 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.$el.find('.requestor').html( (new App.Views.User({model: author})).render().el);
 
         // Fetch Request Reviewers
-
-
+        var reviewersBlock = this.$el.find('.reviewers');
+        reviewersBlock.empty();
+        _.each(reviewers.toArray(), function(reviewer){
+            reviewersBlock.append( (new App.Views.Reviewer({model: reviewer}) ).render().el );
+            console.log('render Request');
+        }, this);
 
         console.log('render Request Details');
         return this;
@@ -198,7 +203,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             title: $('.title-input').val(),
             details: $('.details-input').val(),
             tags: $('.tags-input').val(),
-            group: $('input[name="group-input"]:checked').val()
+            group_id: $('input[name="group-input"]:checked').val()
         });
         this.model.save();
         return this;
@@ -219,13 +224,12 @@ App.Views.CreateRequestForm = Backbone.View.extend({
 // Backbone Views for one reviewer small card
 
 App.Views.Reviewer = Backbone.View.extend({
-    model: new App.Models.Reviewer(),
+    model: reviewer,
     className: "reviewer",
     initialize: function(){
         this.template = _.template($('#reviewer-card-template').html());
     },
     events: {
-
     },
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
@@ -251,7 +255,7 @@ App.Views.Reviewers = Backbone.View.extend({
     render: function(){
         _.each(this.model.toArray(), function(reviewer){
             this.$el.find('.reviewers').append( (new App.Views.Reviewer({model: reviewer})).render().el );
-            console.log('render User');
+            console.log('render Reviewer');
         }, this);
 
         return this;
