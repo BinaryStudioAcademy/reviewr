@@ -95,12 +95,12 @@ class UserController extends Controller
         //
     }
 
-    public function declineReviewRequest()
+    public function declineReviewRequest($user_id, $request_id)
     {
         //
     }
 
-    public function offerOnReviewRequest()
+    public function offerOnReviewRequest($user_id, $request_id)
     {
         //
     }
