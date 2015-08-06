@@ -14,8 +14,8 @@
 
     <title>Reviewer - Binary Academy</title>
 
-    <link href="{{ asset('css/bootstrap.css') }}"  rel="stylesheet">
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    {!! Html::style('css/bootstrap.css') !!}
+    {!! Html::style('css/styles.css') !!}
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -335,15 +335,15 @@
 
 </script>
 
-<script src="{{ asset('js/vendor/underscore/underscore.js') }}"></script>
-<script src="{{ asset('js/vendor/jquery/jquery.js') }}"></script>
-<script src="{{ asset('js/vendor/backbone/backbone.js') }}"></script>
-<script src="{{ asset('js/vendor/bootstrap/bootstrap.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/models.js') }}"></script>
-<script src="{{ asset('js/collections.js') }}"></script>
-<script src="{{ asset('js/views.js') }}"></script>
-<script src="{{ asset('js/routes.js') }}"></script>
+{!! Html::script('js/vendor/underscore/underscore.js') !!}
+{!! Html::script('js/vendor/jquery/jquery.js') !!}
+{!! Html::script('js/vendor/backbone/backbone.js') !!}
+{!! Html::script('js/vendor/bootstrap/bootstrap.js') !!}
+{!! Html::script('js/app.js') !!}
+{!! Html::script('js/models.js') !!}
+{!! Html::script('js/collections.js') !!}
+{!! Html::script('js/views.js') !!}
+{!! Html::script('js/routes.js') !!}
 
 </body>
 </html>
