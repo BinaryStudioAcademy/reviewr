@@ -31,15 +31,15 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function getOffersById($id)
     {
-        $selection_result = ReviewRequest::with('users')->find($id);
+        $review_request = ReviewRequest::find($id);
 
-        return $selection_result->users;
+        return $review_request->users()->get();
     }
 
     public function getTagsById($id)
     {
-        $selection_result = ReviewRequest::with('tags')->find($id);
+        $review_request = ReviewRequest::find($id);
 
-        return $selection_result->tags;
+        return $review_request->tags()->get();
     }
 }
