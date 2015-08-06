@@ -11,4 +11,6 @@ interface RequestServiceInterface
     public function getAllTags();
 
     public function createRequest($data);
+
+    public function getSpecificRequestOffers($id);
 }
