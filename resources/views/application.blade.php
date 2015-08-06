@@ -2,21 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Reviewr</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <meta name="keywords" content="" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="">
+
+    <title>Reviewer - Binary Academy</title>
 
     <link href="{{ asset('css/bootstrap.css') }}"  rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-    <div class="container">
-        <ul class="nav navbar-nav">
-            <li><a href="#!/users">users</a></li>
-            <li><a href="#!/requests">requests</a></li>
-            <li><a href="#!/request/create">create request</a></li>
-        </ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <button type="button" class="btn sidebar-btn">
+                <span class="sr-only">Sidebar navigation</span>
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+            <a class="navbar-brand" href="">REVIEWER</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#!/requests">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        Requests
+                    </a>
+                </li>
+                <li><a href="#!/tags">
+                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                        Tags
+                    </a>
+                </li>
+                <li><a href="#!/users">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        Users
+                    </a>
+                </li>
+                <li><a href="#!/badges">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        Badges
+                    </a>
+                </li>
+                <li><a href="#!/popular">
+                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                        Popular
+                    </a>
+                </li>
+                <li><a href="#!/request/create">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Create request
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Notifications <span class="label label-primary">5</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Name Surname&nbsp;<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Profile &amp; Settings</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/auth/logout">Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
@@ -42,24 +110,33 @@
 {{-- One Review Request card backbone template--}}
 
 <script type="text/template" id="request-card-template">
-    <p>Status: </p>
-    <div class="clearfix">
-        <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/150x150.png" alt="">
-        <div class="user-info">
-            <p>user info</p>
-            <p>Reputation: </p>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><%= title %> <span class="badge"><%= reputation %></span></h3>
+            </div>
+            <div class="panel-body">
+                <p class="status">STATUS</p>
+                <div class="row user-data">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-photo">
+                        <img src="http://www.placeholders.ru/placeholder/b5b5b5/696969/border/nocross/150x150.png" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-info">
+                        <p>NAME SURNAME</p>
+                        <p>POSITION</p>
+                        <p>COMPANY</p>
+                        <p>EMAIL</p>
+                        <p>PHONE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <p class="description"><%- details %></p>
+                <button class="request-offer-btn btn btn-primary">Offer</button>
+                <button class="request-details-btn btn btn-info">Details</button>
+            </div>
         </div>
-    </div>
-    <p>Title: <%= title %></p>
-    <p>Rating: <%= reputation %></p>
-    <p>Details: <%= details %></p>
-    <div class="text-center">
-        <p>
-            <button class="request-accept btn btn-primary">Accept</button>
-            <button class="request-decline btn btn-default">Decline</button>
-            <button class="request-details btn btn-warning">Details</button>
-        </p>
-    </div>
+
 </script>
 
 
@@ -142,10 +219,10 @@
 <script type="text/template" id="review-request-details-template">
 
     <div class="wrapper">
-    <div class="request container">
+    <div class="request-details container">
         <div class="row">
             <div class="info col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <div class="panel  panel-info">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h2 class="panel-title">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -196,10 +273,6 @@
                 <p>reviewer info</p>
                 <p>reviewer info</p>
             </div>
-            <button class="add-reviewer btn btn-primary">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                Add
-            </button>
         </div>
         <hr>
         <div class="chat">
@@ -211,7 +284,7 @@
 </script>
 
 
-{{-- Review Request details backbone template--}}
+{{-- Reviewer backbone template--}}
 
 <script type="text/template" id="reviewer-card-template">
     <div class="reviewer thumbnail">
@@ -254,28 +327,35 @@
 {{-- User Profile backbone template--}}
 
 <script type="text/template" id="user-profile-template">
+
     <div class="user-profile">
-        <div class="photo pull-left">
-            <img src="<%= avatar %>" alt=""  width="200" height="200">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title"><%= first_name %> <%= last_name %></h3>
         </div>
-        <div class="info">
-            <div class="form-horizontal" role="form">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <p><strong><%= first_name %> <%= last_name %></strong></p>
-                        <p>E-mail: <%= email %></p>
-                        <p>Phone: <%= phone %></p>
-                        <p>Address: <%= address %></p>
-                        <p>Reputation: <%= reputation %></p>
+        <div class="panel-body">
+            <div class="photo pull-left">
+                <img src="<%= avatar %>" alt="">
+            </div>
+            <div class="info">
+                <div class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <p>E-mail: <%= email %></p>
+                            <p>Phone: <%= phone %></p>
+                            <p>Address: <%= address %></p>
+                            <p>Reputation: <%= reputation %></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <p>SOME TEXT ADDITIONALLY</p>
+        <div class="panel-footer text-center">
+            <button class="btn btn-primary cancel-user">Cancel</button>
+        </div>
     </div>
-    <div class="well well-sm text-center">
-        <button class="btn btn-primary cancel-user">Cancel</button>
     </div>
+
 </script>
 
 <script src="{{ asset('js/vendor/underscore/underscore.js') }}"></script>

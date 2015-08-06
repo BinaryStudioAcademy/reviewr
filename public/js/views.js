@@ -97,24 +97,19 @@ App.Views.UserProfile = Backbone.View.extend({
 
 App.Views.Request = Backbone.View.extend({
     model: new App.Models.Request(),
-    className: "request-card thumbnail",
+    className: "col-xs-12 col-sm-6 col-md-4 request",
     initialize: function(){
         this.template = _.template($('#request-card-template').html());
     },
     events: {
-        'click .request-accept': 'accept',
-        'click .request-decline': 'decline',
-        'click .request-details': 'details'
+        'click .request-offers-btn': 'createOffers',
+        'click .request-details-btn': 'showDetails'
     },
-    accept: function () {
+    createOffers: function () {
 
         return this;
     },
-    decline: function () {
-
-        return this;
-    },
-    details: function () {
+    showDetails: function () {
         router.navigate('!/request/' + this.model.get("id"), true);
         return this;
     },
