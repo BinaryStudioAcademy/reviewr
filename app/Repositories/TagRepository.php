@@ -20,4 +20,6 @@ class TagRepository implements TagRepositoryInterface
 
         return $tag;
     }
+
+    public function OneById($id) {}
 }

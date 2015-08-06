@@ -53,7 +53,8 @@ class UserController extends Controller
      */
     public function show($userId)
     {
-        return Response::json(\App\User::findOrFail($userId));
+        return Response::json($this->requestService->getOneUserById($userId), 200);
+        //return Response::json(\App\User::findOrFail($userId));
     }
 
     /**
