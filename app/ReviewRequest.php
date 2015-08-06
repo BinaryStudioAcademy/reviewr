@@ -33,8 +33,16 @@ class ReviewRequest extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User')
-                    ->withPivot('isAccepted')
-                    ->withTimestamps();
+        return $this->belongsToMany('App\User')->withPivot('isAccepted');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
     }
 }

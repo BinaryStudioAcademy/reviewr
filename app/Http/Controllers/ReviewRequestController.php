@@ -103,5 +103,10 @@ class ReviewRequestController extends Controller
     {
         
     }
+
+    public function offers($id)
+    {
+        return Response::json($this->requestService->getSpecificRequestOffers($id), 200);
+    }
     
 }

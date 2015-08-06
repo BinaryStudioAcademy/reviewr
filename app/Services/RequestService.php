@@ -42,4 +42,9 @@ class RequestService implements RequestServiceInterface
     {
         return $this->requestRepository->create($data);
     }
+
+    public function getSpecificRequestOffers($id)
+    {
+        return $this->requestRepository->getOffersById($id);
+    }
 }
