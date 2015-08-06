@@ -68,7 +68,8 @@ class ReviewRequestController extends Controller
      */
     public function show($id)
     {
-        return Response::json(\App\ReviewRequest::findOrFail($id));
+        return Response::json($this->requestService->getOneRequestById($id), 200);
+        //return Response::json(\App\ReviewRequest::findOrFail($id));
     }
 
     /**
