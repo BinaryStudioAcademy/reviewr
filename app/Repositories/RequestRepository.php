@@ -35,4 +35,11 @@ class RequestRepository implements RequestRepositoryInterface
 
         return $selection_result->users;
     }
+
+    public function getTagsById($id)
+    {
+        $selection_result = ReviewRequest::with('tags')->find($id);
+
+        return $selection_result->tags;
+    }
 }

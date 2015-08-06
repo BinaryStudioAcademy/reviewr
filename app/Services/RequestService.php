@@ -48,6 +48,11 @@ class RequestService implements RequestServiceInterface
         return $this->requestRepository->getOffersById($id);
     }
 
+    public function getSpecificRequestTags($id)
+    {
+        return $this->requestRepository->getTagsById($id);
+    }
+
     public function getOneUserById($id)
     {
         return $this->userRepository->OneById($id);
