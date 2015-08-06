@@ -22,6 +22,7 @@ Route::group (['prefix' => 'api/v1'], function () {
     Route::resource('department', 'DepartmentController');
     Route::resource('reviewrequest', 'ReviewRequestController');
     Route::get('reviewrequest/{id}/offers', 'ReviewRequestController@offers');
+    Route::get('reviewrequest/{id}/tags', 'ReviewRequestController@tags');
     Route::resource('group', 'GroupController');
     Route::resource('tag', 'TagController');
     Route::resource('badge', 'BadgeController');

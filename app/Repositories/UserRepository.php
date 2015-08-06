@@ -9,7 +9,12 @@ class UserRepository implements UserRepositoryInterface
 {
     public function all()
     {
-        return User::with('job', 'department')->get();
+        return User::all();
+    }
+
+    public function OneById($id)
+    {
+    	return User::with('job', 'department')->find($id);
     }
 
     public function create($data) {}

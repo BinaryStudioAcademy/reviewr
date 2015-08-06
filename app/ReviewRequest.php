@@ -28,7 +28,7 @@ class ReviewRequest extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany('App\Tag', 'tag_review_request');
     }
 
     public function users()
