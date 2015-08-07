@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call('CommentTableSeeder');
         $this->call('TagTableSeeder');
         $this->call('BadgeTableSeeder');
+        $this->call('ReviewRequestUserTableSeeder');
         
     }
 }
