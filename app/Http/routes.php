@@ -31,7 +31,7 @@ Route::group (['prefix' => 'api/v1'], function () {
     Route::resource('badge', 'BadgeController');
 });
 
-Route::group (['prefix' => 'reviewer'], function () {
+Route::group (['prefix' => 'reviewr'], function () {
     Route::get('auth/login', 'Auth\AuthController@getLogin');
     Route::post('auth/login', 'Auth\AuthController@postLogin');
     Route::get('auth/logout', 'Auth\AuthController@getLogout');
