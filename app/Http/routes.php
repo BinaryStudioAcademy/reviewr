@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', ['middleware' => 'auth', function() {
     return view('application');
-});
+}]);
 
 Route::group (['prefix' => 'api/v1'], function () {
     Route::resource('user', 'UserController');

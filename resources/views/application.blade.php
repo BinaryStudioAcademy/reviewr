@@ -76,13 +76,16 @@
                 <li><a href="#">Search</a></li>
                 <li><a href="#">Notifications <span class="label label-primary">5</span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Name Surname&nbsp;<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <strong>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span></strong>
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Profile &amp; Settings</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/auth/logout">Log Out</a></li>
                     </ul>
                 </li>
+                <li><img src="{{ Auth::user()->avatar }}" class="img-thumbnail" width="48" height="48"></li>
             </ul>
         </div>
     </div>
