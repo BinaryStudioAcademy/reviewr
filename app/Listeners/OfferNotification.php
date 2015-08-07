@@ -38,7 +38,7 @@ class OfferNotification implements ShouldQueue
         ];
         
         Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {
-            $message->to('alex.mokrencko@yandex.ru', $data['user']->first_name .' ' . $data['user']->last_name)->subject('You have a new offer to request!');
+            $message->to(($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('You have a new offer to request!');
         });
     }
 }
