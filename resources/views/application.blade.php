@@ -82,7 +82,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Profile &amp; Settings</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ url('reviewr/auth/logout') }}">Log Out</a></li>
+                        <li><a href="{{ url('auth/logout') }}">Log Out</a></li>
                     </ul>
                 </li>
                 <li><img src="{{ Auth::user()->avatar }}" class="img-thumbnail" width="48" height="48"></li>
