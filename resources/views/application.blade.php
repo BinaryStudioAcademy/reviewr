@@ -82,7 +82,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Profile &amp; Settings</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ URL::to('reviewr/auth/logout') }}">Log Out</a></li>
+                        <li><a href="reviewr/auth/logout">Log Out</a></li>
                     </ul>
                 </li>
                 <li><img src="{{ Auth::user()->avatar }}" class="img-thumbnail" width="48" height="48"></li>
@@ -152,7 +152,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">CREATE REQUEST</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ URL::to('reviewr/auth/logout') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="reviewr/auth/logout">
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Title</label>
