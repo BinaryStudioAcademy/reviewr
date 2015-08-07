@@ -8,7 +8,7 @@ use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use App\Events\OfferWasSent;
 use App\Events\UserWasAccept;
-use App\Events\OfferWasDecline;
+use App\Events\UserWasDecline;
 use App\ReviewRequest; 
 
 class MailService implements MailServiceInterface
@@ -32,7 +32,7 @@ class MailService implements MailServiceInterface
                 break;
 
             case 'decline':
-                \Event::fire(new OfferWasDecline($request, $user));
+                \Event::fire(new UserWasDecline($request, $user));
                 break;
 
             case 'sent_offer':

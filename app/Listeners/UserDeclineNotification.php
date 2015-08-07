@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\User;
-use App\Events\OfferWasSent;
+use App\Events\UserWasDecline;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Services\MailService;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,7 +39,7 @@ class UserDeclineNotification implements ShouldQueue
         ];
 
         Mail::send('emails.notificationForDecline',  $data, function ($message) use ($data) {
-            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
+            $message->to('alex.mokrencko@yandex.ru', $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
         });
     }
 }

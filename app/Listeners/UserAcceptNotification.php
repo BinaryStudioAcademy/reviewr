@@ -3,11 +3,11 @@
 namespace App\Listeners;
 
 use App\User;
-use App\Events\OfferWasSent;
+use App\Events\UserWasAccept;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Services\MailService;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Mail;;
+use Mail;
 
 class UserAcceptNotification implements ShouldQueue
 {
@@ -39,7 +39,7 @@ class UserAcceptNotification implements ShouldQueue
         ];
 
         Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {
-            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
+            $message->to('alex.mokrencko@yandex.ru', $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
         });
     }
 }
