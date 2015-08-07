@@ -90,19 +90,21 @@ class UserController extends Controller
     
     }
 
-    public function acceptReviewRequest($user_id, $request_id)
+    public function acceptOfferOnReviewRequest($user_id, $request_id)
     {
-        //
+        return $this->requestService->acceptUserOfferOnReviewRequest($user_id, $request_id);
     }
 
-    public function declineReviewRequest($user_id, $request_id)
+    public function declineOfferOnReviewRequest($user_id, $request_id)
     {
-        //
+        return $this->requestService->declineUserOfferOnReviewRequest($user_id, $request_id);
     }
 
     public function offerOnReviewRequest($user_id, $request_id)
     {
-        //
+        return $this->requestService->offerUserOnReviewRequest($user_id, $request_id);
+        
+        // notification send - MailService call
     }
     
 }
