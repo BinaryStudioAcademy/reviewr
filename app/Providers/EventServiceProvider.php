@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\OfferWasSent' => [
             'App\Listeners\OfferNotification',
         ],
+        'App\Events\UserWasAccept' => [
+            'App\Listeners\UserAcceptNotification',
+        ],
+        'App\Events\UserWasDecline' => [
+            'App\Listeners\UserDeclineNotification',
+        ],
     ];
 
     /**

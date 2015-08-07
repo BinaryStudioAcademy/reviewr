@@ -3,13 +3,13 @@
 namespace App\Listeners;
 
 use App\User;
-use App\Events\OfferWasSent;
+use App\Events\UserWasAccept;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Services\MailService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 
-class OfferNotification implements ShouldQueue
+class UserAcceptNotification implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -18,15 +18,16 @@ class OfferNotification implements ShouldQueue
      */
     public function __construct()
     {
+        //
     }
 
     /**
      * Handle the event.
      *
-     * @param  OfferWasSent  $event
+     * @param  UserWasAccept  $event
      * @return void
      */
-    public function handle(OfferWasSent $event)
+    public function handle(UserWasAccept $event)
     {
         $request = $event->request;
         $offer = $event->offer;
@@ -36,9 +37,9 @@ class OfferNotification implements ShouldQueue
            'request' => $request,
            'user' =>$offer,
         ];
-        
-        Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {
-            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('You have a new offer to request!');
+
+        Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {
+            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
         });
     }
 }

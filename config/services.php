@@ -20,7 +20,7 @@ return [
     ],
 
     'mandrill' => [
-        'secret' => env('MAIL_DRIVER'),
+        'secret' => env('MANDRILL_DRIVER'),
     ],
 
     'ses' => [
