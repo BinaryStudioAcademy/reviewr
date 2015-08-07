@@ -23,8 +23,8 @@ Route::group (['prefix' => 'api/v1'], function () {
     Route::resource('reviewrequest', 'ReviewRequestController');
     Route::get('reviewrequest/{id}/offers', 'ReviewRequestController@offers');
     Route::get('reviewrequest/{id}/tags', 'ReviewRequestController@tags');
-    Route::get('user/{user_id}/offeredon/{request_id}/accept', 'UserController@acceptOfferOnReviewRequest');
-    Route::get('user/{user_id}/offeredon/{request_id}/decline', 'UserController@declineOfferOnReviewRequest');
+    Route::get('user/{user_id}/accept/{request_id}', 'UserController@acceptReviewRequest');
+    Route::get('user/{user_id}/decline/{request_id}', 'UserController@declineReviewRequest');
     Route::get('user/{user_id}/offeron/{request_id}', 'UserController@offerOnReviewRequest');
     Route::resource('group', 'GroupController');
     Route::resource('tag', 'TagController');
