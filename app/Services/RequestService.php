@@ -6,6 +6,7 @@ use App\Services\Interfaces\RequestServiceInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use App\Repositories\Interfaces\TagRepositoryInterface;
+use App;
 
 class RequestService implements RequestServiceInterface
 {
@@ -54,12 +55,51 @@ class RequestService implements RequestServiceInterface
     }
 
     public function getOneUserById($id)
-    {
+    {   
         return $this->userRepository->OneById($id);
+          
     }
 
     public function getOneRequestById($id)
     {
         return $this->requestRepository->OneById($id);
+    }
+
+    public function acceptReviewRequest($user_id, $req_id)
+    {
+        $user =  $this->getOneUserById($user_id);
+        foreach ($user->requests as $request) {
+            if ($request->id == $req_id) {
+                $request->pivot->isAccepted = 1; 
+                $request->pivot->save();
+                return;
+            }
+        }
+        App::abort(404, 'Not found user or request'); 
+        
+    }
+
+    public function declineReviewRequest($user_id, $req_id)
+    {
+        $user =  $this->getOneUserById($user_id);
+        foreach ($user->requests as $request) {
+            if ($request->id == $req_id) {
+                $user->requests()->detach($request->id);
+                
+                return;
+            }
+        }
+        App::abort(404, 'Not found user or request'); 
+    }
+
+    public function offerOnReviewRequest($user_id, $req_id) {
+        $this->getOneRequestById($req_id);
+        $user = $this->getOneUserById($user_id);
+        foreach ($user->requests as $request) {
+            if ($request->id == $req_id) {
+                App::abort(500, 'User has request');
+            }
+        }
+        $user->requests()->attach($req_id);
     }
 }
