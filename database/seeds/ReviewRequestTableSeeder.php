@@ -14,7 +14,7 @@ class ReviewRequestTableSeeder extends Seeder {
         $userIds = User::lists('id')->toArray();
         $groupIds = Group::lists('id')->toArray();
 
-        foreach(range(1,50) as $index)
+        foreach(range(1,20) as $index)
         {
             ReviewRequest::create([
                 'title' => $faker->text(25),

@@ -41,7 +41,7 @@ class UserTableSeeder extends Seeder
                 'department_id' => $faker->randomElement($departmentIds)
             ]);
 
-        foreach(range(1,20) as $index)
+        foreach(range(1,5) as $index)
         {
             User::create([
                 'first_name' => $faker->firstName,
