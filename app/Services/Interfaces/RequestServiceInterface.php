@@ -19,4 +19,10 @@ interface RequestServiceInterface
     public function getSpecificRequestOffers($id);
 
     public function getSpecificRequestTags($id);
+
+    public function acceptUserOfferOnReviewRequest($user_id, $request_id);
+
+    public function declineUserOfferOnReviewRequest($user_id, $request_id);
+
+    public function offerUserOnReviewRequest($user_id, $request_id);
 }

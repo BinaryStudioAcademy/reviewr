@@ -62,4 +62,19 @@ class RequestService implements RequestServiceInterface
     {
         return $this->requestRepository->OneById($id);
     }
+
+    public function acceptUserOfferOnReviewRequest($user_id, $request_id)
+    {
+        return $this->userRepository->acceptOfferOnReviewRequest($user_id, $request_id);
+    }
+
+    public function declineUserOfferOnReviewRequest($user_id, $request_id)
+    {
+        return $this->userRepository->declineOfferOnReviewRequest($user_id, $request_id);
+    }
+
+    public function offerUserOnReviewRequest($user_id, $request_id)
+    {
+        return $this->userRepository->offerOnReviewRequest($user_id, $request_id);
+    }
 }
