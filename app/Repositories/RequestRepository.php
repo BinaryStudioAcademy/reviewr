@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App;
 use App\ReviewRequest;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 
@@ -26,19 +27,19 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function OneById($id)
     {
-        return ReviewRequest::with('user', 'group', 'user.department', 'user.job')->find($id);
+        return ReviewRequest::with('user', 'group', 'user.department', 'user.job')->findOrFail($id);
     }
 
     public function getOffersById($id)
     {
-        $review_request = ReviewRequest::find($id);
+        $review_request = ReviewRequest::findOrFail($id);
 
         return $review_request->users()->get();
     }
 
     public function getTagsById($id)
     {
-        $review_request = ReviewRequest::find($id);
+        $review_request = ReviewRequest::findOrFail($id);
 
         return $review_request->tags()->get();
     }

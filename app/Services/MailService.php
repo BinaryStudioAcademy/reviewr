@@ -7,6 +7,8 @@ use App\Services\Interfaces\RequestServiceInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use App\Events\OfferWasSent;
+use App\Events\UserWasAccept;
+use App\Events\OfferWasDecline;
 use App\ReviewRequest; 
 
 class MailService implements MailServiceInterface
@@ -21,7 +23,22 @@ class MailService implements MailServiceInterface
         $this->requestRepository = $requestRepository;
       }
 
-    public function sendNotificationForOffer($request, $offer) {
-        Event::fire(new OfferWasSent($request, $offer));
+    public function sendNotification($req_id, $user_id, $action) {
+        $user = $this->userRepository->OneById($user_id);
+        $request = $this->requestRepository->OneById($req_id);
+        switch ($action) {
+            case 'accept':
+                \Event::fire(new UserWasAccept($request, $user));
+                break;
+
+            case 'decline':
+                \Event::fire(new OfferWasDecline($request, $user));
+                break;
+
+            case 'sent_offer':
+                \Event::fire(new OfferWasSent($request, $user));
+                break;
+        }
+       
     }
 }
