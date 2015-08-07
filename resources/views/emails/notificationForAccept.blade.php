@@ -4,6 +4,6 @@
 	<title></title>
 </head>
 <body>
-Hello, {{$user->first_name}} {{$user->last_name}}. You was accepted to review {{$request->title}}.
+Hello, {{$user->first_name}} {{$user->last_name}}. You was accepted to review <b> {{$request->title}}</b>.
 </body>
 </html>

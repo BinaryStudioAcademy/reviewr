@@ -12,6 +12,7 @@ class CreateReviewRequestUserTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->boolean('isAccepted');
+            $table->string('status');
             $table->integer('review_request_id')->unsigned();
             $table->integer('user_id')->unsigned();
         });

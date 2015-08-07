@@ -96,18 +96,21 @@ class UserController extends Controller
     {
         $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function declineReviewRequest($user_id, $request_id)
     {
         $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function offerOnReviewRequest($user_id, $request_id)
     {
         $this->requestService->offerOnReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
+        return response()->json(['message'=> 'success'], 200);
 
     }
     

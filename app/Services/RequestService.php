@@ -84,8 +84,8 @@ class RequestService implements RequestServiceInterface
         $user =  $this->getOneUserById($user_id);
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
-                $user->requests()->detach($request->id);
-                
+                $request->pivot->isAccepted = 0; 
+                $request->pivot->save();
                 return;
             }
         }
@@ -97,7 +97,7 @@ class RequestService implements RequestServiceInterface
         $user = $this->getOneUserById($user_id);
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
-                App::abort(500, 'User has request');
+                App::abort(500, 'User already has this request');
             }
         }
         $user->requests()->attach($req_id);

@@ -33,7 +33,7 @@ class ReviewRequest extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User')->withPivot('isAccepted');
+        return $this->belongsToMany('App\User')->withPivot('isAccepted', 'status');
     }
 
     public function user()
