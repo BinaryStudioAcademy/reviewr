@@ -31,6 +31,15 @@ Route::group (['prefix' => 'api/v1'], function () {
     Route::resource('badge', 'BadgeController');
 });
 
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('/auth/login', [
+    'as'   => 'login.get',
+    'uses' => 'Auth\AuthController@getLogin'
+]);
+Route::post('/auth/login', [
+    'as'   => 'login.post',
+    'uses' => 'Auth\AuthController@postLogin'
+]);
+Route::get('/auth/logout', [
+    'as'   => 'logout',
+    'uses' => 'Auth\AuthController@getLogout'
+]);
