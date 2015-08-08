@@ -116,16 +116,19 @@
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><%= title %> <span class="badge"><%= reputation %></span></h3>
+                <h2 class="panel-title">
+                    <%- title %>
+                    <span class="badge"><%- _.isEqual(offers_count, 0) ? 'no offers' : offers_count %></span>
+                </h2>
             </div>
             <div class="panel-body">
-                <p class="status">STATUS</p>
+                <p>Created at: <%= created_at %></p>
                 <div class="row user-data">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-photo">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
                         <img src="<%= user.avatar %>" class="img-responsive" alt="">
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-info">
-                        <p><%= user.first_name + '' + user.last_name%></p>
+                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
+                        <p><%= user.first_name + ' ' + user.last_name%></p>
                         <p><%= user.email %></p>
                         <p><%= user.phone %></p>
                         <p>Group: <%= group.title %></p>
