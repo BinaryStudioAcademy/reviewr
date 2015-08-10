@@ -7,6 +7,7 @@ use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use App\Repositories\Interfaces\TagRepositoryInterface;
 use App;
+use Illuminate\Support\Facades\Auth;
 
 class RequestService implements RequestServiceInterface
 {
@@ -32,6 +33,11 @@ class RequestService implements RequestServiceInterface
     public function getAllRequests()
     {
         return $this->requestRepository->all();
+    }
+
+    public function getMyRequests()
+    {
+        return $this->requestRepository->findByField('user_id', Auth::user()->id);
     }
 
     public function getAllTags()

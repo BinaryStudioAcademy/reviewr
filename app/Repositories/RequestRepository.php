@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App;
 use App\ReviewRequest;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class RequestRepository implements RequestRepositoryInterface
 {
@@ -18,7 +19,7 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request = new ReviewRequest;
         $review_request->title = $data->title;
         $review_request->details = $data->details;
-        $review_request->user_id = 1; // TODO id for login user
+        $review_request->user_id = Auth::user()->id;
         $review_request->group_id = $data->group_id;
         $review_request->save();
 
@@ -42,5 +43,11 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request = ReviewRequest::findOrFail($id);
 
         return $review_request->tags()->get();
+    }
+
+
+    public function findByField($fieldName, $fieldValue, $columns=['*'])
+    {
+        return ReviewRequest::all($columns)->where($fieldName, $fieldValue);
     }
 }

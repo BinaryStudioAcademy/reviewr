@@ -16,6 +16,7 @@ Route::get('/', ['middleware' => 'auth', function() {
 }]);
 
 Route::group (['prefix' => 'api/v1'], function () {
+    Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
     Route::resource('user', 'UserController');
     Route::resource('comment', 'CommentController');
     Route::resource('job', 'JobController');

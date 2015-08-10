@@ -37,7 +37,7 @@
                 <span class="sr-only">Sidebar navigation</span>
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </button>
-            <a class="navbar-brand" href="">REVIEWER</a>
+            <a class="navbar-brand" href="#"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -53,7 +53,6 @@
                 </li>
                 <li><a href="#!/users">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        Users
                     </a>
                 </li>
                 <li><a href="#!/badges">
@@ -61,14 +60,19 @@
                         Badges
                     </a>
                 </li>
-                <li><a href="#!/popular">
-                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
-                        Popular
-                    </a>
-                </li>
+                {{--<li><a href="#!/popular">--}}
+                        {{--<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>--}}
+                        {{--Popular--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <li><a href="#!/request/create">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         Create request
+                    </a>
+                </li>
+                <li><a href="#!/requests/my">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        My Request
                     </a>
                 </li>
             </ul>
