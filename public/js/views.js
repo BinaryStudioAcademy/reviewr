@@ -124,25 +124,34 @@ App.Views.Request = Backbone.View.extend({
 // Backbone Views for all review requests
 
 App.Views.RequestsList = Backbone.View.extend({
-    model: requests,
+    collection: requests,
     el: '#main-content',
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
-    render: function(){
-        this.$el.html('');
-        _.each(this.model.toArray(), function(request){
-            this.$el.append( (new App.Views.Request({model: request})).render().el );
-            console.log('render Request');
-        }, this);
-        return this;
+    render: function() {
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(requests, res, req) {
+                if (!requests.length) {
+                    console.log('Render empty view here!!');
+                } else {
+                    _.each(requests.models, function(rq) {
+                        that.renderRequest(rq);
+                        console.log('render Request');
+                    });
+                }
+            },
+            reset: true
+        });
+    },
+
+    renderRequest: function(rq) {
+        var requestView = new App.Views.Request({model: rq});
+        this.$el.append(requestView.render().$el);
     }
 });
 
@@ -185,17 +194,12 @@ App.Views.RequestDetails = Backbone.View.extend({
 // Backbone Views for Review Request Creation Form
 
 App.Views.CreateRequestForm = Backbone.View.extend({
-    model: new App.Models.Request(),
-    el: '#main-content',
-    initialize: function() {
-        this.template = _.template($('#create-request-form-template').html());
-        this.model.on('change:id', function (){
-            console.log('Change:id');
-            router.navigate('!/request/' + this.model.get("id"), true);
-        }, this);
-    },
+    template: _.template($('#create-request-form-template').html()),
     events: {
         'submit': 'storeRequest'
+    },
+    initialize: function(options) {
+        this.model = options.model;
     },
     storeRequest: function(e) {
         e.preventDefault();
@@ -205,13 +209,16 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             tags: $('.tags-input').val(),
             group_id: $('input[name="group-input"]:checked').val()
         });
-        this.model.save();
-        return this;
+        this.model.save(null, {
+            success: function(rq) {
+                router.navigate('!/request/' + rq.get("id"), true);
+            }
+        });
     },
     render: function() {
         this.$el.html(this.template);
+        return this;
     }
-
 });
 
 
@@ -238,6 +245,7 @@ App.Views.Reviewer = Backbone.View.extend({
 });
 
 // Backbone Views for all reviewers
+// TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
     model: reviewers,

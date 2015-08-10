@@ -30,11 +30,15 @@ App.Router = Backbone.Router.extend({
     requests: function() {
         console.log('Route RequestListView');
         requests.fetch();
-        new App.Views.RequestsList();
+        new App.Views.RequestsList().render();
     },
 
     createRequest: function() {
-        (new App.Views.CreateRequestForm()).render();
+        var requestForm = new App.Views.CreateRequestForm({
+            el: '#main-content',
+            model: new App.Models.Request()
+        });
+        requestForm.render();
     },
 
     showRequestDetails: function(id) {
