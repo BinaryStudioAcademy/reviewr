@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">SIGN IN</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login.post') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('reviewr/auth/login') }}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group">
