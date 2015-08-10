@@ -45,19 +45,6 @@ class ReviewRequestController extends Controller
     {
         return $this->requestService->createRequest($request);
 
-/*        $review_request = new ReviewRequest();
-
-        $review_request->title = $request->title;
-        $review_request->details = $request->details;
-
-        $review_request->user_id = 1; // TODO use user_ig logined user
-        $review_request->group_id = $request->group;
-
-        $review_request->save();
-
-        $rr_id = $review_request->id;
-
-        return Response::json($review_request);*/
     }
 
     /**
@@ -69,7 +56,6 @@ class ReviewRequestController extends Controller
     public function show($id)
     {
         return Response::json($this->requestService->getOneRequestById($id), 200);
-        //return Response::json(\App\ReviewRequest::findOrFail($id));
     }
 
     /**
@@ -114,5 +100,9 @@ class ReviewRequestController extends Controller
     {
         return Response::json($this->requestService->getSpecificRequestTags($id), 200);
     }
-    
+
+    public function myReviewRequest()
+    {
+        return Response::json($this->requestService->getMyRequests(), 200);
+    }
 }
