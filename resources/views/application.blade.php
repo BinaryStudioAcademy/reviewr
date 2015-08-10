@@ -37,7 +37,7 @@
                 <span class="sr-only">Sidebar navigation</span>
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </button>
-            <a class="navbar-brand" href="">REVIEWER</a>
+            <a class="navbar-brand" href="#"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -53,7 +53,6 @@
                 </li>
                 <li><a href="#!/users">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        Users
                     </a>
                 </li>
                 <li><a href="#!/badges">
@@ -61,14 +60,19 @@
                         Badges
                     </a>
                 </li>
-                <li><a href="#!/popular">
-                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
-                        Popular
-                    </a>
-                </li>
+                {{--<li><a href="#!/popular">--}}
+                        {{--<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>--}}
+                        {{--Popular--}}
+                    {{--</a>--}}
+                {{--</li>--}}
                 <li><a href="#!/request/create">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         Create request
+                    </a>
+                </li>
+                <li><a href="#!/requests/my">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        My Request
                     </a>
                 </li>
             </ul>
@@ -82,7 +86,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">Profile &amp; Settings</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{ URL::to('reviewr/auth/logout') }}">Log Out</a></li>
+                        <li><a href="{{ route('logout') }}">Log Out</a></li>
                     </ul>
                 </li>
                 <li><img src="{{ Auth::user()->avatar }}" class="img-thumbnail" width="48" height="48"></li>
@@ -116,16 +120,19 @@
 
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><%= title %> <span class="badge"><%= reputation %></span></h3>
+                <h2 class="panel-title">
+                    <%- title %>
+                    <span class="badge"><%- _.isEqual(offers_count, 0) ? 'no offers' : offers_count %></span>
+                </h2>
             </div>
             <div class="panel-body">
-                <p class="status">STATUS</p>
+                <p>Created at: <%= created_at %></p>
                 <div class="row user-data">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-photo">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
                         <img src="<%= user.avatar %>" class="img-responsive" alt="">
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 user-info">
-                        <p><%= user.first_name + '' + user.last_name%></p>
+                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
+                        <p><%= user.first_name + ' ' + user.last_name%></p>
                         <p><%= user.email %></p>
                         <p><%= user.phone %></p>
                         <p>Group: <%= group.title %></p>

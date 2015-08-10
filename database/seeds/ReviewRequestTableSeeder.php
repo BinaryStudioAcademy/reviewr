@@ -18,7 +18,7 @@ class ReviewRequestTableSeeder extends Seeder {
         {
             ReviewRequest::create([
                 'title' => $faker->text(25),
-                'details' => $faker->text(300),
+                'details' => $faker->realtext(1000),
                 'reputation' => $faker->randomDigitNotNull,
                 'user_id' => $faker->randomElement($userIds),
                 'group_id' => $faker->randomElement($groupIds)

@@ -20,6 +20,8 @@ class ReviewRequest extends Model
     );
 
     protected $dates = ['deleted_at'];
+
+    protected $appends = ['offers_count'];
       
     public function comments()
     {
@@ -44,5 +46,10 @@ class ReviewRequest extends Model
     public function group()
     {
         return $this->belongsTo('App\Group');
+    }
+
+    public function getOffersCountAttribute()
+    {
+        return $this->users()->count();
     }
 }
