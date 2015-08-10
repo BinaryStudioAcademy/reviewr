@@ -9,11 +9,14 @@ App.Router = Backbone.Router.extend({
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
-        "!/request/:id/decline": "declineRequest"
+        "!/request/:id/decline": "declineRequest",
+        "!/tags": "tags"
     },
+    
     home: function () {
         this.navigate('!/requests', true)
     },
+    
     users: function() {
         console.log('Route usersListView');
         users.fetch();
@@ -45,7 +48,12 @@ App.Router = Backbone.Router.extend({
         reviewers.fetch({wait: true}).then(function(){
             new App.Views.RequestDetails({model: request}).render();
         });
+    },
 
+    tags: function() {
+        console.log("Route: !/tags");
+        tags.fetch();
+        new App.Views.TagsList();
     }
 
 

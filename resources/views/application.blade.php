@@ -341,6 +341,11 @@
 
 </script>
 
+<script type="text/template" id="tag-template">
+<p>id: <%= id %></p>
+<p>title: <%= title %></p>
+</script>
+
 <script src="js/vendor/underscore/underscore.js"></script>
 <script src="js/vendor/jquery/jquery.js"></script>
 <script src="js/vendor/backbone/backbone.js"></script>

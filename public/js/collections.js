@@ -47,3 +47,19 @@ App.Collections.Reviewers = Backbone.Collection.extend({
 //instantiate collection of reviewers
 
 var reviewers = new App.Collections.Reviewers();
+
+
+/*
+ *---------------------------------------------------
+ *  Tags Collection
+ *---------------------------------------------------
+ */
+
+ App.Collections.Tags = Backbone.Collection.extend({
+ 	url: "api/v1/tag",
+ 	model: App.Models.Tag
+ });
+
+ //instantiate collection of tags
+
+ var tags = new App.Collections.Tags();
