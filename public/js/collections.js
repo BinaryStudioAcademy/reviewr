@@ -34,7 +34,7 @@ var requests = new App.Collections.Requests();
 
 /*
  *---------------------------------------------------
- *  Reviewer Collection
+ *  Reviewers Collection
  *---------------------------------------------------
  */
 
@@ -63,3 +63,19 @@ var reviewers = new App.Collections.Reviewers();
  //instantiate collection of tags
 
  var tags = new App.Collections.Tags();
+
+
+ /*
+ *---------------------------------------------------
+ *  Tags Collection For Specific Review Request
+ *---------------------------------------------------
+ */
+
+ App.Collections.RequestTags = Backbone.Collection.extend({
+ 	url: "api/v1/reviewrequest/:id/tags",
+ 	model: App.Models.Tag
+ });
+
+ //instantiate collection of tags
+
+ var request_tags = new App.Collections.RequestTags();

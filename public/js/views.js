@@ -163,7 +163,8 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
-        this.$el.html(this.template( this.model.toJSON() ));
+        // Fetch Request Details
+        this.$el.html( this.template(this.model.toJSON()) );
 
         // Fetch Request Author
         var author = new App.Models.User(this.model.get('user'));
@@ -174,10 +175,17 @@ App.Views.RequestDetails = Backbone.View.extend({
         reviewersBlock.empty();
         _.each(reviewers.toArray(), function(reviewer){
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer}) ).render().el );
-            console.log('render Request');
+            console.log('render Reviewer');
         }, this);
 
-        console.log('render Request Details');
+        // Fetch Request Tags
+        var request_tags_list = this.$el.find(".tags");
+        request_tags_list.empty();
+        _.each(request_tags.toArray(), function(request_tag){
+            request_tags_list.append( (new App.Views.Tag({model: request_tag}) ).render().el );
+            console.log('render Tag');
+        }, this);
+
         return this;
     }
 });
