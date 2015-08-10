@@ -159,7 +159,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">CREATE REQUEST</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ URL::to('reviewr/auth/logout') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="#" id="create-request-form">
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Title</label>
