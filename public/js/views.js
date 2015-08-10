@@ -172,7 +172,8 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
-        this.$el.html(this.template( this.model.toJSON() ));
+        // Fetch Request Details
+        this.$el.html( this.template(this.model.toJSON()) );
 
         // Fetch Request Author
         var author = new App.Models.User(this.model.get('user'));
@@ -183,10 +184,17 @@ App.Views.RequestDetails = Backbone.View.extend({
         reviewersBlock.empty();
         _.each(reviewers.toArray(), function(reviewer){
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer}) ).render().el );
-            console.log('render Request');
+            console.log('render Reviewer');
         }, this);
 
-        console.log('render Request Details');
+        // Fetch Request Tags
+        var request_tags_list = this.$el.find(".tags");
+        request_tags_list.empty();
+        _.each(request_tags.toArray(), function(request_tag){
+            request_tags_list.append( (new App.Views.Tag({model: request_tag}) ).render().el );
+            console.log('render Tag');
+        }, this);
+
         return this;
     }
 });
@@ -269,3 +277,52 @@ App.Views.Reviewers = Backbone.View.extend({
         return this;
     }
 });
+
+
+/*
+ *---------------------------------------------------
+ *  Tag View
+ *---------------------------------------------------
+ */
+
+ App.Views.Tag = Backbone.View.extend({
+    model: tag,
+    className: "tag thumbnail text-center",
+    initialize: function(){
+        this.template = _.template($('#tag-template').html());
+    },
+    render: function(){
+        this.$el.html(this.template( this.model.toJSON() ));
+        return this;
+    }
+ });
+
+
+ /*
+ *---------------------------------------------------
+ *  Tags List View
+ *---------------------------------------------------
+ */
+
+ App.Views.TagsList = Backbone.View.extend({
+    model: tags,
+    el: "#main-content",
+    initialize: function() {
+        this.model.on('sync', this.render, this);
+        this.model.on('remove', this.render, this);
+        this.model.on('invalid', function(error, message){
+            alert(message);
+        }, this);
+        this.model.on('error', function (error, message) {
+            alert(message.responseText);
+        }, this);
+    },
+    render: function(){
+        this.$el.html('');
+        _.each(this.model.toArray(), function(tag){
+            this.$el.append( (new App.Views.Tag({model: tag})).render().el );
+            console.log('Tag Model Render');
+        }, this);
+        return this;
+    }
+ });

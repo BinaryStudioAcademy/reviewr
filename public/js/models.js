@@ -59,3 +59,20 @@ App.Models.Reviewer = Backbone.Model.extend({
 });
 
 var reviewer = new App.Models.Reviewer();
+
+
+/*
+ *---------------------------------------------------
+ *  Tag Model
+ *---------------------------------------------------
+ */
+
+ App.Models.Tag = Backbone.Model.extend({
+    urlRoot: "api/v1/tag",
+    defaults: {
+        id: null,
+        title: ""
+    }
+ });
+
+ var tag = new App.Models.Tag();

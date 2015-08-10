@@ -242,7 +242,7 @@
                         <p><%- details %></p>
                         <p>Group: <%= group.title %>, Author: <%= user.first_name + user.last_name%></p>
                         <p>Created at: <%= created_at %></p>
-                        <p><span class="label label-success pull-left">tag, tag, tag</span></p>
+                        <div class="tags">Request Tags List</div>
                     </div>
                     <div class="panel-footer">
                         <p class="-rating">Rating:<span class="badge"><%= reputation %></span></p>
@@ -343,6 +343,11 @@
     </div>
     </div>
 
+</script>
+
+<script type="text/template" id="tag-template">
+<p>id: <%= id %></p>
+<p>title: <%= title %></p>
 </script>
 
 <script src="js/vendor/underscore/underscore.js"></script>
