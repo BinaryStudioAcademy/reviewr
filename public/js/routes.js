@@ -52,8 +52,8 @@ App.Router = Backbone.Router.extend({
         
         request.fetch({wait: true}); // with id
         
-        reviewers.url = 'api/v1/reviewrequest/' + id + '/offers'
-        request_tags.url = "api/v1/reviewrequest/" + id + "/tags"
+        reviewers.url = App.prefix + '/api/v1/reviewrequest/' + id + '/offers'
+        request_tags.url = App.prefix + "/api/v1/reviewrequest/" + id + "/tags"
         
         reviewers.fetch({wait: true});
         request_tags.fetch({wait: true});
