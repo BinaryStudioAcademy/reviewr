@@ -186,7 +186,7 @@
                                     </ul>
                                 </div>
 
-                                <a class="btn btn-default" data-edit="formatblock pre.prettyprint" title="Code">Code</a>
+                                <a class="btn btn-default" data-edit="formatblock pre" title="Code">Code</a>
 
                                 <div class="btn-group">
                                     <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
