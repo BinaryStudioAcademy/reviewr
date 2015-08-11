@@ -211,10 +211,16 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     storeRequest: function(e) {
         e.preventDefault();
+        
+        var tags = $('.tags-input').tokenfield('getTokens');
+        for (var i = 0; i < tags.length; i++) {
+            tags[i]= tags[i].value;
+        }
+
         this.model.set({
             title: $('.title-input').val(),
             details: $('.details-input').val(),
-            tags: $('.tags-input').val(),
+            tags: tags,
             group_id: $('input[name="group-input"]:checked').val()
         });
         this.model.save(null, {
