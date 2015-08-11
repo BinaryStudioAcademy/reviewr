@@ -1,7 +1,7 @@
 <?php
 
 Route::group (['prefix' => 'reviewr'], function () {
-    Route::get('/', ['middleware' => 'auth', function() {
+    Route::get('/', ['as' => 'home', 'middleware' => 'auth', function() {
         return view('application');
     }]);
 
