@@ -281,6 +281,8 @@
         <img src="<%= avatar %>" alt="">
         <p><%= first_name %></p>
         <p><%= last_name %></p>
+         <button class="accept btn btn-primary">Accept</button>
+         <button class="decline btn btn-info">Decline</button>
     </div>
 </script>
 

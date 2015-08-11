@@ -93,7 +93,7 @@ class UserController extends Controller
 
     public function acceptReviewRequest($user_id, $request_id)
     {
-       
+        $user_id = Auth::user()->id;
         $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
         return response()->json(['message'=> 'success'], 200);
@@ -101,6 +101,7 @@ class UserController extends Controller
 
     public function declineReviewRequest($user_id, $request_id)
     {
+        $user_id = Auth::user()->id;
         $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
         return response()->json(['message'=> 'success'], 200);
