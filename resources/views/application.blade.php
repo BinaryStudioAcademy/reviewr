@@ -15,6 +15,9 @@
     <title>Reviewer - Binary Academy</title>
 
     <link href="css/bootstrap.css"  rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
+    <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -354,6 +357,9 @@
 <script src="js/vendor/jquery/jquery.js"></script>
 <script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap/bootstrap.js"></script>
+<script src="js/vendor/jquery/jqueryui.js"></script>
+<script src="js/vendor/bootstrap/bootstrap-tokenfield.js"></script>
+<script src="js/vendor/bootstrap/typeahead.bundle.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>
 <script src="js/collections.js"></script>

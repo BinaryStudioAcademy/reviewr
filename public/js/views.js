@@ -225,6 +225,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     render: function() {
         this.$el.html(this.template);
+        $('.tags-input').tokenfield();
         return this;
     }
 });
