@@ -108,7 +108,7 @@ App.Views.Request = Backbone.View.extend({
         'click .request-details-btn': 'showDetails',
     },
     createOffers: function () {
-        reviewers.url = 'api/v1/user/0/offeron/' + this.model.get('id');
+        reviewers.url = 'reviewr/api/v1/user/0/offeron/' + this.model.get('id');
         reviewers.fetch({wait: true});
         return this;
     },
@@ -259,12 +259,12 @@ App.Views.Reviewer = Backbone.View.extend({
         'click .decline': 'declineOffer',
     },
     acceptOffer: function () {
-        reviewers.url = 'api/v1/user/0/accept/' + this.request_id;
+        reviewers.url = 'reviewr/api/v1/user/0/accept/' + this.request_id;
         reviewers.fetch({wait: true});
         return this;
     },
     declineOffer: function () {
-        reviewers.url = 'api/v1/user/0/decline/' + this.request_id;
+        reviewers.url = 'reviewr/api/v1/user/0/decline/' + this.request_id;
         reviewers.fetch({wait: true});
         return this;
     },
