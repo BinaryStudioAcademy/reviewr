@@ -48,6 +48,6 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function findByField($fieldName, $fieldValue, $columns=['*'])
     {
-        return ReviewRequest::all($columns)->where($fieldName, $fieldValue);
+        return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
 }
