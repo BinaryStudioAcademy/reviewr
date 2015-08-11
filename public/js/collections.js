@@ -5,7 +5,7 @@
  */
 
 App.Collections.Users = Backbone.Collection.extend({
-    url: 'api/v1/user',
+    url: App.apiPrefix + '/user',
     model: App.Models.User
 
 });
@@ -22,7 +22,7 @@ var users = new App.Collections.Users();
  */
 
 App.Collections.Requests = Backbone.Collection.extend({
-    url: 'api/v1/reviewrequest',
+    url: App.apiPrefix + '/reviewrequest',
     model: App.Models.Request
 
 });
@@ -31,15 +31,31 @@ App.Collections.Requests = Backbone.Collection.extend({
 
 var requests = new App.Collections.Requests();
 
+/*
+ *---------------------------------------------------
+ *  My Requests Collection
+ *---------------------------------------------------
+ */
+
+App.Collections.MyRequests = Backbone.Collection.extend({
+    url: App.apiPrefix + '/reviewrequest/my',
+    model: App.Models.Request
+
+});
+
+//instantiate collection of myRequests
+
+var myRequests = new App.Collections.MyRequests();
+
 
 /*
  *---------------------------------------------------
- *  Reviewers Collection
+ *  Reviewer Collection
  *---------------------------------------------------
  */
 
 App.Collections.Reviewers = Backbone.Collection.extend({
-    url: 'api/v1/reviewrequest/:id/offers',
+    url: App.apiPrefix + '/reviewrequest/:id/offers',
     model: App.Models.Reviewer
 
 });

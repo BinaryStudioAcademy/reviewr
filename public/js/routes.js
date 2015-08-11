@@ -6,6 +6,7 @@ App.Router = Backbone.Router.extend({
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
         "!/request/create": "createRequest",
+        "!/requests/my": "showMyRequest",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -32,7 +33,6 @@ App.Router = Backbone.Router.extend({
 
     requests: function() {
         console.log('Route RequestListView');
-        requests.fetch();
         new App.Views.RequestsList().render();
     },
 
@@ -42,6 +42,11 @@ App.Router = Backbone.Router.extend({
             model: new App.Models.Request()
         });
         requestForm.render();
+    },
+
+    showMyRequest: function() {
+        console.log('Route MyRequest');
+        new App.Views.RequestsList({collection: myRequests}).render();
     },
 
     showRequestDetails: function(id) {

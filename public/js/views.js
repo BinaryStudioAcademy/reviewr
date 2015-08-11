@@ -134,6 +134,7 @@ App.Views.RequestsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
     },
     render: function() {
+        console.log(this.collection);
         this.$el.empty();
 
         var that = this;

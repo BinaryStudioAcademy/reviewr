@@ -3,10 +3,10 @@
         Models: {},
         Collections: {},
         Views: {},
-        Router: {}
-    };
+        Router: {},
+        apiPrefix: 'api/v1'
 
-    window.vent = _.extend({}, Backbone.Events);
+    };
 
 
 
