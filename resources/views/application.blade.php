@@ -14,8 +14,8 @@
 
     <title>Reviewer - Binary Academy</title>
 
-    <link href="css/bootstrap.css"  rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap.css') }}"  rel="stylesheet">
+    <link href="{{ asset('reviewr/css/styles.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -350,15 +350,15 @@
 <p>title: <%= title %></p>
 </script>
 
-<script src="js/vendor/underscore/underscore.js"></script>
-<script src="js/vendor/jquery/jquery.js"></script>
-<script src="js/vendor/backbone/backbone.js"></script>
-<script src="js/vendor/bootstrap/bootstrap.js"></script>
-<script src="js/app.js"></script>
-<script src="js/models.js"></script>
-<script src="js/collections.js"></script>
-<script src="js/views.js"></script>
-<script src="js/routes.js"></script>
+<script src="{{ asset('reviewr/js/vendor/underscore/underscore.js') }}"></script>
+<script src="{{ asset('reviewr/js/vendor/jquery/jquery.js') }}"></script>
+<script src="{{ asset('reviewr/js/vendor/backbone/backbone.js') }}"></script>
+<script src="{{ asset('reviewr/js/vendor/bootstrap/bootstrap.js') }}"></script>
+<script src="{{ asset('reviewr/js/app.js') }}"></script>
+<script src="{{ asset('reviewr/js/models.js') }}"></script>
+<script src="{{ asset('reviewr/js/collections.js') }}"></script>
+<script src="{{ asset('reviewr/js/views.js') }}"></script>
+<script src="{{ asset('reviewr/js/routes.js') }}"></script>
 
 </body>
 </html>
