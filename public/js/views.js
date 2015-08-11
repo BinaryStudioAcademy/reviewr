@@ -186,6 +186,11 @@ App.Views.RequestDetails = Backbone.View.extend({
         var req_id = this.model.get('id');
         _.each(reviewers.toArray(), function(reviewer, request_id) {
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id }) ).render().el );
+            if ($('.id') != userID) {
+                $('.buttons').hide(100);
+            }
+            else alert(this.model.get('id') + '  '+ userID);
+
         }, this);
 
         // Fetch Request Tags
@@ -252,6 +257,7 @@ App.Views.Reviewer = Backbone.View.extend({
     initialize: function(options){
         this.request_id = options.request_id;
         this.template = _.template($('#reviewer-card-template').html());
+
     },
     events: {
         'click .accept': 'acceptOffer',
@@ -269,6 +275,7 @@ App.Views.Reviewer = Backbone.View.extend({
     },
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
+        
         return this;
     }
 });
@@ -284,7 +291,7 @@ App.Views.Reviewers = Backbone.View.extend({
         this.model.on('remove', this.render, this);
         this.model.on('invalid', function(error, message){
             alert(message);
-        }, this);
+        },  this);
         this.model.on('error', function (error, message) {
             alert(message.responseText);
         }, this);

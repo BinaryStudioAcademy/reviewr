@@ -115,6 +115,10 @@
     </div>
 
 </div>
+    <script>
+        var userID = "{{ Auth::user()->id }}";
+    </script>
+
 
 
 {{-- One Review Request card backbone template--}}
@@ -279,10 +283,13 @@
 <script type="text/template" id="reviewer-card-template">
     <div class="reviewer thumbnail">
         <img src="<%= avatar %>" alt="">
+        <p class='id'><%= id %></p>
         <p><%= first_name %></p>
         <p><%= last_name %></p>
-         <button class="accept btn btn-primary">Accept</button>
-         <button class="decline btn btn-info">Decline</button>
+        <div class="buttons">
+            <button class="accept btn btn-primary">Accept</button>
+            <button class="decline btn btn-info">Decline</button>
+        </div>
     </div>
 </script>
 
