@@ -305,24 +305,32 @@ App.Views.Reviewers = Backbone.View.extend({
  */
 
  App.Views.TagsList = Backbone.View.extend({
-    model: tags,
+    collection: tags,
     el: "#main-content",
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        this.$el.html('');
-        _.each(this.model.toArray(), function(tag){
-            this.$el.append( (new App.Views.Tag({model: tag})).render().el );
-            console.log('Tag Model Render');
-        }, this);
-        return this;
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(tags, res, tag) {
+                if (!tags.length) {
+                    // Render Empty View Here
+                } else {
+                    _.each(tags.models, function(tag) {
+                        that.renderTag(tag);
+                        console.log('Tag Model Render');
+                    });
+                }
+            },
+            reset: true
+        });
+    },
+    renderTag: function(tag) {
+        var tagView = new App.Views.Tag({model: tag});
+        this.$el.append(tagView.render().$el);
     }
  });

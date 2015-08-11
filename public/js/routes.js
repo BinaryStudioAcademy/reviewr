@@ -64,7 +64,7 @@ App.Router = Backbone.Router.extend({
     tags: function() {
         console.log("Route: !/tags");
         tags.fetch();
-        new App.Views.TagsList();
+        new App.Views.TagsList().render();
     }
 
 

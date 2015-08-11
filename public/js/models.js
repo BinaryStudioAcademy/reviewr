@@ -32,7 +32,9 @@ App.Models.Request = Backbone.Model.extend({
         title: '',
         details: '',
         tags: '',
-        group: ''
+        group: '',
+        created_at: '',
+        reputation: ''
     }
 });
 
