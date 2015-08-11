@@ -177,6 +177,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
+        this.stopListening();
         // Fetch Request Details
         this.$el.html( this.template(this.model.toJSON()) );
 
@@ -187,7 +188,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         // Fetch Request Reviewers
         var reviewersBlock = this.$el.find('.reviewers');
         reviewersBlock.empty();
-        _.each(reviewers.toArray(), function(reviewer){
+        _.each(reviewers.models, function(reviewer){
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer}) ).render().el );
             console.log('render Reviewer');
         }, this);
