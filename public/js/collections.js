@@ -5,7 +5,7 @@
  */
 
 App.Collections.Users = Backbone.Collection.extend({
-    url: 'api/v1/user',
+    url: App.prefix + '/api/v1/user',
     model: App.Models.User
 
 });
@@ -22,7 +22,7 @@ var users = new App.Collections.Users();
  */
 
 App.Collections.Requests = Backbone.Collection.extend({
-    url: 'api/v1/reviewrequest',
+    url: App.prefix + '/api/v1/reviewrequest',
     model: App.Models.Request
 
 });
@@ -39,7 +39,7 @@ var requests = new App.Collections.Requests();
  */
 
 App.Collections.Reviewers = Backbone.Collection.extend({
-    url: 'api/v1/reviewrequest/:id/offers',
+    url: App.prefix + '/api/v1/reviewrequest/:id/offers',
     model: App.Models.Reviewer
 
 });
@@ -56,7 +56,7 @@ var reviewers = new App.Collections.Reviewers();
  */
 
  App.Collections.Tags = Backbone.Collection.extend({
- 	url: "api/v1/tag",
+ 	url: App.prefix + "/api/v1/tag",
  	model: App.Models.Tag
  });
 
@@ -72,7 +72,7 @@ var reviewers = new App.Collections.Reviewers();
  */
 
  App.Collections.RequestTags = Backbone.Collection.extend({
- 	url: "api/v1/reviewrequest/:id/tags",
+ 	url: App.prefix + "/api/v1/reviewrequest/:id/tags",
  	model: App.Models.Tag
  });
 

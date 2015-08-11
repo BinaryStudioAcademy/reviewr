@@ -1,5 +1,6 @@
 (function() {
     window.App = {
+        prefix: 'reviewr',
         Models: {},
         Collections: {},
         Views: {},
