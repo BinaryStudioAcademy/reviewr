@@ -186,11 +186,6 @@ App.Views.RequestDetails = Backbone.View.extend({
         var req_id = this.model.get('id');
         _.each(reviewers.toArray(), function(reviewer, request_id) {
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id }) ).render().el );
-            if ($('.id') != userID) {
-                $('.buttons').hide(100);
-            }
-            else alert(this.model.get('id') + '  '+ userID);
-
         }, this);
 
         // Fetch Request Tags
