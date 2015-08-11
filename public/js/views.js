@@ -40,26 +40,30 @@ App.Views.User = Backbone.View.extend({
 // Backbone Views for all users
 
 App.Views.UsersList = Backbone.View.extend({
-    model: users,
+    collection: users,
     el: '#main-content',
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        this.$el.html('');
-        console.log('render UserList starting...');
-        _.each(this.model.toArray(), function(user){
-            this.$el.append( (new App.Views.User({model: user})).render().el );
-            console.log('render User');
-        }, this);
-        console.log('render UserList end.');
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(users, res, req){
+                if (!users.length) {
+                    console.log('Render No-Users view here');
+                } else {
+                    _.each(users.models, function (user) {
+                        var userView = new App.Views.User({model: user});
+                        that.$el.append(userView.render().$el);
+                        console.log('render User');
+                    });
+                }
+            },
+            reset: true
+        });
         return this;
     }
 });
@@ -212,11 +216,14 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     storeRequest: function(e) {
         e.preventDefault();
         this.model.set({
+            id: null,
             title: $('.title-input').val(),
             details: $('.details-input').val(),
             tags: $('.tags-input').val(),
             group_id: $('input[name="group-input"]:checked').val()
         });
+        this.stopListening()
+        this.$el.empty();
         this.model.save(null, {
             success: function(rq) {
                 router.navigate('!/request/' + rq.get("id"), true);

@@ -20,7 +20,7 @@ App.Router = Backbone.Router.extend({
     users: function() {
         console.log('Route usersListView');
         users.fetch();
-        new App.Views.UsersList();
+        new App.Views.UsersList().render();
     },
 
     showUserProfile: function(id) {
@@ -52,8 +52,8 @@ App.Router = Backbone.Router.extend({
         
         request.fetch({wait: true}); // with id
         
-        reviewers.url = 'api/v1/reviewrequest/' + id + '/offers'
-        request_tags.url = "api/v1/reviewrequest/" + id + "/tags"
+        reviewers.url = 'api/v1/reviewrequest/' + id + '/offers';
+        request_tags.url = "api/v1/reviewrequest/" + id + "/tags";
         
         reviewers.fetch({wait: true});
         request_tags.fetch({wait: true});
