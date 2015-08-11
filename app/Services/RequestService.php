@@ -47,7 +47,13 @@ class RequestService implements RequestServiceInterface
 
     public function createRequest($data)
     {
-        return $this->requestRepository->create($data);
+        $request = $this->requestRepository->create($data);
+        foreach ($data->tags as $tag) {
+            $tag = $this->tagRepository->create($tag);
+            $request->tags()->attach($tag->id);
+            $request->save();
+        }
+        return $request;
     }
 
     public function getSpecificRequestOffers($id)

@@ -14,10 +14,9 @@ class TagRepository implements TagRepositoryInterface
 
     public function create($data)
     {
-        $tag = new Tag;
-        $tag->title = $data->title;
+        $tag = new Tag();
+        $tag->title = $data;
         $tag->save();
-
         return $tag;
     }
 
