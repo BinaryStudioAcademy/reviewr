@@ -218,7 +218,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.model.set({
             id: null,
             title: $('.title-input').val(),
-            details: $('.details-input').val(),
+            details: $('.details-input').html(),
             tags: $('.tags-input').val(),
             group_id: $('input[name="group-input"]:checked').val()
         });
@@ -232,6 +232,10 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     render: function() {
         this.$el.html(this.template);
+
+        // WYSIWYG Editor show
+        $('#editor').wysiwyg();
+
         return this;
     }
 });

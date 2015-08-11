@@ -15,7 +15,11 @@
     <title>Reviewer - Binary Academy</title>
 
     <link href="css/bootstrap.css"  rel="stylesheet">
+    <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
     <link href="css/styles.css" rel="stylesheet">
+
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -162,18 +166,67 @@
                         <form class="form-horizontal" role="form" method="POST" action="#" id="create-request-form">
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Title</label>
-                                <div class="col-md-6">
+                                <label class="col-md-1 control-label">Title</label>
+                                <div class="col-md-11">
                                     <input type="text" class="title-input form-control" name="title" placeholder="Title">
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Details</label>
-                                <div class="col-md-6">
-                                    <textarea class="details-input form-control" rows="3" placeholder="Details"></textarea>
+                            <label class="control-label">Details</label>
+                            <div class="btn-toolbar" data-role="editor-toolbar"
+                                 data-target="#editor">
+                                <div class="btn-group">
+                                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a data-edit="fontSize 5" class="fs-Five">Huge</a></li>
+                                        <li><a data-edit="fontSize 3" class="fs-Three">Normal</a></li>
+                                        <li><a data-edit="fontSize 1" class="fs-One">Small</a></li>
+                                    </ul>
+                                </div>
+
+                                <a class="btn btn-default" data-edit="formatblock pre.prettyprint" title="Code">Code</a>
+
+                                <div class="btn-group">
+                                    <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+                                    <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+                                    <a class="btn btn-default" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+                                    <a class="btn btn-default" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-default" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+                                    <a class="btn btn-default" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-default" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                                    <a class="btn btn-default" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                                    <a class="btn btn-default" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+                                    <div class="dropdown-menu input-append">
+                                        <input placeholder="URL" type="text" data-edit="createLink" />
+                                        <button class="btn" type="button">Add</button>
+                                    </div>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-unlink"></i></a>
+						            <span class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureBtn"> <i class="fa fa-picture-o"></i>
+							            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 37px; height: 30px;">
+						            </span>
+                                </div>
+                                <div class="btn-group">
+                                    <a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+                                    <a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
                                 </div>
                             </div>
+                            </div>
+                            <div class="form-group">
+                                <div id="editor" class="details-input"></div>
+                            </div>
+
+                            </div> <!-- End Col-MD-10 -->
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Tags</label>
@@ -239,7 +292,7 @@
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <p><%- details %></p>
+                        <p><%= details %></p>
                         <p>Group: <%= group.title %>, Author: <%= user.first_name + user.last_name%></p>
                         <p>Created at: <%= created_at %></p>
                         <div class="tags">Request Tags List</div>
@@ -350,10 +403,14 @@
 <p>title: <%= title %></p>
 </script>
 
-<script src="js/vendor/underscore/underscore.js"></script>
 <script src="js/vendor/jquery/jquery.js"></script>
-<script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap/bootstrap.js"></script>
+<script src="js/vendor/underscore/underscore.js"></script>
+<script src="js/vendor/backbone/backbone.js"></script>
+<script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
+<script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
+<script src="js/vendor/bootstrap-wysiwyg/external/google-code-prettify/prettify.js"></script>
+
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>
 <script src="js/collections.js"></script>
