@@ -188,7 +188,7 @@ App.Views.RequestDetails = Backbone.View.extend({
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id }) ).render().el );
         }, this);
 
-        // Fetch Request Tags
+        //Fetch Request Tags
         var request_tags_list = this.$el.find(".tags");
         request_tags_list.empty();
         _.each(request_tags.toArray(), function(request_tag) {
