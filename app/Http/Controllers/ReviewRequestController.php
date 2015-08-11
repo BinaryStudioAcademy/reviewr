@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
-
 use App\Services\Interfaces\RequestServiceInterface;
 
 class ReviewRequestController extends Controller

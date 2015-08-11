@@ -98,21 +98,22 @@ App.Views.UserProfile = Backbone.View.extend({
 
 App.Views.Request = Backbone.View.extend({
     model: request,
-    className: "col-xs-12 col-sm-6 col-md-4 request",
+    className: 'col-xs-12 col-sm-6 col-md-4 request',
     initialize: function(){
         this.template = _.template($('#request-card-template').html());
         this.model.on('change', this.render, this);
     },
     events: {
-        'click .request-offers-btn': 'createOffers',
-        'click .request-details-btn': 'showDetails'
+        'click .request-offer-btn': 'createOffers',
+        'click .request-details-btn': 'showDetails',
     },
     createOffers: function () {
-
+        reviewers.url = 'api/v1/user/0/offeron/' + this.model.get('id');
+        reviewers.fetch({wait: true});
         return this;
     },
     showDetails: function () {
-        router.navigate('!/request/' + this.model.get("id"), true);
+        router.navigate('!/request/' + this.model.get('id'), true);
         return this;
     },
     render: function(){

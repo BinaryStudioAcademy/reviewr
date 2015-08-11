@@ -51,6 +51,7 @@ class RequestService implements RequestServiceInterface
         foreach ($data->tags as $tag) {
             $tag = $this->tagRepository->create($tag);
             $request->tags()->attach($tag->id);
+            $request->save();
         }
         return $request;
     }
