@@ -268,25 +268,30 @@ App.Views.Reviewer = Backbone.View.extend({
 // TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
-    model: reviewers,
+    collection: reviewers,
     el: '#main-content',
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        _.each(this.model.toArray(), function(reviewer){
-            this.$el.find('.reviewers').append( (new App.Views.Reviewer({model: reviewer})).render().el );
-            console.log('render Reviewer');
-        }, this);
+        this.$el.empty();
 
-        return this;
+        var that = this;
+
+        this.collection.fetch({
+            success: function(reviewers, res, reviewer) {
+                _.each(requests.models, function(reviewer) {
+                    that.renderReviewer(reviewer);
+                    console.log('Reviewer Model Render');
+                });
+            },
+            reset: true
+        });
+
+    },
+    renderReviewer: function(reviewer) {
+        var reviewerView = new App.Views.Reviewer({model: reviewer});
+        this$el.find('.reviewers').append(reviewerView.render().$el);
     }
 });
 
@@ -317,24 +322,32 @@ App.Views.Reviewers = Backbone.View.extend({
  */
 
  App.Views.TagsList = Backbone.View.extend({
-    model: tags,
+    collection: tags,
     el: "#main-content",
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        this.$el.html('');
-        _.each(this.model.toArray(), function(tag){
-            this.$el.append( (new App.Views.Tag({model: tag})).render().el );
-            console.log('Tag Model Render');
-        }, this);
-        return this;
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(tags, res, tag) {
+                if (!tags.length) {
+                    // Render Empty View Here
+                } else {
+                    _.each(tags.models, function(tag) {
+                        that.renderTag(tag);
+                        console.log('Tag Model Render');
+                    });
+                }
+            },
+            reset: true
+        });
+    },
+    renderTag: function(tag) {
+        var tagView = new App.Views.Tag({model: tag});
+        this.$el.append(tagView.render().$el);
     }
  });
