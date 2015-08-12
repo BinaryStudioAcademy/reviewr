@@ -40,26 +40,30 @@ App.Views.User = Backbone.View.extend({
 // Backbone Views for all users
 
 App.Views.UsersList = Backbone.View.extend({
-    model: users,
+    collection: users,
     el: '#main-content',
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        this.$el.html('');
-        console.log('render UserList starting...');
-        _.each(this.model.toArray(), function(user){
-            this.$el.append( (new App.Views.User({model: user})).render().el );
-            console.log('render User');
-        }, this);
-        console.log('render UserList end.');
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(users, res, req){
+                if (!users.length) {
+                    console.log('Render No-Users view here');
+                } else {
+                    _.each(users.models, function (user) {
+                        var userView = new App.Views.User({model: user});
+                        that.$el.append(userView.render().$el);
+                        console.log('render User');
+                    });
+                }
+            },
+            reset: true
+        });
         return this;
     }
 });
@@ -131,6 +135,7 @@ App.Views.RequestsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
     },
     render: function() {
+        console.log(this.collection);
         this.$el.empty();
 
         var that = this;
@@ -173,12 +178,15 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
+        this.stopListening();
         // Fetch Request Details
         this.$el.html( this.template(this.model.toJSON()) );
 
         // Fetch Request Author
         var author = new App.Models.User(this.model.get('user'));
         this.$el.find('.requestor').html( (new App.Views.User({model: author})).render().el);
+
+        // Fetch Request Reviewers
         var reviewersBlock = this.$el.find('.reviewers');
         reviewersBlock.empty();
 
@@ -218,11 +226,14 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         }
 
         this.model.set({
+            id: null,
             title: $('.title-input').val(),
-            details: $('.details-input').val(),
+            details: $('.details-input').html(),
             tags: tags,
             group_id: $('input[name="group-input"]:checked').val()
         });
+        this.stopListening()
+        this.$el.empty();
         this.model.save(null, {
             success: function(rq) {
                 router.navigate('!/request/' + rq.get("id"), true);
@@ -231,6 +242,10 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     render: function() {
         this.$el.html(this.template);
+
+        // WYSIWYG Editor show
+        $('#editor').wysiwyg();
+
         $('.tags-input').tokenfield();
         return this;
     }
@@ -279,25 +294,30 @@ App.Views.Reviewer = Backbone.View.extend({
 // TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
-    model: reviewers,
+    collection: reviewers,
     el: '#main-content',
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        },  this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        _.each(this.model.toArray(), function(reviewer){
-            this.$el.find('.reviewers').append( (new App.Views.Reviewer({model: reviewer})).render().el );
-            console.log('render Reviewer');
-        }, this);
+        this.$el.empty();
 
-        return this;
+        var that = this;
+
+        this.collection.fetch({
+            success: function(reviewers, res, reviewer) {
+                _.each(requests.models, function(reviewer) {
+                    that.renderReviewer(reviewer);
+                    console.log('Reviewer Model Render');
+                });
+            },
+            reset: true
+        });
+
+    },
+    renderReviewer: function(reviewer) {
+        var reviewerView = new App.Views.Reviewer({model: reviewer});
+        this$el.find('.reviewers').append(reviewerView.render().$el);
     }
 });
 
@@ -328,24 +348,32 @@ App.Views.Reviewers = Backbone.View.extend({
  */
 
  App.Views.TagsList = Backbone.View.extend({
-    model: tags,
+    collection: tags,
     el: "#main-content",
     initialize: function() {
-        this.model.on('sync', this.render, this);
-        this.model.on('remove', this.render, this);
-        this.model.on('invalid', function(error, message){
-            alert(message);
-        }, this);
-        this.model.on('error', function (error, message) {
-            alert(message.responseText);
-        }, this);
+        this.collection.on('remove', this.render, this);
     },
     render: function(){
-        this.$el.html('');
-        _.each(this.model.toArray(), function(tag){
-            this.$el.append( (new App.Views.Tag({model: tag})).render().el );
-            console.log('Tag Model Render');
-        }, this);
-        return this;
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(tags, res, tag) {
+                if (!tags.length) {
+                    // Render Empty View Here
+                } else {
+                    _.each(tags.models, function(tag) {
+                        that.renderTag(tag);
+                        console.log('Tag Model Render');
+                    });
+                }
+            },
+            reset: true
+        });
+    },
+    renderTag: function(tag) {
+        var tagView = new App.Views.Tag({model: tag});
+        this.$el.append(tagView.render().$el);
     }
  });

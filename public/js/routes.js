@@ -6,6 +6,7 @@ App.Router = Backbone.Router.extend({
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
         "!/request/create": "createRequest",
+        "!/requests/my": "showMyRequest",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -20,7 +21,7 @@ App.Router = Backbone.Router.extend({
     users: function() {
         console.log('Route usersListView');
         users.fetch();
-        new App.Views.UsersList();
+        new App.Views.UsersList().render();
     },
 
     showUserProfile: function(id) {
@@ -32,7 +33,6 @@ App.Router = Backbone.Router.extend({
 
     requests: function() {
         console.log('Route RequestListView');
-        requests.fetch();
         new App.Views.RequestsList().render();
     },
 
@@ -44,6 +44,11 @@ App.Router = Backbone.Router.extend({
         requestForm.render();
     },
 
+    showMyRequest: function() {
+        console.log('Route MyRequest');
+        new App.Views.RequestsList({collection: myRequests}).render();
+    },
+
     showRequestDetails: function(id) {
         
         var request = new App.Models.Request({id: id});
@@ -52,19 +57,21 @@ App.Router = Backbone.Router.extend({
         
         request.fetch({wait: true}); // with id
         
-        reviewers.url = App.prefix + '/api/v1/reviewrequest/' + id + '/offers'
-        request_tags.url = App.prefix + "/api/v1/reviewrequest/" + id + "/tags"
+        reviewers.url = App.apiPrefix + '/reviewrequest/' + id + '/offers';
+        request_tags.url = App.apiPrefix + '/reviewrequest/' + id + '/tags';
         
-        reviewers.fetch({wait: true});
         request_tags.fetch({wait: true});
+        reviewers.fetch({wait: true}).then(function(){
+            new App.Views.RequestDetails({model: request}).render();
+        });
 
-        new App.Views.RequestDetails({model: request}).render();
+
     },
 
     tags: function() {
         console.log("Route: !/tags");
         tags.fetch();
-        new App.Views.TagsList();
+        new App.Views.TagsList().render();
     }
 
 
