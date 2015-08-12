@@ -152,11 +152,20 @@
             </div>
             <div class="panel-footer text-center">
                 <p class="description"><%- offer.details %></p>
-                   <% if(status) { %>
+                   <% if(status ) { %>
                       <div> You already send</div> 
-                    <% } else { %>
-                        <button class="request-offer-btn btn btn-primary">Offer</button>
-                <% } %>
+                    <% } %>
+
+                     <% if(offer.user.id ===  userID) { %>
+                        <div>you are admin </div>
+                    <% }%>
+
+                   <% if(!status && offer.user.id !==  userID) { %>
+                     <button class="request-offer-btn btn btn-primary">Offer</button>
+                    <% }%>
+
+                       
+              
 
                 <button class="request-details-btn btn btn-info">Details</button>
             </div>
