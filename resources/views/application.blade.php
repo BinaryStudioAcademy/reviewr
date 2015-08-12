@@ -19,9 +19,8 @@
     <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
     <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
-
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap-editable.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -30,6 +29,10 @@
     <![endif]-->
 </head>
 <body>
+
+<script>
+    var userID = "{{ Auth::user()->id }}";
+</script>
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -131,31 +134,36 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">
-                    <%- title %>
-                    <span class="badge"><%- (offers_count == 0) ? 'no offers' : offers_count %></span>
+                    <%= offer.title %>
+                    <span class="badge"><%- _.isEqual(offer.offers_count, 0) ? 'no offers' : offer.offers_count %></span>
                 </h2>
             </div>
             <div class="panel-body">
-                <p>Created at: <%= created_at %></p>
+                <p>Created at: <%= offer.created_at %></p>
                 <div class="row user-data">
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
-                        <img src="<%= user.avatar %>" class="img-responsive" alt="">
+                        <img src="<%= offer.user.avatar %>" class="img-responsive" alt="">
                     </div>
                     <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
-                        <p><%= user.first_name + ' ' + user.last_name%></p>
-                        <p><%= user.email %></p>
-                        <p><%= user.phone %></p>
-                        <p>Group: <%= group.title %></p>
+                        <p><%= offer.user.first_name + ' ' + offer.user.last_name%></p>
+                        <p><%= offer.user.email %></p>
+                        <p><%= offer.user.phone %></p>
+                        <p>Group: <%= offer.group.title %></p>
                     </div>
                 </div>
             </div>
             <div class="panel-footer text-center">
-                <p class="description"><%- details %></p>
-                <% if (user.id != {{ Auth::user()->id }}) { %>
+                <p class="description"><%- offer.details %></p>
+                 <% if (status) { %>
+                     <button class="undo-offer-btn btn btn-primary">Undo</button>
+                <% } %>
+
+                <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
                     <button class="request-offer-btn btn btn-primary">Offer</button>
                 <% } %>
+
                 <button class="request-details-btn btn btn-info">Details</button>
-                <% if (user.id == {{ Auth::user()->id }}) { %>
+                <% if (offer.user.id == {{ Auth::user()->id }}) { %>
                     <button class="request-delete-btn btn btn-danger">Delete</button>
                 <% } %>
             </div>
@@ -339,14 +347,17 @@
 
 <script type="text/template" id="reviewer-card-template">
     <div class="reviewer thumbnail">
-        <img src="<%= avatar %>" alt="">
-        <p class='id'><%= id %></p>
-        <p><%= first_name %></p>
-        <p><%= last_name %></p>
-        <div class="buttons">
-            <button class="accept btn btn-primary">Accept</button>
-            <button class="decline btn btn-info">Decline</button>
-        </div>
+        <img src="<%= offer.avatar %>" alt="">
+       
+        <p><%= offer.first_name %></p>
+        <p><%= offer.last_name %></p>
+        <% if (author_id == userID) { %>
+            <% if (status) { %>
+                <button class="decline btn btn-primary">Decline</button>
+            <% } else { %>
+                <button class="accept btn btn-primary">Accept</button>
+            <% } %>
+         <% } %>
     </div>
 </script>
 
@@ -428,7 +439,7 @@
 <script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="js/vendor/bootstrap-editable.min.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>

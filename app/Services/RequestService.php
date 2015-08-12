@@ -89,10 +89,10 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 1; 
                 $request->pivot->save();
-                return;
+                return response()->json(['message'=> 'fail'], 500);
             }
         }
-        App::abort(404, 'Not found user or request'); 
+        return response()->json(['message'=> 'success'], 200);
         
     }
 
@@ -103,10 +103,10 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 0; 
                 $request->pivot->save();
-                return;
+                return response()->json(['message'=> 'success'], 200);
             }
         }
-        App::abort(404, 'Not found user or request'); 
+        return response()->json(['message'=> 'fail'], 500);
     }
 
     public function offerOnReviewRequest($user_id, $req_id) {
@@ -114,9 +114,32 @@ class RequestService implements RequestServiceInterface
         $user = $this->getOneUserById($user_id);
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
-                App::abort(500, 'User already has this request');
+                return response()->json(['message'=> 'fail'], 500);
             }
         }
         $user->requests()->attach($req_id);
+        return response()->json(['message'=> 'success'], 200);
     }
-}
+
+    public function checkUserForRequest($user_id, $req_id) {
+        $user = $this->getOneUserById($user_id);
+        foreach ($user->requests as $request) {
+            if ($request->id == $req_id) {
+                return response()->json(['message'=> 'success'], 200);
+            }
+        }
+      //  return response()->json(['message'=> 'fail'], 500);
+    }
+
+    public function offerOffReviewRequest($user, $request_id) {
+        $user->requests()->detach($request_id);
+        return response()->json(['message'=> 'success'], 200);
+    }
+
+    public function usersForRequest($request_id) {
+
+        $request = $this->getOneRequestById($request_id);
+        $users = $request->users()->wherePivot('isAccepted', 1)->get();
+        return $users;
+    }
+} 

@@ -52,21 +52,21 @@ App.Router = Backbone.Router.extend({
     showRequestDetails: function(id) {
         
         var request = new App.Models.Request({id: id});
-        
         console.log('Route requestDetails', id, request);
-        
         request.fetch({wait: true}); // with id
+
         
         reviewers.url = App.apiPrefix + '/reviewrequest/' + id + '/offers';
         request_tags.url = App.apiPrefix + '/reviewrequest/' + id + '/tags';
         
+
         request_tags.fetch({wait: true});
         reviewers.fetch({wait: true}).then(function(){
             new App.Views.RequestDetails({model: request}).render();
         });
 
+  },
 
-    },
 
     tags: function() {
         console.log("Route: !/tags");
