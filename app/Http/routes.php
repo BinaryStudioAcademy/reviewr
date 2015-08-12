@@ -1,6 +1,5 @@
 <?php
 
-Route::group (['prefix' => 'reviewr'], function () {
     Route::get('/', ['as' => 'home', 'middleware' => 'auth', function() {
         return view('application');
     }]);
@@ -34,4 +33,3 @@ Route::group (['prefix' => 'reviewr'], function () {
         Route::resource('tag', 'TagController');
         Route::resource('badge', 'BadgeController');
     });
-});
