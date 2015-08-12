@@ -6,7 +6,6 @@
 
 App.Views.App = Backbone.View.extend({
     initialize: function() {
-        console.log( this.collection.toJSON() );
     }
 });
 
@@ -106,6 +105,7 @@ App.Views.Request = Backbone.View.extend({
     initialize: function(){
         this.template = _.template($('#request-card-template').html());
         this.model.on('change', this.render, this);
+        //this.model.on('destroy', this.render, this);
     },
     events: {
         'click .request-offer-btn': 'createOffers',
@@ -122,7 +122,8 @@ App.Views.Request = Backbone.View.extend({
         return this;
     },
     deleteRequest: function () {
-        this.model.destroy();
+        this.stopListening();
+        this.model.destroy({wait: true});
     },
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
@@ -140,6 +141,8 @@ App.Views.RequestsList = Backbone.View.extend({
     },
     render: function() {
         console.log(this.collection);
+
+        this.stopListening();
         this.$el.empty();
 
         var that = this;
