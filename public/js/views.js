@@ -112,7 +112,7 @@ App.Views.Request = Backbone.View.extend({
         'click .request-details-btn': 'showDetails',
     },
     createOffers: function () {
-        reviewers.url = 'reviewr/api/v1/user/0/offeron/' + this.model.get('id');
+        reviewers.url = App.apiPrefix + '/user/0/offeron/' + this.model.get('id');
         reviewers.fetch({wait: true});
         return this;
     },
@@ -186,11 +186,9 @@ App.Views.RequestDetails = Backbone.View.extend({
         var author = new App.Models.User(this.model.get('user'));
         this.$el.find('.requestor').html( (new App.Views.User({model: author})).render().el);
 
-        // Fetch Request Reviewers
+        // Fetch Request Reviewers (Offers)
         var reviewersBlock = this.$el.find('.reviewers');
         reviewersBlock.empty();
-
-        // Fetch reviewers
         var req_id = this.model.get('id');
         _.each(reviewers.toArray(), function(reviewer, request_id) {
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id }) ).render().el );
@@ -274,12 +272,12 @@ App.Views.Reviewer = Backbone.View.extend({
         'click .decline': 'declineOffer',
     },
     acceptOffer: function () {
-        reviewers.url = 'reviewr/api/v1/user/0/accept/' + this.request_id;
+        reviewers.url = App.apiPrefix + '/user/0/accept/' + this.request_id;
         reviewers.fetch({wait: true});
         return this;
     },
     declineOffer: function () {
-        reviewers.url = 'reviewr/api/v1/user/0/decline/' + this.request_id;
+        reviewers.url = App.apiPrefix + '/user/0/decline/' + this.request_id;
         reviewers.fetch({wait: true});
         return this;
     },
