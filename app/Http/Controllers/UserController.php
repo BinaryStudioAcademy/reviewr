@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Response;
-
+use Illuminate\Support\Facades\Auth;
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
 
@@ -93,6 +93,7 @@ class UserController extends Controller
 
     public function acceptReviewRequest($user_id, $request_id)
     {
+        $user_id = Auth::user()->id;
         $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
         return response()->json(['message'=> 'success'], 200);
@@ -100,6 +101,7 @@ class UserController extends Controller
 
     public function declineReviewRequest($user_id, $request_id)
     {
+        $user_id = Auth::user()->id;
         $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
         return response()->json(['message'=> 'success'], 200);
@@ -107,10 +109,10 @@ class UserController extends Controller
 
     public function offerOnReviewRequest($user_id, $request_id)
     {
+        $user_id = Auth::user()->id;
         $this->requestService->offerOnReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
         return response()->json(['message'=> 'success'], 200);
-
     }
     
 }

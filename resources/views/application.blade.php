@@ -15,11 +15,13 @@
     <title>Reviewer - Binary Academy</title>
 
     <link href="css/bootstrap.css"  rel="stylesheet">
+    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
+    <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
 
     <link href="css/styles.css" rel="stylesheet">
-
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -116,6 +118,9 @@
     </div>
 
 </div>
+    <script>
+        var userID = "{{ Auth::user()->id }}";
+    </script>
 
 
 {{-- One Review Request card backbone template--}}
@@ -329,8 +334,13 @@
 <script type="text/template" id="reviewer-card-template">
     <div class="reviewer thumbnail">
         <img src="<%= avatar %>" alt="">
+        <p class='id'><%= id %></p>
         <p><%= first_name %></p>
         <p><%= last_name %></p>
+        <div class="buttons">
+            <button class="accept btn btn-primary">Accept</button>
+            <button class="decline btn btn-info">Decline</button>
+        </div>
     </div>
 </script>
 
@@ -405,6 +415,9 @@
 
 <script src="js/vendor/jquery/jquery.js"></script>
 <script src="js/vendor/bootstrap/bootstrap.js"></script>
+<script src="js/vendor/jquery/jqueryui.js"></script>
+<script src="js/vendor/bootstrap/bootstrap-tokenfield.js"></script>
+<script src="js/vendor/bootstrap/typeahead.bundle.min.js"></script>
 <script src="js/vendor/underscore/underscore.js"></script>
 <script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>

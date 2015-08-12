@@ -102,21 +102,22 @@ App.Views.UserProfile = Backbone.View.extend({
 
 App.Views.Request = Backbone.View.extend({
     model: request,
-    className: "col-xs-12 col-sm-6 col-md-4 request",
+    className: 'col-xs-12 col-sm-6 col-md-4 request',
     initialize: function(){
         this.template = _.template($('#request-card-template').html());
         this.model.on('change', this.render, this);
     },
     events: {
-        'click .request-offers-btn': 'createOffers',
-        'click .request-details-btn': 'showDetails'
+        'click .request-offer-btn': 'createOffers',
+        'click .request-details-btn': 'showDetails',
     },
     createOffers: function () {
-
+        reviewers.url = 'reviewr/api/v1/user/0/offeron/' + this.model.get('id');
+        reviewers.fetch({wait: true});
         return this;
     },
     showDetails: function () {
-        router.navigate('!/request/' + this.model.get("id"), true);
+        router.navigate('!/request/' + this.model.get('id'), true);
         return this;
     },
     render: function(){
@@ -188,15 +189,17 @@ App.Views.RequestDetails = Backbone.View.extend({
         // Fetch Request Reviewers
         var reviewersBlock = this.$el.find('.reviewers');
         reviewersBlock.empty();
-        _.each(reviewers.models, function(reviewer){
-            reviewersBlock.append( (new App.Views.Reviewer({model: reviewer}) ).render().el );
-            console.log('render Reviewer');
+
+        // Fetch reviewers
+        var req_id = this.model.get('id');
+        _.each(reviewers.toArray(), function(reviewer, request_id) {
+            reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id }) ).render().el );
         }, this);
 
         // Fetch Request Tags
         var request_tags_list = this.$el.find(".tags");
         request_tags_list.empty();
-        _.each(request_tags.toArray(), function(request_tag){
+        _.each(request_tags.toArray(), function(request_tag) {
             request_tags_list.append( (new App.Views.Tag({model: request_tag}) ).render().el );
             console.log('render Tag');
         }, this);
@@ -206,7 +209,6 @@ App.Views.RequestDetails = Backbone.View.extend({
 });
 
 // Backbone Views for Review Request Creation Form
-
 App.Views.CreateRequestForm = Backbone.View.extend({
     template: _.template($('#create-request-form-template').html()),
     events: {
@@ -217,11 +219,17 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     storeRequest: function(e) {
         e.preventDefault();
+        
+        var tags = $('.tags-input').tokenfield('getTokens');
+        for (var i = 0; i < tags.length; i++) {
+            tags[i]= tags[i].value;
+        }
+
         this.model.set({
             id: null,
             title: $('.title-input').val(),
             details: $('.details-input').html(),
-            tags: $('.tags-input').val(),
+            tags: tags,
             group_id: $('input[name="group-input"]:checked').val()
         });
         this.stopListening()
@@ -238,6 +246,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         // WYSIWYG Editor show
         $('#editor').wysiwyg();
 
+        $('.tags-input').tokenfield();
         return this;
     }
 });
@@ -253,14 +262,30 @@ App.Views.CreateRequestForm = Backbone.View.extend({
 
 App.Views.Reviewer = Backbone.View.extend({
     model: reviewer,
+    request_id: 0,
     className: "reviewer",
-    initialize: function(){
+    initialize: function(options){
+        this.request_id = options.request_id;
         this.template = _.template($('#reviewer-card-template').html());
+
     },
     events: {
+        'click .accept': 'acceptOffer',
+        'click .decline': 'declineOffer',
+    },
+    acceptOffer: function () {
+        reviewers.url = 'reviewr/api/v1/user/0/accept/' + this.request_id;
+        reviewers.fetch({wait: true});
+        return this;
+    },
+    declineOffer: function () {
+        reviewers.url = 'reviewr/api/v1/user/0/decline/' + this.request_id;
+        reviewers.fetch({wait: true});
+        return this;
     },
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
+        
         return this;
     }
 });

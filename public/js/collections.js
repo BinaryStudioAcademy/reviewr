@@ -72,7 +72,7 @@ var reviewers = new App.Collections.Reviewers();
  */
 
  App.Collections.Tags = Backbone.Collection.extend({
- 	url: "api/v1/tag",
+ 	url: App.apiPrefix + '/tag',
  	model: App.Models.Tag
  });
 
@@ -88,7 +88,7 @@ var reviewers = new App.Collections.Reviewers();
  */
 
  App.Collections.RequestTags = Backbone.Collection.extend({
- 	url: "api/v1/reviewrequest/:id/tags",
+ 	url: App.apiPrefix + '/reviewrequest/:id/tags',
  	model: App.Models.Tag
  });
 
