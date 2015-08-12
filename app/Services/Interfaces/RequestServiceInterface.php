@@ -23,4 +23,6 @@ interface RequestServiceInterface
     public function getSpecificRequestTags($id);
 
     public function deleteRequestById($id);
+
+    public function searchTagsByKeyWord($keyword);
 }

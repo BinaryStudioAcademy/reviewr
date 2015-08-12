@@ -18,20 +18,20 @@ Route::group (['prefix' => ''], function () {
         'uses' => 'Auth\AuthController@getLogout'
     ]);
 
-    Route::group (['prefix' => 'api/v1'], function () {
-        Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
-        Route::resource('user', 'UserController');
-        Route::resource('comment', 'CommentController');
-        Route::resource('job', 'JobController');
-        Route::resource('department', 'DepartmentController');
-        Route::resource('reviewrequest', 'ReviewRequestController');
-        Route::get('reviewrequest/{id}/offers', 'ReviewRequestController@offers');
-        Route::get('reviewrequest/{id}/tags', 'ReviewRequestController@tags');
-        Route::get('user/{user_id}/accept/{request_id}', 'UserController@acceptReviewRequest');
-        Route::get('user/{user_id}/decline/{request_id}', 'UserController@declineReviewRequest');
-        Route::get('user/{user_id}/offeron/{request_id}', 'UserController@offerOnReviewRequest');
-        Route::resource('group', 'GroupController');
-        Route::resource('tag', 'TagController');
-        Route::resource('badge', 'BadgeController');
-    });
+Route::group (['prefix' => 'api/v1'], function () {
+    Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
+    Route::resource('user', 'UserController');
+    Route::resource('comment', 'CommentController');
+    Route::resource('job', 'JobController');
+    Route::resource('department', 'DepartmentController');
+    Route::resource('reviewrequest', 'ReviewRequestController');
+    Route::get('reviewrequest/{id}/offers', 'ReviewRequestController@offers');
+    Route::get('reviewrequest/{id}/tags', 'ReviewRequestController@tags');
+    Route::get('user/{user_id}/accept/{request_id}', 'UserController@acceptReviewRequest');
+    Route::get('user/{user_id}/decline/{request_id}', 'UserController@declineReviewRequest');
+    Route::get('user/{user_id}/offeron/{request_id}', 'UserController@offerOnReviewRequest');
+    Route::resource('group', 'GroupController');
+    Route::resource('tag', 'TagController');
+    Route::resource('badge', 'BadgeController');
+    Route::post('tags/search', "TagController@search");
 });
