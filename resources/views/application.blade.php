@@ -20,6 +20,7 @@
     <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 
     <link href="css/styles.css" rel="stylesheet">
 
@@ -298,11 +299,11 @@
                     <div class="panel-heading">
                         <h2 class="panel-title">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            <%= title %>
+                            <a href="#" id="title"><%= title %></a>
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <p><%= details %></p>
+                        <div id="details"><%= details %></div>
                         <p>Group: <%= group.title %>, Author: <%= user.first_name + user.last_name%></p>
                         <p>Created at: <%= created_at %></p>
                         <div class="tags">Request Tags List</div>
@@ -427,7 +428,7 @@
 <script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
-<script src="js/vendor/bootstrap-wysiwyg/external/google-code-prettify/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>

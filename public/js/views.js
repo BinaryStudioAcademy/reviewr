@@ -185,6 +185,8 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
+        var that = this;
+
         this.stopListening();
         // Fetch Request Details
         this.$el.html( this.template(this.model.toJSON()) );
@@ -208,6 +210,26 @@ App.Views.RequestDetails = Backbone.View.extend({
             request_tags_list.append( (new App.Views.Tag({model: request_tag}) ).render().el );
             console.log('render Tag');
         }, this);
+
+        // X-Editable field
+        $('#title').editable({
+            mode: 'inline',
+            type: 'text',
+            name: 'title',
+            success: function(response, newValue) {
+                that.model.set('title', newValue); //update backbone model
+                that.model.save();
+            }
+        });
+        $('#details').editable({
+            mode: 'inline',
+            type: 'textarea',
+            name: 'details',
+            success: function(response, newValue) {
+                that.model.set('details', newValue); //update backbone model
+                that.model.save();
+            }
+        });
 
         return this;
     }
