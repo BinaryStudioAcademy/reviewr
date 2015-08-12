@@ -130,4 +130,16 @@ class RequestService implements RequestServiceInterface
         }
       //  return response()->json(['message'=> 'fail'], 500);
     }
-}
+
+    public function offerOffReviewRequest($user, $request_id) {
+        $user->requests()->detach($request_id);
+        return response()->json(['message'=> 'success'], 200);
+    }
+
+    public function usersForRequest($request_id) {
+
+        $request = $this->getOneRequestById($request_id);
+        $users = $request->users()->wherePivot('isAccepted', 1)->get();
+        return $users;
+    }
+} 

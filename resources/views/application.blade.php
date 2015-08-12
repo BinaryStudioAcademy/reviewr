@@ -19,9 +19,8 @@
     <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
     <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
-
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap-editable.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -154,13 +153,17 @@
                 </div>
             </div>
             <div class="panel-footer text-center">
-                <p class="description"><%- details %></p>
-                <% if (user.id != {{ Auth::user()->id }}) { %>
+                <p class="description"><%- offer.details %></p>
+                 <% if (status) { %>
+                     <button class="undo-offer-btn btn btn-primary">Undo</button>
+                <% } %>
+
+                <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
                     <button class="request-offer-btn btn btn-primary">Offer</button>
                 <% } %>
 
                 <button class="request-details-btn btn btn-info">Details</button>
-                <% if (user.id == {{ Auth::user()->id }}) { %>
+                <% if (offer.user.id == {{ Auth::user()->id }}) { %>
                     <button class="request-delete-btn btn btn-danger">Delete</button>
                 <% } %>
             </div>
@@ -345,15 +348,16 @@
 <script type="text/template" id="reviewer-card-template">
     <div class="reviewer thumbnail">
         <img src="<%= offer.avatar %>" alt="">
-        <p class='id'><%= offer.id %></p>
+       
         <p><%= offer.first_name %></p>
         <p><%= offer.last_name %></p>
-        <% if(author_id == userID) { %>
-            <div class="buttons">
+        <% if (author_id == userID) { %>
+            <% if (status) { %>
+                <button class="decline btn btn-primary">Decline</button>
+            <% } else { %>
                 <button class="accept btn btn-primary">Accept</button>
-                <button class="decline btn btn-info">Decline</button>
-            </div>
-        <% } %>
+            <% } %>
+         <% } %>
     </div>
 </script>
 
@@ -435,7 +439,7 @@
 <script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="js/vendor/bootstrap-editable.min.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>

@@ -94,7 +94,7 @@ class UserController extends Controller
 
     public function acceptReviewRequest($user_id, $request_id)
     {
-        $user_id = Auth::user()->id;
+       // $user_id = Auth::user()->id;
         $message = $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
         return $message;
@@ -102,7 +102,7 @@ class UserController extends Controller
 
     public function declineReviewRequest($user_id, $request_id)
     {
-        $user_id = Auth::user()->id;
+       // $user_id = Auth::user()->id;
         $message = $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
         return $message;
@@ -116,19 +116,17 @@ class UserController extends Controller
         return $message;
     }
 
-      public function checkUserForRequest($user_id, $request_id)
-      {
-        $user_id = Auth::user()->id;
-        $message = $this->requestService->checkUserForRequest($user_id, $request_id);
-        return $message;
-     }
-
-      public function myRequests()
-      {
+    public function myRequests()
+    {
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
         return response()->json(['message'=> $user->requests], 200);
-     }
-     
-   
+    }
+
+    public function offerOffReviewRequest($request_id)
+    {
+        $user = Auth::user();
+        $message = $this->requestService->offerOffReviewRequest($user, $request_id);
+        return $message;
+    }
 }

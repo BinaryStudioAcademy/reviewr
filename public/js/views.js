@@ -112,11 +112,16 @@ App.Views.Request = Backbone.View.extend({
     events: {
         'click .request-offer-btn': 'createOffers',
         'click .request-details-btn': 'showDetails',
-        'click .request-delete-btn': 'deleteRequest'
+        'click .request-delete-btn': 'deleteRequest',
+        'click .undo-offer-btn': 'undoOffer'
     },
     createOffers: function () {
         reviewers.url = App.apiPrefix + '/user/0/offeron/' + this.model.get('id');
         reviewers.fetch({wait: true});
+        
+        this.$el.find('.request-offer-btn').html('Undo');
+        this.$el.find('.request-offer-btn').addClass('undo-offer-btn');
+        this.$el.find('.request-offer-btn').removeClass('request-offer-btn');
         return this;
     },
     showDetails: function () {
@@ -127,9 +132,17 @@ App.Views.Request = Backbone.View.extend({
         this.stopListening();
         this.model.destroy({wait: true});
     },
+    undoOffer: function() {
+        reviewers.url = App.apiPrefix + '/user/offeroff/' + this.model.get('id');
+        reviewers.fetch({wait: true});
+
+        this.$el.find('.undo-offer-btn').html('Offer');
+        this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
+        this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
+        return this;
+    },
     render: function(){
         var data = {offer : this.model.toJSON()};
-
         for (var i = 0; i < this.offers.length; i++) {
             if (this.offers[i].id == this.model.get('id')) {
                 data.status = 'You send offer';
@@ -156,13 +169,14 @@ App.Views.RequestsList = Backbone.View.extend({
 
         var that = this;
         var offers;
-        reviewers.url = 'reviewr/api/v1/myrequests';
+        reviewers.url = App.apiPrefix + '/myrequests';
         reviewers.fetch({
         async:false,
         success: function(requests, res, req) {
                 offers = res.message;
            }
         });
+        console.log(offers);
   
         this.collection.fetch({
             success: function(requests, res, req) {
@@ -202,6 +216,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
     render: function(){
+        
         var that = this;
 
         this.stopListening();
@@ -217,8 +232,21 @@ App.Views.RequestDetails = Backbone.View.extend({
         reviewersBlock.empty();
         var req_id = this.model.get('id');
         var user_id = this.model.get('user_id');
+        
+        var offers;
+        users.url = App.apiPrefix + '/usersforrequest/' + this.model.get('id');
+        users.fetch({
+        async:false,
+        success: function(requests, res, req) {
+                offers = res.message;
+           }
+        });
+       
+        console.log(offers);
+
         _.each(reviewers.toArray(), function(reviewer, request_id) {
-            reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id, author_id: user_id  }) ).render().el );
+            console.log(offers);
+            reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id, author_id: user_id, acceptOffers:offers  }) ).render().el );
         }, this);
 
         //Fetch Request Tags
@@ -309,10 +337,13 @@ App.Views.Reviewer = Backbone.View.extend({
     model: reviewer,
     request_id: 0,
     author_id: 0,
+    acceptOffers:0,
     className: "reviewer",
     initialize: function(options){
+        this.acceptOffers = options.acceptOffers;
         this.request_id = options.request_id;
         this.author_id = options.author_id;
+        this.template = _.template($('#reviewer-card-template').html());
 
     },
     events: {
@@ -320,22 +351,37 @@ App.Views.Reviewer = Backbone.View.extend({
         'click .decline': 'declineOffer',
     },
     acceptOffer: function () {
-        reviewers.url = App.apiPrefix + '/user/0/accept/' + this.request_id;
+        reviewers.url = App.apiPrefix + '/user/' + this.model.get("id") + '/accept/' + this.request_id;
         reviewers.fetch({wait: true});
+
+        this.$el.find('.accept').html('Decline');
+        this.$el.find('.accept').addClass('decline');
+        this.$el.find('.accept').removeClass('accept');
+
         return this;
     },
     declineOffer: function () {
-        reviewers.url = App.apiPrefix + '/user/0/decline/' + this.request_id;
+        reviewers.url = App.apiPrefix + '/user/'+ this.model.get("id") +'/decline/' + this.request_id;
         reviewers.fetch({wait: true});
+
+        this.$el.find('.decline').html('accept');
+        this.$el.find('.decline').addClass('accept');
+        this.$el.find('.decline').removeClass('decline');
+
         return this;
     },
     render: function(){
         var data = {
                    author_id : this.author_id,
                    offer : this.model.toJSON()};
-        this.template = _.template($('#reviewer-card-template').html());
-        this.template = _.template($('#reviewer-card-template').html());
-        this.$el.html(this.template( data));
+      
+        for (var i = 0; i < this.acceptOffers.length; i++) {
+            if (this.acceptOffers[i].id == this.model.get('id')) {
+                data.status = 'You accepted';
+            }
+        };
+        console.log(this.model.toJSON());
+        this.$el.html(this.template(data ));
         
         return this;
     }
