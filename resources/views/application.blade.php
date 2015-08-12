@@ -131,7 +131,7 @@
             <div class="panel-heading">
                 <h2 class="panel-title">
                     <%- title %>
-                    <span class="badge"><%- _.isEqual(offers_count, 0) ? 'no offers' : offers_count %></span>
+                    <span class="badge"><%- (offers_count == 0) ? 'no offers' : offers_count %></span>
                 </h2>
             </div>
             <div class="panel-body">
@@ -150,8 +150,13 @@
             </div>
             <div class="panel-footer text-center">
                 <p class="description"><%- details %></p>
-                <button class="request-offer-btn btn btn-primary">Offer</button>
+                <% if (user.id != {{ Auth::user()->id }}) { %>
+                    <button class="request-offer-btn btn btn-primary">Offer</button>
+                <% } %>
                 <button class="request-details-btn btn btn-info">Details</button>
+                <% if (user.id == {{ Auth::user()->id }}) { %>
+                    <button class="request-delete-btn btn btn-danger">Delete</button>
+                <% } %>
             </div>
         </div>
 
