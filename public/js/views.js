@@ -110,6 +110,7 @@ App.Views.Request = Backbone.View.extend({
     events: {
         'click .request-offer-btn': 'createOffers',
         'click .request-details-btn': 'showDetails',
+        'click .request-delete-btn': 'deleteRequest'
     },
     createOffers: function () {
         reviewers.url = App.apiPrefix + '/user/0/offeron/' + this.model.get('id');
@@ -119,6 +120,9 @@ App.Views.Request = Backbone.View.extend({
     showDetails: function () {
         router.navigate('!/request/' + this.model.get('id'), true);
         return this;
+    },
+    deleteRequest: function () {
+        this.model.destroy();
     },
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
