@@ -108,4 +108,9 @@ class RequestService implements RequestServiceInterface
         }
         $user->requests()->attach($req_id);
     }
+
+    public function searchTagsByKeyWord($keyword)
+    {
+        return $this->tagRepository->searchByKeyWord($keyword);
+    }
 }

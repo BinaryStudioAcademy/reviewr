@@ -30,6 +30,7 @@ Route::group (['prefix' => 'api/v1'], function () {
     Route::resource('group', 'GroupController');
     Route::resource('tag', 'TagController');
     Route::resource('badge', 'BadgeController');
+    Route::post('tags/search', "TagController@search");
 });
 
 Route::get('/auth/login', [

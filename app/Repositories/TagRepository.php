@@ -22,4 +22,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     public function OneById($id) {}
+
+    public function searchByKeyWord($keyword)
+    {
+        return Tag::where('title', 'like', '%'.$keyword.'%')->get();
+    }
 }

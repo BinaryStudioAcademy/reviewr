@@ -10,7 +10,8 @@ App.Router = Backbone.Router.extend({
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest",
-        "!/tags": "tags"
+        "!/tags": "tags",
+        "!/search": "search"
     },
     
     home: function () {
@@ -65,6 +66,11 @@ App.Router = Backbone.Router.extend({
         console.log("Route: !/tags");
         tags.fetch();
         new App.Views.TagsList().render();
+    },
+
+    search: function() {
+        console.log("Route: !/search");
+        new App.Views.Search().render();
     }
 
 
