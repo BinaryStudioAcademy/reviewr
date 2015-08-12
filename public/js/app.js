@@ -1,10 +1,11 @@
 (function() {
     window.App = {
-        prefix: 'reviewr',
         Models: {},
         Collections: {},
         Views: {},
         Router: {},
+
+        prefix: '',
         apiPrefix: 'api/v1'
 
     };
