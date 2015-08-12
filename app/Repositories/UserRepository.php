@@ -15,7 +15,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function OneById($id)
     {
-    	return User::with('job', 'department')->findOrFail($id);
+    	return User::with('job', 'department')->find($id);
     }
 
     public function create($data) {}
