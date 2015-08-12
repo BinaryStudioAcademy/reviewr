@@ -21,4 +21,6 @@ interface RequestServiceInterface
     public function getSpecificRequestOffers($id);
 
     public function getSpecificRequestTags($id);
+
+    public function deleteRequestById($id);
 }

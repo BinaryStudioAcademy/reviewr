@@ -21,4 +21,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     public function OneById($id) {}
+
+    public function delete($id)
+    {
+        return Tag::findOrFail($id)->delete();
+    }
 }

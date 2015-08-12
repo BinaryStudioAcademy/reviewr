@@ -19,7 +19,8 @@
     <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
     <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 
     <link href="css/styles.css" rel="stylesheet">
 
@@ -131,7 +132,7 @@
             <div class="panel-heading">
                 <h2 class="panel-title">
                     <%- title %>
-                    <span class="badge"><%- _.isEqual(offers_count, 0) ? 'no offers' : offers_count %></span>
+                    <span class="badge"><%- (offers_count == 0) ? 'no offers' : offers_count %></span>
                 </h2>
             </div>
             <div class="panel-body">
@@ -150,8 +151,13 @@
             </div>
             <div class="panel-footer text-center">
                 <p class="description"><%- details %></p>
-                <button class="request-offer-btn btn btn-primary">Offer</button>
+                <% if (user.id != {{ Auth::user()->id }}) { %>
+                    <button class="request-offer-btn btn btn-primary">Offer</button>
+                <% } %>
                 <button class="request-details-btn btn btn-info">Details</button>
+                <% if (user.id == {{ Auth::user()->id }}) { %>
+                    <button class="request-delete-btn btn btn-danger">Delete</button>
+                <% } %>
             </div>
         </div>
 
@@ -293,11 +299,11 @@
                     <div class="panel-heading">
                         <h2 class="panel-title">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            <%= title %>
+                            <a href="#" id="title"><%= title %></a>
                         </h2>
                     </div>
                     <div class="panel-body">
-                        <p><%= details %></p>
+                        <div id="details"><%= details %></div>
                         <p>Group: <%= group.title %>, Author: <%= user.first_name + user.last_name%></p>
                         <p>Created at: <%= created_at %></p>
                         <div class="tags">Request Tags List</div>
@@ -422,7 +428,7 @@
 <script src="js/vendor/backbone/backbone.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
-<script src="js/vendor/bootstrap-wysiwyg/external/google-code-prettify/prettify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>

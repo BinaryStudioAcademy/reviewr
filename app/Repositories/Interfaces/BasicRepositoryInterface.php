@@ -9,4 +9,6 @@ interface BasicRepositoryInterface
     public function OneById($id);
 
     public function create($data);
+
+    public function delete($id);
 }
