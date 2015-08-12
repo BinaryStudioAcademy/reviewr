@@ -87,7 +87,7 @@ class ReviewRequestController extends Controller
      */
     public function destroy($id)
     {
-        
+        return Response::json($this->requestService->deleteRequestById($id), 200);
     }
 
     public function offers($id)
