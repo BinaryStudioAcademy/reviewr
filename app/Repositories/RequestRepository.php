@@ -26,6 +26,18 @@ class RequestRepository implements RequestRepositoryInterface
         return $review_request;
     }
 
+
+    public function delete($id)
+    {
+        $review_request = ReviewRequest::findOrFail($id);
+        if ($review_request->user_id == Auth::user()->id) {
+            $review_request->delete();
+            return ['status' => 'Ok', 'message' => 'Deleted request with ID: ' . $id];
+        } else {
+            return ['error' => ['message' => 'You can not remove not yours request']];
+        }
+    }
+
     public function OneById($id)
     {
         return ReviewRequest::with('user', 'group', 'user.department', 'user.job')->find($id);
@@ -48,6 +60,6 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function findByField($fieldName, $fieldValue, $columns=['*'])
     {
-        return ReviewRequest::all($columns)->where($fieldName, $fieldValue);
+        return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
 }

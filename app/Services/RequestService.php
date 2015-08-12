@@ -56,6 +56,11 @@ class RequestService implements RequestServiceInterface
         return $request;
     }
 
+    public function deleteRequestById($id)
+    {
+        return $this->requestRepository->delete($id);
+    }
+
     public function getSpecificRequestOffers($id)
     {
         return $this->requestRepository->getOffersById($id);

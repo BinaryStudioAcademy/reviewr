@@ -1,6 +1,6 @@
 <?php
 
-Route::group (['prefix' => 'reviewr'], function () {
+Route::group (['prefix' => ''], function () {
     Route::get('/', ['as' => 'home', 'middleware' => 'auth', function() {
         return view('application');
     }]);

@@ -1,13 +1,14 @@
 (function() {
     window.App = {
-        prefix: 'reviewr',
         Models: {},
         Collections: {},
         Views: {},
-        Router: {}
-    };
+        Router: {},
 
-    window.vent = _.extend({}, Backbone.Events);
+        prefix: '',
+        apiPrefix: 'api/v1'
+
+    };
 
 
 
