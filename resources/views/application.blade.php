@@ -19,7 +19,7 @@
     <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
     <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <link href="css/styles.css" rel="stylesheet">
 
