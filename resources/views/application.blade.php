@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +20,7 @@
     <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
     <link href="css/tokenfield-typeahead.css" rel="stylesheet">
     <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
 
     <link href="css/styles.css" rel="stylesheet">
@@ -28,100 +29,84 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top">
+    <!-- TEMP NAVIGATION -->
+    <nav class="navbar navbar-default navbar-fixed-top" id="temp">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Log Out</a></li>
+                        </ul>
+                    </li>
+                    <li><img src="{{ Auth::user()->avatar }}" class="img-responsive" width="50" height="50" alt="user avatar"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END TEMP NAVIGATION -->
+
+    <!-- MAIN CONTAINER -->
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <button type="button" class="btn sidebar-btn">
-                <span class="sr-only">Sidebar navigation</span>
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
-            </button>
-            <a class="navbar-brand" href="#"></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#!/requests">
-                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                        Requests
-                    </a>
-                </li>
-                <li><a href="#!/tags">
-                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                        Tags
-                    </a>
-                </li>
-                <li><a href="#!/users">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    </a>
-                </li>
-                <li><a href="#!/badges">
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        Badges
-                    </a>
-                </li>
-                {{--<li><a href="#!/popular">--}}
-                        {{--<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>--}}
-                        {{--Popular--}}
-                    {{--</a>--}}
-                {{--</li>--}}
-                <li><a href="#!/request/create">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        Create request
-                    </a>
-                </li>
-                <li><a href="#!/requests/my">
-                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                        My Request
-                    </a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#!/search">Search</a></li>
-                <li><a href="#">Notifications <span class="label label-primary">5</span></a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <strong>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span></strong>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Profile &amp; Settings</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ route('logout') }}">Log Out</a></li>
-                    </ul>
-                </li>
-                <li><img src="{{ Auth::user()->avatar }}" class="img-thumbnail" width="48" height="48"></li>
-            </ul>
+        <div class="row">
+            
+            <!-- SIDEBAR CONTAINER-->
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="sub-menu-label"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>&nbsp;MAIN</li>
+                    <li><a href="#!/request/create">Create review request</a></li>
+                    <li><a href="#!/requests/my">My review requests</a></li>
+                    <li><a href="#!/requests/offered">My offers</a></li>
+                    <li class="sub-menu-label"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;REVIEW REQUESTS</li>
+                    <li><a href="#!/requests">All</a></li>
+                    <li><a href="#!/requests/popular">Popular</a></li>
+                    <li><a href="#!/requests/high_rate">Hight rated</a></li>
+                    <li class="sub-menu-label"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>&nbsp;GROUPS</li>
+                    <li><a href="#!/requests/group/php">PHP</a></li>
+                    <li><a href="#!/requests/group/net">.NET</a></li>
+                    <li><a href="#!/requests/group/js">JS</a></li>
+                    <li class="sub-menu-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;USERS</li>
+                    <li><a href="#!/users">All</a></li>
+                    <li><a href="#!/users/high_rep">Higest reputation</a></li>
+                    <li class="sub-menu-label"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;TAGS</li>
+                    <li><a href="#!/tags">All</a></li>
+                    <li><a href="#!/tags/popular">Popular</a></li>
+                </ul>
+                <hr>
+            </div>
+            <!-- END SIDEBAR CONTAINER-->
+            
+            <!-- CONTENT CONTAINER -->
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="row" id="main-content">
+                    <!-- MAIN CONTENT HERE -->
+                </div>
+            </div>
+            <!-- END CONTENT CONTAINER -->
+        
         </div>
     </div>
-</nav>
+    <!-- END MAIN CONTAINER -->
 
-<div id="notifications">
-
-    <!-- Backbone notification paste here -->
-
-</div>
-
-<!-- Navbar feature -->
-
-<div class="container" data-role="main">
-
-    <div id="main-content">
-
-        <!-- Backbone views will paste here -->
-
-    </div>
-
-</div>
-    <script>
-        var userID = "{{ Auth::user()->id }}";
-    </script>
+<script>
+    var userID = "{{ Auth::user()->id }}";
+</script>
 
 
 {{-- One Review Request card backbone template--}}
@@ -439,6 +424,7 @@
 <div class="search-results">Search-Results</div>
 </script>
 
+<!-- VENDOR SCRIPTS -->
 <script src="js/vendor/jquery/jquery.js"></script>
 <script src="js/vendor/bootstrap/bootstrap.js"></script>
 <script src="js/vendor/jquery/jqueryui.js"></script>
@@ -449,12 +435,15 @@
 <script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
 <script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<!-- END VENDOR SCRIPTS -->
 
+<!-- APP SCRIPTS -->
 <script src="js/app.js"></script>
 <script src="js/models.js"></script>
 <script src="js/collections.js"></script>
 <script src="js/views.js"></script>
 <script src="js/routes.js"></script>
+<!-- END APP SCRIPTS -->
 
 <script>
     var authUserId = {{ Auth::user()->id }} ;
