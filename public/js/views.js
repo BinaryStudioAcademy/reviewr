@@ -218,7 +218,7 @@ App.Views.RequestDetails = Backbone.View.extend({
             name: 'title',
             success: function(response, newValue) {
                 that.model.set('title', newValue); //update backbone model
-                that.model.save();
+                that.model.save(null, {patch: true});
             }
         });
         $('#details').editable({
@@ -227,7 +227,7 @@ App.Views.RequestDetails = Backbone.View.extend({
             name: 'details',
             success: function(response, newValue) {
                 that.model.set('details', newValue); //update backbone model
-                that.model.save();
+                that.model.save(null, {patch: true});
             }
         });
 
