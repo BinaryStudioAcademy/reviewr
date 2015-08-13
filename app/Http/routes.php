@@ -1,9 +1,14 @@
 <?php
 
 Route::group (['prefix' => ''], function () {
-    Route::get('/', ['as' => 'home', 'middleware' => 'auth', function() {
-        return view('application');
-    }]);
+
+    Route::get('/', [
+        'as'         => 'home',
+        'middleware' => 'auth',
+        function () {
+            return view('application');
+        }
+    ]);
 
     Route::get('/auth/login', [
         'as'   => 'login.get',
@@ -18,7 +23,7 @@ Route::group (['prefix' => ''], function () {
         'uses' => 'Auth\AuthController@getLogout'
     ]);
 
-    Route::group (['prefix' => 'api/v1'], function () {
+    Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
         Route::resource('user', 'UserController');
         Route::resource('comment', 'CommentController');
@@ -33,5 +38,6 @@ Route::group (['prefix' => ''], function () {
         Route::resource('group', 'GroupController');
         Route::resource('tag', 'TagController');
         Route::resource('badge', 'BadgeController');
+        Route::post('tags/search', "TagController@search");
     });
 });

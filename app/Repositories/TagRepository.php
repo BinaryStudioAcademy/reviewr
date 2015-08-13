@@ -14,8 +14,8 @@ class TagRepository implements TagRepositoryInterface
 
     public function create($data)
     {
-        $tag = new Tag();
-        $tag->title = $data;
+        $tag = new Tag;
+        $tag->title = $data->title;
         $tag->save();
         return $tag;
     }
@@ -25,5 +25,10 @@ class TagRepository implements TagRepositoryInterface
     public function delete($id)
     {
         return Tag::findOrFail($id)->delete();
+    }
+
+    public function searchByKeyWord($keyword)
+    {
+        return Tag::where('title', 'like', '%'.$keyword.'%')->get();
     }
 }

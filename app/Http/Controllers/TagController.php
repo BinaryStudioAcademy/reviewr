@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
 
 use App\Services\Interfaces\RequestServiceInterface;
 
@@ -88,6 +89,11 @@ class TagController extends Controller
     public function destroy($id)
     {
         
+    }
+
+    public function search(Request $request)
+    {
+        return Response::json($this->requestService->searchTagsByKeyWord($request->keyword), 200);
     }
     
 }
