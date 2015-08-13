@@ -3,15 +3,23 @@ App.Router = Backbone.Router.extend({
     routes: {
         "": "home",
         "!/users": "users",
+        "!/users/high_rep": "highestReputaionUsers",
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
         "!/request/create": "createRequest",
         "!/requests/my": "showMyRequest",
+        "!/requests/offered": "offeredRequests",
+        "!/requests/popular": "popularRequests",
+        "!/requests/high_rate": "highestRatedRequests",
+        "!/requests/group/php": "phpGroupeRequests",
+        "!/requests/group/net": "netGroupeRequests",
+        "!/requests/group/js": "jsGroupeRequests",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest",
         "!/tags": "tags",
+        "!/tags/popular": "popularTags",
         "!/search": "search"
     },
     
@@ -23,6 +31,11 @@ App.Router = Backbone.Router.extend({
         console.log('Route usersListView');
         users.fetch();
         new App.Views.UsersList().render();
+    },
+
+    highestReputaionUsers: function() {
+        console.log("Route: !/users/high_rep");
+        //
     },
 
     showUserProfile: function(id) {
@@ -50,6 +63,36 @@ App.Router = Backbone.Router.extend({
         new App.Views.RequestsList({collection: myRequests}).render();
     },
 
+    offeredRequests: function() {
+        console.log("Route: !/requests/offered");
+        //
+    },
+
+    popularRequests: function() {
+        console.log("Route: !/requests/popular");
+        //
+    },
+
+    highestRatedRequests: function() {
+        console.log("Route: !/requests/high_rate");
+        //
+    },
+
+    phpGroupeRequests: function() {
+        console.log("Route: !/requests/group/php");
+        //
+    },
+
+    netGroupeRequests: function() {
+        console.log("Route: !/requests/group/net");
+        //
+    },
+
+    jsGroupeRequests: function() {
+        console.log("Route: !/requests/group/js");
+        //
+    },
+    
     showRequestDetails: function(id) {
         
         var request = new App.Models.Request({id: id});
@@ -72,6 +115,11 @@ App.Router = Backbone.Router.extend({
     tags: function() {
         console.log("Route: !/tags");
         new App.Views.TagsList().render();
+    },
+
+    popularTags: function(){
+        console.log("Route: !/tags/popular");
+        //
     },
 
     search: function() {

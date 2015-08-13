@@ -72,22 +72,21 @@
                     <li class="sub-menu-label"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>&nbsp;MAIN</li>
                     <li><a href="#!/request/create">Create review request</a></li>
                     <li><a href="#!/requests/my">My review requests</a></li>
-                    <li><a href="#">My offers</a></li>
+                    <li><a href="#!/requests/offered">My offers</a></li>
                     <li class="sub-menu-label"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;REVIEW REQUESTS</li>
                     <li><a href="#!/requests">All</a></li>
-                    <li><a href="#">Popular</a></li>
-                    <li><a href="#">Hight rated</a></li>
+                    <li><a href="#!/requests/popular">Popular</a></li>
+                    <li><a href="#!/requests/high_rate">Hight rated</a></li>
                     <li class="sub-menu-label"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>&nbsp;GROUPS</li>
-                    <li><a href="#">PHP</a></li>
-                    <li><a href="#">.NET</a></li>
-                    <li><a href="#">JS</a></li>
+                    <li><a href="#!/requests/group/php">PHP</a></li>
+                    <li><a href="#!/requests/group/net">.NET</a></li>
+                    <li><a href="#!/requests/group/js">JS</a></li>
                     <li class="sub-menu-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;USERS</li>
                     <li><a href="#!/users">All</a></li>
-                    <li><a href="#">Higest reputation</a></li>
+                    <li><a href="#!/users/high_rep">Higest reputation</a></li>
                     <li class="sub-menu-label"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;TAGS</li>
                     <li><a href="#!/tags">All</a></li>
-                    <li><a href="#">Popular</a></li>
-                    <li><a href="#">Cloud</a></li>
+                    <li><a href="#!/tags/popular">Popular</a></li>
                 </ul>
                 <hr>
             </div>
