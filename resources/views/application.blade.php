@@ -46,13 +46,13 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#!/search">Search</a></li>
+                    <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ route('logout') }}">Log Out</a></li>
+                            <li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Log Out</a></li>
                         </ul>
                     </li>
                     <li><img src="{{ Auth::user()->avatar }}" class="img-responsive" width="50" height="50" alt="user avatar"></li>

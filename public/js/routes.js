@@ -16,7 +16,7 @@ App.Router = Backbone.Router.extend({
     },
     
     home: function () {
-        this.navigate('!/requests', true)
+        this.navigate('!/requests/my', true)
     },
     
     users: function() {
@@ -71,7 +71,6 @@ App.Router = Backbone.Router.extend({
 
     tags: function() {
         console.log("Route: !/tags");
-        tags.fetch();
         new App.Views.TagsList().render();
     },
 
