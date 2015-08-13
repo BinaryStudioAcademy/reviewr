@@ -61,6 +61,20 @@ class RequestService implements RequestServiceInterface
         return $this->requestRepository->delete($id);
     }
 
+    public function updateRequest($id, $data)
+    {
+        //dd($id, $data);
+        $request = $this->requestRepository->update($id, $data);
+        // tags for request update
+        //foreach ($data->tags as $tag_id => $tag_item) {
+        //    $tag = $this->tagRepository->update($tag_id, $tag_item);
+        //    $tag->save();
+        //    $request->save();
+        //}
+
+        return $request;
+    }
+
     public function getSpecificRequestOffers($id)
     {
         return $this->requestRepository->getOffersById($id);

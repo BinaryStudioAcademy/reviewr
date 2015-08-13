@@ -74,9 +74,9 @@ class ReviewRequestController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
-        
+        return $this->requestService->updateRequest($id, $request);
     }
 
     /**

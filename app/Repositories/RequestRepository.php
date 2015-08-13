@@ -26,13 +26,31 @@ class RequestRepository implements RequestRepositoryInterface
         return $review_request;
     }
 
+    public function update($id, $data)
+    {
+        $review_request = ReviewRequest::findOrFail($id);
+
+        if ($review_request->user_id == Auth::user()->id) {
+            $review_request->title = $data->title;
+            $review_request->details = $data->details;
+            // There is may be another fields witch need to update
+
+            $review_request->save();
+
+            return $review_request;
+        } else {
+            return ['error' => ['message' => 'You can not edit not yours request']];
+        }
+
+    }
 
     public function delete($id)
     {
         $review_request = ReviewRequest::findOrFail($id);
         if ($review_request->user_id == Auth::user()->id) {
+            $removed = $review_request; // store removed item for returning
             $review_request->delete();
-            return ['status' => 'Ok', 'message' => 'Deleted request with ID: ' . $id];
+            return ['status' => 'Ok', 'message' => 'Request removed', $removed];
         } else {
             return ['error' => ['message' => 'You can not remove not yours request']];
         }

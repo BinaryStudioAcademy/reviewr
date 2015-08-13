@@ -212,24 +212,29 @@ App.Views.RequestDetails = Backbone.View.extend({
         }, this);
 
         // X-Editable field
-        $('#title').editable({
-            mode: 'inline',
-            type: 'text',
-            name: 'title',
-            success: function(response, newValue) {
-                that.model.set('title', newValue); //update backbone model
-                that.model.save();
-            }
-        });
-        $('#details').editable({
-            mode: 'inline',
-            type: 'textarea',
-            name: 'details',
-            success: function(response, newValue) {
-                that.model.set('details', newValue); //update backbone model
-                that.model.save();
-            }
-        });
+
+        // Check review request belong to auth user
+        if (this.model.get('user_id') == authUserId) {
+            $('#title').editable({
+                mode: 'inline',
+                type: 'text',
+                name: 'title',
+                success: function(response, newValue) {
+                    that.model.set('title', newValue); //update backbone model
+                    that.model.save(null, {patch: true});
+                }
+            });
+            $('#details').editable({
+                mode: 'inline',
+                type: 'textarea',
+                name: 'details',
+                success: function(response, newValue) {
+                    that.model.set('details', newValue); //update backbone model
+                    that.model.save(null, {patch: true});
+                }
+            });
+        }
+
 
         return this;
     }
@@ -357,7 +362,7 @@ App.Views.Reviewers = Backbone.View.extend({
 
  App.Views.Tag = Backbone.View.extend({
     model: tag,
-    className: "tag thumbnail text-center",
+    tagName: 'li',
     initialize: function(){
         this.template = _.template($('#tag-template').html());
     },
@@ -377,6 +382,7 @@ App.Views.Reviewers = Backbone.View.extend({
  App.Views.TagsList = Backbone.View.extend({
     collection: tags,
     el: "#main-content",
+    template: _.template($("#tags-list-template").html()),
     initialize: function() {
         this.collection.on('remove', this.render, this);
     },
@@ -390,6 +396,7 @@ App.Views.Reviewers = Backbone.View.extend({
                 if (!tags.length) {
                     // Render Empty View Here
                 } else {
+                    that.$el.html(that.template());
                     _.each(tags.models, function(tag) {
                         that.renderTag(tag);
                         console.log('Tag Model Render');
@@ -401,7 +408,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     renderTag: function(tag) {
         var tagView = new App.Views.Tag({model: tag});
-        this.$el.append(tagView.render().$el);
+        this.$el.find('.tags').append(tagView.render().$el);
     }
  });
 

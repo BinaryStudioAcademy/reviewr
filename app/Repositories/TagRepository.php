@@ -15,12 +15,14 @@ class TagRepository implements TagRepositoryInterface
     public function create($data)
     {
         $tag = new Tag;
-        $tag->title = $data->title;
+        $tag->title = $data;
         $tag->save();
         return $tag;
     }
 
     public function OneById($id) {}
+
+    public function update($id, $data) {}
 
     public function delete($id)
     {

@@ -306,7 +306,7 @@
                         <div id="details"><%= details %></div>
                         <p>Group: <%= group.title %>, Author: <%= user.first_name + user.last_name%></p>
                         <p>Created at: <%= created_at %></p>
-                        <div class="tags">Request Tags List</div>
+                        <ul class="tags list-inline">Request Tags List</ul>
                     </div>
                     <div class="panel-footer">
                         <p class="-rating">Rating:<span class="badge"><%= reputation %></span></p>
@@ -415,8 +415,14 @@
 </script>
 
 <script type="text/template" id="tag-template">
-<p>id: <%= id %></p>
-<p>title: <%= title %></p>
+    <span class="label label-success">
+    <%- title %>
+    </span>
+</script>
+
+<script type="text/template" id="tags-list-template">
+    <ul class="tags list-unstyled text-center">
+    </ul>
 </script>
 
 <script type="text/template" id="search-view-template">
@@ -449,6 +455,10 @@
 <script src="js/collections.js"></script>
 <script src="js/views.js"></script>
 <script src="js/routes.js"></script>
+
+<script>
+    var authUserId = {{ Auth::user()->id }} ;
+</script>
 
 </body>
 </html>
