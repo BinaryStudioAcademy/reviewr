@@ -26,4 +26,9 @@ class TagRepository implements TagRepositoryInterface
     {
         return Tag::findOrFail($id)->delete();
     }
+
+    public function searchByKeyWord($keyword)
+    {
+        return Tag::where('title', 'like', '%'.$keyword.'%')->get();
+    }
 }

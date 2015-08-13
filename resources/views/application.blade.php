@@ -87,7 +87,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Search</a></li>
+                <li><a href="#!/search">Search</a></li>
                 <li><a href="#">Notifications <span class="label label-primary">5</span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -428,6 +428,20 @@
 <script type="text/template" id="tag-template">
 <p>id: <%= id %></p>
 <p>title: <%= title %></p>
+</script>
+
+<script type="text/template" id="search-view-template">
+<h3 class="text-center">search page</h3>
+<hr>
+<div class="search-form text-center">
+<form>
+<div class="form-group">
+    <label for="search-input">Search Form</label>
+    <input type="text" class="form-control" id="search-input" placeholder="search">
+  </div>
+</form>
+</div>
+<div class="search-results">Search-Results</div>
 </script>
 
 <script src="js/vendor/jquery/jquery.js"></script>

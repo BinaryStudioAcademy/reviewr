@@ -121,6 +121,7 @@ class RequestService implements RequestServiceInterface
         return response()->json(['message'=> 'success'], 200);
     }
 
+
     public function checkUserForRequest($user_id, $req_id) {
         $user = $this->getOneUserById($user_id);
         foreach ($user->requests as $request) {
@@ -142,4 +143,10 @@ class RequestService implements RequestServiceInterface
         $users = $request->users()->wherePivot('isAccepted', 1)->get();
         return $users;
     }
-} 
+ 
+    public function searchTagsByKeyWord($keyword)
+    {
+        return $this->tagRepository->searchByKeyWord($keyword);
+    }
+}
+

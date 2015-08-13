@@ -297,7 +297,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         for (var i = 0; i < tags.length; i++) {
             tags[i]= tags[i].value;
         }
-
+        console.log(tags);
         this.model.set({
             id: null,
             title: $('.title-input').val(),
@@ -472,5 +472,62 @@ App.Views.Reviewers = Backbone.View.extend({
     renderTag: function(tag) {
         var tagView = new App.Views.Tag({model: tag});
         this.$el.append(tagView.render().$el);
+    }
+ });
+
+
+ /*
+ *---------------------------------------------------
+ *  Search View
+ *---------------------------------------------------
+ */
+
+ App.Views.Search = Backbone.View.extend({
+    el: "#main-content",
+    template: _.template($("#search-view-template").html()),
+    
+    events: {
+        "keyup #search-input": "keywordSearch"
+    },
+
+    keywordSearch: _.debounce(function(){
+        if ($("#search-input").val().length >= 2)
+        {
+            this.renderResults(this.f());
+        } else {
+            console.log("Min Length Of Search Keyword: 2");
+        }
+    }, 1000),
+
+    f: function() {
+        Backbone.ajax({
+            type: "POST",
+            async: false,
+            data: "keyword" + "=" + $("#search-input").val(),
+            url: "/api/v1/tags/search",
+            success: function(data) {
+                content = data;
+            }
+        });
+        console.log(content);
+        return content;
+    },
+
+    render: function() {
+        console.log("Render Search Page Template");
+        this.$el.empty();
+        this.$el.html(this.template);
+    },
+
+    renderResults: function(res) {
+        var search_results_div = this.$el.find(".search-results");
+
+        search_results_div.empty();
+
+        console.log("Render Search Results");
+        
+        _.each(res, function(r){
+            search_results_div.append('<div class="text-center">' + '<p>' + r.id + '</p>' + '<p>' + r.title + '</p>' + '</div>');
+        });
     }
  });
