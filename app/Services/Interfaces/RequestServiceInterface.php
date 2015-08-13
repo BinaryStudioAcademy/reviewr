@@ -18,6 +18,8 @@ interface RequestServiceInterface
 
     public function createRequest($data);
 
+    public function updateRequest($id, $data);
+
     public function getSpecificRequestOffers($id);
 
     public function getSpecificRequestTags($id);

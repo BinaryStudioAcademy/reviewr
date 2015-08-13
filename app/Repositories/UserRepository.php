@@ -20,6 +20,8 @@ class UserRepository implements UserRepositoryInterface
 
     public function create($data) {}
 
+    public function update($id, $data) {}
+
     public function delete($id)
     {
         return User::findOrFail($id)->delete();
