@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\RequestServiceInterface;
+use App\ReviewRequest;
+use App\User;
 
 class ReviewRequestController extends Controller
 {
@@ -103,5 +105,11 @@ class ReviewRequestController extends Controller
     public function myReviewRequest()
     {
         return Response::json($this->requestService->getMyRequests(), 200);
+    }
+
+    public function usersForRequest($request_id) 
+    {
+        $users = $this->requestService->usersForRequest($request_id);
+        return response()->json(['message'=> $users], 200);
     }
 }
