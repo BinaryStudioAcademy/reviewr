@@ -212,24 +212,29 @@ App.Views.RequestDetails = Backbone.View.extend({
         }, this);
 
         // X-Editable field
-        $('#title').editable({
-            mode: 'inline',
-            type: 'text',
-            name: 'title',
-            success: function(response, newValue) {
-                that.model.set('title', newValue); //update backbone model
-                that.model.save(null, {patch: true});
-            }
-        });
-        $('#details').editable({
-            mode: 'inline',
-            type: 'textarea',
-            name: 'details',
-            success: function(response, newValue) {
-                that.model.set('details', newValue); //update backbone model
-                that.model.save(null, {patch: true});
-            }
-        });
+
+        // Check review request belong to auth user
+        if (this.model.get('user_id') == authUserId) {
+            $('#title').editable({
+                mode: 'inline',
+                type: 'text',
+                name: 'title',
+                success: function(response, newValue) {
+                    that.model.set('title', newValue); //update backbone model
+                    that.model.save(null, {patch: true});
+                }
+            });
+            $('#details').editable({
+                mode: 'inline',
+                type: 'textarea',
+                name: 'details',
+                success: function(response, newValue) {
+                    that.model.set('details', newValue); //update backbone model
+                    that.model.save(null, {patch: true});
+                }
+            });
+        }
+
 
         return this;
     }

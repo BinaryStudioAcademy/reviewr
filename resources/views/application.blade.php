@@ -456,5 +456,9 @@
 <script src="js/views.js"></script>
 <script src="js/routes.js"></script>
 
+<script>
+    var authUserId = {{ Auth::user()->id }} ;
+</script>
+
 </body>
 </html>
