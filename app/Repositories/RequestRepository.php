@@ -45,14 +45,14 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function getOffersById($id)
     {
-        $review_request = ReviewRequest::find($id);
+        $review_request = ReviewRequest::findOrFail($id);
 
         return $review_request->users()->get();
     }
 
     public function getTagsById($id)
     {
-        $review_request = ReviewRequest::find($id);
+        $review_request = ReviewRequest::findOrFail($id);
 
         return $review_request->tags()->get();
     }
