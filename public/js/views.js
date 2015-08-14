@@ -524,7 +524,7 @@ App.Views.Reviewers = Backbone.View.extend({
         } else {
             console.log("Min Length Of Search Keyword: 2");
         }
-    }, 1000),
+    }, 250),
 
     f: function() {
         Backbone.ajax({
@@ -554,7 +554,7 @@ App.Views.Reviewers = Backbone.View.extend({
         console.log("Render Search Results");
         
         _.each(res, function(r){
-            search_results_div.append('<div class="text-center">' + '<p>' + r.id + '</p>' + '<p>' + r.title + '</p>' + '</div>');
+            search_results_div.append('<div class="thumbnail text-center">' + '<p>' + r.id + '</p>' + '<p>' + r.title + '</p>' + '</div>');
         });
     }
  });

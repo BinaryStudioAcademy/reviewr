@@ -81,6 +81,26 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
 
+    public function getOffered($user_id)
+    {
+        //
+    }
+
+    public function getPopular()
+    {
+        //
+    }
+
+    public function getHighestRated()
+    {
+        return ReviewRequest::with('user', 'group')->orderBy('reputation', 'desc')->get();
+    }
+
+    public function getByGroupId($id)
+    {
+        return ReviewRequest::with('user', 'group')->where('group_id', $id)->get();
+    }
+   
     public function checkVote($request_id, $user_id) {
         $review_request = ReviewRequest::findOrFail($request_id);
         foreach ($review_request->votes as $vote) {
@@ -104,6 +124,5 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request->reputation = $review_request->reputation - 1;
         $review_request->votes()->detach($user_id);
         $review_request->save();
-  
     }
 }
