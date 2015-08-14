@@ -120,11 +120,23 @@
         <div class="panel-heading">
             <h2 class="panel-title">
                 <%= offer.title %>
-                <span class="badge"><%- _.isEqual(offer.offers_count, 0) ? 'no offers' : offer.offers_count %></span>
             </h2>
         </div>
         <div class="panel-body">
-            <p>Created at: <%= offer.created_at %></p>
+            <p>
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                <%= offer.created_at %>
+                &nbsp;
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span class="badge">
+                    <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
+                </span>
+                &nbsp;
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <span class="badge">
+                    <%- offer.reputation %>
+                </span>
+            </p>
             <div class="row user-data">
                 <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
                     <img src="<%= offer.user.avatar %>" class="thumbnail img-responsive" alt="">
