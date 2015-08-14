@@ -15,14 +15,14 @@
 
     <title>Reviewer - Binary Academy</title>
 
-    <link href="css/bootstrap.css"  rel="stylesheet">
-    <link href="css/jquery-ui.css" rel="stylesheet">
-    <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
-    <link href="css/tokenfield-typeahead.css" rel="stylesheet">
-    <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap.css') }}"  rel="stylesheet">
+    <link href="{{ asset('reviewr/css/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/tokenfield-typeahead.css') }}" rel="stylesheet">
+    <link href="{{ asset('reviewr/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="css/bootstrap-editable.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap-editable.css') }}" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/styles.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -442,23 +442,23 @@
 </script>
 
 <!-- VENDOR SCRIPTS -->
-<script src="js/vendor/jquery/jquery.js"></script>
-<script src="js/vendor/bootstrap/bootstrap.js"></script>
-<script src="js/vendor/jquery/jqueryui.js"></script>
-<script src="js/vendor/bootstrap/bootstrap-tokenfield.js"></script>
-<script src="js/vendor/bootstrap/typeahead.bundle.min.js"></script>
-<script src="js/vendor/underscore/underscore.js"></script>
-<script src="js/vendor/backbone/backbone.js"></script>
-<script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
-<script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
-<script src="js/vendor/bootstrap-editable.min.js"></script>
+<script src="{{asset('reviewr/js/vendor/jquery/jquery.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/bootstrap/bootstrap.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/jquery/jqueryui.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/bootstrap/typeahead.bundle.min.js')}}j"></script>
+<script src="{{asset('reviewr/js/vendor/underscore/underscore.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/backbone/backbone.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
+<script src="{{asset('reviewr/js/vendor/bootstrap-editable.min.js')}}"></script>
 
 <!-- APP SCRIPTS -->
-<script src="js/app.js"></script>
-<script src="js/models.js"></script>
-<script src="js/collections.js"></script>
-<script src="js/views.js"></script>
-<script src="js/routes.js"></script>
+<script src="{{asset('reviewr/js/app.js')}}"></script>
+<script src="{{asset('reviewr/js/models.js')}}"></script>
+<script src="{{asset('reviewr/js/collections.js')}}"></script>
+<script src="{{asset('reviewr/js/views.js')}}"></script>
+<script src="{{asset('reviewr/js/routes.js')}}"></script>
 <!-- END APP SCRIPTS -->
 
 <script>
