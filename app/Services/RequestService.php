@@ -163,6 +163,26 @@ class RequestService implements RequestServiceInterface
         return $this->tagRepository->searchByKeyWord($keyword);
     }
 
+    public function getOfferedReviewRequests()
+    {
+        return $this->requestRepository->getOffered(Auth::user()->id);
+    }
+
+    public function getPopularReviewRequests()
+    {
+        return $this->requestRepository->getPopular();
+    }
+
+    public function getHighestRatedReviewRequests()
+    {
+        return $this->requestRepository->getHighestRated();
+    }
+
+    public function getReviewRequestsByGroupId($id)
+    {
+        return $this->requestRepository->getByGroupId($id);
+    }
+    
     public function checkVote($request_id, $user_id)
     {
         return $this->requestRepository->checkVote($request_id, $user_id);
@@ -178,4 +198,3 @@ class RequestService implements RequestServiceInterface
         return $this->requestRepository->reputationDown($request_id, $user_id);
     }
 }
-

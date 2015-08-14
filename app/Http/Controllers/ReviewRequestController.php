@@ -108,6 +108,43 @@ class ReviewRequestController extends Controller
         return Response::json($this->requestService->getMyRequests(), 200);
     }
 
+    public function offeredReviewRequests()
+    {
+        return Response::json($this->requestService->getOfferedReviewRequests(), 200);
+    }
+
+    public function popularReviewRequests()
+    {
+        return Response::json($this->requestService->getPopularReviewRequests(), 200);
+    }
+
+    public function highestRatedReviewRequests()
+    {
+        return Response::json($this->requestService->getHighestRatedReviewRequests(), 200);
+    }
+
+    public function sortReviewRequestsByGroups($group)
+    {
+        switch($group)
+        {
+            case 'php':
+                return Response::json($this->requestService->getReviewRequestsByGroupId(1), 200);
+                break;
+            
+            case 'net':
+                return Response::json($this->requestService->getReviewRequestsByGroupId(3), 200);
+                break;
+            
+            case 'js':
+                return Response::json($this->requestService->getReviewRequestsByGroupId(2), 200);
+                break;
+
+            default:
+                return 'exception!';
+                break;
+        }
+    }
+    
     public function usersForRequest($request_id) 
     {
         $users = $this->requestService->usersForRequest($request_id);
