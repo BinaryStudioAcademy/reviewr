@@ -284,6 +284,7 @@ App.Views.RequestDetails = Backbone.View.extend({
             $('#title').editable({
                 mode: 'inline',
                 type: 'text',
+                inputclass: 'input-title',
                 name: 'title',
                 success: function(response, newValue) {
                     that.model.set('title', newValue); //update backbone model

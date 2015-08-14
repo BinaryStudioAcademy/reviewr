@@ -182,10 +182,6 @@ body {
     overflow: hidden;
 }
 
-/*.user-info p {*/
-    /*margin-right: 10px;*/
-    /*margin-left: 10px;*/
-/*}*/
 .reviewers {
     text-align: center;
 }
@@ -199,4 +195,13 @@ body {
     margin-bottom: 20px;
     line-height: 200px;
     text-align: center;
+}
+
+.editable-container .input-large {
+    width: 50em;
+    height: 20em;
+}
+
+.editable-container .input-title {
+    width: 50em;
 }
