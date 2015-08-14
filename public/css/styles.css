@@ -186,6 +186,10 @@ body {
     overflow: hidden;
 }
 
+.user-info p{
+    margin-bottom: 5px;
+}
+
 .reviewers {
     text-align: center;
 }

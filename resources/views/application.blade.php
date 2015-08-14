@@ -130,13 +130,13 @@
                     <img src="<%= offer.user.avatar %>" class="thumbnail img-responsive" alt="">
                 </div>
                 <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
-                    <h4>
+                    <p><b>
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         <%= offer.user.first_name + ' ' + offer.user.last_name %>
-                    </h4>
+                    </b></p>
+                    <p>Group: <%= offer.group.title %></p>
                     <p><%= offer.user.email %></p>
                     <p><%= offer.user.phone %></p>
-                    <p>Group: <%= offer.group.title %></p>
                 </div>
             </div>
         </div>
