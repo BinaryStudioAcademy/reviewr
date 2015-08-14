@@ -1,6 +1,6 @@
 <?php
 
-Route::group (['prefix' => ''], function () {
+Route::group (['prefix' => 'reviewr'], function () {
 
     Route::get('/', [
         'as'         => 'home',
