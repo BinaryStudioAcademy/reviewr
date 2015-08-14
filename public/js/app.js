@@ -5,7 +5,7 @@
         Views: {},
         Router: {},
 
-        prefix: APP_PREFIX,
+        prefix: window.APP_PREFIX,
         apiPrefix: '/api/v1',
 
         getPrefix: function() {
