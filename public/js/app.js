@@ -5,7 +5,7 @@
         Views: {},
         Router: {},
 
-        prefix: 'reviewr',
+        prefix: APP_PREFIX,
         apiPrefix: '/api/v1',
 
         getPrefix: function() {

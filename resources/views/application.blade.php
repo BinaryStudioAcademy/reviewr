@@ -463,6 +463,7 @@
 
 <script>
     var authUserId = {{ Auth::user()->id }} ;
+    var APP_PREFIX = {{ env('APP_PREFIX', '') }};
 </script>
 
 </body>

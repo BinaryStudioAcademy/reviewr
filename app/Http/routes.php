@@ -1,6 +1,6 @@
 <?php
 
-Route::group (['prefix' => 'reviewr'], function () {
+Route::group (['prefix' => env('APP_PREFIX', '')], function () {
 
     Route::get('/', [
         'as'         => 'home',
