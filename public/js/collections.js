@@ -5,7 +5,7 @@
  */
 
 App.Collections.Users = Backbone.Collection.extend({
-    url: App.apiPrefix + '/user',
+    url: App.getPrefix() + '/user',
     model: App.Models.User
 
 });
@@ -22,7 +22,7 @@ var users = new App.Collections.Users();
  */
 
 App.Collections.Requests = Backbone.Collection.extend({
-    url: App.apiPrefix + '/reviewrequest',
+    url: App.getPrefix() + '/reviewrequest',
     model: App.Models.Request
 
 });
@@ -38,7 +38,7 @@ var requests = new App.Collections.Requests();
  */
 
 App.Collections.MyRequests = Backbone.Collection.extend({
-    url: App.apiPrefix + '/reviewrequest/my',
+    url: App.getPrefix() + '/reviewrequest/my',
     model: App.Models.Request
 
 });
@@ -55,7 +55,7 @@ var myRequests = new App.Collections.MyRequests();
  */
 
 App.Collections.Reviewers = Backbone.Collection.extend({
-    url: App.apiPrefix + '/reviewrequest/:id/offers',
+    url: App.getPrefix() + '/reviewrequest/:id/offers',
     model: App.Models.Reviewer
 
 });
@@ -72,7 +72,7 @@ var reviewers = new App.Collections.Reviewers();
  */
 
  App.Collections.Tags = Backbone.Collection.extend({
- 	url: App.apiPrefix + '/tag',
+ 	url: App.getPrefix() + '/tag',
  	model: App.Models.Tag
  });
 
@@ -88,7 +88,7 @@ var reviewers = new App.Collections.Reviewers();
  */
 
  App.Collections.RequestTags = Backbone.Collection.extend({
- 	url: App.apiPrefix + '/reviewrequest/:id/tags',
+ 	url: App.getPrefix() + '/reviewrequest/:id/tags',
  	model: App.Models.Tag
  });
 
