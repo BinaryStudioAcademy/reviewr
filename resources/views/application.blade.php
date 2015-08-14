@@ -442,23 +442,23 @@
 </script>
 
 <!-- VENDOR SCRIPTS -->
-<script src="{{asset('reviewr/js/vendor/jquery/jquery.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/bootstrap/bootstrap.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/jquery/jqueryui.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/bootstrap/typeahead.bundle.min.js')}}j"></script>
-<script src="{{asset('reviewr/js/vendor/underscore/underscore.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/backbone/backbone.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
-<script src="{{asset('reviewr/js/vendor/bootstrap-editable.min.js')}}"></script>
+<script src="js/vendor/jquery/jquery.js"></script>
+<script src="js/vendor/bootstrap/bootstrap.js"></script>
+<script src="js/vendor/jquery/jqueryui.js"></script>
+<script src="js/vendor/bootstrap/bootstrap-tokenfield.js"></script>
+<script src="js/vendor/bootstrap/typeahead.bundle.min.js"></script>
+<script src="js/vendor/underscore/underscore.js"></script>
+<script src="js/vendor/backbone/backbone.js"></script>
+<script src="js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script>
+<script src="js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js"></script>
+<script src="js/vendor/bootstrap-editable.min.js"></script>
 
 <!-- APP SCRIPTS -->
-<script src="{{asset('reviewr/js/app.js')}}"></script>
-<script src="{{asset('reviewr/js/models.js')}}"></script>
-<script src="{{asset('reviewr/js/collections.js')}}"></script>
-<script src="{{asset('reviewr/js/views.js')}}"></script>
-<script src="{{asset('reviewr/js/routes.js')}}"></script>
+<script src="js/app.js"></script>
+<script src="js/models.js"></script>
+<script src="js/collections.js"></script>
+<script src="js/views.js"></script>
+<script src="js/routes.js"></script>
 <!-- END APP SCRIPTS -->
 
 <script>
