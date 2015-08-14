@@ -118,15 +118,20 @@ App.Views.Request = Backbone.View.extend({
     createOffers: function () {
         reviewers.url = App.apiPrefix + '/user/0/offeron/' + this.model.get('id');
         reviewers.fetch({wait: true});
-        
+        this.model.set({'offers_count': this.current() + 1});
         this.$el.find('.request-offer-btn').html('Undo');
         this.$el.find('.request-offer-btn').addClass('undo-offer-btn');
         this.$el.find('.request-offer-btn').removeClass('request-offer-btn');
+        
+       
         return this;
     },
     showDetails: function () {
         router.navigate('!/request/' + this.model.get('id'), true);
         return this;
+    },
+    current: function() {
+        return this.model.get('offers_count');
     },
     deleteRequest: function () {
         this.stopListening();
@@ -135,10 +140,11 @@ App.Views.Request = Backbone.View.extend({
     undoOffer: function() {
         reviewers.url = App.apiPrefix + '/user/offeroff/' + this.model.get('id');
         reviewers.fetch({wait: true});
-
+        this.model.set({'offers_count': this.current() - 1});
         this.$el.find('.undo-offer-btn').html('Offer');
         this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
+         
         return this;
     },
     render: function(){
@@ -163,7 +169,6 @@ App.Views.RequestsList = Backbone.View.extend({
     },
     render: function() {
         console.log(this.collection);
-
         this.stopListening();
         this.$el.empty();
 
@@ -219,25 +224,30 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     like: function () {
-        this.$el.find('.like').html('Like');
+        users.url = App.apiPrefix + '/reputationUp/' + this.model.get('id');
+        users.fetch();
+        this.model.set({'reputation': parseInt(this.model.get('reputation')) + 1});
+        this.$el.find('.like').html('Undo like');
         this.$el.find('.like').addClass('undo-like');
         this.$el.find('.like').removeClass('like');
-        reviewers.url = App.apiPrefix + '/reputationUp/' + this.model.get('id');
-        reviewers.fetch({wait: true});
         return this;
     },
    
     undoLike: function () {
-        this.$el.find('.undo-like').html('Undo like');
+        users.url = App.apiPrefix + '/reputationDown/' + this.model.get('id');
+        users.fetch();
+        this.model.set({'reputation': this.model.get('reputation')-1});
+        this.$el.find('.undo-like').html('Like');
         this.$el.find('.undo-like').addClass('like');
         this.$el.find('.undo-like').removeClass('undo-like');
-        reviewers.url = App.apiPrefix + '/reputationDown/' + this.model.get('id');
-        reviewers.fetch({wait: true});
+       
         return this;
     },
+
     render: function(){
         
         var that = this;
+        
 
         this.stopListening();
         // Fetch Request Details
@@ -261,9 +271,25 @@ App.Views.RequestDetails = Backbone.View.extend({
                 offers = res.message;
            }
         });
-       
+        users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') + '/checkvote';
+        var check;
+        users.fetch({
+        async:false,
+        success: function(requests, res, req) {
+               check = res.toString();
+           }
+        });
+
+        if (check == 'true') {
+            this.$el.find('.like').html('Undo like');
+            this.$el.find('.like').addClass('undo-like');
+            this.$el.find('.like').removeClass('like');
+        }
+ 
         console.log(offers);
 
+        users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
+       
         _.each(reviewers.toArray(), function(reviewer, request_id) {
             console.log(offers);
             reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id, author_id: user_id, acceptOffers:offers  }) ).render().el );
@@ -378,17 +404,14 @@ App.Views.Reviewer = Backbone.View.extend({
     acceptOffer: function () {
         reviewers.url = App.apiPrefix + '/user/' + this.model.get("id") + '/accept/' + this.request_id;
         reviewers.fetch({wait: true});
-
         this.$el.find('.accept').html('Decline');
         this.$el.find('.accept').addClass('decline');
         this.$el.find('.accept').removeClass('accept');
-
         return this;
     },
     declineOffer: function () {
         reviewers.url = App.apiPrefix + '/user/'+ this.model.get("id") +'/decline/' + this.request_id;
         reviewers.fetch({wait: true});
-
         this.$el.find('.decline').html('accept');
         this.$el.find('.decline').addClass('accept');
         this.$el.find('.decline').removeClass('decline');
