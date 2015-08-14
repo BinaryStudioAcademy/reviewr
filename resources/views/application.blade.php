@@ -128,10 +128,13 @@
                 <p>Created at: <%= offer.created_at %></p>
                 <div class="row user-data">
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
-                        <img src="<%= offer.user.avatar %>" class="img-responsive" alt="">
+                        <img src="<%= offer.user.avatar %>" class="thumbnail img-responsive" alt="">
                     </div>
                     <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
-                        <p><%= offer.user.first_name + ' ' + offer.user.last_name%></p>
+                        <h4>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <%= offer.user.first_name + ' ' + offer.user.last_name %>
+                        </h4>
                         <p><%= offer.user.email %></p>
                         <p><%= offer.user.phone %></p>
                         <p>Group: <%= offer.group.title %></p>
@@ -335,8 +338,10 @@
     <div class="reviewer thumbnail">
         <img src="<%= offer.avatar %>" alt="">
        
-        <p><%= offer.first_name %></p>
-        <p><%= offer.last_name %></p>
+        <h4>
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <%= offer.first_name + ' ' + offer.last_name %>
+        </h4>
         <% if (author_id == userID) { %>
             <% if (status) { %>
                 <button class="decline btn btn-primary">Decline</button>
