@@ -162,5 +162,20 @@ class RequestService implements RequestServiceInterface
     {
         return $this->tagRepository->searchByKeyWord($keyword);
     }
+
+    public function checkVote($request_id, $user_id)
+    {
+        return $this->requestRepository->checkVote($request_id, $user_id);
+    }
+
+    public function reputationUp($request_id, $user_id)
+    {
+        return $this->requestRepository->reputationUp($request_id, $user_id);
+    }
+
+    public function reputationDown($request_id, $user_id)
+    {
+        return $this->requestRepository->reputationDown($request_id, $user_id);
+    }
 }
 
