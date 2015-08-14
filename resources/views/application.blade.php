@@ -32,6 +32,11 @@
 </head>
 <body>
 
+<script>
+    var authUserId = {{ Auth::user()->id }} ;
+    window.APP_PREFIX = "{{ env('APP_PREFIX', '') }}";
+</script>
+
 <!-- TEMP NAVIGATION -->
 <nav class="navbar navbar-default navbar-fixed-top" id="temp">
     <div class="container-fluid">
@@ -460,11 +465,6 @@
 <script src="{{asset('reviewr/js/views.js')}}"></script>
 <script src="{{asset('reviewr/js/routes.js')}}"></script>
 <!-- END APP SCRIPTS -->
-
-<script>
-    var authUserId = {{ Auth::user()->id }} ;
-    window.APP_PREFIX = "{{ env('APP_PREFIX', '') }}";
-</script>
 
 </body>
 </html>
