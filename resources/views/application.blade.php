@@ -15,14 +15,14 @@
 
     <title>Reviewer - Binary Academy</title>
 
-    <link href="css/bootstrap.css"  rel="stylesheet">
-    <link href="css/jquery-ui.css" rel="stylesheet">
-    <link href="css/bootstrap-tokenfield.css" rel="stylesheet">
-    <link href="css/tokenfield-typeahead.css" rel="stylesheet">
-    <link href="js/vendor/bootstrap-wysiwyg/index.css" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap.css') }}"  rel="stylesheet">
+    <link href="{{ asset('reviewr/css/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/tokenfield-typeahead.css') }}" rel="stylesheet">
+    <link href="{{ asset('reviewr/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="css/bootstrap-editable.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/bootstrap-editable.css') }}" rel="stylesheet">
+    <link href="{{ asset('reviewr/css/styles.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -463,6 +463,7 @@
 
 <script>
     var authUserId = {{ Auth::user()->id }} ;
+    var APP_PREFIX = {{ env('APP_PREFIX', '') }};
 </script>
 
 </body>
