@@ -75,13 +75,13 @@ App.Router = Backbone.Router.extend({
 
     highestRatedRequests: function() {
         console.log("Route: !/requests/high_rate");
-        requests.url = App.apiPrefix + "/reviewrequest/high_rate";
+        requests.url = App.getPrefix() + "/reviewrequest/high_rate";
         new App.Views.RequestsList().render();
     },
 
     sortRequestsByGroups: function(group) {
         console.log("Route: !/requests/group/" + group);
-        requests.url = App.apiPrefix + "/reviewrequest/group/" + group;
+        requests.url = App.getPrefix() + "/reviewrequest/group/" + group;
         new App.Views.RequestsList().render();
     },
 
@@ -92,8 +92,8 @@ App.Router = Backbone.Router.extend({
         request.fetch({wait: true}); // with id
 
         
-        reviewers.url = App.apiPrefix + '/reviewrequest/' + id + '/offers';
-        request_tags.url = App.apiPrefix + '/reviewrequest/' + id + '/tags';
+        reviewers.url = App.getPrefix() + '/reviewrequest/' + id + '/offers';
+        request_tags.url = App.getPrefix() + '/reviewrequest/' + id + '/tags';
         
 
         request_tags.fetch({wait: true});

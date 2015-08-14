@@ -5,8 +5,12 @@
         Views: {},
         Router: {},
 
-        prefix: '',
-        apiPrefix: 'api/v1'
+        prefix: 'reviewr',
+        apiPrefix: '/api/v1',
+
+        getPrefix: function() {
+            return this.prefix + this.apiPrefix
+        }
 
     };
 

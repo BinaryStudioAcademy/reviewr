@@ -116,7 +116,7 @@ App.Views.Request = Backbone.View.extend({
         'click .undo-offer-btn': 'undoOffer'
     },
     createOffers: function () {
-        reviewers.url = App.apiPrefix + '/user/0/offeron/' + this.model.get('id');
+        reviewers.url = App.getPrefix() + '/user/0/offeron/' + this.model.get('id');
         reviewers.fetch({wait: true});
         this.model.set({'offers_count': this.current() + 1});
         this.$el.find('.request-offer-btn').html('Undo');
@@ -138,7 +138,7 @@ App.Views.Request = Backbone.View.extend({
         this.model.destroy({wait: true});
     },
     undoOffer: function() {
-        reviewers.url = App.apiPrefix + '/user/offeroff/' + this.model.get('id');
+        reviewers.url = App.getPrefix() + '/user/offeroff/' + this.model.get('id');
         reviewers.fetch({wait: true});
         this.model.set({'offers_count': this.current() - 1});
         this.$el.find('.undo-offer-btn').html('Offer');
@@ -174,7 +174,7 @@ App.Views.RequestsList = Backbone.View.extend({
 
         var that = this;
         var offers;
-        reviewers.url = App.apiPrefix + '/myrequests';
+        reviewers.url = App.getPrefix() + '/myrequests';
         reviewers.fetch({
         async:false,
         success: function(requests, res, req) {

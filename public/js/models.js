@@ -5,7 +5,7 @@
  */
 
 App.Models.User = Backbone.Model.extend({
-    urlRoot: App.prefix + '/api/v1/user',
+    urlRoot: App.getPrefix() + '/user',
     defaults: {
         first_name: '',
         last_name: '',
@@ -27,7 +27,7 @@ var user = new App.Models.User();
  */
 
 App.Models.Request = Backbone.Model.extend({
-    urlRoot: App.prefix + '/api/v1/reviewrequest',
+    urlRoot: App.getPrefix() + '/reviewrequest',
     defaults: {
         title: '',
         details: '',
@@ -48,7 +48,7 @@ var request = new App.Models.Request();
  */
 
 App.Models.Reviewer = Backbone.Model.extend({
-    urlRoot: App.prefix + '/api/v1/reviewer',
+    urlRoot: App.getPrefix() + '/reviewer',
     defaults: {
         first_name: '',
         last_name: '',
@@ -70,7 +70,7 @@ var reviewer = new App.Models.Reviewer();
  */
 
  App.Models.Tag = Backbone.Model.extend({
-    urlRoot: App.prefix + "/api/v1/tag",
+    urlRoot: App.getPrefix() + "/tag",
     defaults: {
         id: null,
         title: ""
