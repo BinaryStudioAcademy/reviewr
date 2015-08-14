@@ -80,4 +80,24 @@ class RequestRepository implements RequestRepositoryInterface
     {
         return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
+
+    public function getOffered($user_id)
+    {
+        //
+    }
+
+    public function getPopular()
+    {
+        //
+    }
+
+    public function getHighestRated()
+    {
+        return ReviewRequest::with('user', 'group')->orderBy('reputation', 'desc')->get();
+    }
+
+    public function getByGroupId($id)
+    {
+        return ReviewRequest::with('user', 'group')->where('group_id', $id)->get();
+    }
 }

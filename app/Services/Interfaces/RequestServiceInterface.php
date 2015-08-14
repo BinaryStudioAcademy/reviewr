@@ -27,4 +27,12 @@ interface RequestServiceInterface
     public function deleteRequestById($id);
 
     public function searchTagsByKeyWord($keyword);
+
+    public function getOfferedReviewRequests();
+
+    public function getPopularReviewRequests();
+
+    public function getHighestRatedReviewRequests();
+
+    public function getReviewRequestsByGroupId($id);
 }

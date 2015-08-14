@@ -11,9 +11,7 @@ App.Router = Backbone.Router.extend({
         "!/requests/offered": "offeredRequests",
         "!/requests/popular": "popularRequests",
         "!/requests/high_rate": "highestRatedRequests",
-        "!/requests/group/php": "phpGroupeRequests",
-        "!/requests/group/net": "netGroupeRequests",
-        "!/requests/group/js": "jsGroupeRequests",
+        "!/requests/group/:group": "sortRequestsByGroups",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -65,34 +63,28 @@ App.Router = Backbone.Router.extend({
 
     offeredRequests: function() {
         console.log("Route: !/requests/offered");
-        //
+/*        request.url = App.apiPrefix + "/reviewrequest/offered";
+        new App.Views.RequestsList().render();*/
     },
 
     popularRequests: function() {
         console.log("Route: !/requests/popular");
-        //
+/*        requests.url = App.apiPrefix + "/reviewrequest/popular";
+        new App.Views.RequestsList().render();*/
     },
 
     highestRatedRequests: function() {
         console.log("Route: !/requests/high_rate");
-        //
+        requests.url = App.apiPrefix + "/reviewrequest/high_rate";
+        new App.Views.RequestsList().render();
     },
 
-    phpGroupeRequests: function() {
-        console.log("Route: !/requests/group/php");
-        //
+    sortRequestsByGroups: function(group) {
+        console.log("Route: !/requests/group/" + group);
+        requests.url = App.apiPrefix + "/reviewrequest/group/" + group;
+        new App.Views.RequestsList().render();
     },
 
-    netGroupeRequests: function() {
-        console.log("Route: !/requests/group/net");
-        //
-    },
-
-    jsGroupeRequests: function() {
-        console.log("Route: !/requests/group/js");
-        //
-    },
-    
     showRequestDetails: function(id) {
         
         var request = new App.Models.Request({id: id});
