@@ -33,7 +33,8 @@ App.Router = Backbone.Router.extend({
 
     highestReputaionUsers: function() {
         console.log("Route: !/users/high_rep");
-        //
+        users.url = App.getPrefix() + "/users/high_rep";
+        new App.Views.UsersList().render();
     },
 
     showUserProfile: function(id) {
