@@ -380,20 +380,24 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                &nbsp;
                 <%= first_name + ' ' + last_name %>
             </h3>
         </div>
         <div class="panel-body">
-            <img src="<%= avatar %>" alt="">
+            <img src="<%= avatar %>" alt="avatar">
             <div class="user-info">
-                <p><%= email %></p>
-                <p><%= phone %></p>
-                <p>Reputation: <%= reputation %></p>
+                <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                <%= email %></p>
+                <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                <%= phone %></p>
+                <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <%= reputation %></p>
             </div>
         </div>
         <div class="panel-footer">
             <div class="text-center">
-                <button class="btn btn-primary select-user">Select</button>
+                <button class="btn btn-primary select-user">Show Details</button>
             </div>
         </div>
     </div>
