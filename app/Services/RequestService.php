@@ -197,4 +197,9 @@ class RequestService implements RequestServiceInterface
     {
         return $this->requestRepository->reputationDown($request_id, $user_id);
     }
+
+    public function getHighestReputationUsers()
+    {
+        return $this->userRepository->getByHighestReputation();
+    }
 }
