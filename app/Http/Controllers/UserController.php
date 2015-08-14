@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
+use App\User;
 
 class UserController extends Controller
 {
@@ -93,26 +94,39 @@ class UserController extends Controller
 
     public function acceptReviewRequest($user_id, $request_id)
     {
-        $user_id = Auth::user()->id;
-        $this->requestService->acceptReviewRequest($user_id, $request_id);
+       // $user_id = Auth::user()->id;
+        $message = $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
-        return response()->json(['message'=> 'success'], 200);
+        return $message;
     }
 
     public function declineReviewRequest($user_id, $request_id)
     {
-        $user_id = Auth::user()->id;
-        $this->requestService->declineReviewRequest($user_id, $request_id);
+       // $user_id = Auth::user()->id;
+        $message = $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
-        return response()->json(['message'=> 'success'], 200);
+        return $message;
     }
 
     public function offerOnReviewRequest($user_id, $request_id)
     {
         $user_id = Auth::user()->id;
-        $this->requestService->offerOnReviewRequest($user_id, $request_id);
+        $message = $this->requestService->offerOnReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
-        return response()->json(['message'=> 'success'], 200);
+        return $message;
     }
-    
+
+    public function myRequests()
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        return response()->json(['message'=> $user->requests], 200);
+    }
+
+    public function offerOffReviewRequest($request_id)
+    {
+        $user = Auth::user();
+        $message = $this->requestService->offerOffReviewRequest($user, $request_id);
+        return $message;
+    }
 }

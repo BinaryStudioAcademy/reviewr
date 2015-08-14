@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\RequestServiceInterface;
+use App\ReviewRequest;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class ReviewRequestController extends Controller
 {
@@ -140,5 +143,26 @@ class ReviewRequestController extends Controller
                 return 'exception!';
                 break;
         }
+    }
+    
+    public function usersForRequest($request_id) 
+    {
+        $users = $this->requestService->usersForRequest($request_id);
+        return response()->json(['message'=> $users], 200);
+    }
+
+    public function reputationUp($request_id)
+    {
+        return Response::json($this->requestService->reputationUp($request_id, Auth::user()->id),200);
+    }
+
+    public function reputationDown($request_id)
+    {
+        return Response::json($this->requestService->reputationDown($request_id, Auth::user()->id),200);
+    }
+
+    public function checkVote($request_id) 
+    {   
+        return Response::json($this->requestService->checkVote($request_id, Auth::user()->id), 200);
     }
 }
