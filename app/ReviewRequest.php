@@ -43,6 +43,11 @@ class ReviewRequest extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function votes()
+    {
+        return $this->belongsToMany('App\User', 'user_vote');
+    }
+
     public function group()
     {
         return $this->belongsTo('App\Group');
@@ -52,4 +57,8 @@ class ReviewRequest extends Model
     {
         return $this->users()->count();
     }
+
+    
+
+
 }

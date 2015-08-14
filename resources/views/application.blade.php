@@ -306,7 +306,7 @@
                         <p class="-rating">Rating:<span class="badge"><%= reputation %></span></p>
                     </div>
                 </div>
-                <p><a href="#" class="btn btn-default" style="width:100%" role="button">Like</a></p>
+                 <button class="like btn btn-default" style="width:100%">Like</button>
             </div>
 
             <div class="requestor col-lg-4 col-md-4 col-sm-4 col-xs-4">

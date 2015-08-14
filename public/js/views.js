@@ -209,10 +209,30 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.model.on('change', this.render, this);
     },
     events: {
-        'click .back-request': 'back'
+        'click .back-request': 'back',
+        'click .like': 'like',
+        'click .undo-like': 'undoLike',
     },
     back: function () {
         router.navigate('!/requests', true);
+        return this;
+    },
+
+    like: function () {
+        this.$el.find('.like').html('Like');
+        this.$el.find('.like').addClass('undo-like');
+        this.$el.find('.like').removeClass('like');
+        reviewers.url = App.apiPrefix + '/reputationUp/' + this.model.get('id');
+        reviewers.fetch({wait: true});
+        return this;
+    },
+   
+    undoLike: function () {
+        this.$el.find('.undo-like').html('Undo like');
+        this.$el.find('.undo-like').addClass('like');
+        this.$el.find('.undo-like').removeClass('undo-like');
+        reviewers.url = App.apiPrefix + '/reputationDown/' + this.model.get('id');
+        reviewers.fetch({wait: true});
         return this;
     },
     render: function(){

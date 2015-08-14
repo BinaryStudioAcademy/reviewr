@@ -80,4 +80,30 @@ class RequestRepository implements RequestRepositoryInterface
     {
         return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
+
+    public function checkVote($request_id, $user_id) {
+        $review_request = ReviewRequest::findOrFail($request_id);
+        foreach ($review_request->votes as $vote) {
+            if ($vote->id == $user_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function reputationUp($request_id, $user_id) {
+        $review_request = ReviewRequest::findOrFail($request_id);
+        $review_request->reputation = $review_request->reputation + 1;
+        $review_request->votes()->attach($user_id);
+        $review_request->save();
+  
+    }
+
+    public function reputationDown($request_id, $user_id) {
+        $review_request = ReviewRequest::findOrFail($request_id);
+        $review_request->reputation = $review_request->reputation - 1;
+        $review_request->votes()->detach($user_id);
+        $review_request->save();
+  
+    }
 }

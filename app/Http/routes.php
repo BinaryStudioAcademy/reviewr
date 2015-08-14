@@ -26,6 +26,9 @@ Route::group (['prefix' => ''], function () {
     Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
         Route::get('myrequests', 'UserController@myRequests');
+        Route::get('reviewrequest/{request_id}/checkvote', 'ReviewRequestController@checkVote');
+        Route::get('reputationUp/{request_id}', 'ReviewRequestController@reputationUp');
+        Route::get('reputationDown/{request_id}', 'ReviewRequestController@reputationDown');
         Route::get('usersforrequest/{request_id}', 'ReviewRequestController@usersForRequest');
         Route::resource('user', 'UserController');
         Route::resource('comment', 'CommentController');
