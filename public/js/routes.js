@@ -27,7 +27,7 @@ App.Router = Backbone.Router.extend({
     
     users: function() {
         console.log('Route usersListView');
-        users.fetch();
+        users.url = App.getPrefix() + "/user";
         new App.Views.UsersList().render();
     },
 
