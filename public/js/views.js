@@ -168,6 +168,7 @@ App.Views.RequestsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
     },
     render: function() {
+        $('#spinner').show();
         console.log(this.collection);
         this.stopListening();
         this.$el.empty();
@@ -193,6 +194,7 @@ App.Views.RequestsList = Backbone.View.extend({
                         console.log('render Request');
                     });
                 }
+                $('#spinner').hide();
             },
             reset: true
         });
@@ -288,7 +290,8 @@ App.Views.RequestDetails = Backbone.View.extend({
  
         console.log(offers);
 
-        users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
+        // ????
+        //users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
        
         _.each(reviewers.toArray(), function(reviewer, request_id) {
             console.log(offers);

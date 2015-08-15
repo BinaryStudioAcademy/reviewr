@@ -87,7 +87,7 @@ App.Router = Backbone.Router.extend({
     },
 
     showRequestDetails: function(id) {
-        
+
         var request = new App.Models.Request({id: id});
         console.log('Route requestDetails', id, request);
         request.fetch({wait: true}); // with id

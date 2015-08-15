@@ -100,8 +100,18 @@
         </div>
         <!-- END SIDEBAR CONTAINER-->
 
+        <!-- SPINNER PRELOADER -->
+        <div id="spinner">
+            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+            </svg>
+        </div>
+        <!-- END SPINNER PRELOADER -->
+
         <!-- CONTENT CONTAINER -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+
             <div class="row" id="main-content">
                 <!-- MAIN CONTENT HERE -->
             </div>
