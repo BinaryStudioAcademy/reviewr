@@ -58,7 +58,14 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function OneById($id)
     {
-        return ReviewRequest::with('user', 'group', 'user.department', 'user.job')->findOrFail($id);
+        return ReviewRequest::with([
+            'user.job',
+            'user.department',
+            'group',
+            'tags',
+            'votes',
+            'users'
+        ])->findOrFail($id);
     }
 
     public function getOffersById($id)
