@@ -46,7 +46,7 @@ App.Views.UsersList = Backbone.View.extend({
     },
     render: function(){
         this.$el.empty();
-
+        $('#spinner').show();
         var that = this;
 
         this.collection.fetch({
@@ -60,6 +60,7 @@ App.Views.UsersList = Backbone.View.extend({
                         console.log('render User');
                     });
                 }
+                $('#spinner').hide();
             },
             reset: true
         });
@@ -168,10 +169,10 @@ App.Views.RequestsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
     },
     render: function() {
-        $('#spinner').show();
         console.log(this.collection);
         this.stopListening();
         this.$el.empty();
+        $('#spinner').show();
 
         var that = this;
         var offers;
@@ -505,7 +506,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     render: function(){
         this.$el.empty();
-
+        $('#spinner').show();
         var that = this;
 
         this.collection.fetch({
@@ -519,6 +520,7 @@ App.Views.Reviewers = Backbone.View.extend({
                         console.log('Tag Model Render');
                     });
                 }
+                $('#spinner').hide();
             },
             reset: true
         });
