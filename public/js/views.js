@@ -137,6 +137,7 @@ App.Views.Request = Backbone.View.extend({
     deleteRequest: function () {
         this.stopListening();
         this.model.destroy({wait: true});
+        this.remove();
     },
     undoOffer: function() {
         reviewers.url = App.getPrefix() + '/user/offeroff/' + this.model.get('id');
@@ -166,7 +167,6 @@ App.Views.RequestsList = Backbone.View.extend({
     collection: requests,
     el: '#main-content',
     initialize: function() {
-        this.collection.on('remove', this.render, this);
     },
     render: function() {
         console.log(this.collection);
