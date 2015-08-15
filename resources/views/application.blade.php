@@ -188,9 +188,9 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">CREATE REQUEST</div>
+                    <div class="panel-heading">Create New Review Request</div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="#" id="create-request-form">
 
@@ -214,9 +214,6 @@
                                                 <li><a data-edit="fontSize 1" class="fs-One">Small</a></li>
                                             </ul>
                                         </div>
-
-                                        <a class="btn btn-default" data-edit="formatblock pre" title="Code">Code</a>
-
                                         <div class="btn-group">
                                             <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
                                             <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
@@ -258,15 +255,15 @@
                             </div> <!-- End Col-MD-10 -->
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Tags</label>
-                                <div class="col-md-6">
+                                <label class="col-md-1 control-label">Tags</label>
+                                <div class="col-md-11">
                                     <input type="text" class="tags-input form-control" name="hashtags" placeholder="use in this input regexp: #\w+">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Group</label>
-                                <div class="col-md-6">
+                                <label class="col-md-1 control-label">Group</label>
+                                <div class="col-md-11">
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="group-input" value="1" checked>
