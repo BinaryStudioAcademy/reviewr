@@ -116,7 +116,7 @@ class ReviewRequestController extends Controller
 
     public function offeredReviewRequests()
     {
-        return Response::json($this->requestService->getOfferedReviewRequests(), 200);
+        return Response::json($this->requestService->getOfferedReviewRequests_(), 200);
     }
 
     public function popularReviewRequests()

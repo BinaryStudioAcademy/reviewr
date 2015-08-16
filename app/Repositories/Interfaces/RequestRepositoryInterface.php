@@ -14,6 +14,8 @@ interface RequestRepositoryInterface extends BasicRepositoryInterface
 
     public function getOffered($auth_user);
 
+    public function getOffered_($auth_user_id);
+
     public function getPopular();
 
     public function getHighestRated();
