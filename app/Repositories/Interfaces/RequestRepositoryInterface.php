@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\User;
+
 interface RequestRepositoryInterface extends BasicRepositoryInterface
 {
     public function getOffersById($id);
@@ -10,7 +12,7 @@ interface RequestRepositoryInterface extends BasicRepositoryInterface
 
     public function findByField($fieldName, $fieldValue, $columns = [ '*' ]);
 
-    public function getOffered($user_id);
+    public function getOffered($auth_user);
 
     public function getPopular();
 

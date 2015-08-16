@@ -88,9 +88,9 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
 
-    public function getOffered($user_id)
+    public function getOffered($auth_user_id)
     {
-        //
+        return App\User::findOrFail($auth_user_id)->requests()->with('user', 'group')->get();
     }
 
     public function getPopular()

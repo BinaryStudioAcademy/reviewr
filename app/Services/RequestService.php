@@ -40,6 +40,11 @@ class RequestService implements RequestServiceInterface
         return $this->requestRepository->findByField('user_id', Auth::user()->id);
     }
 
+    public function getOfferedRequests()
+    {
+        return $this->requestRepository->getOffered(Auth::user()->id);
+    }
+
     public function getAllTags()
     {
         return $this->tagRepository->all();
