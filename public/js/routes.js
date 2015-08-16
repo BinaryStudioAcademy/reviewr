@@ -104,7 +104,7 @@ App.Router = Backbone.Router.extend({
         //    new App.Views.RequestDetails({model: request}).render();
         //});
 
-  },
+    },
 
 
     tags: function() {

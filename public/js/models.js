@@ -73,7 +73,7 @@ var reviewer = new App.Models.Reviewer();
     urlRoot: App.getPrefix() + "/tag",
     defaults: {
         id: null,
-        title: ""
+        title: ''
     }
  });
 

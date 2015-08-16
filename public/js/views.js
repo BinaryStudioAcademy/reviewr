@@ -494,7 +494,7 @@ App.Views.Reviewers = Backbone.View.extend({
         this.template = _.template($('#tag-template').html());
     },
     render: function(){
-        this.$el.html(this.template( this.model ));
+        this.$el.html(this.template( this.model.toJSON() ));
         return this;
     }
  });
@@ -521,7 +521,7 @@ App.Views.Reviewers = Backbone.View.extend({
         this.collection.fetch({
             success: function(tags, res, tag) {
                 if (!tags.length) {
-                    // Render Empty View Here
+                    console.log('Render No-Tags view here');
                 } else {
                     that.$el.html(that.template());
                     _.each(tags.models, function(tag) {
