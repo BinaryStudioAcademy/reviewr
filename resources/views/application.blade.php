@@ -369,7 +369,7 @@
         <img src="<%= offer.avatar %>" alt="offers" class="thumbnail">
         <p><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
         <% if (author_id == userID) { %>
-        <% if (status) { %>
+        <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">Decline</button>
         <% } else { %>
         <button class="accept btn btn-primary">Accept</button>

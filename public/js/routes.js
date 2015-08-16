@@ -89,18 +89,21 @@ App.Router = Backbone.Router.extend({
     showRequestDetails: function(id) {
 
         var request = new App.Models.Request({id: id});
-        console.log('Route requestDetails', id, request);
-        request.fetch({wait: true}); // with id
-
-        
-        reviewers.url = App.getPrefix() + '/reviewrequest/' + id + '/offers';
-        request_tags.url = App.getPrefix() + '/reviewrequest/' + id + '/tags';
-        
-
-        request_tags.fetch({wait: true});
-        reviewers.fetch({wait: true}).then(function(){
+        console.log('Route requestDetails');
+        $('#spinner').show();
+        request.fetch({wait: true}).then(function(){
             new App.Views.RequestDetails({model: request}).render();
+            $('#spinner').hide();
         });
+
+        //reviewers.url = App.getPrefix() + '/reviewrequest/' + id + '/offers';
+        //request_tags.url = App.getPrefix() + '/reviewrequest/' + id + '/tags';
+        //
+        //
+        //request_tags.fetch({wait: true});
+        //reviewers.fetch({wait: true}).then(function(){
+        //    new App.Views.RequestDetails({model: request}).render();
+        //});
 
   },
 
