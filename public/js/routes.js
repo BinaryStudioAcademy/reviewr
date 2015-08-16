@@ -64,8 +64,7 @@ App.Router = Backbone.Router.extend({
 
     offeredRequests: function() {
         console.log("Route: !/requests/offered");
-/*        request.url = App.apiPrefix + "/reviewrequest/offered";
-        new App.Views.RequestsList().render();*/
+        new App.Views.RequestsList({collection: offeredRequests}).render();
     },
 
     popularRequests: function() {
