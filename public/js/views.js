@@ -517,11 +517,12 @@ App.Views.Reviewers = Backbone.View.extend({
  App.Views.Tag = Backbone.View.extend({
     model: tag,
     tagName: 'li',
+    className: 'col-md-1',
     initialize: function(){
         this.template = _.template($('#tag-template').html());
     },
     render: function(){
-        this.$el.html(this.template( this.model.toJSON() ));
+        this.$el.html(this.template( this.model ));
         return this;
     }
  });
@@ -562,7 +563,7 @@ App.Views.Reviewers = Backbone.View.extend({
         });
     },
     renderTag: function(tag) {
-        var tagView = new App.Views.Tag({model: tag});
+        var tagView = new App.Views.Tag({model: tag.toJSON()});
         this.$el.find('.tags').append(tagView.render().$el);
     }
  });

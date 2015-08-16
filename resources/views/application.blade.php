@@ -508,7 +508,7 @@
 </script>
 
 <script type="text/template" id="tags-list-template">
-    <ul class="tags list-unstyled text-center">
+    <ul class="tags list-unstyled text-center row">
     </ul>
 </script>
 
