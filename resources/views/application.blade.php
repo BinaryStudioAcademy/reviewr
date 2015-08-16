@@ -460,42 +460,45 @@
 
 </script>
 
-{{-- User Profile backbone template--}}
+{{-- User Profile backbone template MODAL --}}
 
 <script type="text/template" id="user-profile-template">
-
-    <div class="user-profile">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <%= first_name %> <%= last_name %>
-                    &nbsp;
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <%= reputation %>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="photo pull-left col-md-2">
-                    <img src="<%= avatar %>" alt="avatar" width="140" heigth="140" class="img-thumbnail img-responsive">
+    <div class="user-profile modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="User Details">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <%= first_name %> <%= last_name %>
+                        &nbsp;
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <%= reputation %>
+                    </h4>
                 </div>
-                <div class="info col-md-10">
-                    <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        <%= email %></p>
-                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                        <%= phone %></p>
-                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <%= department.title %></p>
-                    <p>(<%= job.position %>)</p>
-                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        <%= address %></p>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="photo col-md-4 text-center">
+                            <img src="<%= avatar %>" alt="avatar" width="140" heigth="140" class="img-thumbnail img-responsive">
+                        </div>
+                        <div class="info col-md-8">
+                            <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                <%= email %></p>
+                            <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                                <%= phone %></p>
+                            <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                <%= department.title %></p>
+                            <p>(<%= job.position %>)</p>
+                            <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                <%= address %></p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="panel-footer text-center">
-                <button class="btn btn-primary cancel-user">Cancel</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-
 </script>
 
 <script type="text/template" id="tag-template">

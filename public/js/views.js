@@ -26,7 +26,9 @@ App.Views.User = Backbone.View.extend({
         'click .show-user': 'show'
     },
     show: function () {
-        router.navigate('!/user/' + this.model.get("id"), true);
+        // Show popup without change history
+        //router.navigate('!/user/' + this.model.get("id"), true);
+        router.showUserProfile(this.model.get("id"));
         return this;
     },
     render: function(){
@@ -46,7 +48,9 @@ App.Views.Author = Backbone.View.extend({
         'click .show-user': 'show'
     },
     show: function () {
-        router.navigate('!/user/' + this.model.get("id"), true);
+        // Show popup without change history
+        //router.navigate('!/user/' + this.model.get("id"), true);
+        router.showUserProfile(this.model.get("id"));
         return this;
     },
     render: function(){
@@ -91,7 +95,7 @@ App.Views.UsersList = Backbone.View.extend({
 
 App.Views.UserProfile = Backbone.View.extend({
     model: user,
-    el: '#main-content',
+    el: '#popup',
     initialize: function(){
         this.template = _.template($('#user-profile-template').html());
         this.model.on('change', this.render, this);
@@ -107,6 +111,7 @@ App.Views.UserProfile = Backbone.View.extend({
         this.$el.html(this.template( this.model.toJSON() ));
         console.log('render UserProfile');
         $('#spinner').hide();
+        $('#myModal').modal();
         return this;
     }
 });
