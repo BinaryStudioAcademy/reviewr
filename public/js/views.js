@@ -19,9 +19,28 @@ App.Views.App = Backbone.View.extend({
 
 App.Views.User = Backbone.View.extend({
     model: user,
-    className: "user-card",
+    template: _.template($('#user-card-template').html()),
     initialize: function(){
-        this.template = _.template($('#user-card-template').html());
+    },
+    events: {
+        'click .select-user': 'select'
+    },
+    select: function () {
+        router.navigate('!/user/' + this.model.get("id"), true);
+        return this;
+    },
+    render: function(){
+        this.$el.html(this.template( this.model.toJSON() ));
+        return this;
+    }
+});
+
+// Backbone Views for author of request (also use model user, but another template)
+
+App.Views.Author = Backbone.View.extend({
+    model: user,
+    template: _.template($('#author-card-template').html()),
+    initialize: function(){
     },
     events: {
         'click .select-user': 'select'
@@ -260,7 +279,9 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.$el.html( this.template(this.model.toJSON()) );
         // Render Request Author
         var author = new App.Models.User(this.model.get('user'));
-        this.$el.find('.requestor').html( (new App.Views.User({model: author})).render().el);
+        this.$el.find('.requestor').html((new App.Views.Author({
+            model: author
+        })).render().el);
 
         var tags = this.model.get('tags');
 
