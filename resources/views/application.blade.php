@@ -100,6 +100,12 @@
         </div>
         <!-- END SIDEBAR CONTAINER-->
 
+        <!-- POPUP CONTAINER -->
+        <div id="popup">
+            <!-- POPUP CONTENT HERE -->
+        </div>
+        <!-- END POPUP CONTAINER -->
+
         <!-- SPINNER PRELOADER -->
         <div id="spinner">
             <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
@@ -110,8 +116,6 @@
 
         <!-- CONTENT CONTAINER -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-
             <div class="row" id="main-content">
                 <!-- MAIN CONTENT HERE -->
             </div>
@@ -390,22 +394,25 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     &nbsp;
                     <%= first_name + ' ' + last_name %>
+                    &nbsp;
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    <%= reputation %>
                 </h3>
             </div>
             <div class="panel-body">
-                <img src="<%= avatar %>" alt="avatar">
-                <div class="user-info">
-                    <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        <%= email %></p>
-                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                        <%= phone %></p>
-                    <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <%= reputation %></p>
+                <div class="row">
+                    <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="thumbnail"></div>
+                    <div class="user-info col-md-8">
+                        <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            <%= email %></p>
+                        <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                            <%= phone %></p>
+                    </div>
                 </div>
             </div>
             <div class="panel-footer">
                 <div class="text-center">
-                    <button class="btn btn-primary select-user">Show Details</button>
+                    <button class="btn btn-primary show-user">Show Details</button>
                 </div>
             </div>
         </div>
@@ -423,22 +430,30 @@
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 &nbsp;
                 <%= first_name + ' ' + last_name %>
+                &nbsp;
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <%= reputation %>
             </h3>
+
         </div>
         <div class="panel-body">
-            <img src="<%= avatar %>" alt="avatar">
-            <div class="user-info">
-                <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                    <%= email %></p>
-                <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                    <%= phone %></p>
-                <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <%= reputation %></p>
+            <div class="thumbnail">
+                <img src="<%= avatar %>" alt="avatar" width="120" height="120" class="thumbnail">
+                <div class="user-info caption">
+                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <%= department.title %></p>
+                    <p>(<%= job.position %>)</p>
+                    <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        <%= email %></p>
+                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                        <%= phone %></p>
+                </div>
             </div>
+
         </div>
         <div class="panel-footer">
             <div class="text-center">
-                <button class="btn btn-primary select-user">Show Details</button>
+                <button class="btn btn-primary show-user">Show Details</button>
             </div>
         </div>
     </div>
@@ -452,23 +467,27 @@
     <div class="user-profile">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><%= first_name %> <%= last_name %></h3>
+                <h3 class="panel-title">
+                    <%= first_name %> <%= last_name %>
+                    &nbsp;
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    <%= reputation %>
+                </h3>
             </div>
             <div class="panel-body">
-                <div class="photo pull-left">
-                    <img src="<%= avatar %>" alt="">
+                <div class="photo pull-left col-md-2">
+                    <img src="<%= avatar %>" alt="avatar" width="140" heigth="140" class="img-thumbnail img-responsive">
                 </div>
-                <div class="info">
-                    <div class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                <p>E-mail: <%= email %></p>
-                                <p>Phone: <%= phone %></p>
-                                <p>Address: <%= address %></p>
-                                <p>Reputation: <%= reputation %></p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="info col-md-10">
+                    <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        <%= email %></p>
+                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                        <%= phone %></p>
+                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <%= department.title %></p>
+                    <p>(<%= job.position %>)</p>
+                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <%= address %></p>
                 </div>
             </div>
             <div class="panel-footer text-center">

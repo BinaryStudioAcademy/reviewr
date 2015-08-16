@@ -23,9 +23,9 @@ App.Views.User = Backbone.View.extend({
     initialize: function(){
     },
     events: {
-        'click .select-user': 'select'
+        'click .show-user': 'show'
     },
-    select: function () {
+    show: function () {
         router.navigate('!/user/' + this.model.get("id"), true);
         return this;
     },
@@ -43,9 +43,9 @@ App.Views.Author = Backbone.View.extend({
     initialize: function(){
     },
     events: {
-        'click .select-user': 'select'
+        'click .show-user': 'show'
     },
-    select: function () {
+    show: function () {
         router.navigate('!/user/' + this.model.get("id"), true);
         return this;
     },
@@ -106,6 +106,7 @@ App.Views.UserProfile = Backbone.View.extend({
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
         console.log('render UserProfile');
+        $('#spinner').hide();
         return this;
     }
 });

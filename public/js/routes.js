@@ -38,8 +38,8 @@ App.Router = Backbone.Router.extend({
     },
 
     showUserProfile: function(id) {
+        $('#spinner').show();
         var user = new App.Models.User({id: id});
-        console.log('Route userProfile', id, user.attributes);
         user.fetch({wait: true}); // with id
         new App.Views.UserProfile({model: user}).render();
     },
