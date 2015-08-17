@@ -137,7 +137,7 @@ App.Views.Request = Backbone.View.extend({
     events: {
         'click .request-offer-btn': 'createOffers',
         'click .request-details-btn': 'showDetails',
-        'click .request-delete-btn': 'deleteRequest',
+        'click .request-delete-btn': 'deleteRequestConfirm',
         'click .undo-offer-btn': 'undoOffer'
     },
     createOffers: function () {
@@ -157,6 +157,17 @@ App.Views.Request = Backbone.View.extend({
     },
     current: function() {
         return this.model.get('offers_count');
+    },
+    deleteRequestConfirm: function () {
+        var that = this;
+        var confirmModal = new App.Views.ConfirmModal({
+            cb: function(){
+                //use that to run functions for this view
+                that.deleteRequest();
+            },
+            body: "Delete this review request"
+        });
+        confirmModal.render();
     },
     deleteRequest: function () {
         this.stopListening();
@@ -624,3 +635,29 @@ App.Views.Reviewers = Backbone.View.extend({
         });
     }
  });
+
+/*
+ *---------------------------------------------------
+ *  Confirm Modal View
+ *---------------------------------------------------
+ */
+
+App.Views.ConfirmModal = Backbone.View.extend({
+    el: "#confirm-modal",
+    events: {
+        "click .btn-ok": "runCallBack"
+    },
+    initialize: function(args){
+        this.$el.find(".modal-body").html("<p>"+args.body+"</p>");
+        this.cb = args.cb;
+    },
+    render: function(){
+        this.$el.modal("show");
+    },
+    close: function(){
+        this.$el.modal("close");
+    },
+    runCallBack: function(){
+        this.cb();
+    }
+});

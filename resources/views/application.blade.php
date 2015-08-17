@@ -106,6 +106,24 @@
         </div>
         <!-- END POPUP CONTAINER -->
 
+        <div class="modal fade" id="confirm-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span id="header-text"></span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Are You Sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-ok" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SPINNER PRELOADER -->
         <div id="spinner">
             <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
@@ -133,7 +151,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">
-                <%= offer.title %>
+                <%- offer.title %>
             </h2>
         </div>
         <div class="panel-body">
@@ -319,7 +337,7 @@
                             <h2 class="panel-title">
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                                 &nbsp;
-                                <a href="#" id="title"><%= title %></a>
+                                <a href="#" id="title"><%- title %></a>
                             </h2>
                         </div>
                         <div class="panel-body">
