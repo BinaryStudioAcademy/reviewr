@@ -120,23 +120,35 @@
         <div class="panel-heading">
             <h2 class="panel-title">
                 <%= offer.title %>
-                <span class="badge"><%- _.isEqual(offer.offers_count, 0) ? 'no offers' : offer.offers_count %></span>
             </h2>
         </div>
         <div class="panel-body">
-            <p>Created at: <%= offer.created_at %></p>
+            <p>
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                <%= offer.created_at %>
+                &nbsp;
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span class="badge">
+                    <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
+                </span>
+                &nbsp;
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <span class="badge">
+                    <%- offer.reputation %>
+                </span>
+            </p>
             <div class="row user-data">
                 <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
                     <img src="<%= offer.user.avatar %>" class="thumbnail img-responsive" alt="">
                 </div>
                 <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
-                    <h4>
+                    <p><b>
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         <%= offer.user.first_name + ' ' + offer.user.last_name %>
-                    </h4>
+                    </b></p>
+                    <p>Group: <%= offer.group.title %></p>
                     <p><%= offer.user.email %></p>
                     <p><%= offer.user.phone %></p>
-                    <p>Group: <%= offer.group.title %></p>
                 </div>
             </div>
         </div>
@@ -294,21 +306,33 @@
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h2 class="panel-title">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                &nbsp;
                                 <a href="#" id="title"><%= title %></a>
                             </h2>
                         </div>
                         <div class="panel-body">
+                            <p>
+                                <small><span class="glyphicon glyphicon-time"
+                                             aria-hidden="true"></span> <%= created_at %></small>
+                            </p>
                             <div id="details"><%= details %></div>
-                            <p>Group: <%= group.title %>, Author: <%= user.first_name + user.last_name%></p>
-                            <p>Created at: <%= created_at %></p>
                             <ul class="tags list-inline">Request Tags List</ul>
                         </div>
                         <div class="panel-footer">
-                            <p class="-rating">Rating:<span class="badge"><%= reputation %></span></p>
+                            <span class="glyphicon glyphicon-duplicate"
+                                  aria-hidden="true"></span> <%= group.title %>
+                            &nbsp;
+                            <span class="glyphicon glyphicon-user"
+                                  aria-hidden="true"></span> <%= user.first_name + ' ' + user.last_name%>
+                            &nbsp;
+                            <span class="glyphicon glyphicon-star"
+                                  aria-hidden="true"></span><%= reputation %>
+                            &nbsp;
+                            <button class="like btn btn-default btn-sm">Like</button>
                         </div>
                     </div>
-                    <button class="like btn btn-default" style="width:100%">Like</button>
+
                 </div>
 
                 <div class="requestor col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -334,16 +358,12 @@
 {{-- Reviewer backbone template--}}
 
 <script type="text/template" id="reviewer-card-template">
-    <div class="reviewer thumbnail">
-        <img src="<%= offer.avatar %>" alt="">
-
-        <h4>
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            <%= offer.first_name + ' ' + offer.last_name %>
-        </h4>
+    <div class="thumbnail">
+        <img src="<%= offer.avatar %>" alt="offers" class="thumbnail">
+        <p><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
         <% if (author_id == userID) { %>
         <% if (status) { %>
-        <button class="decline btn btn-primary">Decline</button>
+        <button class="decline btn btn-danger">Decline</button>
         <% } else { %>
         <button class="accept btn btn-primary">Accept</button>
         <% } %>
@@ -360,20 +380,24 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                &nbsp;
                 <%= first_name + ' ' + last_name %>
             </h3>
         </div>
         <div class="panel-body">
-            <img src="<%= avatar %>" alt="">
+            <img src="<%= avatar %>" alt="avatar">
             <div class="user-info">
-                <p><%= email %></p>
-                <p><%= phone %></p>
-                <p>Reputation: <%= reputation %></p>
+                <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                <%= email %></p>
+                <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                <%= phone %></p>
+                <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <%= reputation %></p>
             </div>
         </div>
         <div class="panel-footer">
             <div class="text-center">
-                <button class="btn btn-primary select-user">Select</button>
+                <button class="btn btn-primary select-user">Show Details</button>
             </div>
         </div>
     </div>

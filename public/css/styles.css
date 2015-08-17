@@ -186,11 +186,16 @@ body {
     overflow: hidden;
 }
 
+.user-info p{
+    margin-bottom: 5px;
+}
+
 .reviewers {
     text-align: center;
 }
 .reviewer {
     display: inline-block;
+    min-width: 130px;
 }
 .chat {
     width: 100%;
@@ -202,10 +207,10 @@ body {
 }
 
 .editable-container .input-large {
-    width: 50em;
+    width: 38em;
     height: 20em;
 }
 
 .editable-container .input-title {
-    width: 50em;
+    width: 30em;
 }

@@ -16,11 +16,11 @@ class UserTableSeeder extends Seeder
         $departmentIds = Department::lists('id')->toArray();
 
         User::create([
-                'first_name' => 'admin',
-                'last_name' => 'admin',
+                'first_name' => 'Alex',
+                'last_name' => 'Adminov',
                 'email' => 'admin@email.com',
                 'phone' => $faker->phoneNumber,
-                'avatar' => $faker->imageUrl(150, 150, 'abstract'),
+                'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
                 'address' => $faker->address,
                 'password' => bcrypt('password'),
                 'reputation' => $faker->randomDigitNotNull,
@@ -29,11 +29,11 @@ class UserTableSeeder extends Seeder
             ]);
 
         User::create([
-                'first_name' => 'test',
-                'last_name' => 'test',
+                'first_name' => 'Tim',
+                'last_name' => 'Testuser',
                 'email' => 'test@email.com',
                 'phone' => $faker->phoneNumber,
-                'avatar' => $faker->imageUrl(150, 150, 'abstract'),
+                'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
                 'address' => $faker->address,
                 'password' => bcrypt('password'),
                 'reputation' => $faker->randomDigitNotNull,
@@ -41,14 +41,14 @@ class UserTableSeeder extends Seeder
                 'department_id' => $faker->randomElement($departmentIds)
             ]);
 
-        foreach(range(1,5) as $index)
+        foreach(range(1,10) as $index)
         {
             User::create([
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
-                'email' => $faker->email,
+                'email' => $faker->unique()->email,
                 'phone' => $faker->phoneNumber,
-                'avatar' => $faker->imageUrl(150, 150, 'abstract'),
+                'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
                 'address' => $faker->address,
                 'password' => bcrypt('password'),
                 'reputation' => $faker->randomDigitNotNull,
