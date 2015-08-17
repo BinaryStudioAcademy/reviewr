@@ -129,4 +129,9 @@ class UserController extends Controller
         $message = $this->requestService->offerOffReviewRequest($user, $request_id);
         return $message;
     }
+
+    public function highRept()
+    {
+        return Response::json($this->requestService->getHighestReputationUsers(), 200);
+    }
 }

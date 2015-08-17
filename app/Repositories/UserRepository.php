@@ -26,4 +26,9 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::findOrFail($id)->delete();
     }
+
+    public function getByHighestReputation()
+    {
+        return User::orderBy('reputation', 'desc')->get();
+    }
 }
