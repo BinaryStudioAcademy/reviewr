@@ -251,7 +251,7 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     like: function () {
-        users.url = App.apiPrefix + '/reputationUp/' + this.model.get('id');
+        users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
         users.fetch();
         this.model.set({'reputation': parseInt(this.model.get('reputation')) + 1});
         this.$el.find('.like').html('Undo like');
@@ -261,7 +261,7 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
    
     undoLike: function () {
-        users.url = App.apiPrefix + '/reputationDown/' + this.model.get('id');
+        users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
         users.fetch();
         this.model.set({'reputation': this.model.get('reputation')-1});
         this.$el.find('.undo-like').html('Like');
@@ -300,14 +300,14 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         //
         //var offers;
-        //users.url = App.apiPrefix + '/usersforrequest/' + this.model.get('id');
+        //users.url = App.getPrefix() + '/usersforrequest/' + this.model.get('id');
         //users.fetch({
         //async:false,
         //success: function(requests, res, req) {
         //        offers = res.message;
         //   }
         //});
-        //users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') + '/checkvote';
+        //users.url = App.getPrefix() + '/reviewrequest/'+ this.model.get('id') + '/checkvote';
         //var check;
         //users.fetch({
         //async:false,
@@ -325,7 +325,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         //console.log(offers);
 
         // ????
-        //users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
+        //users.url = App.getPrefix() + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
 
         var reviewers = this.model.get('users');
         _.each(reviewers, function (reviewer, request_id) {
@@ -444,7 +444,7 @@ App.Views.Reviewer = Backbone.View.extend({
         'click .decline': 'declineOffer',
     },
     acceptOffer: function () {
-        reviewers.url = App.apiPrefix + '/user/' + this.model.id + '/accept/' + this.request_id;
+        reviewers.url = App.getPrefix() + '/user/' + this.model.id + '/accept/' + this.request_id;
         reviewers.fetch({wait: true});
         this.$el.find('.accept').html('Decline');
         this.$el.find('.accept').addClass('decline btn-danger');
@@ -452,7 +452,7 @@ App.Views.Reviewer = Backbone.View.extend({
         return this;
     },
     declineOffer: function () {
-        reviewers.url = App.apiPrefix + '/user/'+ this.model.id +'/decline/' + this.request_id;
+        reviewers.url = App.getPrefix() + '/user/'+ this.model.id +'/decline/' + this.request_id;
         reviewers.fetch({wait: true});
         this.$el.find('.decline').html('Accept');
         this.$el.find('.decline').addClass('accept btn-primary');
