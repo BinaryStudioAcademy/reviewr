@@ -12,6 +12,7 @@ App.Router = Backbone.Router.extend({
         "!/requests/popular": "popularRequests",
         "!/requests/high_rate": "highestRatedRequests",
         "!/requests/group/:group_id": "sortRequestsByGroups",
+        "!/requests/tag/:tag_id": "sortRequestsByTags",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -82,6 +83,11 @@ App.Router = Backbone.Router.extend({
     sortRequestsByGroups: function(group_id) {
         console.log("Route: !/requests/group/" + group_id);
         requests.url = App.getPrefix() + "/reviewrequest/group/" + group_id;
+        new App.Views.RequestsList().render();
+    },
+
+    sortRequestsByTags: function(tag_id) {
+        requests.url = App.getPrefix() + "/reviewrequest/tag/" + tag_id;
         new App.Views.RequestsList().render();
     },
 
