@@ -160,7 +160,7 @@
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         <%= offer.user.first_name + ' ' + offer.user.last_name %>
                     </b></p>
-                    <p>Group: <%= offer.group.title %></p>
+                    <p>Group: <a href="#!/requests/group/<%= offer.group_id %>"><%= offer.group.title %></a></p>
                     <p><%= offer.user.email %></p>
                     <p><%= offer.user.phone %></p>
                 </div>
@@ -331,8 +331,9 @@
                             <ul class="tags list-inline">Request Tags List</ul>
                         </div>
                         <div class="panel-footer">
-                            <span class="glyphicon glyphicon-duplicate"
+                            <a href="#!/requests/group/<%= group_id %>"><span class="glyphicon glyphicon-duplicate"
                                   aria-hidden="true"></span> <%= group.title %>
+                            </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-user"
                                   aria-hidden="true"></span> <%= user.first_name + ' ' + user.last_name%>
@@ -502,9 +503,11 @@
 </script>
 
 <script type="text/template" id="tag-template">
-    <span class="label label-success">
-    <%- title %>
-    </span>
+    <a href="#!/requests/tag/<%= id %>">
+        <span class="label label-success" title="<%= requests_count %>">
+            <%- title %>
+        </span>
+    </a>
 </script>
 
 <script type="text/template" id="tags-list-template">

@@ -109,6 +109,7 @@ App.Router = Backbone.Router.extend({
 
     tags: function() {
         console.log("Route: !/tags");
+        tags.url = App.getPrefix() + "/tag";
         new App.Views.TagsList().render();
     },
 
