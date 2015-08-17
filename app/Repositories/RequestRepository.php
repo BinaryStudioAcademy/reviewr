@@ -155,4 +155,13 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request->votes()->detach($user_id);
         $review_request->save();
     }
+
+    public function getByTagId($tag_id)
+    {
+        return ReviewRequest::with('user', 'group')
+                            ->whereIn('id', DB::table('tag_review_request')
+                                              ->where('tag_id', $tag_id)
+                                              ->lists('review_request_id'))
+                            ->get();
+    }
 }
