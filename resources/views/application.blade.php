@@ -86,9 +86,9 @@
                 <li><a href="#!/requests/popular">Popular</a></li>
                 <li><a href="#!/requests/high_rate">Hight rated</a></li>
                 <li class="sub-menu-label"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>&nbsp;GROUPS</li>
-                <li><a href="#!/requests/group/php">PHP</a></li>
-                <li><a href="#!/requests/group/net">.NET</a></li>
-                <li><a href="#!/requests/group/js">JS</a></li>
+                <li><a href="#!/requests/group/1">PHP</a></li>
+                <li><a href="#!/requests/group/3">.NET</a></li>
+                <li><a href="#!/requests/group/2">JS</a></li>
                 <li class="sub-menu-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;USERS</li>
                 <li><a href="#!/users">All</a></li>
                 <li><a href="#!/users/high_rep">Higest reputation</a></li>

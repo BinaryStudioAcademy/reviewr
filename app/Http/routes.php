@@ -30,7 +30,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('reviewrequest/offered_', 'ReviewRequestController@offeredReviewRequests');
         Route::get('reviewrequest/popular', 'ReviewRequestController@popularReviewRequests');
         Route::get('reviewrequest/high_rate', 'ReviewRequestController@highestRatedReviewRequests');
-        Route::get('reviewrequest/group/{group}', 'ReviewRequestController@sortReviewRequestsByGroups');
+        Route::get('reviewrequest/group/{group_id}', 'ReviewRequestController@sortReviewRequestsByGroups');
         Route::get('reviewrequest/{request_id}/checkvote', 'ReviewRequestController@checkVote');
         Route::get('reputationUp/{request_id}', 'ReviewRequestController@reputationUp');
         Route::get('reputationDown/{request_id}', 'ReviewRequestController@reputationDown');

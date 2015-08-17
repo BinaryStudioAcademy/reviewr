@@ -11,7 +11,7 @@ App.Router = Backbone.Router.extend({
         "!/requests/offered": "offeredRequests",
         "!/requests/popular": "popularRequests",
         "!/requests/high_rate": "highestRatedRequests",
-        "!/requests/group/:group": "sortRequestsByGroups",
+        "!/requests/group/:group_id": "sortRequestsByGroups",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -69,7 +69,7 @@ App.Router = Backbone.Router.extend({
 
     popularRequests: function() {
         console.log("Route: !/requests/popular");
-        requests.url = App.apiPrefix + "/reviewrequest/popular";
+        requests.url = App.getPrefix() + "/reviewrequest/popular";
         new App.Views.RequestsList().render();
     },
 
@@ -79,9 +79,9 @@ App.Router = Backbone.Router.extend({
         new App.Views.RequestsList().render();
     },
 
-    sortRequestsByGroups: function(group) {
-        console.log("Route: !/requests/group/" + group);
-        requests.url = App.getPrefix() + "/reviewrequest/group/" + group;
+    sortRequestsByGroups: function(group_id) {
+        console.log("Route: !/requests/group/" + group_id);
+        requests.url = App.getPrefix() + "/reviewrequest/group/" + group_id;
         new App.Views.RequestsList().render();
     },
 
