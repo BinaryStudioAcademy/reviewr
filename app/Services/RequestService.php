@@ -168,9 +168,9 @@ class RequestService implements RequestServiceInterface
         return $this->tagRepository->searchByKeyWord($keyword);
     }
 
-    public function getOfferedReviewRequests()
+    public function getOfferedReviewRequests_()
     {
-        return $this->requestRepository->getOffered(Auth::user()->id);
+        return $this->requestRepository->getOffered_(Auth::user()->id);
     }
 
     public function getPopularReviewRequests()

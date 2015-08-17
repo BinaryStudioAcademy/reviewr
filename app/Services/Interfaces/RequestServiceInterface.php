@@ -30,7 +30,7 @@ interface RequestServiceInterface
 
     public function searchTagsByKeyWord($keyword);
 
-    public function getOfferedReviewRequests();
+    public function getOfferedReviewRequests_();
 
     public function getPopularReviewRequests();
 
