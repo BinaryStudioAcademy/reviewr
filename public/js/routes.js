@@ -69,8 +69,8 @@ App.Router = Backbone.Router.extend({
 
     popularRequests: function() {
         console.log("Route: !/requests/popular");
-/*        requests.url = App.apiPrefix + "/reviewrequest/popular";
-        new App.Views.RequestsList().render();*/
+        requests.url = App.apiPrefix + "/reviewrequest/popular";
+        new App.Views.RequestsList().render();
     },
 
     highestRatedRequests: function() {

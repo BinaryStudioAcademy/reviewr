@@ -7,6 +7,10 @@ use App\ReviewRequest;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
+// Temp Use
+use DB;
+// End Temp Use
+
 class RequestRepository implements RequestRepositoryInterface
 {
     public function all()
@@ -93,10 +97,29 @@ class RequestRepository implements RequestRepositoryInterface
         return App\User::findOrFail($auth_user_id)->requests()->with('user', 'group')->get();
     }
 
+    //---------------------------------------------------------------------------------------------
+    // Temp Solution
+    //---------------------------------------------------------------------------------------------
+
+    public function getOffered_($auth_user_id)
+    {
+        return ReviewRequest::with('user', 'group')
+                            ->whereIn('id', DB::table('review_request_user')
+                                              ->where('user_id', $auth_user_id)
+                                              ->lists('review_request_id'))
+                            ->get();
+    }
+
     public function getPopular()
     {
-        //
+        $review_requests = $this->all();
+        $review_requests_sorted = $review_requests->sortByDesc('offers_count');
+        return $review_requests_sorted->values()->all();
     }
+
+    //---------------------------------------------------------------------------------------------
+    // End Temp Solution
+    //---------------------------------------------------------------------------------------------
 
     public function getHighestRated()
     {
