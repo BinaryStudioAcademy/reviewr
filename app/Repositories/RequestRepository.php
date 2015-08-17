@@ -58,7 +58,14 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function OneById($id)
     {
-        return ReviewRequest::with('user', 'group', 'user.department', 'user.job')->findOrFail($id);
+        return ReviewRequest::with([
+            'user.job',
+            'user.department',
+            'group',
+            'tags',
+            'votes',
+            'users'
+        ])->findOrFail($id);
     }
 
     public function getOffersById($id)
@@ -81,9 +88,9 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
     }
 
-    public function getOffered($user_id)
+    public function getOffered($auth_user_id)
     {
-        //
+        return App\User::findOrFail($auth_user_id)->requests()->with('user', 'group')->get();
     }
 
     public function getPopular()

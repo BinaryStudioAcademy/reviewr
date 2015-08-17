@@ -27,7 +27,7 @@ App.Router = Backbone.Router.extend({
     
     users: function() {
         console.log('Route usersListView');
-        users.fetch();
+        users.url = App.getPrefix() + "/user";
         new App.Views.UsersList().render();
     },
 
@@ -38,8 +38,8 @@ App.Router = Backbone.Router.extend({
     },
 
     showUserProfile: function(id) {
+        $('#spinner').show();
         var user = new App.Models.User({id: id});
-        console.log('Route userProfile', id, user.attributes);
         user.fetch({wait: true}); // with id
         new App.Views.UserProfile({model: user}).render();
     },
@@ -64,8 +64,7 @@ App.Router = Backbone.Router.extend({
 
     offeredRequests: function() {
         console.log("Route: !/requests/offered");
-/*        request.url = App.apiPrefix + "/reviewrequest/offered";
-        new App.Views.RequestsList().render();*/
+        new App.Views.RequestsList({collection: offeredRequests}).render();
     },
 
     popularRequests: function() {
@@ -87,22 +86,25 @@ App.Router = Backbone.Router.extend({
     },
 
     showRequestDetails: function(id) {
-        
+
         var request = new App.Models.Request({id: id});
-        console.log('Route requestDetails', id, request);
-        request.fetch({wait: true}); // with id
-
-        
-        reviewers.url = App.getPrefix() + '/reviewrequest/' + id + '/offers';
-        request_tags.url = App.getPrefix() + '/reviewrequest/' + id + '/tags';
-        
-
-        request_tags.fetch({wait: true});
-        reviewers.fetch({wait: true}).then(function(){
+        console.log('Route requestDetails');
+        $('#spinner').show();
+        request.fetch({wait: true}).then(function(){
             new App.Views.RequestDetails({model: request}).render();
+            $('#spinner').hide();
         });
 
-  },
+        //reviewers.url = App.getPrefix() + '/reviewrequest/' + id + '/offers';
+        //request_tags.url = App.getPrefix() + '/reviewrequest/' + id + '/tags';
+        //
+        //
+        //request_tags.fetch({wait: true});
+        //reviewers.fetch({wait: true}).then(function(){
+        //    new App.Views.RequestDetails({model: request}).render();
+        //});
+
+    },
 
 
     tags: function() {

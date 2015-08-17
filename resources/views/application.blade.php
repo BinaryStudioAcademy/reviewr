@@ -100,6 +100,20 @@
         </div>
         <!-- END SIDEBAR CONTAINER-->
 
+        <!-- POPUP CONTAINER -->
+        <div id="popup">
+            <!-- POPUP CONTENT HERE -->
+        </div>
+        <!-- END POPUP CONTAINER -->
+
+        <!-- SPINNER PRELOADER -->
+        <div id="spinner">
+            <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+            </svg>
+        </div>
+        <!-- END SPINNER PRELOADER -->
+
         <!-- CONTENT CONTAINER -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row" id="main-content">
@@ -178,9 +192,9 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">CREATE REQUEST</div>
+                    <div class="panel-heading">Create New Review Request</div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="#" id="create-request-form">
 
@@ -204,9 +218,6 @@
                                                 <li><a data-edit="fontSize 1" class="fs-One">Small</a></li>
                                             </ul>
                                         </div>
-
-                                        <a class="btn btn-default" data-edit="formatblock pre" title="Code">Code</a>
-
                                         <div class="btn-group">
                                             <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
                                             <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
@@ -248,15 +259,15 @@
                             </div> <!-- End Col-MD-10 -->
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Tags</label>
-                                <div class="col-md-6">
+                                <label class="col-md-1 control-label">Tags</label>
+                                <div class="col-md-11">
                                     <input type="text" class="tags-input form-control" name="hashtags" placeholder="use in this input regexp: #\w+">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Group</label>
-                                <div class="col-md-6">
+                                <label class="col-md-1 control-label">Group</label>
+                                <div class="col-md-11">
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="group-input" value="1" checked>
@@ -362,7 +373,7 @@
         <img src="<%= offer.avatar %>" alt="offers" class="thumbnail">
         <p><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
         <% if (author_id == userID) { %>
-        <% if (status) { %>
+        <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">Decline</button>
         <% } else { %>
         <button class="accept btn btn-primary">Accept</button>
@@ -376,67 +387,118 @@
 
 <script type="text/template" id="user-card-template">
 
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                &nbsp;
-                <%= first_name + ' ' + last_name %>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <img src="<%= avatar %>" alt="avatar">
-            <div class="user-info">
-                <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                <%= email %></p>
-                <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                <%= phone %></p>
-                <p><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <%= reputation %></p>
+    <div class="user-card col-md-4 text-center">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    &nbsp;
+                    <%= first_name + ' ' + last_name %>
+                    &nbsp;
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    <%= reputation %>
+                </h3>
             </div>
-        </div>
-        <div class="panel-footer">
-            <div class="text-center">
-                <button class="btn btn-primary select-user">Show Details</button>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="thumbnail"></div>
+                    <div class="user-info col-md-8">
+                        <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            <%= email %></p>
+                        <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                            <%= phone %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="text-center">
+                    <button class="btn btn-primary show-user">Show Details</button>
+                </div>
             </div>
         </div>
     </div>
 
 </script>
 
+{{-- Author request backbone template--}}
 
-{{-- User Profile backbone template--}}
+<script type="text/template" id="author-card-template">
 
-<script type="text/template" id="user-profile-template">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                &nbsp;
+                <%= first_name + ' ' + last_name %>
+                &nbsp;
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <%= reputation %>
+            </h3>
 
-    <div class="user-profile">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title"><%= first_name %> <%= last_name %></h3>
-            </div>
-            <div class="panel-body">
-                <div class="photo pull-left">
-                    <img src="<%= avatar %>" alt="">
+        </div>
+        <div class="panel-body">
+            <div class="thumbnail">
+                <img src="<%= avatar %>" alt="avatar" width="120" height="120" class="thumbnail">
+                <div class="user-info caption">
+                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        <%= department.title %></p>
+                    <p>(<%= job.position %>)</p>
+                    <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        <%= email %></p>
+                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                        <%= phone %></p>
                 </div>
-                <div class="info">
-                    <div class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <div class="col-md-10">
-                                <p>E-mail: <%= email %></p>
-                                <p>Phone: <%= phone %></p>
-                                <p>Address: <%= address %></p>
-                                <p>Reputation: <%= reputation %></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="panel-footer text-center">
-                <button class="btn btn-primary cancel-user">Cancel</button>
+
+        </div>
+        <div class="panel-footer">
+            <div class="text-center">
+                <button class="btn btn-primary show-user">Show Details</button>
             </div>
         </div>
     </div>
 
+</script>
+
+{{-- User Profile backbone template MODAL --}}
+
+<script type="text/template" id="user-profile-template">
+    <div class="user-profile modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="User Details">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <%= first_name %> <%= last_name %>
+                        &nbsp;
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <%= reputation %>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="photo col-md-4 text-center">
+                            <img src="<%= avatar %>" alt="avatar" width="140" heigth="140" class="img-thumbnail img-responsive">
+                        </div>
+                        <div class="info col-md-8">
+                            <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                <%= email %></p>
+                            <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                                <%= phone %></p>
+                            <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                <%= department.title %></p>
+                            <p>(<%= job.position %>)</p>
+                            <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                <%= address %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/template" id="tag-template">
@@ -446,7 +508,7 @@
 </script>
 
 <script type="text/template" id="tags-list-template">
-    <ul class="tags list-unstyled text-center">
+    <ul class="tags list-unstyled text-center row">
     </ul>
 </script>
 
@@ -469,7 +531,7 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jqueryui.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
-<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}j"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>

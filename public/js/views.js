@@ -19,15 +19,38 @@ App.Views.App = Backbone.View.extend({
 
 App.Views.User = Backbone.View.extend({
     model: user,
-    className: "user-card",
+    template: _.template($('#user-card-template').html()),
     initialize: function(){
-        this.template = _.template($('#user-card-template').html());
     },
     events: {
-        'click .select-user': 'select'
+        'click .show-user': 'show'
     },
-    select: function () {
-        router.navigate('!/user/' + this.model.get("id"), true);
+    show: function () {
+        // Show popup without change history
+        //router.navigate('!/user/' + this.model.get("id"), true);
+        router.showUserProfile(this.model.get("id"));
+        return this;
+    },
+    render: function(){
+        this.$el.html(this.template( this.model.toJSON() ));
+        return this;
+    }
+});
+
+// Backbone Views for author of request (also use model user, but another template)
+
+App.Views.Author = Backbone.View.extend({
+    model: user,
+    template: _.template($('#author-card-template').html()),
+    initialize: function(){
+    },
+    events: {
+        'click .show-user': 'show'
+    },
+    show: function () {
+        // Show popup without change history
+        //router.navigate('!/user/' + this.model.get("id"), true);
+        router.showUserProfile(this.model.get("id"));
         return this;
     },
     render: function(){
@@ -46,7 +69,7 @@ App.Views.UsersList = Backbone.View.extend({
     },
     render: function(){
         this.$el.empty();
-
+        $('#spinner').show();
         var that = this;
 
         this.collection.fetch({
@@ -60,6 +83,7 @@ App.Views.UsersList = Backbone.View.extend({
                         console.log('render User');
                     });
                 }
+                $('#spinner').hide();
             },
             reset: true
         });
@@ -71,7 +95,7 @@ App.Views.UsersList = Backbone.View.extend({
 
 App.Views.UserProfile = Backbone.View.extend({
     model: user,
-    el: '#main-content',
+    el: '#popup',
     initialize: function(){
         this.template = _.template($('#user-profile-template').html());
         this.model.on('change', this.render, this);
@@ -86,6 +110,8 @@ App.Views.UserProfile = Backbone.View.extend({
     render: function(){
         this.$el.html(this.template( this.model.toJSON() ));
         console.log('render UserProfile');
+        $('#spinner').hide();
+        $('#myModal').modal();
         return this;
     }
 });
@@ -107,7 +133,6 @@ App.Views.Request = Backbone.View.extend({
         this.offers = options.offers;
         this.template = _.template($('#request-card-template').html());
         this.model.on('change', this.render, this);
-        //this.model.on('destroy', this.render, this);
     },
     events: {
         'click .request-offer-btn': 'createOffers',
@@ -136,6 +161,7 @@ App.Views.Request = Backbone.View.extend({
     deleteRequest: function () {
         this.stopListening();
         this.model.destroy({wait: true});
+        this.remove();
     },
     undoOffer: function() {
         reviewers.url = App.getPrefix() + '/user/offeroff/' + this.model.get('id');
@@ -165,12 +191,12 @@ App.Views.RequestsList = Backbone.View.extend({
     collection: requests,
     el: '#main-content',
     initialize: function() {
-        this.collection.on('remove', this.render, this);
     },
     render: function() {
         console.log(this.collection);
         this.stopListening();
         this.$el.empty();
+        $('#spinner').show();
 
         var that = this;
         var offers;
@@ -193,6 +219,7 @@ App.Views.RequestsList = Backbone.View.extend({
                         console.log('render Request');
                     });
                 }
+                $('#spinner').hide();
             },
             reset: true
         });
@@ -244,65 +271,79 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
 
+    checkVote: function(){
+        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
+    },
+
     render: function(){
         
         var that = this;
-        
 
         this.stopListening();
-        // Fetch Request Details
-        this.$el.html( this.template(this.model.toJSON()) );
 
-        // Fetch Request Author
+        // Fetch All Request Details
+        this.$el.html( this.template(this.model.toJSON()) );
+        // Render Request Author
         var author = new App.Models.User(this.model.get('user'));
-        this.$el.find('.requestor').html( (new App.Views.User({model: author})).render().el);
+        this.$el.find('.requestor').html((new App.Views.Author({
+            model: author
+        })).render().el);
+
+        var tags = this.model.get('tags');
 
         // Fetch Request Reviewers (Offers)
         var reviewersBlock = this.$el.find('.reviewers');
         reviewersBlock.empty();
+
         var req_id = this.model.get('id');
         var user_id = this.model.get('user_id');
-        
-        var offers;
-        users.url = App.apiPrefix + '/usersforrequest/' + this.model.get('id');
-        users.fetch({
-        async:false,
-        success: function(requests, res, req) {
-                offers = res.message;
-           }
-        });
-        users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') + '/checkvote';
-        var check;
-        users.fetch({
-        async:false,
-        success: function(requests, res, req) {
-               check = res.toString();
-           }
-        });
 
-        if (check == 'true') {
+        //
+        //var offers;
+        //users.url = App.apiPrefix + '/usersforrequest/' + this.model.get('id');
+        //users.fetch({
+        //async:false,
+        //success: function(requests, res, req) {
+        //        offers = res.message;
+        //   }
+        //});
+        //users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') + '/checkvote';
+        //var check;
+        //users.fetch({
+        //async:false,
+        //success: function(requests, res, req) {
+        //       check = res.toString();
+        //   }
+        //});
+        //
+        if (this.checkVote()) {
             this.$el.find('.like').html('Undo like');
             this.$el.find('.like').addClass('undo-like');
             this.$el.find('.like').removeClass('like');
         }
- 
-        console.log(offers);
+        //
+        //console.log(offers);
 
-        users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
-       
-        _.each(reviewers.toArray(), function(reviewer, request_id) {
-            console.log(offers);
-            reviewersBlock.append( (new App.Views.Reviewer({model: reviewer, request_id: req_id, author_id: user_id, acceptOffers:offers  }) ).render().el );
+        // ????
+        //users.url = App.apiPrefix + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
+
+        var reviewers = this.model.get('users');
+        _.each(reviewers, function (reviewer, request_id) {
+            reviewersBlock.append((new App.Views.Reviewer({
+                model: reviewer,
+                request_id: req_id,
+                author_id: user_id,
+                acceptOffers: reviewers
+            }) ).render().el);
         }, this);
 
         //Fetch Request Tags
         var request_tags_list = this.$el.find(".tags");
         request_tags_list.empty();
-        _.each(request_tags.toArray(), function(request_tag) {
-            request_tags_list.append( (new App.Views.Tag({model: request_tag}) ).render().el );
-            console.log('render Tag');
+        _.each(tags, function(tag) {
+            request_tags_list.append( (new App.Views.Tag({model: tag}) ).render().el );
+            console.log('render Tag', tag);
         }, this);
-
         // X-Editable field
 
         // Check review request belong to auth user
@@ -327,7 +368,6 @@ App.Views.RequestDetails = Backbone.View.extend({
                 }
             });
         }
-
 
         return this;
     }
@@ -396,6 +436,7 @@ App.Views.Reviewer = Backbone.View.extend({
         this.request_id = options.request_id;
         this.author_id = options.author_id;
         this.template = _.template($('#reviewer-card-template').html());
+        //this.on('change', this.render, this);
 
     },
     events: {
@@ -403,33 +444,32 @@ App.Views.Reviewer = Backbone.View.extend({
         'click .decline': 'declineOffer',
     },
     acceptOffer: function () {
-        reviewers.url = App.apiPrefix + '/user/' + this.model.get("id") + '/accept/' + this.request_id;
+        reviewers.url = App.apiPrefix + '/user/' + this.model.id + '/accept/' + this.request_id;
         reviewers.fetch({wait: true});
         this.$el.find('.accept').html('Decline');
-        this.$el.find('.accept').addClass('decline');
-        this.$el.find('.accept').removeClass('accept');
+        this.$el.find('.accept').addClass('decline btn-danger');
+        this.$el.find('.accept').removeClass('accept btn-primary');
         return this;
     },
     declineOffer: function () {
-        reviewers.url = App.apiPrefix + '/user/'+ this.model.get("id") +'/decline/' + this.request_id;
+        reviewers.url = App.apiPrefix + '/user/'+ this.model.id +'/decline/' + this.request_id;
         reviewers.fetch({wait: true});
-        this.$el.find('.decline').html('accept');
-        this.$el.find('.decline').addClass('accept');
-        this.$el.find('.decline').removeClass('decline');
+        this.$el.find('.decline').html('Accept');
+        this.$el.find('.decline').addClass('accept btn-primary');
+        this.$el.find('.decline').removeClass('decline btn-danger');
 
         return this;
     },
     render: function(){
         var data = {
                    author_id : this.author_id,
-                   offer : this.model.toJSON()};
+                   offer : this.model};
       
         for (var i = 0; i < this.acceptOffers.length; i++) {
-            if (this.acceptOffers[i].id == this.model.get('id')) {
+            if (this.acceptOffers[i].id == this.model.id) {
                 data.status = 'You accepted';
             }
         };
-        console.log(this.model.toJSON());
         this.$el.html(this.template(data ));
         
         return this;
@@ -477,11 +517,12 @@ App.Views.Reviewers = Backbone.View.extend({
  App.Views.Tag = Backbone.View.extend({
     model: tag,
     tagName: 'li',
+    className: 'col-md-1',
     initialize: function(){
         this.template = _.template($('#tag-template').html());
     },
     render: function(){
-        this.$el.html(this.template( this.model.toJSON() ));
+        this.$el.html(this.template( this.model ));
         return this;
     }
  });
@@ -502,13 +543,13 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     render: function(){
         this.$el.empty();
-
+        $('#spinner').show();
         var that = this;
 
         this.collection.fetch({
             success: function(tags, res, tag) {
                 if (!tags.length) {
-                    // Render Empty View Here
+                    console.log('Render No-Tags view here');
                 } else {
                     that.$el.html(that.template());
                     _.each(tags.models, function(tag) {
@@ -516,12 +557,13 @@ App.Views.Reviewers = Backbone.View.extend({
                         console.log('Tag Model Render');
                     });
                 }
+                $('#spinner').hide();
             },
             reset: true
         });
     },
     renderTag: function(tag) {
-        var tagView = new App.Views.Tag({model: tag});
+        var tagView = new App.Views.Tag({model: tag.toJSON()});
         this.$el.find('.tags').append(tagView.render().$el);
     }
  });

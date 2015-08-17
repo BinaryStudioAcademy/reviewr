@@ -10,6 +10,8 @@ interface RequestServiceInterface
 
     public function getMyRequests();
 
+    public function getOfferedRequests();
+
     public function getAllTags();
 
     public function getOneUserById($id);

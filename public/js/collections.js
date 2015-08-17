@@ -47,6 +47,21 @@ App.Collections.MyRequests = Backbone.Collection.extend({
 
 var myRequests = new App.Collections.MyRequests();
 
+/*
+ *---------------------------------------------------
+ *  Offered Requests Collection
+ *---------------------------------------------------
+ */
+
+App.Collections.OfferedRequests = Backbone.Collection.extend({
+    url: App.getPrefix() + '/reviewrequest/offered',
+    model: App.Models.Request
+
+});
+
+//instantiate collection of myRequests
+
+var offeredRequests = new App.Collections.OfferedRequests();
 
 /*
  *---------------------------------------------------
