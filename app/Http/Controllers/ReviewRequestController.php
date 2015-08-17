@@ -154,4 +154,9 @@ class ReviewRequestController extends Controller
     {   
         return Response::json($this->requestService->checkVote($request_id, Auth::user()->id), 200);
     }
+
+    public function sortReviewRequestsByTags($tag_id)
+    {
+        return Response::json($this->requestService->getReviewRequestsByTagId($tag_id), 200);
+    }
 }

@@ -33,4 +33,11 @@ class TagRepository implements TagRepositoryInterface
     {
         return Tag::where('title', 'like', '%'.$keyword.'%')->get();
     }
+
+    public function getPopular()
+    {
+        $tags = $this->all();
+        $tags_sorted = $tags->sortByDesc('requests_count');
+        return $tags_sorted->values()->all();
+    }
 }

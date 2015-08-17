@@ -207,4 +207,14 @@ class RequestService implements RequestServiceInterface
     {
         return $this->userRepository->getByHighestReputation();
     }
+
+    public function getReviewRequestsByTagId($tag_id)
+    {
+        return $this->requestRepository->getByTagId($tag_id);
+    }
+
+    public function getPopularTags()
+    {
+        return $this->tagRepository->getPopular();
+    }
 }

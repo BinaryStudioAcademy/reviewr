@@ -114,7 +114,8 @@ App.Router = Backbone.Router.extend({
 
     popularTags: function(){
         console.log("Route: !/tags/popular");
-        //
+        tags.url = App.getPrefix() + "/tags/popular";
+        new App.Views.TagsList().render();
     },
 
     search: function() {

@@ -95,5 +95,10 @@ class TagController extends Controller
     {
         return Response::json($this->requestService->searchTagsByKeyWord($request->keyword), 200);
     }
+
+    public function popularTags()
+    {
+        return Response::json($this->requestService->getPopularTags(), 200);
+    }
     
 }

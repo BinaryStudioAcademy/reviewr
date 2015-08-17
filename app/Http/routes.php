@@ -31,6 +31,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('reviewrequest/popular', 'ReviewRequestController@popularReviewRequests');
         Route::get('reviewrequest/high_rate', 'ReviewRequestController@highestRatedReviewRequests');
         Route::get('reviewrequest/group/{group_id}', 'ReviewRequestController@sortReviewRequestsByGroups');
+        Route::get('reviewrequest/tag/{tag_id}', 'ReviewRequestController@sortReviewRequestsByTags');
         Route::get('reviewrequest/{request_id}/checkvote', 'ReviewRequestController@checkVote');
         Route::get('reputationUp/{request_id}', 'ReviewRequestController@reputationUp');
         Route::get('reputationDown/{request_id}', 'ReviewRequestController@reputationDown');
@@ -48,6 +49,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('user/{user_id}/offeron/{request_id}', 'UserController@offerOnReviewRequest');
         Route::get('user/offeroff/{request_id}', 'UserController@offerOffReviewRequest');
         Route::resource('group', 'GroupController');
+        Route::get('tags/popular', 'TagController@popularTags');
         Route::resource('tag', 'TagController');
         Route::resource('badge', 'BadgeController');
         Route::post('tags/search', "TagController@search");
