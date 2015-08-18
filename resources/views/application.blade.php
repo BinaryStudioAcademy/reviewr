@@ -220,7 +220,8 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Title</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="title-input form-control" name="title" placeholder="Title">
+                                    <input type="text" class="title-input form-control" name="title" id="title" placeholder="Title">
+                                    <span class="help-block hidden"></span>
                                 </div>
                             </div>
 
@@ -277,21 +278,23 @@
 
                             </div> <!-- End Col-MD-10 -->
 
-                             <div class="form-group">
-                                <label class="col-md-1 control-label">Tags</label>
-                                <div class="col-md-11">
-                                    <input type="text" class="tags-input form-control" name="hashtags" placeholder="use in this input regexp: #\w+">
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Date</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="form-control" id="datetime">
+                                    <input type="text" class="form-control"  bootstrap-datepicker data-date-end-date="0d" id="date_review" name='date_review'/>
+                                    <span class="help-block hidden"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-1 control-label">Tags</label>
+                                <div class="col-md-11">
+                                    <input type="text" class="tags-input form-control" id="hashtags" placeholder="use in this input regexp: #\w+">
+                                    <span class="help-block hidden"></span>
+                                </div>
+                            </div>
+                           
+                           <div class="form-group">
                                 <label class="col-md-1 control-label">Group</label>
                                 <div class="col-md-11">
                                     <div class="radio">
@@ -565,6 +568,8 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.validation.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>

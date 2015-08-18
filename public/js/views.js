@@ -400,16 +400,34 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     events: {
         'submit': 'storeRequest'
     },
+    
+    bindings: {
+        '[name=title]': {
+            observe: 'title',
+            setOptions: {
+                validate: true
+            }
+        },
+        '[name=date_review]': {
+            observe: 'date_review',
+            setOptions: {
+                validate: true
+            }
+        }    
+    },
+
     initialize: function(options) {
         this.model = options.model;
+        Backbone.Validation.bind(this);
     },
     storeRequest: function(e) {
         e.preventDefault();
-        alert($('#datetime').val());
+
         var tags = $('.tags-input').tokenfield('getTokens');
         for (var i = 0; i < tags.length; i++) {
             tags[i]= tags[i].value;
         }
+
         console.log(tags);
         this.model.set({
             id: null,
@@ -417,25 +435,38 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             details: $('.details-input').html(),
             tags: tags,
             group_id: $('input[name="group-input"]:checked').val(),
-            date_review:  $('#datetime').val(),
+            date_review:  $('#date_review').val(),
         });
+
         this.stopListening()
-        this.$el.empty();
-        this.model.save(null, {
-            success: function(rq) {
-                router.navigate('!/request/' + rq.get("id"), true);
-            }
-        });
+        console.log(this.model.isValid());
+
+        if(this.model.isValid(true)) { 
+
+            this.model.save(null, {
+                success: function(rq) {
+                    router.navigate('!/request/' + rq.get("id"), true);
+                }
+            });
+            this.$el.empty();
+        }
+
     },
     render: function() {
         this.$el.html(this.template);
-
         // WYSIWYG Editor show
-        $('#editor').wysiwyg(); 
-        $("#datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+        $('#editor').wysiwyg();
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), nowDate.getHours(), nowDate.getMinutes(), 0, 0);
+        $("#date_review").datetimepicker({
+            autoclose: true,
+            startDate: today,
+            format: 'yyyy-mm-dd hh:ii'
+        });
         $('.tags-input').tokenfield();
         return this;
-    }
+    },
+
 });
 
 
