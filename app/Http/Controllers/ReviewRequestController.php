@@ -130,26 +130,9 @@ class ReviewRequestController extends Controller
         return Response::json($this->requestService->getHighestRatedReviewRequests(), 200);
     }
 
-    public function sortReviewRequestsByGroups($group)
+    public function sortReviewRequestsByGroups($group_id)
     {
-        switch($group)
-        {
-            case 'php':
-                return Response::json($this->requestService->getReviewRequestsByGroupId(1), 200);
-                break;
-            
-            case 'net':
-                return Response::json($this->requestService->getReviewRequestsByGroupId(3), 200);
-                break;
-            
-            case 'js':
-                return Response::json($this->requestService->getReviewRequestsByGroupId(2), 200);
-                break;
-
-            default:
-                return 'exception!';
-                break;
-        }
+        return Response::json($this->requestService->getReviewRequestsByGroupId($group_id), 200);
     }
     
     public function usersForRequest($request_id) 
@@ -191,5 +174,10 @@ class ReviewRequestController extends Controller
     public function upcomingForPeriodReviewRequests($period)
     {
         return Response::json($this->requestService->upcomingForPeriodReviewRequests($period), 200);
+    }
+    
+    public function sortReviewRequestsByTags($tag_id)
+    {
+        return Response::json($this->requestService->getReviewRequestsByTagId($tag_id), 200);
     }
 }

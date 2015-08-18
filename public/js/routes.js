@@ -11,7 +11,8 @@ App.Router = Backbone.Router.extend({
         "!/requests/offered": "offeredRequests",
         "!/requests/popular": "popularRequests",
         "!/requests/high_rate": "highestRatedRequests",
-        "!/requests/group/:group": "sortRequestsByGroups",
+        "!/requests/group/:group_id": "sortRequestsByGroups",
+        "!/requests/tag/:tag_id": "sortRequestsByTags",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -69,7 +70,7 @@ App.Router = Backbone.Router.extend({
 
     popularRequests: function() {
         console.log("Route: !/requests/popular");
-        requests.url = App.apiPrefix + "/reviewrequest/popular";
+        requests.url = App.getPrefix() + "/reviewrequest/popular";
         new App.Views.RequestsList().render();
     },
 
@@ -79,9 +80,14 @@ App.Router = Backbone.Router.extend({
         new App.Views.RequestsList().render();
     },
 
-    sortRequestsByGroups: function(group) {
-        console.log("Route: !/requests/group/" + group);
-        requests.url = App.getPrefix() + "/reviewrequest/group/" + group;
+    sortRequestsByGroups: function(group_id) {
+        console.log("Route: !/requests/group/" + group_id);
+        requests.url = App.getPrefix() + "/reviewrequest/group/" + group_id;
+        new App.Views.RequestsList().render();
+    },
+
+    sortRequestsByTags: function(tag_id) {
+        requests.url = App.getPrefix() + "/reviewrequest/tag/" + tag_id;
         new App.Views.RequestsList().render();
     },
 
@@ -109,12 +115,14 @@ App.Router = Backbone.Router.extend({
 
     tags: function() {
         console.log("Route: !/tags");
+        tags.url = App.getPrefix() + "/tag";
         new App.Views.TagsList().render();
     },
 
     popularTags: function(){
         console.log("Route: !/tags/popular");
-        //
+        tags.url = App.getPrefix() + "/tags/popular";
+        new App.Views.TagsList().render();
     },
 
     search: function() {

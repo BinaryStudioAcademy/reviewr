@@ -227,4 +227,14 @@ class RequestService implements RequestServiceInterface
     {
         return $this->requestRepository->upcomingForPeriodReviewRequests($period);
     }
+
+    public function getReviewRequestsByTagId($tag_id)
+    {
+        return $this->requestRepository->getByTagId($tag_id);
+    }
+
+    public function getPopularTags()
+    {
+        return $this->tagRepository->getPopular();
+    }
 }
