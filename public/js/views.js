@@ -138,7 +138,7 @@ App.Views.Request = Backbone.View.extend({
         'click .request-offer-btn': 'createOffers',
         'click .request-details-btn': 'showDetails',
         'click .request-delete-btn': 'deleteRequestConfirm',
-        'click .undo-offer-btn': 'undoOffer'
+        'click .undo-offer-btn': 'undoOfferConfirm'
     },
     createOffers: function () {
         reviewers.url = App.getPrefix() + '/user/0/offeron/' + this.model.get('id');
@@ -174,6 +174,17 @@ App.Views.Request = Backbone.View.extend({
         this.model.destroy({wait: true});
         this.remove();
     },
+    undoOfferConfirm: function() {
+        var that = this;
+        var confirmModal = new App.Views.ConfirmModal({
+            cb: function(){
+                //use that to run functions for this view
+                that.undoOffer();
+            },
+            body: "Undo your offer to this review request"
+        });
+        confirmModal.render();
+    },
     undoOffer: function() {
         reviewers.url = App.getPrefix() + '/user/offeroff/' + this.model.get('id');
         reviewers.fetch({wait: true});
@@ -181,8 +192,7 @@ App.Views.Request = Backbone.View.extend({
         this.$el.find('.undo-offer-btn').html('Offer');
         this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
-         
-        return this;
+        this.remove();
     },
     render: function(){
         var data = {offer : this.model.toJSON()};
@@ -656,6 +666,9 @@ App.Views.ConfirmModal = Backbone.View.extend({
     },
     close: function(){
         this.$el.modal("close");
+        this.undelegateEvents();
+        this.remove();
+        this.cb = null;
     },
     runCallBack: function(){
         this.cb();
