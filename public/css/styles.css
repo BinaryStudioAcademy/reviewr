@@ -178,6 +178,10 @@ body {
     background: gray;
     text-align: center;
 }
+
+.tags {
+    padding: 10px;
+}
 .requestor {
     text-align: center;
 }

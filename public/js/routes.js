@@ -12,6 +12,7 @@ App.Router = Backbone.Router.extend({
         "!/requests/popular": "popularRequests",
         "!/requests/high_rate": "highestRatedRequests",
         "!/requests/group/:group_id": "sortRequestsByGroups",
+        "!/requests/tag/:tag_id": "sortRequestsByTags",
         "!/request/:id": "showRequestDetails",
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
@@ -85,6 +86,11 @@ App.Router = Backbone.Router.extend({
         new App.Views.RequestsList().render();
     },
 
+    sortRequestsByTags: function(tag_id) {
+        requests.url = App.getPrefix() + "/reviewrequest/tag/" + tag_id;
+        new App.Views.RequestsList().render();
+    },
+
     showRequestDetails: function(id) {
 
         var request = new App.Models.Request({id: id});
@@ -109,6 +115,7 @@ App.Router = Backbone.Router.extend({
 
     tags: function() {
         console.log("Route: !/tags");
+        tags.url = App.getPrefix() + "/tag";
         new App.Views.TagsList().render();
     },
 

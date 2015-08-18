@@ -137,8 +137,8 @@ App.Views.Request = Backbone.View.extend({
     events: {
         'click .request-offer-btn': 'createOffers',
         'click .request-details-btn': 'showDetails',
-        'click .request-delete-btn': 'deleteRequest',
-        'click .undo-offer-btn': 'undoOffer'
+        'click .request-delete-btn': 'deleteRequestConfirm',
+        'click .undo-offer-btn': 'undoOfferConfirm'
     },
     createOffers: function () {
         reviewers.url = App.getPrefix() + '/user/0/offeron/' + this.model.get('id');
@@ -158,10 +158,32 @@ App.Views.Request = Backbone.View.extend({
     current: function() {
         return this.model.get('offers_count');
     },
+    deleteRequestConfirm: function () {
+        var that = this;
+        var confirmModal = new App.Views.ConfirmModal({
+            cb: function(){
+                //use that to run functions for this view
+                that.deleteRequest();
+            },
+            body: "Delete this review request"
+        });
+        confirmModal.render();
+    },
     deleteRequest: function () {
         this.stopListening();
         this.model.destroy({wait: true});
         this.remove();
+    },
+    undoOfferConfirm: function() {
+        var that = this;
+        var confirmModal = new App.Views.ConfirmModal({
+            cb: function(){
+                //use that to run functions for this view
+                that.undoOffer();
+            },
+            body: "Undo your offer to this review request"
+        });
+        confirmModal.render();
     },
     undoOffer: function() {
         reviewers.url = App.getPrefix() + '/user/offeroff/' + this.model.get('id');
@@ -170,8 +192,7 @@ App.Views.Request = Backbone.View.extend({
         this.$el.find('.undo-offer-btn').html('Offer');
         this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
-         
-        return this;
+        this.remove();
     },
     render: function(){
         var data = {offer : this.model.toJSON()};
@@ -624,3 +645,32 @@ App.Views.Reviewers = Backbone.View.extend({
         });
     }
  });
+
+/*
+ *---------------------------------------------------
+ *  Confirm Modal View
+ *---------------------------------------------------
+ */
+
+App.Views.ConfirmModal = Backbone.View.extend({
+    el: "#confirm-modal",
+    events: {
+        "click .btn-ok": "runCallBack"
+    },
+    initialize: function(args){
+        this.$el.find(".modal-body").html("<p>"+args.body+"</p>");
+        this.cb = args.cb;
+    },
+    render: function(){
+        this.$el.modal("show");
+    },
+    close: function(){
+        this.$el.modal("close");
+        this.undelegateEvents();
+        this.remove();
+        this.cb = null;
+    },
+    runCallBack: function(){
+        this.cb();
+    }
+});

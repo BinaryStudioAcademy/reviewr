@@ -106,6 +106,24 @@
         </div>
         <!-- END POPUP CONTAINER -->
 
+        <div class="modal fade" id="confirm-modal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span id="header-text"></span>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Are You Sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-ok" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SPINNER PRELOADER -->
         <div id="spinner">
             <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
@@ -133,7 +151,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">
-                <%= offer.title %>
+                <%- offer.title %>
             </h2>
         </div>
         <div class="panel-body">
@@ -160,7 +178,7 @@
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         <%= offer.user.first_name + ' ' + offer.user.last_name %>
                     </b></p>
-                    <p>Group: <%= offer.group.title %></p>
+                    <p>Group: <a href="#!/requests/group/<%= offer.group_id %>"><%= offer.group.title %></a></p>
                     <p><%= offer.user.email %></p>
                     <p><%= offer.user.phone %></p>
                 </div>
@@ -319,7 +337,7 @@
                             <h2 class="panel-title">
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                                 &nbsp;
-                                <a href="#" id="title"><%= title %></a>
+                                <a href="#" id="title"><%- title %></a>
                             </h2>
                         </div>
                         <div class="panel-body">
@@ -331,8 +349,9 @@
                             <ul class="tags list-inline">Request Tags List</ul>
                         </div>
                         <div class="panel-footer">
-                            <span class="glyphicon glyphicon-duplicate"
+                            <a href="#!/requests/group/<%= group_id %>"><span class="glyphicon glyphicon-duplicate"
                                   aria-hidden="true"></span> <%= group.title %>
+                            </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-user"
                                   aria-hidden="true"></span> <%= user.first_name + ' ' + user.last_name%>
@@ -502,9 +521,11 @@
 </script>
 
 <script type="text/template" id="tag-template">
-    <span class="label label-success">
-    <%- title %>
-    </span>
+    <a href="#!/requests/tag/<%= id %>">
+        <span class="label label-success" title="<%= requests_count %>">
+            <%- title %>
+        </span>
+    </a>
 </script>
 
 <script type="text/template" id="tags-list-template">
