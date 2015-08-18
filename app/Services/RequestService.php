@@ -207,4 +207,24 @@ class RequestService implements RequestServiceInterface
     {
         return $this->userRepository->getByHighestReputation();
     }
+
+    public function getHighRept($number) 
+    {
+        return $this->requestRepository->getHighRept($number);
+    }
+
+    public function upcomingReviewRequests()
+    {
+        return $this->requestRepository->upcomingReviewRequests();
+    }
+    
+    public function lastNReviewRequests($number)
+    {
+        return $this->requestRepository->lastNReviewRequests($number);
+    }
+
+    public function upcomingForPeriodReviewRequests($period)
+    {
+        return $this->requestRepository->upcomingForPeriodReviewRequests($period);
+    }
 }

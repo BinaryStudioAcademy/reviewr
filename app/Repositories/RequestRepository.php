@@ -6,7 +6,7 @@ use App;
 use App\ReviewRequest;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 // Temp Use
 use DB;
 // End Temp Use
@@ -141,7 +141,8 @@ class RequestRepository implements RequestRepositoryInterface
         return false;
     }
 
-    public function reputationUp($request_id, $user_id) {
+    public function reputationUp($request_id, $user_id)
+    {
         $review_request = ReviewRequest::findOrFail($request_id);
         $review_request->reputation = $review_request->reputation + 1;
         $review_request->votes()->attach($user_id);
@@ -149,10 +150,45 @@ class RequestRepository implements RequestRepositoryInterface
   
     }
 
-    public function reputationDown($request_id, $user_id) {
+    public function reputationDown($request_id, $user_id)
+    {
         $review_request = ReviewRequest::findOrFail($request_id);
         $review_request->reputation = $review_request->reputation - 1;
         $review_request->votes()->detach($user_id);
         $review_request->save();
+    }
+
+    public function getHighRept($number)
+    {
+        return ReviewRequest::orderBy('reputation','descs')->take($number)->get();
+    }
+
+    public function upcomingReviewRequests()
+    {
+        return ReviewRequest::where('date_review', '>', Carbon::now())->get();
+    }
+
+    public function lastNReviewRequests($number)
+    {
+        return ReviewRequest::where('date_review', '<', Carbon::now())->take($number)->get();
+    }
+
+    public function upcomingForPeriodReviewRequests($period)
+    {
+        switch($period)
+        {
+            case 'today':
+                return ReviewRequest::where('date_review', '=', Carbon::today())->get();
+                break;
+            case 'week':
+                return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
+            
+            case 'month':
+                return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addMonth()))->get();
+
+            default:
+                return 'exception!';
+                break;
+        }
     }
 }

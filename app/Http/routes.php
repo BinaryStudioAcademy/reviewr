@@ -29,6 +29,9 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('myrequests', 'UserController@myRequests');
         Route::get('reviewrequest/offered_', 'ReviewRequestController@offeredReviewRequests');
         Route::get('reviewrequest/popular', 'ReviewRequestController@popularReviewRequests');
+        Route::get('reviewrequest/last/{number}', 'ReviewRequestController@lastNReviewRequests');
+        Route::get('reviewrequest/upcoming/{period}', 'ReviewRequestController@upcomingForPeriodReviewRequests');
+        Route::get('reviewrequest/upcoming', 'ReviewRequestController@upcomingReviewRequests');
         Route::get('reviewrequest/high_rate', 'ReviewRequestController@highestRatedReviewRequests');
         Route::get('reviewrequest/group/{group}', 'ReviewRequestController@sortReviewRequestsByGroups');
         Route::get('reviewrequest/{request_id}/checkvote', 'ReviewRequestController@checkVote');
@@ -36,6 +39,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('reputationDown/{request_id}', 'ReviewRequestController@reputationDown');
         Route::get('usersforrequest/{request_id}', 'ReviewRequestController@usersForRequest');
         Route::get('users/high_rep', 'UserController@highRept');
+        Route::get('reviewrequest/heigh_rep/{number}', 'ReviewRequestController@getHeighRept');
         Route::resource('user', 'UserController');
         Route::resource('comment', 'CommentController');
         Route::resource('job', 'JobController');
