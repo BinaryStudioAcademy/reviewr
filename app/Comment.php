@@ -26,7 +26,7 @@ class Comment extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function requests()
+    public function request()
     {
         return $this->belongsTo('App\ReviewRequest');
     }
