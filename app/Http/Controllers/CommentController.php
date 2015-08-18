@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Services\Interfaces\ChatServiceInterface;
 use Illuminate\Support\Facades\Response;
 
 class CommentController extends Controller
 {
+
+    private $chatService;
+
+    public function __construct(ChatServiceInterface $chatService)
+    {
+        $this->chatService = $chatService;
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        return Response::json(Comment::all());
+        return Response::json($this->chatService->getAllCommentsByRequest($id), 200);
     }
 
     /**
@@ -25,7 +33,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        
+        // Not needed this
     }
 
     /**
@@ -46,7 +54,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        
+        return Response::json($this->chatService->getOneCommentById($id), 200);
     }
 
     /**
@@ -57,7 +65,7 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        
+        // Not needed this
     }
 
     /**

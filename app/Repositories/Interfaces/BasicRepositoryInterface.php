@@ -6,7 +6,7 @@ interface BasicRepositoryInterface
 {
     public function all();
 
-    public function OneById($id);
+    public function OneById($id); //TODO Refactor to 'find($id)'
 
     public function create($data);
 

@@ -38,7 +38,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('usersforrequest/{request_id}', 'ReviewRequestController@usersForRequest');
         Route::get('users/high_rep', 'UserController@highRept');
         Route::resource('user', 'UserController');
-        Route::resource('comment', 'CommentController');
+        Route::resource('/reviewrequest/{id}/comment', 'CommentController');
         Route::resource('job', 'JobController');
         Route::resource('department', 'DepartmentController');
         Route::resource('reviewrequest', 'ReviewRequestController');
