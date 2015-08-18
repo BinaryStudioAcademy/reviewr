@@ -674,3 +674,70 @@ App.Views.ConfirmModal = Backbone.View.extend({
         this.cb();
     }
 });
+
+
+/*
+ *---------------------------------------------------
+ *  Tags Cloud Page View
+ *---------------------------------------------------
+ */
+
+ App.Views.TagsCloud = Backbone.View.extend({
+    collection: tags,
+    el: '#main-content',
+    render: function() {
+
+        Backbone.ajax({
+            type: "GET",
+            async: false,
+            url: "/api/v1/tag",
+            success: function(data) {
+                res = data;
+            }
+        });
+
+        console.log(res);
+
+/*        var words = [];
+        var word = {};
+
+        for(var i = 0; i < res.length; ++i ){
+            word['text'] = res[i]['title'];
+            word['link'] = "!/requests/tag/" + res[i]['id'];
+            words[i] = word;
+        }
+
+        console.log(words);
+*/        
+        this.$el.empty();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(){
+                _.each(tags.models, function(tag) {
+                    console.log(tags.models);
+                });
+            }});
+
+/*        var words = [
+            {text: "Lorem", weight: 13, link: 'http://github.com/mistic100/jQCloud'},
+            {text: "Ipsum", weight: 10.5, link: 'http://www.strangeplanet.fr'},
+            {text: "Dolor", weight: 9.4, link: 'http://piwigo.org'},
+            {text: "tag#1", weight: 7, link: 'http://github.com/mistic100/jQCloud'},
+            {text: "tag#2", weight: 8, link: 'http://www.strangeplanet.fr'},
+            {text: "Tag3", weight: 9, link: 'http://piwigo.org'},
+        ];*/
+
+        console.log(words);
+
+        this.$el.html('<div id="tags-cloud"></div>');
+        
+        $('#tags-cloud').jQCloud(words, {autoResize: true});
+    },
+    f: function(tag) {
+        var array = [];
+        array = tag.get('title');
+        console.log(array);
+    }
+ });

@@ -19,6 +19,7 @@ App.Router = Backbone.Router.extend({
         "!/request/:id/decline": "declineRequest",
         "!/tags": "tags",
         "!/tags/popular": "popularTags",
+        "!/tags/cloud": "tagsCloud",
         "!/search": "search"
     },
     
@@ -123,6 +124,11 @@ App.Router = Backbone.Router.extend({
         console.log("Route: !/tags/popular");
         tags.url = App.getPrefix() + "/tags/popular";
         new App.Views.TagsList().render();
+    },
+
+    tagsCloud: function() {
+        console.log("Route: !/tags/cloud");
+        new App.Views.TagsCloud().render();
     },
 
     search: function() {

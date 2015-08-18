@@ -349,3 +349,21 @@ body {
 }
 
 /* SPINNER END*/
+
+
+@media (min-width: 768px) {
+    .sidebar-collapse {
+        display: none;
+    }
+}
+
+
+/* Tags Cloud Page Template */
+
+#tags-cloud {
+    width: 100%;
+    min-height: 400px;
+    background-color: gray;
+}
+
+/* End Tags Cloud Page Template */
