@@ -1,16 +1,9 @@
-// Since we are automatically updating the model, we want the model
-// to also hold invalid values, otherwise, we might be validating
-// something else than the user has entered in the form.
-// See: http://thedersen.com/projects/backbone-validation/#configuration/force-update
 Backbone.Validation.configure({
     forceUpdate: true
 });
 
-// Extend the callbacks to work with Bootstrap, as used in this example
-// See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
 _.extend(Backbone.Validation.callbacks, {
     valid: function (view, attr, selector) {
-      //  alert('!!!');
         var $el = view.$('[name=' + attr + ']'), 
             $group = $el.closest('.form-group');
         
@@ -18,8 +11,6 @@ _.extend(Backbone.Validation.callbacks, {
         $group.find('.help-block').html('').addClass('hidden');
     },
     invalid: function (view, attr, error, selector) {
-      //  debugger;
-        // alert('XXxx');
         var $el = view.$('[name=' + attr + ']'), 
             $group = $el.closest('.form-group');
         

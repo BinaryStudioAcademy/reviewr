@@ -272,6 +272,7 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     like: function () {
+
         users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
         users.fetch();
         this.model.set({'reputation': parseInt(this.model.get('reputation')) + 1});
@@ -293,11 +294,11 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     checkVote: function(){
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
+        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId.toString());
     },
 
     render: function(){
-        
+       
         var that = this;
 
         this.stopListening();
@@ -314,6 +315,7 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // Fetch Request Reviewers (Offers)
         var reviewersBlock = this.$el.find('.reviewers');
+
         reviewersBlock.empty();
 
         var req_id = this.model.get('id');
@@ -337,6 +339,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         //   }
         //});
         //
+        
         if (this.checkVote()) {
             this.$el.find('.like').html('Undo like');
             this.$el.find('.like').addClass('undo-like');
@@ -442,7 +445,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         console.log(this.model.isValid());
 
         if(this.model.isValid(true)) { 
-
             this.model.save(null, {
                 success: function(rq) {
                     router.navigate('!/request/' + rq.get("id"), true);
