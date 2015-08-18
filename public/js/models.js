@@ -31,6 +31,7 @@ App.Models.Request = Backbone.Model.extend({
     defaults: {
         title: '',
         details: '',
+        date_review: '',
         tags: '',
         group: '',
         created_at: '',

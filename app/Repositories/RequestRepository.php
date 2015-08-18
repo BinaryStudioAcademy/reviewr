@@ -25,8 +25,8 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request->details = $data->details;
         $review_request->user_id = Auth::user()->id;
         $review_request->group_id = $data->group_id;
+        $review_request->date_review = $data->date_review.':00';
         $review_request->save();
-
         return $review_request;
     }
 
@@ -180,6 +180,7 @@ class RequestRepository implements RequestRepositoryInterface
             case 'today':
                 return ReviewRequest::where('date_review', '=', Carbon::today())->get();
                 break;
+        
             case 'week':
                 return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
             
@@ -190,6 +191,7 @@ class RequestRepository implements RequestRepositoryInterface
                 return 'exception!';
                 break;
         }
+    }
 
     public function getByTagId($tag_id)
     {

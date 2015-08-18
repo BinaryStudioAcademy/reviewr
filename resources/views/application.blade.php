@@ -23,6 +23,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -276,10 +277,17 @@
 
                             </div> <!-- End Col-MD-10 -->
 
-                            <div class="form-group">
+                             <div class="form-group">
                                 <label class="col-md-1 control-label">Tags</label>
                                 <div class="col-md-11">
                                     <input type="text" class="tags-input form-control" name="hashtags" placeholder="use in this input regexp: #\w+">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">Date</label>
+                                <div class="col-md-11">
+                                    <input type="text" class="form-control" id="datetime">
                                 </div>
                             </div>
 
@@ -553,6 +561,8 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jqueryui.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}"></script>
+<!-- <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/moment.js')}}"></script> -->
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
@@ -566,6 +576,7 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/collections.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/views.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/routes.js')}}"></script>
+
 <!-- END APP SCRIPTS -->
 
 </body>

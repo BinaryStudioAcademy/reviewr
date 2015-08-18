@@ -405,7 +405,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     storeRequest: function(e) {
         e.preventDefault();
-        
+        alert($('#datetime').val());
         var tags = $('.tags-input').tokenfield('getTokens');
         for (var i = 0; i < tags.length; i++) {
             tags[i]= tags[i].value;
@@ -416,7 +416,8 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             title: $('.title-input').val(),
             details: $('.details-input').html(),
             tags: tags,
-            group_id: $('input[name="group-input"]:checked').val()
+            group_id: $('input[name="group-input"]:checked').val(),
+            date_review:  $('#datetime').val(),
         });
         this.stopListening()
         this.$el.empty();
@@ -430,8 +431,8 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.$el.html(this.template);
 
         // WYSIWYG Editor show
-        $('#editor').wysiwyg();
-
+        $('#editor').wysiwyg(); 
+        $("#datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
         $('.tags-input').tokenfield();
         return this;
     }

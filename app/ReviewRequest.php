@@ -19,7 +19,7 @@ class ReviewRequest extends Model
         'title'=>'required|min:2|max:100',
     );
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'date_review'];
 
     protected $appends = ['offers_count'];
       
