@@ -725,7 +725,7 @@ App.Views.CommentsList = Backbone.View.extend({
     initialize: function(options) {
         this.options = options;
         this.collection.on('remove', this.render, this);
-        this.collection.on('add', this.renderComment, this);
+        this.collection.on('add', this.render, this);
         this.poller = Backbone.Poller.get(this.collection).start();
     },
     render: function() {
