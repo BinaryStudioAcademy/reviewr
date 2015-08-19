@@ -56,6 +56,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('tags/popular', 'TagController@popularTags');
         Route::resource('tag', 'TagController');
         Route::resource('badge', 'BadgeController');
-        Route::post('tags/search', "TagController@search");
+        Route::post('tags/search', 'TagController@search');
+        Route::get('checknotification', 'UserController@checkNotification');
     });
 });

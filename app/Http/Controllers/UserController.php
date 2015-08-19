@@ -94,7 +94,6 @@ class UserController extends Controller
 
     public function acceptReviewRequest($user_id, $request_id)
     {
-       // $user_id = Auth::user()->id;
         $message = $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
         return $message;
@@ -102,7 +101,6 @@ class UserController extends Controller
 
     public function declineReviewRequest($user_id, $request_id)
     {
-       // $user_id = Auth::user()->id;
         $message = $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
         return $message;
@@ -133,5 +131,10 @@ class UserController extends Controller
     public function highRept()
     {
         return Response::json($this->requestService->getHighestReputationUsers(), 200);
+    }
+
+    public function checkNotification()
+    {
+       
     }
 }

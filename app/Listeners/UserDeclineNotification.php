@@ -39,7 +39,7 @@ class UserDeclineNotification implements ShouldQueue
         ];
 
         Mail::send('emails.notificationForDecline',  $data, function ($message) use ($data) {
-            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
+            $message->to($data['user']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
         });
     }
 }

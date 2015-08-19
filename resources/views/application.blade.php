@@ -20,7 +20,7 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+   <!--  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"> -->
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
@@ -48,6 +48,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a></li>
+                     <li><a href="#">Notifications <span class="label label-primary">5</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span>

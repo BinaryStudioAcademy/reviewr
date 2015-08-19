@@ -108,10 +108,10 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 1; 
                 $request->pivot->save();
-                return response()->json(['message'=> 'fail'], 500);
+                return response()->json(['message'=> 'success'], 200);
             }
         }
-        return response()->json(['message'=> 'success'], 200);
+        return response()->json(['message'=> 'fail'], 500);
         
     }
 
