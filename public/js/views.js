@@ -674,3 +674,32 @@ App.Views.ConfirmModal = Backbone.View.extend({
         this.cb();
     }
 });
+
+
+/*
+ *---------------------------------------------------
+ *  Comment View
+ *---------------------------------------------------
+ */
+
+// Backbone Views for one comment
+
+App.Views.Comment = Backbone.View.extend({
+    model: comment,
+    className: 'list-group-item single-comment',
+    template: _.template($('#single-comment-template').html()),
+    initialize: function(){
+    },
+    events: {
+        'click .delete-btn': 'deleteComment'
+    },
+    deleteComment: function () {
+        // Delete comment action
+        console.log('Comment ' + this.model.get('id') + ' deleted');
+        return this;
+    },
+    render: function(){
+        this.$el.html(this.template( this.model ));  //toJSON() ???
+        return this;
+    }
+});
