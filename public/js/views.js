@@ -703,3 +703,42 @@ App.Views.Comment = Backbone.View.extend({
         return this;
     }
 });
+
+
+// Backbone Views for comments list
+
+App.Views.CommentsList = Backbone.View.extend({
+    collection: comments,
+    el: "#chat-region",
+    template: _.template($("#comments-list-template").html()),
+    initialize: function() {
+        this.collection.on('remove', this.render, this);
+    },
+    render: function() {
+        this.stopListening();
+        this.$el.empty();
+        $('#spinner').show();  // May be not need
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(comments, res, req) {
+                if (!comments.length) {
+                    console.log('Render No-comment view here');
+                } else {
+                    that.$el.html(that.template());
+                    _.each(comments.models, function(comment) {
+                        that.renderComment(comment);
+                        console.log('Comment Render');
+                    });
+                }
+                $('#spinner').hide();
+            },
+            reset: true
+        });
+    },
+    renderComment: function(comment) {
+        var commentView = new App.Views.Comment({model: comment.toJSON()});
+        this.$el.find('#comments-list').append(commentView.render().el);
+    }
+});
