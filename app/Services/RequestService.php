@@ -16,14 +16,14 @@ class RequestService implements RequestServiceInterface
     private $tagRepository;
     
     public function __construct(
-        UserRepositoryInterface $userRepository,
-        RequestRepositoryInterface $requestRepository,
-        TagRepositoryInterface $tagRepository
-    ) {
-        $this->userRepository = $userRepository;
-        $this->requestRepository = $requestRepository;
-        $this->tagRepository = $tagRepository;
-    }
+    UserRepositoryInterface $userRepository,
+    RequestRepositoryInterface $requestRepository,
+    TagRepositoryInterface $tagRepository
+) {
+    $this->userRepository = $userRepository;
+    $this->requestRepository = $requestRepository;
+    $this->tagRepository = $tagRepository;
+}
 
     public function getAllUsers()
     {
