@@ -120,7 +120,7 @@ var reviewers = new App.Collections.Reviewers();
 
 App.Collections.Comments = Backbone.Collection.extend({
     model: App.Models.Comment,
-    url: App.getPrefix() + '/reviewrequest/20/comment'
+    url: App.getPrefix() + '/reviewrequest/:rid/comment'
 });
 
 // instantiate collection of Comments

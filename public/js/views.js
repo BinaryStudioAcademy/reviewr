@@ -358,13 +358,20 @@ App.Views.RequestDetails = Backbone.View.extend({
             }) ).render().el);
         }, this);
 
-        //Fetch Request Tags
+        // Render Request Tags
         var request_tags_list = this.$el.find(".tags");
         request_tags_list.empty();
         _.each(tags, function(tag) {
             request_tags_list.append( (new App.Views.Tag({model: tag}) ).render().el );
             console.log('render Tag', tag);
         }, this);
+
+        // Render Comments
+        comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
+        new App.Views.CommentsList().render()
+
+
+
         // X-Editable field
 
         // Check review request belong to auth user
