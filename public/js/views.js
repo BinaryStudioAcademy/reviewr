@@ -725,6 +725,7 @@ App.Views.CommentsList = Backbone.View.extend({
     initialize: function(options) {
         this.options = options;
         this.collection.on('remove', this.render, this);
+        this.collection.on('add', this.renderComment, this);
     },
     render: function() {
         this.stopListening();
@@ -757,21 +758,16 @@ App.Views.CommentsList = Backbone.View.extend({
     storeComment: function(e) {
         e.preventDefault();
         this.stopListening();
-        var rid = this.options.rid;
-        var newComment = this.collection.add({
-            text: $('#text-input').val()
+
+        // rid already exist after render comments
+        //var rid = this.options.rid;
+
+        this.collection.create({
+            text: $('#text-input').val(),
+        }, {
+            wait: true
         });
-        newComment.urlRoot = App.getPrefix() + '/reviewrequest/' + rid + '/comment';
-
-        var that = this;
-        newComment.save(null, {
-            success: function (model, response, options) {
-                console.log('saved');
-                that.render();
-            }
-        });
-
-
+        console.log(comment);
 
     }
 });
