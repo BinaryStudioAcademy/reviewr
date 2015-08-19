@@ -78,3 +78,19 @@ var reviewer = new App.Models.Reviewer();
  });
 
  var tag = new App.Models.Tag();
+
+
+/*
+ *---------------------------------------------------
+ *  Comment Model
+ *---------------------------------------------------
+ */
+
+App.Models.Comment = Backbone.Model.extend({
+    urlRoot: App.getPrefix() + "/comment",
+    defaults: {
+        text: ''
+    }
+});
+
+var comment = new App.Models.Comment();
