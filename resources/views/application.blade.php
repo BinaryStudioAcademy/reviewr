@@ -529,6 +529,31 @@
 </script>
 
 
+{{-- Single Comment backbone template--}}
+<script type="text/template" id="single-comment-template">
+    <div class="row">
+        <!-- User info -->
+        <div class="col-md-2">
+            <div class="user-info text-center">
+                <img src="<%= user.avatar %>" alt="avatar" class="img-thumbnail">
+                <h5><b><%= user.first_name + ' ' + user.last_name %></b></h5>
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <%= user.reputation %>
+            </div>
+        </div>
+        <!-- Text -->
+        <div class="col-md-10">
+            <div class="comment-time">
+                <small>
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <%= created_at %>
+                </small>
+            </div>
+            <div class="comment-description"><%= text %></div>
+        </div>
+    </div>
+</script>
+
 {{-- One user card backbone template--}}
 
 <script type="text/template" id="user-card-template">
