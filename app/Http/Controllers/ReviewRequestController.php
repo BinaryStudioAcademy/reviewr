@@ -158,4 +158,9 @@ class ReviewRequestController extends Controller
     {
         return Response::json($this->requestService->getReviewRequestsByTagId($tag_id), 200);
     }
+
+    public function sortReviewRequestsByUsers($user_id)
+    {
+        return Response::json($this->requestService->getReviewRequestsByUserId($user_id), 200);
+    }
 }

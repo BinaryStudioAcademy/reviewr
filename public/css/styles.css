@@ -349,3 +349,23 @@ body {
 }
 
 /* SPINNER END*/
+
+/* Hidden/Mobile Menu/Menu[Sidebar] */
+
+@media (min-width: 768px) {
+    .sidebar-hidden {
+        display: none;
+    }
+}
+
+/* End Hidden/Mobile Menu/Menu[Sidebar] */
+
+/* Tags Cloud Page Template */
+
+#tags-cloud {
+    width: 100%;
+    min-height: 400px;
+    /*background-color: gray;*/
+}
+
+/* End Tags Cloud Page Template */

@@ -505,7 +505,6 @@ App.Views.Reviewer = Backbone.View.extend({
 });
 
 // Backbone Views for all reviewers
-// TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
     collection: reviewers,
@@ -531,7 +530,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     renderReviewer: function(reviewer) {
         var reviewerView = new App.Views.Reviewer({model: reviewer});
-        this$el.find('.reviewers').append(reviewerView.render().$el);
+        this.$el.find('.reviewers').append(reviewerView.render().$el);
     }
 });
 
@@ -773,3 +772,40 @@ App.Views.CommentsList = Backbone.View.extend({
 
     }
 });
+
+
+/*
+ *---------------------------------------------------
+ *  Tags Cloud Page View
+ *---------------------------------------------------
+ */
+
+ App.Views.TagsCloud = Backbone.View.extend({
+    collection: tags,
+    el: '#main-content',
+    render: function() {
+        
+        this.$el.empty();
+
+        $('#spinner').show();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(model, response, options){
+                var words = tags.models.map(function(tag_model) {
+                    return {
+                        text: tag_model.attributes.title,
+                        weight: _.random(8, 60),
+                        link: "#!/requests/tag/" + tag_model.attributes.id,
+                    };
+                });
+                that.cloudRender(words);
+                $('#spinner').hide();
+            }});
+    },
+    cloudRender: function(words){
+        this.$el.html('<div id="tags-cloud"></div>');
+        $('#tags-cloud').jQCloud(words, {autoResize: true});
+    }
+ });

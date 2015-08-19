@@ -217,4 +217,9 @@ class RequestService implements RequestServiceInterface
     {
         return $this->tagRepository->getPopular();
     }
+
+    public function getReviewRequestsByUserId($user_id)
+    {
+        return $this->requestRepository->getByUserId($user_id);
+    }
 }

@@ -23,4 +23,6 @@ interface RequestRepositoryInterface extends BasicRepositoryInterface
     public function getByGroupId($id);
 
     public function getByTagId($tag_id);
+
+    public function getByUserId($user_id);
 }
