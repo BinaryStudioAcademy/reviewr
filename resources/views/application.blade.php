@@ -384,12 +384,108 @@
                         &nbsp;
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         &nbsp;
-                        <span class="counter-comments">0</span> comments
+                        <span class="counter-comments">3</span> comments
                     </div>
 
                     <!-- COMMENTS LIST -->
                     <div id="comments-list" class="list-group">
-                        There is no comments yet. Be the first
+                        <!-- SINGLE COMMENT -->
+                        <div class="list-group-item single-comment">
+                            <div class="row">
+                                <!-- User info -->
+                                <div class="col-md-2">
+                                    <div class="user-info text-center">
+                                        <img src="http://www.gravatar.com/avatar/801d1813b7659134bce6149e12de576f.jpg?s=80&amp;d=identicon&amp;r=g" alt="avatar" class="img-thumbnail">
+                                        <h5><b>Elton Dickinson</b></h5>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        6
+                                    </div>
+                                </div>
+                                <!-- Text -->
+                                <div class="col-md-10">
+                                    <div class="comment-time">
+                                        <small>
+                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                        2015-08-18 12:15:24
+                                        </small>
+                                    </div>
+                                    <div class="comment-description">When they take us up and said, 'That's right, Five! Always
+                                        lay the blame on others!' 'YOU'D better not talk!' said Five. 'I heard every
+                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
+                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
+                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
+                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
+                                        this fireplace is narrow, to be a footman in livery, with a great hurry. An
+                                        enormous puppy was looking down at her as she fell.
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- END SINGLE COMMENT -->
+                        <!-- SINGLE COMMENT -->
+                        <div class="list-group-item single-comment">
+                            <div class="row">
+                                <!-- User info -->
+                                <div class="col-md-2">
+                                    <div class="user-info text-center">
+                                        <img src="http://www.gravatar.com/avatar/801d1813b7659134bce6149e12de576f.jpg?s=80&amp;d=identicon&amp;r=g" alt="avatar" class="img-thumbnail">
+                                        <h5><b>Elton Dickinson</b></h5>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        14
+                                    </div>
+                                </div>
+                                <!-- Text -->
+                                <div class="col-md-10">
+                                    <div class="comment-time">
+                                        <small>
+                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                        2015-08-18 12:15:24
+                                        </small>
+                                    </div>
+                                    <div class="comment-description">When they take us up and said, 'That's right, Five! Always
+                                        lay the blame on others!' 'YOU'D better not talk!' said Five. 'I heard every
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- END SINGLE COMMENT -->
+                        <!-- SINGLE COMMENT -->
+                        <div class="list-group-item single-comment">
+                            <div class="row">
+                                <!-- User info -->
+                                <div class="col-md-2">
+                                    <div class="user-info text-center">
+                                        <img src="http://www.gravatar.com/avatar/801d1813b7659134bce6149e12de576f.jpg?s=80&amp;d=identicon&amp;r=g" alt="avatar" class="img-thumbnail">
+                                        <h5><b>Elton Dickinson</b></h5>
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        -3
+                                    </div>
+                                </div>
+                                <!-- Text -->
+                                <div class="col-md-10">
+                                    <div class="comment-time">
+                                        <small>
+                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                        2015-08-18 12:15:24
+                                        </small>
+                                    </div>
+                                    <div class="comment-description">When they take us up and said, 'That's right, Five! Always
+                                        lay the blame on others!' 'YOU'D better not talk!' said Five. 'I heard every
+                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
+                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- END SINGLE COMMENT -->
                     </div> <!-- END COMMENTS LIST -->
 
                     <!-- Adding form -->
@@ -432,68 +528,6 @@
     </div>
 </script>
 
-
-{{-- Single Comment backbone template--}}
-<script type="text/template" id="single-comment-template">
-    <div class="row">
-        <!-- User info -->
-        <div class="col-md-2">
-            <div class="user-info text-center">
-                <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="img-thumbnail">
-                <small><%= user.first_name + ' ' + user.last_name %></small>
-                {{--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>--}}
-                {{--<%= user.reputation %>--}}
-            </div>
-        </div>
-        <!-- Text -->
-        <div class="col-md-10">
-            <div class="comment-time">
-                <small>
-                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <%= created_at %>
-                </small>
-            </div>
-            <div class="comment-description"><%= text %></div>
-        </div>
-    </div>
-</script>
-
-{{-- Comments List backbone template--}}
-<script type="text/template" id="comments-list-template">
-    <div class="comments-list col-md-8">
-
-        <div class="comments-header">
-            &nbsp;
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-            &nbsp;
-            <span class="counter-comments">3</span> comments
-        </div>
-
-        <!-- COMMENTS LIST -->
-        <div id="comments-list" class="list-group">
-            <!-- SINGLE COMMENT -->
-            <!-- SINGLE COMMENT -->
-            <!-- SINGLE COMMENT -->
-        </div>
-
-        <!-- Adding form -->
-        <div class="panel panel-default new-comment">
-            <div class="panel-heading">
-                <h3 class="panel-title">Your comment</h3>
-            </div>
-            <div class="panel-body">
-                <form class="form-horisontal" id="new-comment-form">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="6" name="text" id="text-input"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="panel-footer text-center">
-                <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
-            </div>
-        </div>
-    </div>
-</script>
 
 {{-- One user card backbone template--}}
 
@@ -648,7 +682,6 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
-<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>

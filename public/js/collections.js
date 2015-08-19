@@ -110,18 +110,3 @@ var reviewers = new App.Collections.Reviewers();
  //instantiate collection of tags
 
  var request_tags = new App.Collections.RequestTags();
-
-
-/*
- *---------------------------------------------------
- *  Comments Collection
- *---------------------------------------------------
- */
-
-App.Collections.Comments = Backbone.Collection.extend({
-    model: App.Models.Comment,
-    url: App.getPrefix() + '/reviewrequest/:rid/comment'
-});
-
-// instantiate collection of Comments
-var comments = new App.Collections.Comments();

@@ -17,7 +17,7 @@ class TagTableSeeder extends Seeder
         foreach(range(1,20) as $index)
         {
             Tag::create([
-                'title' => $faker->unique()->word,
+                'title' => $faker->word,
             ]);
         }
     }

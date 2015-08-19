@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Services\Interfaces\ChatServiceInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class CommentController extends Controller
@@ -42,9 +41,9 @@ class CommentController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request, $rid)
+    public function store()
     {
-        return Response::json($this->chatService->addComment($request, $rid), 201);
+        
     }
 
     /**
