@@ -46,7 +46,7 @@
                 </button>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right sidebar-collapse">
+                <ul class="nav navbar-nav navbar-right sidebar-hidden">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>&nbsp;Main&nbsp;<span class="caret"></span>

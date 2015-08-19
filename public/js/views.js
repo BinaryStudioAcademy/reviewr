@@ -498,7 +498,6 @@ App.Views.Reviewer = Backbone.View.extend({
 });
 
 // Backbone Views for all reviewers
-// TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
     collection: reviewers,
@@ -524,7 +523,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     renderReviewer: function(reviewer) {
         var reviewerView = new App.Views.Reviewer({model: reviewer});
-        this$el.find('.reviewers').append(reviewerView.render().$el);
+        this.$el.find('.reviewers').append(reviewerView.render().$el);
     }
 });
 
@@ -686,58 +685,28 @@ App.Views.ConfirmModal = Backbone.View.extend({
     collection: tags,
     el: '#main-content',
     render: function() {
-
-        Backbone.ajax({
-            type: "GET",
-            async: false,
-            url: "/api/v1/tag",
-            success: function(data) {
-                res = data;
-            }
-        });
-
-        console.log(res);
-
-/*        var words = [];
-        var word = {};
-
-        for(var i = 0; i < res.length; ++i ){
-            word['text'] = res[i]['title'];
-            word['link'] = "!/requests/tag/" + res[i]['id'];
-            words[i] = word;
-        }
-
-        console.log(words);
-*/        
+        
         this.$el.empty();
+
+        $('#spinner').show();
 
         var that = this;
 
         this.collection.fetch({
-            success: function(){
-                _.each(tags.models, function(tag) {
-                    console.log(tags.models);
+            success: function(model, response, options){
+                var words = tags.models.map(function(tag_model) {
+                    return {
+                        text: tag_model.attributes.title,
+                        weight: _.random(8, 60),
+                        link: "#!/requests/tag/" + tag_model.attributes.id,
+                    };
                 });
+                that.cloudRender(words);
+                $('#spinner').hide();
             }});
-
-/*        var words = [
-            {text: "Lorem", weight: 13, link: 'http://github.com/mistic100/jQCloud'},
-            {text: "Ipsum", weight: 10.5, link: 'http://www.strangeplanet.fr'},
-            {text: "Dolor", weight: 9.4, link: 'http://piwigo.org'},
-            {text: "tag#1", weight: 7, link: 'http://github.com/mistic100/jQCloud'},
-            {text: "tag#2", weight: 8, link: 'http://www.strangeplanet.fr'},
-            {text: "Tag3", weight: 9, link: 'http://piwigo.org'},
-        ];*/
-
-        console.log(words);
-
-        this.$el.html('<div id="tags-cloud"></div>');
-        
-        $('#tags-cloud').jQCloud(words, {autoResize: true});
     },
-    f: function(tag) {
-        var array = [];
-        array = tag.get('title');
-        console.log(array);
+    cloudRender: function(words){
+        this.$el.html('<div id="tags-cloud"></div>');
+        $('#tags-cloud').jQCloud(words, {autoResize: true});
     }
  });
