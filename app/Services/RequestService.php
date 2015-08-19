@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Interfaces\RequestServiceInterface;
+use App\Notification;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use App\Repositories\Interfaces\TagRepositoryInterface;
@@ -108,6 +109,12 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 1; 
                 $request->pivot->save();
+                $notification = new Notification();
+                $author = $this->getOneUserById($request->user['id']);
+                $notification->title = 'User ' . $author->first_name .'   '. $author->last_name . ' accept you offer for request ' . $request->title;
+                $notification->user_id = $user_id;
+                $notification->save();
+                $notification->user()->associate($notification);
                 return response()->json(['message'=> 'success'], 200);
             }
         }
@@ -122,15 +129,32 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 0; 
                 $request->pivot->save();
+
+                $notification = new Notification();
+                $author = $this->getOneUserById($request->user['id']);
+                $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline you offer for request ' . $request->title;
+                $notification->user_id = $user_id;
+                $notification->save();
+                $notification->user()->associate($notification);
                 return response()->json(['message'=> 'success'], 200);
             }
         }
         return response()->json(['message'=> 'fail'], 500);
     }
 
-    public function offerOnReviewRequest($user_id, $req_id) {
-        $this->getOneRequestById($req_id);
+    public function offerOnReviewRequest($user_id, $req_id) 
+    {
+        $request = $this->getOneRequestById($req_id);
         $user = $this->getOneUserById($user_id);
+
+        $notification = new Notification();
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send you offer for request ' . $request->title;
+        $notification->user_id = $user_id;
+        $notification->save();
+
+        $author = $this->getOneUserById($request->user['id']);
+        $notification->user()->associate($notification);
+
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
                 return response()->json(['message'=> 'fail'], 500);
