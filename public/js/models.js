@@ -89,7 +89,9 @@ var reviewer = new App.Models.Reviewer();
 App.Models.Comment = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/comment",
     defaults: {
-        text: ''
+        id: null,
+        text: '',
+        created_at: ''
     }
 });
 

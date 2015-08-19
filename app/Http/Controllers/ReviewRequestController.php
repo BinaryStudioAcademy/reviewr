@@ -45,8 +45,7 @@ class ReviewRequestController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->requestService->createRequest($request);
-
+        return Response::json($this->requestService->createRequest($request), 201);
     }
 
     /**

@@ -368,7 +368,7 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // Render Comments
         comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
-        new App.Views.CommentsList().render()
+        new App.Views.CommentsList({'rid': req_id}).render()
 
 
 
@@ -425,7 +425,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             tags: tags,
             group_id: $('input[name="group-input"]:checked').val()
         });
-        this.stopListening()
+        this.stopListening();
         this.$el.empty();
         this.model.save(null, {
             success: function(rq) {
@@ -715,10 +715,15 @@ App.Views.Comment = Backbone.View.extend({
 // Backbone Views for comments list
 
 App.Views.CommentsList = Backbone.View.extend({
+    model: comment,
     collection: comments,
     el: "#chat-region",
     template: _.template($("#comments-list-template").html()),
-    initialize: function() {
+    events: {
+        'submit': 'storeComment'
+    },
+    initialize: function(options) {
+        this.options = options;
         this.collection.on('remove', this.render, this);
     },
     render: function() {
@@ -747,5 +752,26 @@ App.Views.CommentsList = Backbone.View.extend({
     renderComment: function(comment) {
         var commentView = new App.Views.Comment({model: comment.toJSON()});
         this.$el.find('#comments-list').append(commentView.render().el);
+    },
+
+    storeComment: function(e) {
+        e.preventDefault();
+        this.stopListening();
+        var rid = this.options.rid;
+        var newComment = this.collection.add({
+            text: $('#text-input').val()
+        });
+        newComment.urlRoot = App.getPrefix() + '/reviewrequest/' + rid + '/comment';
+
+        var that = this;
+        newComment.save(null, {
+            success: function (model, response, options) {
+                console.log('saved');
+                that.render();
+            }
+        });
+
+
+
     }
 });

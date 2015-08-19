@@ -484,7 +484,7 @@
             <div class="panel-body">
                 <form class="form-horisontal" id="new-comment-form">
                     <div class="form-group">
-                        <textarea class="form-control" rows="6" name="text" id="text"></textarea>
+                        <textarea class="form-control" rows="6" name="text" id="text-input"></textarea>
                     </div>
                 </form>
             </div>

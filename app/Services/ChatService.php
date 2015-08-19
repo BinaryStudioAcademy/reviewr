@@ -23,4 +23,10 @@ class ChatService implements ChatServiceInterface
     {
         return $this->commentRepository->findByField('review_request_id', $rid);
     }
+
+
+    public function addComment($data, $rid)
+    {
+        return $this->commentRepository->addCommentToRequest($data, $rid);
+    }
 }
