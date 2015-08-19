@@ -439,10 +439,10 @@
         <!-- User info -->
         <div class="col-md-2">
             <div class="user-info text-center">
-                <img src="<%= user.avatar %>" alt="avatar" class="img-thumbnail">
-                <h5><b><%= user.first_name + ' ' + user.last_name %></b></h5>
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <%= user.reputation %>
+                <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="img-thumbnail">
+                <small><%= user.first_name + ' ' + user.last_name %></small>
+                {{--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>--}}
+                {{--<%= user.reputation %>--}}
             </div>
         </div>
         <!-- Text -->
@@ -460,7 +460,7 @@
 
 {{-- Comments List backbone template--}}
 <script type="text/template" id="comments-list-template">
-    <div class="comments-list">
+    <div class="comments-list col-md-8">
 
         <div class="comments-header">
             &nbsp;

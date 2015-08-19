@@ -200,7 +200,7 @@ body {
 }
 
 .reviewers {
-    text-align: center;
+    /*text-align: center;*/
 }
 .reviewer {
     display: inline-block;
