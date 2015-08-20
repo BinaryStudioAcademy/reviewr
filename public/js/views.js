@@ -727,7 +727,7 @@ App.Views.Reviewers = Backbone.View.extend({
             type: "POST",
             async: false,
             data: "keyword" + "=" + $("#search-input").val(),
-            url: "/api/v1/tags/search",
+            url: App.getPrefix() + "/tags/search",
             success: function(data) {
                 content = data;
             }
