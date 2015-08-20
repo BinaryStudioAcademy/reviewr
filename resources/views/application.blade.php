@@ -403,12 +403,15 @@
                             <ul class="tags list-inline">Request Tags List</ul>
                         </div>
                         <div class="panel-footer">
-                            <a href="#!/requests/group/<%= group_id %>"><span class="glyphicon glyphicon-duplicate"
-                                  aria-hidden="true"></span> <%= group.title %>
+                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                            <a href="#!/requests/group/<%= group_id %>">
+                                <%= group.title %>
                             </a>
                             &nbsp;
-                            <span class="glyphicon glyphicon-user"
-                                  aria-hidden="true"></span> <%= user.first_name + ' ' + user.last_name%>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <a href="#!/requests/user/<%= user_id %>">
+                                <%= user.first_name + ' ' + user.last_name%>
+                            </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-star"
                                   aria-hidden="true"></span><%= reputation %>
