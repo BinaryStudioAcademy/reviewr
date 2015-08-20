@@ -38,15 +38,16 @@ class RequestRepository implements RequestRepositoryInterface
         $isReputationUp = ($data->reputation > $review_request->reputation);
         $isReputationDown = ($data->reputation < $review_request->reputation);
 
+        if ($isReputationUp) {
+            $review_request->votes()->attach($auth_user_id);
+        } elseif ($isReputationDown) {
+            $review_request->votes()->detach($auth_user_id);
+        }
+
         if ($review_request->user_id == $auth_user_id) {
             $review_request->title = $data->title;
             $review_request->details = $data->details;
             $review_request->reputation = $data->reputation;
-            if ($isReputationUp) {
-                $review_request->votes()->attach($auth_user_id);
-            } elseif ($isReputationDown) {
-                $review_request->votes()->detach($auth_user_id);
-            }
 
             // There is may be another fields witch need to update
 
