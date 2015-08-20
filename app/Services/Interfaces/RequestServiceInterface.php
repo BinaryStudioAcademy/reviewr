@@ -43,4 +43,6 @@ interface RequestServiceInterface
     public function getReviewRequestsByTagId($tag_id);
 
     public function getPopularTags();
+
+    public function getReviewRequestsByUserId($user_id);
 }

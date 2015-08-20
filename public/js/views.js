@@ -458,7 +458,7 @@ App.Views.Reviewer = Backbone.View.extend({
     request_id: 0,
     author_id: 0,
     acceptOffers:0,
-    className: "reviewer",
+    className: "reviewer text-center",
     initialize: function(options){
         this.acceptOffers = options.acceptOffers;
         this.request_id = options.request_id;
@@ -505,7 +505,6 @@ App.Views.Reviewer = Backbone.View.extend({
 });
 
 // Backbone Views for all reviewers
-// TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
     collection: reviewers,
@@ -531,7 +530,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     renderReviewer: function(reviewer) {
         var reviewerView = new App.Views.Reviewer({model: reviewer});
-        this$el.find('.reviewers').append(reviewerView.render().$el);
+        this.$el.find('.reviewers').append(reviewerView.render().$el);
     }
 });
 
@@ -723,10 +722,11 @@ App.Views.CommentsList = Backbone.View.extend({
         'submit': 'storeComment'
     },
     initialize: function(options) {
+        var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
-        this.collection.on('add', this.render, this);
-        this.poller = Backbone.Poller.get(this.collection).start();
+        this.collection.on('add', this.renderComment, this);
+        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
     },
     render: function() {
         this.stopListening();
@@ -756,6 +756,10 @@ App.Views.CommentsList = Backbone.View.extend({
         this.$el.find('#comments-list').append(commentView.render().el);
     },
 
+    renderLastComment: function(comment){
+        this.renderComment(comment);
+        $("html, body").animate({ scrollTop: $(document).height() }, 500);
+    },
     storeComment: function(e) {
         e.preventDefault();
         this.stopListening();
@@ -773,3 +777,40 @@ App.Views.CommentsList = Backbone.View.extend({
 
     }
 });
+
+
+/*
+ *---------------------------------------------------
+ *  Tags Cloud Page View
+ *---------------------------------------------------
+ */
+
+ App.Views.TagsCloud = Backbone.View.extend({
+    collection: tags,
+    el: '#main-content',
+    render: function() {
+        
+        this.$el.empty();
+
+        $('#spinner').show();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(model, response, options){
+                var words = tags.models.map(function(tag_model) {
+                    return {
+                        text: tag_model.attributes.title,
+                        weight: _.random(8, 60),
+                        link: "#!/requests/tag/" + tag_model.attributes.id,
+                    };
+                });
+                that.cloudRender(words);
+                $('#spinner').hide();
+            }});
+    },
+    cloudRender: function(words){
+        this.$el.html('<div id="tags-cloud"></div>');
+        $('#tags-cloud').jQCloud(words, {autoResize: true});
+    }
+ });
