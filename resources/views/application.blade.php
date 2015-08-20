@@ -699,11 +699,12 @@
 </script>
 
 <script type="text/template" id="notification-template">
-        <%- title %>
+     <%- title %> 
 </script>
 
 <script type="text/template" id="notifications-list-template">
-    <ul class="notifications list-unstyled text-center row">
+    <h1>Your notifications</h1>
+    <ul class="notifications list-group">
     </ul>
 </script>
 

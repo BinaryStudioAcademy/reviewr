@@ -111,7 +111,7 @@ class RequestService implements RequestServiceInterface
                 $request->pivot->save();
                 $notification = new Notification();
                 $author = $this->getOneUserById($request->user['id']);
-                $notification->title = 'User ' . $author->first_name .'   '. $author->last_name . ' accept you offer for request ' . $request->title;
+                $notification->title = 'User ' . $author->first_name .'   '. $author->last_name . ' accept your offer for request ' . $request->title;
                 $notification->user_id = $user_id;
                 $notification->save();
                 $notification->user()->associate($notification);
@@ -132,7 +132,7 @@ class RequestService implements RequestServiceInterface
 
                 $notification = new Notification();
                 $author = $this->getOneUserById($request->user['id']);
-                $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline you offer for request ' . $request->title;
+                $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline your offer for request ' . $request->title;
                 $notification->user_id = $user_id;
                 $notification->save();
                 $notification->user()->associate($notification);
@@ -146,13 +146,14 @@ class RequestService implements RequestServiceInterface
     {
         $request = $this->getOneRequestById($req_id);
         $user = $this->getOneUserById($user_id);
-
+        $author = $this->getOneUserById($request->user['id']);  
+        
         $notification = new Notification();
-        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send you offer for request ' . $request->title;
-        $notification->user_id = $user_id;
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send your offer for request ' . $request->title;
+        $notification->user_id = $author->id;
         $notification->save();
 
-        $author = $this->getOneUserById($request->user['id']);
+        
         $notification->user()->associate($notification);
 
         foreach ($user->requests as $request) {
@@ -176,6 +177,14 @@ class RequestService implements RequestServiceInterface
     }
 
     public function offerOffReviewRequest($user, $request_id) {
+        $request = $this->getOneRequestById($req_id);
+        $user = $this->getOneUserById($user_id);
+        $author = $this->getOneUserById($request->user['id']); 
+        $notification = new Notification();
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send your offer for request ' . $request->title;
+        $notification->user_id = $author->id;
+        $notification->save();
+
         $user->requests()->detach($request_id);
         return response()->json(['message'=> 'success'], 200);
     }
