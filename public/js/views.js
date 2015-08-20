@@ -272,9 +272,10 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     like: function () {
-        users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
-        users.fetch();
+        //users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
+        //users.fetch();
         this.model.set({'reputation': parseInt(this.model.get('reputation')) + 1});
+        this.model.save();
         this.$el.find('.like').html('Undo like');
         this.$el.find('.like').addClass('undo-like');
         this.$el.find('.like').removeClass('like');
@@ -282,9 +283,10 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
    
     undoLike: function () {
-        users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
-        users.fetch();
-        this.model.set({'reputation': this.model.get('reputation')-1});
+        //users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
+        //users.fetch();
+        this.model.set({'reputation': parseInt(this.model.get('reputation'))-1});
+        this.model.save();
         this.$el.find('.undo-like').html('Like');
         this.$el.find('.undo-like').addClass('like');
         this.$el.find('.undo-like').removeClass('undo-like');
@@ -734,7 +736,7 @@ App.Views.CommentsList = Backbone.View.extend({
         this.options = options;
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderComment, this);
-        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
     },
     render: function() {
         this.stopListening();
