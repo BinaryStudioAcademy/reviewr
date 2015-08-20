@@ -35,12 +35,19 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request = ReviewRequest::findOrFail($id);
 
         $auth_user_id = Auth::user()->id;
+        $isReputationUp = ($data->reputation > $review_request->reputation);
+        $isReputationDown = ($data->reputation < $review_request->reputation);
 
         if ($review_request->user_id == $auth_user_id) {
             $review_request->title = $data->title;
             $review_request->details = $data->details;
             $review_request->reputation = $data->reputation;
-            $review_request->votes()->attach($auth_user_id);
+            if ($isReputationUp) {
+                $review_request->votes()->attach($auth_user_id);
+            } elseif ($isReputationDown) {
+                $review_request->votes()->detach($auth_user_id);
+            }
+
             // There is may be another fields witch need to update
 
             $review_request->save();
