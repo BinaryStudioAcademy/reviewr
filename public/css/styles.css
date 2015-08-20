@@ -350,6 +350,10 @@ body {
 
 /* SPINNER END*/
 
+/*
+ * ****************************************************************************
+ */
+
 /* Hidden/Mobile Menu/Menu[Sidebar] */
 
 @media (min-width: 768px) {
@@ -360,6 +364,10 @@ body {
 
 /* End Hidden/Mobile Menu/Menu[Sidebar] */
 
+/*
+ * ****************************************************************************
+ */
+
 /* Tags Cloud Page Template */
 
 #tags-cloud {
@@ -369,3 +377,43 @@ body {
 }
 
 /* End Tags Cloud Page Template */
+
+/*
+ * ****************************************************************************
+ */
+
+/* Tags List Styles */
+
+.tile {
+    background-color: #e5e5e5;
+}
+
+#tag-tile {
+    padding: 5px;
+}
+
+.tilecaption {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%); 
+    margin:0!important;
+    text-align: center;
+    color:white;
+    font-family: Segoe UI;
+    font-weight: lighter;
+}
+
+.tile:hover {
+    -webkit-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+    -moz-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+    -ms-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+    transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+}
+
+/* End Tags List Styles */
+
+/*
+ * ****************************************************************************
+ */
