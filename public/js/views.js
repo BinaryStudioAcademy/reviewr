@@ -526,7 +526,6 @@ App.Views.Reviewers = Backbone.View.extend({
             },
             reset: true
         });
-
     },
     renderReviewer: function(reviewer) {
         var reviewerView = new App.Views.Reviewer({model: reviewer});
@@ -543,11 +542,9 @@ App.Views.Reviewers = Backbone.View.extend({
 
  App.Views.Tag = Backbone.View.extend({
     model: tag,
-    tagName: 'li',
-    className: 'col-md-1',
-    initialize: function(){
-        this.template = _.template($('#tag-template').html());
-    },
+    className: 'col-sm-2 col-xs-4',
+    id: 'tag-tile',
+    template: _.template($('#tag-template').html()),
     render: function(){
         this.$el.html(this.template( this.model ));
         return this;
@@ -584,6 +581,17 @@ App.Views.Reviewers = Backbone.View.extend({
                         console.log('Tag Model Render');
                     });
                 }
+                
+                /* carousel initialize */
+                $('.carousel').carousel();
+                /* end carousel initialize */
+
+                /* ready element resize */
+                $(".tile").height($(".tile").width());
+                $(".carousel").height($(".tile").width());
+                $(".item").height($(".tile").width());
+                /* ready element resize */
+
                 $('#spinner').hide();
             },
             reset: true
@@ -591,7 +599,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     renderTag: function(tag) {
         var tagView = new App.Views.Tag({model: tag.toJSON()});
-        this.$el.find('.tags').append(tagView.render().$el);
+        this.$el.find('#tags-list').append(tagView.render().$el);
     }
  });
 
