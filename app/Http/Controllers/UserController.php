@@ -153,4 +153,12 @@ class UserController extends Controller
 
         // }       
     }
+
+    public function unreadNotifications()
+    {   
+        $user = Auth::user();
+        return Response::json($this->requestService->unreadNotifications($user), 200);
+    }
+
+
 }

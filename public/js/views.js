@@ -289,7 +289,6 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.$el.find('.undo-like').html('Like');
         this.$el.find('.undo-like').addClass('like');
         this.$el.find('.undo-like').removeClass('undo-like');
-       
         return this;
     },
 
@@ -708,3 +707,63 @@ App.Views.ConfirmModal = Backbone.View.extend({
         this.cb();
     }
 });
+
+/*
+ *---------------------------------------------------
+ *  Notification View
+ *---------------------------------------------------
+ */
+
+ App.Views.Notification = Backbone.View.extend({
+    model: notification,
+    tagName: 'li',
+    className: 'col-md-1',
+    initialize: function(){
+        this.template = _.template($('#notification-template').html());
+    },
+    render: function(){
+        this.$el.html(this.template( this.model ));
+        return this;
+    }
+ });
+
+
+ /*
+ *---------------------------------------------------
+ *  Notification List View
+ *---------------------------------------------------
+ */
+
+ App.Views.NotificationsList = Backbone.View.extend({
+    collection: notifications,
+    el: "#main-content",
+    template: _.template($("#notifications-list-template").html()),
+    initialize: function() {
+        this.collection.on('remove', this.render, this);
+    },
+    render: function(){
+        this.$el.empty();
+        $('#spinner').show();
+        var that = this;
+
+        this.collection.fetch({
+            success: function(notifications, res, notification) {
+                if (!notifications.length) {
+                    console.log('Render No-Notifications view here');
+                } else {
+                    that.$el.html(that.template());
+                    _.each(notifications.models, function(notification) {
+                        that.renderNotifications(notification);
+                        console.log('Notification Model Render');
+                    });
+                }
+                $('#spinner').hide();
+            },
+            reset: true
+        });
+    },
+    renderNotifications: function(notification) {
+        var notificationView = new App.Views.Notification({model: notification.toJSON()});
+        this.$el.find('.notifications').append(notificationView.render().$el);
+    }
+ });

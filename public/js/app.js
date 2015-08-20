@@ -23,7 +23,6 @@ function listenChangeForNotifications() {
     url: App.getPrefix() + '/checknotification',
     async: true,
     cache: false,
-    //timeout: 12,
 
     success: function(data) {
         $('#notification').html(data);

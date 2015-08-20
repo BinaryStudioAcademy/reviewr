@@ -31,4 +31,10 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::orderBy('reputation', 'desc')->get();
     }
+
+    public function unreadNotifications($user)
+    {
+        $notifications = $user->notifications;
+        return $notifications;
+    }
 }

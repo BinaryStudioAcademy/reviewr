@@ -48,7 +48,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a></li>
-                     <li><a href="#">Notifications <span class="label label-primary" id="notification">0</span></a></li>
+                     <li><a href="#!/notifications">Notifications <span class="label label-primary" id="notification">0</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span>
@@ -493,7 +493,7 @@
                                         a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
                                         it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
                                         word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
+                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do'
                                     </div>
                                 </div>
                             </div>
@@ -684,6 +684,17 @@
         </form>
     </div>
     <div class="search-results">Search-Results</div>
+</script>
+
+<script type="text/template" id="notification-template">
+       
+            <%- title %>
+    
+</script>
+
+<script type="text/template" id="notifications-list-template">
+    <ul class="notifications list-unstyled text-center row">
+    </ul>
 </script>
 
 <!-- VENDOR SCRIPTS -->

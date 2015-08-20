@@ -261,4 +261,9 @@ class RequestService implements RequestServiceInterface
     {
         return $this->tagRepository->getPopular();
     }
+
+    public function unreadNotifications($user)
+    {
+        return $this->userRepository->unreadNotifications($user);
+    }
 }
