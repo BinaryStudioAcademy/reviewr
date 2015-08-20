@@ -17,14 +17,14 @@ class RequestService implements RequestServiceInterface
     private $tagRepository;
     
     public function __construct(
-        UserRepositoryInterface $userRepository,
-        RequestRepositoryInterface $requestRepository,
-        TagRepositoryInterface $tagRepository
-    ) {
-        $this->userRepository = $userRepository;
-        $this->requestRepository = $requestRepository;
-        $this->tagRepository = $tagRepository;
-    }
+    UserRepositoryInterface $userRepository,
+    RequestRepositoryInterface $requestRepository,
+    TagRepositoryInterface $tagRepository
+) {
+    $this->userRepository = $userRepository;
+    $this->requestRepository = $requestRepository;
+    $this->tagRepository = $tagRepository;
+}
 
     public function getAllUsers()
     {
@@ -262,8 +262,14 @@ class RequestService implements RequestServiceInterface
         return $this->tagRepository->getPopular();
     }
 
+
     public function unreadNotifications($user)
     {
         return $this->userRepository->unreadNotifications($user);
+    }
+    
+    public function getReviewRequestsByUserId($user_id)
+    {
+        return $this->requestRepository->getByUserId($user_id);
     }
 }

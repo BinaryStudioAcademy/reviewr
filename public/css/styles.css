@@ -196,11 +196,14 @@ body {
 }
 
 .user-info p{
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .reviewers {
-    text-align: center;
+    /*text-align: center;*/
 }
 .reviewer {
     display: inline-block;
@@ -349,3 +352,23 @@ body {
 }
 
 /* SPINNER END*/
+
+/* Hidden/Mobile Menu/Menu[Sidebar] */
+
+@media (min-width: 768px) {
+    .sidebar-hidden {
+        display: none;
+    }
+}
+
+/* End Hidden/Mobile Menu/Menu[Sidebar] */
+
+/* Tags Cloud Page Template */
+
+#tags-cloud {
+    width: 100%;
+    min-height: 400px;
+    /*background-color: gray;*/
+}
+
+/* End Tags Cloud Page Template */

@@ -13,7 +13,7 @@ class Comment extends Model
   
     public $timestamps = true;
   
-    protected $fillable = ['text'];
+    protected $fillable = ['text', 'user_id', 'review_request_id'];
   
     public static $rules = array(
         'text'=>'required|min:1|max:200',

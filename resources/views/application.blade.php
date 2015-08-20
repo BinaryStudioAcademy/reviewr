@@ -22,6 +22,7 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
    <!--  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"> -->
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
 
@@ -46,6 +47,58 @@
                 </button>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right sidebar-hidden">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>&nbsp;Main&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/request/create">Create review request</a></li>
+                            <li><a href="#!/requests/my">My review requests</a></li>
+                            <li><a href="#!/requests/offered">My offers</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></span>&nbsp;Review requests&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/requests">All</a></li>
+                            <li><a href="#!/requests/popular">Popular</a></li>
+                            <li><a href="#!/requests/high_rate">Hight rated</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>&nbsp;Groups&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/requests/group/1">PHP</a></li>
+                            <li><a href="#!/requests/group/3">.NET</a></li>
+                            <li><a href="#!/requests/group/2">JS</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Users&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/users">All</a></li>
+                            <li><a href="#!/users/high_rep">Highest reputation</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;Tags&nbsp;<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!/tags">All</a></li>
+                            <li><a href="#!/tags/popular">Popular</a></li>
+                            <li><a href="#!/tags/cloud">Cloud</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a></li>
                      <li><a href="#!/notifications">Notifications <span class="label label-primary" id="notification">0</span></a></li>
@@ -97,6 +150,7 @@
                 <li class="sub-menu-label"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;TAGS</li>
                 <li><a href="#!/tags">All</a></li>
                 <li><a href="#!/tags/popular">Popular</a></li>
+                <li><a href="#!/tags/cloud">Cloud</a></li>
             </ul>
             <hr>
         </div>
@@ -361,12 +415,15 @@
                             <ul class="tags list-inline">Request Tags List</ul>
                         </div>
                         <div class="panel-footer">
-                            <a href="#!/requests/group/<%= group_id %>"><span class="glyphicon glyphicon-duplicate"
-                                  aria-hidden="true"></span> <%= group.title %>
+                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+                            <a href="#!/requests/group/<%= group_id %>">
+                                <%= group.title %>
                             </a>
                             &nbsp;
-                            <span class="glyphicon glyphicon-user"
-                                  aria-hidden="true"></span> <%= user.first_name + ' ' + user.last_name%>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <a href="#!/requests/user/<%= user_id %>">
+                                <%= user.first_name + ' ' + user.last_name%>
+                            </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-star"
                                   aria-hidden="true"></span><%= reputation %>
@@ -388,136 +445,11 @@
                 </div>
             </div>
             <hr>
-            <!-- CHAT REGION -->
             <div id="chat-region">
-                <div class="comments-list">
-                    
-                    <div class="comments-header">
-                        &nbsp;
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        &nbsp;
-                        <span class="counter-comments">3</span> comments
-                    </div>
+                <!-- Chat View paste here  -->
+                There is no comments yet. Be the first
+            </div>
 
-                    <!-- COMMENTS LIST -->
-                    <div id="comments-list" class="list-group">
-                        <!-- SINGLE COMMENT -->
-                        <div class="list-group-item single-comment">
-                            <div class="row">
-                                <!-- User info -->
-                                <div class="col-md-2">
-                                    <div class="user-info text-center">
-                                        <img src="http://www.gravatar.com/avatar/801d1813b7659134bce6149e12de576f.jpg?s=80&amp;d=identicon&amp;r=g" alt="avatar" class="img-thumbnail">
-                                        <h5><b>Elton Dickinson</b></h5>
-                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        6
-                                    </div>
-                                </div>
-                                <!-- Text -->
-                                <div class="col-md-10">
-                                    <div class="comment-time">
-                                        <small>
-                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                        2015-08-18 12:15:24
-                                        </small>
-                                    </div>
-                                    <div class="comment-description">When they take us up and said, 'That's right, Five! Always
-                                        lay the blame on others!' 'YOU'D better not talk!' said Five. 'I heard every
-                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
-                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
-                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
-                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
-                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
-                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
-                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
-                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
-                                        this fireplace is narrow, to be a footman in livery, with a great hurry. An
-                                        enormous puppy was looking down at her as she fell.
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- END SINGLE COMMENT -->
-                        <!-- SINGLE COMMENT -->
-                        <div class="list-group-item single-comment">
-                            <div class="row">
-                                <!-- User info -->
-                                <div class="col-md-2">
-                                    <div class="user-info text-center">
-                                        <img src="http://www.gravatar.com/avatar/801d1813b7659134bce6149e12de576f.jpg?s=80&amp;d=identicon&amp;r=g" alt="avatar" class="img-thumbnail">
-                                        <h5><b>Elton Dickinson</b></h5>
-                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        14
-                                    </div>
-                                </div>
-                                <!-- Text -->
-                                <div class="col-md-10">
-                                    <div class="comment-time">
-                                        <small>
-                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                        2015-08-18 12:15:24
-                                        </small>
-                                    </div>
-                                    <div class="comment-description">When they take us up and said, 'That's right, Five! Always
-                                        lay the blame on others!' 'YOU'D better not talk!' said Five. 'I heard every
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- END SINGLE COMMENT -->
-                        <!-- SINGLE COMMENT -->
-                        <div class="list-group-item single-comment">
-                            <div class="row">
-                                <!-- User info -->
-                                <div class="col-md-2">
-                                    <div class="user-info text-center">
-                                        <img src="http://www.gravatar.com/avatar/801d1813b7659134bce6149e12de576f.jpg?s=80&amp;d=identicon&amp;r=g" alt="avatar" class="img-thumbnail">
-                                        <h5><b>Elton Dickinson</b></h5>
-                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        -3
-                                    </div>
-                                </div>
-                                <!-- Text -->
-                                <div class="col-md-10">
-                                    <div class="comment-time">
-                                        <small>
-                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                        2015-08-18 12:15:24
-                                        </small>
-                                    </div>
-                                    <div class="comment-description">When they take us up and said, 'That's right, Five! Always
-                                        lay the blame on others!' 'YOU'D better not talk!' said Five. 'I heard every
-                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do
-                                        it!--That I won't, then!--Bill's to go from here?' 'That depends a good deal
-                                        word you fellows were saying.' 'Tell us a story!' said the Duchess, 'and that's
-                                        a fact.' Alice did not venture to go down the chimney?--Nay, I shan't! YOU do'
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- END SINGLE COMMENT -->
-                    </div> <!-- END COMMENTS LIST -->
-
-                    <!-- Adding form -->
-                    <div class="panel panel-default new-comment">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Your comment</h3>
-                        </div>
-                        <div class="panel-body">
-                            <form class="form-horisontal" id="new-comment-form">
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="6" name="text" id="text"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- END CHAT REGION -->
         </div>
     </div>
 
@@ -541,6 +473,68 @@
 </script>
 
 
+{{-- Single Comment backbone template--}}
+<script type="text/template" id="single-comment-template">
+    <div class="row">
+        <!-- Text -->
+        <div class="col-md-10">
+            <strong><%= user.first_name + ' ' + user.last_name %></strong>
+            <div class="comment-time pull-right text-muted">
+                <small>
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                <%= created_at %>
+                </small>
+            </div>
+            <div class="comment-description"><%= text %></div>
+        </div>
+        <!-- User info -->
+        <div class="col-md-2 pull-right">
+            <div class="user-info text-center">
+                <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="img-thumbnail">
+            </div>
+        </div>
+    </div>
+</script>
+
+{{-- Comments List backbone template--}}
+<script type="text/template" id="comments-list-template">
+    <div class="comments-list col-md-8">
+
+        <div class="comments-header">
+            &nbsp;
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            &nbsp;
+            Chat with accepted users:
+        </div>
+
+        <!-- COMMENTS LIST -->
+        <div id="comments-list" class="list-group">
+            <!-- SINGLE COMMENT -->
+            <!-- SINGLE COMMENT -->
+            <!-- SINGLE COMMENT -->
+        </div>
+
+        <!-- Adding form -->
+        <div class="panel panel-default new-comment">
+            <div class="panel-heading">
+                <h3 class="panel-title">Your comment</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horisontal" id="new-comment-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Your message..." name="text" id="text-input">
+                        <span class="input-group-btn">
+                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
+                        </span>
+                    </div><!-- /input-group -->
+                </form>
+            </div>
+            <div class="panel-footer text-center">
+            </div>
+        </div>
+    </div>
+</script>
+
 {{-- One user card backbone template--}}
 
 <script type="text/template" id="user-card-template">
@@ -560,11 +554,16 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="thumbnail"></div>
-                    <div class="user-info col-md-8">
+                    <div class="user-info col-md-8 text-left">
                         <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                            <%= email %></p>
+                            <%= email %>
+                        </p>
                         <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                            <%= phone %></p>
+                            <%= phone %>
+                        </p>
+                        <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            <a href="#!/requests/user/<%= id %>">His Requests</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -709,9 +708,11 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.validation.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jcloud/jqcloud.min.js')}}"></script>
 <!-- END VENDOR SCRIPTS -->
 
 <!-- APP SCRIPTS -->

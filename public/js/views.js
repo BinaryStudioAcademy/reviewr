@@ -360,13 +360,20 @@ App.Views.RequestDetails = Backbone.View.extend({
             }) ).render().el);
         }, this);
 
-        //Fetch Request Tags
+        // Render Request Tags
         var request_tags_list = this.$el.find(".tags");
         request_tags_list.empty();
         _.each(tags, function(tag) {
             request_tags_list.append( (new App.Views.Tag({model: tag}) ).render().el );
             console.log('render Tag', tag);
         }, this);
+
+        // Render Comments
+        comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
+        new App.Views.CommentsList({'rid': req_id}).render()
+
+
+
         // X-Editable field
 
         // Check review request belong to auth user
@@ -443,7 +450,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.stopListening()
         console.log(this.model.isValid());
 
-        if(this.model.isValid(true)) { 
+        if(this.model.isValid()) { 
             this.model.save(null, {
                 success: function(rq) {
                     router.navigate('!/request/' + rq.get("id"), true);
@@ -451,7 +458,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             });
             this.$el.empty();
         }
-
     },
     render: function() {
         this.$el.html(this.template);
@@ -484,7 +490,7 @@ App.Views.Reviewer = Backbone.View.extend({
     request_id: 0,
     author_id: 0,
     acceptOffers:0,
-    className: "reviewer",
+    className: "reviewer text-center",
     initialize: function(options){
         this.acceptOffers = options.acceptOffers;
         this.request_id = options.request_id;
@@ -531,7 +537,6 @@ App.Views.Reviewer = Backbone.View.extend({
 });
 
 // Backbone Views for all reviewers
-// TODO: rewrite w/o sync. See requests!!!
 
 App.Views.Reviewers = Backbone.View.extend({
     collection: reviewers,
@@ -557,7 +562,7 @@ App.Views.Reviewers = Backbone.View.extend({
     },
     renderReviewer: function(reviewer) {
         var reviewerView = new App.Views.Reviewer({model: reviewer});
-        this$el.find('.reviewers').append(reviewerView.render().$el);
+        this.$el.find('.reviewers').append(reviewerView.render().$el);
     }
 });
 
@@ -708,6 +713,7 @@ App.Views.ConfirmModal = Backbone.View.extend({
     }
 });
 
+
 /*
  *---------------------------------------------------
  *  Notification View
@@ -741,6 +747,7 @@ App.Views.ConfirmModal = Backbone.View.extend({
     initialize: function() {
         this.collection.on('remove', this.render, this);
     },
+    
     render: function(){
         this.$el.empty();
         $('#spinner').show();
@@ -749,12 +756,12 @@ App.Views.ConfirmModal = Backbone.View.extend({
         this.collection.fetch({
             success: function(notifications, res, notification) {
                 if (!notifications.length) {
-                    console.log('Render No-Notifications view here');
+                    console.log('Render No-Tags view here');
                 } else {
                     that.$el.html(that.template());
                     _.each(notifications.models, function(notification) {
                         that.renderNotifications(notification);
-                        console.log('Notification Model Render');
+                        console.log('Tag Model Render');
                     });
                 }
                 $('#spinner').hide();
@@ -762,8 +769,144 @@ App.Views.ConfirmModal = Backbone.View.extend({
             reset: true
         });
     },
+
+
     renderNotifications: function(notification) {
         var notificationView = new App.Views.Notification({model: notification.toJSON()});
         this.$el.find('.notifications').append(notificationView.render().$el);
+    }
+});
+
+/*
+ *---------------------------------------------------
+ *  Comment View
+ *---------------------------------------------------
+ */
+
+// Backbone Views for one comment
+
+App.Views.Comment = Backbone.View.extend({
+    model: comment,
+    className: 'list-group-item single-comment',
+    template: _.template($('#single-comment-template').html()),
+    initialize: function(){
+    },
+    events: {
+        'click .delete-btn': 'deleteComment'
+    },
+    deleteComment: function () {
+        // Delete comment action
+        console.log('Comment ' + this.model.get('id') + ' deleted');
+        return this;
+    },
+    render: function(){
+        this.$el.html(this.template( this.model ));  //toJSON() ???
+        return this;
+    }
+});
+
+
+// Backbone Views for comments list
+
+App.Views.CommentsList = Backbone.View.extend({
+    model: comment,
+    collection: comments,
+    el: "#chat-region",
+    template: _.template($("#comments-list-template").html()),
+    events: {
+        'submit': 'storeComment'
+    },
+    initialize: function(options) {
+        var that = this;
+        this.options = options;
+        this.collection.on('remove', this.render, this);
+        this.collection.on('add', this.renderComment, this);
+        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+    },
+    render: function() {
+        this.stopListening();
+        this.$el.empty();
+        $('#spinner').show();  // May be not need
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(comments, res, req) {
+                if (!comments.length) {
+                    console.log('Render No-comment view here');
+                } else {
+                    that.$el.html(that.template());
+                    _.each(comments.models, function(comment) {
+                        that.renderComment(comment);
+                        console.log('Comment Render');
+                    });
+                }
+                $('#spinner').hide();
+            },
+            reset: true
+        });
+    },
+
+    renderComment: function(comment) {
+        var commentView = new App.Views.Comment({model: comment.toJSON()});
+        this.$el.find('#comments-list').append(commentView.render().el);
+    },
+
+    renderLastComment: function(comment){
+        this.renderComment(comment);
+        $("html, body").animate({ scrollTop: $(document).height() }, 500);
+    },
+    storeComment: function(e) {
+        e.preventDefault();
+        this.stopListening();
+
+        // rid already exist after render comments
+        //var rid = this.options.rid;
+
+        this.collection.create({
+            text: $('#text-input').val(),
+        }, {
+            wait: true
+        });
+        console.log(comment);
+        $('#text-input').val('');
+
+    }
+});
+
+
+/*
+ *---------------------------------------------------
+ *  Tags Cloud Page View
+ *---------------------------------------------------
+ */
+
+ App.Views.TagsCloud = Backbone.View.extend({
+    collection: tags,
+    el: '#main-content',
+    render: function() {
+        
+        this.$el.empty();
+
+        $('#spinner').show();
+
+        var that = this;
+
+        this.collection.fetch({
+            success: function(model, response, options){
+                var words = tags.models.map(function(tag_model) {
+                    return {
+                        text: tag_model.attributes.title,
+                        weight: _.random(8, 60),
+                        link: "#!/requests/tag/" + tag_model.attributes.id,
+                    };
+                });
+                that.cloudRender(words);
+                $('#spinner').hide();
+            }});
+    },
+    cloudRender: function(words){
+        this.$el.html('<div id="tags-cloud"></div>');
+        $('#tags-cloud').jQCloud(words, {autoResize: true});
     }
  });

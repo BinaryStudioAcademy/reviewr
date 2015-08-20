@@ -22,13 +22,15 @@ class CommentRepository implements CommentRepositoryInterface
 
     public function addCommentToRequest($data, $rid)
     {
-        $comment = new Comment;
-        $comment->text = $data->text;
-        $comment->user_id = Auth::user()->id;
-        $comment->review_request_id = $rid;
-        $comment->save();
+        $comment = Comment::create([
+            'text' => $data->text,
+            'user_id' => Auth::user()->id,
+            'review_request_id' => $rid
+        ]);
 
-        return $comment;
+        $last_comment_id = $comment->id;
+
+        return $comment->with('user')->find($last_comment_id);
     }
 
     public function update($id, $data)

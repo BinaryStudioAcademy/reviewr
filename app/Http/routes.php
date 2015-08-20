@@ -35,6 +35,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('reviewrequest/high_rate', 'ReviewRequestController@highestRatedReviewRequests');
         Route::get('reviewrequest/group/{group_id}', 'ReviewRequestController@sortReviewRequestsByGroups');
         Route::get('reviewrequest/tag/{tag_id}', 'ReviewRequestController@sortReviewRequestsByTags');
+        Route::get('reviewrequest/user/{user_id}', 'ReviewRequestController@sortReviewRequestsByUsers');
         Route::get('reviewrequest/{request_id}/checkvote', 'ReviewRequestController@checkVote');
         Route::get('reputationUp/{request_id}', 'ReviewRequestController@reputationUp');
         Route::get('reputationDown/{request_id}', 'ReviewRequestController@reputationDown');
@@ -43,7 +44,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('users/high_rep', 'UserController@highRept');
         Route::get('reviewrequest/heigh_rep/{number}', 'ReviewRequestController@getHeighRept');
         Route::resource('user', 'UserController');
-        Route::resource('/reviewrequest/{id}/comment', 'CommentController');
+        Route::resource('/reviewrequest/{rid}/comment', 'CommentController');
         Route::resource('job', 'JobController');
         Route::resource('department', 'DepartmentController');
         Route::resource('reviewrequest', 'ReviewRequestController');

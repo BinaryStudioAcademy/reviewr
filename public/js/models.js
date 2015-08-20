@@ -108,6 +108,7 @@ var reviewer = new App.Models.Reviewer();
     }
  });
 
+
 var tag = new App.Models.Tag();
 
  /*
@@ -125,4 +126,21 @@ var tag = new App.Models.Tag();
  });
 
  var notification = new App.Models.Notification();
+
+
+/*
+ *---------------------------------------------------
+ *  Comment Model
+ *---------------------------------------------------
+ */
+
+App.Models.Comment = Backbone.Model.extend({
+    defaults: {
+        id: null,
+        text: '',
+        created_at: ''
+    }
+});
+
+var comment = new App.Models.Comment();
 

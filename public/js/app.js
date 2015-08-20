@@ -10,7 +10,9 @@
 
         getPrefix: function() {
             return this.prefix + this.apiPrefix
-        }
+        },
+
+        poller: ''
 
     };
 

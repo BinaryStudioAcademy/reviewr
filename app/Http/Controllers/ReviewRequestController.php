@@ -46,8 +46,7 @@ class ReviewRequestController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->requestService->createRequest($request);
-
+        return Response::json($this->requestService->createRequest($request), 201);
     }
 
     /**
@@ -179,5 +178,10 @@ class ReviewRequestController extends Controller
     public function sortReviewRequestsByTags($tag_id)
     {
         return Response::json($this->requestService->getReviewRequestsByTagId($tag_id), 200);
+    }
+
+    public function sortReviewRequestsByUsers($user_id)
+    {
+        return Response::json($this->requestService->getReviewRequestsByUserId($user_id), 200);
     }
 }

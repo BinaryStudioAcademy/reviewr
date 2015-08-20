@@ -201,4 +201,9 @@ class RequestRepository implements RequestRepositoryInterface
                                               ->lists('review_request_id'))
                             ->get();
     }
+
+    public function getByUserId($user_id)
+    {
+        return ReviewRequest::with('user', 'group')->where('user_id', $user_id)->get();
+    }
 }
