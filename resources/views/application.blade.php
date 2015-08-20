@@ -661,16 +661,27 @@
 </script>
 
 <script type="text/template" id="tag-template">
-    <a href="#!/requests/tag/<%= id %>">
-        <span class="label label-success" title="<%= requests_count %>">
-            <%- title %>
-        </span>
-    </a>
+<div class="tile">
+    <div class="carousel slide" data-ride="carousel">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <h3 class="tilecaption"><%= title %></h3>
+            </div>
+            <div class="item">
+                <h3 class="tilecaption"><%= requests_count %></h3>
+            </div>
+        </div>
+    </div>     
+</div>
 </script>
 
 <script type="text/template" id="tags-list-template">
-    <ul class="tags list-unstyled text-center row">
-    </ul>
+<div class="container-fluid">
+    <div class="row" id="tags-list">
+        <!-- TAGS LIST -->
+    </div>
+</div>
 </script>
 
 <script type="text/template" id="search-view-template">
@@ -714,6 +725,25 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jcloud/jqcloud.min.js')}}"></script>
 <!-- END VENDOR SCRIPTS -->
+
+<script>
+$( document ).ready(function() {
+
+    $(window).resize(function() {
+    if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 10);
+    });
+    
+    $(window).bind('resizeEnd', function() {
+        $(".tile").height($(".tile").width());
+        $(".carousel").height($(".tile").width());
+        $(".item").height($(".tile").width());
+    });
+
+});
+</script>
 
 <!-- APP SCRIPTS -->
 <script src="{{asset(env('APP_PREFIX', '') .'/js/app.js')}}"></script>
