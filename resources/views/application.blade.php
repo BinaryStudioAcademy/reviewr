@@ -430,40 +430,10 @@
                 </div>
             </div>
             <hr>
-            <!-- CHAT REGION -->
             <div id="chat-region">
-                <div class="comments-list">
-                    
-                    <div class="comments-header">
-                        &nbsp;
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        &nbsp;
-                        <span class="counter-comments">0</span> comments
-                    </div>
-
-                    <!-- COMMENTS LIST -->
-                    <div id="comments-list" class="list-group">
-                        There is no comments yet. Be the first
-                    </div> <!-- END COMMENTS LIST -->
-
-                    <!-- Adding form -->
-                    <div class="panel panel-default new-comment">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Your comment</h3>
-                        </div>
-                        <div class="panel-body">
-                            <form class="form-horisontal" id="new-comment-form">
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="6" name="text" id="text"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="panel-footer text-center">
-                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- END CHAT REGION -->
+                <!-- Chat View paste here  -->
+                There is no comments yet. Be the first
+            </div>
         </div>
     </div>
 
@@ -490,24 +460,22 @@
 {{-- Single Comment backbone template--}}
 <script type="text/template" id="single-comment-template">
     <div class="row">
-        <!-- User info -->
-        <div class="col-md-2">
-            <div class="user-info text-center">
-                <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="img-thumbnail">
-                <small><%= user.first_name + ' ' + user.last_name %></small>
-                {{--<span class="glyphicon glyphicon-star" aria-hidden="true"></span>--}}
-                {{--<%= user.reputation %>--}}
-            </div>
-        </div>
         <!-- Text -->
         <div class="col-md-10">
-            <div class="comment-time">
+            <strong><%= user.first_name + ' ' + user.last_name %></strong>
+            <div class="comment-time pull-right text-muted">
                 <small>
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <%= created_at %>
+                <%= created_at %>
                 </small>
             </div>
             <div class="comment-description"><%= text %></div>
+        </div>
+        <!-- User info -->
+        <div class="col-md-2 pull-right">
+            <div class="user-info text-center">
+                <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="img-thumbnail">
+            </div>
         </div>
     </div>
 </script>
@@ -520,7 +488,7 @@
             &nbsp;
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             &nbsp;
-            <span class="counter-comments">3</span> comments
+            Chat with accepted users:
         </div>
 
         <!-- COMMENTS LIST -->
@@ -537,13 +505,15 @@
             </div>
             <div class="panel-body">
                 <form class="form-horisontal" id="new-comment-form">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="6" name="text" id="text-input"></textarea>
-                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Your message..." name="text" id="text-input">
+                        <span class="input-group-btn">
+                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
+                        </span>
+                    </div><!-- /input-group -->
                 </form>
             </div>
             <div class="panel-footer text-center">
-                <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
             </div>
         </div>
     </div>
