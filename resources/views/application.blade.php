@@ -521,11 +521,13 @@
             </div>
             <div class="panel-body">
                 <form class="form-horisontal" id="new-comment-form">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Your message..." name="text" id="text-input">
+                    <div class="input-group form-group">
+                        <input type="text" class="form-control" placeholder="Your message..." name="text" id="text">
+                        
                         <span class="input-group-btn">
                             <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
                         </span>
+                 
                     </div><!-- /input-group -->
                 </form>
             </div>
@@ -686,9 +688,7 @@
 </script>
 
 <script type="text/template" id="notification-template">
-       
-            <%- title %>
-    
+        <%- title %>
 </script>
 
 <script type="text/template" id="notifications-list-template">
@@ -702,7 +702,7 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jqueryui.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}"></script>
-<!-- <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/moment.js')}}"></script> -->
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/moment.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>

@@ -138,20 +138,6 @@ class UserController extends Controller
         $user = Auth::user();
         $count = $user->notifications->count();
         return Response::json($count, 200);
-        // while(true) {
-        //     $currentCount = $user->notifications->count();
-        //     if ($count < $currentCount || $count > $currentCount) {
-        //         return Response::json($currentCount, 200);
-        //     }
-        //      else {
-        //         sleep(5);
-        //         $currentCount = $user->notifications->count();
-        //         continue;
-
-        //      }
-
-
-        // }       
     }
 
     public function unreadNotifications()

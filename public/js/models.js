@@ -13,7 +13,8 @@ _.extend(Backbone.Validation.callbacks, {
     invalid: function (view, attr, error, selector) {
         var $el = view.$('[name=' + attr + ']'), 
             $group = $el.closest('.form-group');
-        
+            $group = $el.closest('.input-group');
+
         $group.addClass('has-error');
         $group.find('.help-block').html(error).removeClass('hidden');
     }
@@ -139,6 +140,11 @@ App.Models.Comment = Backbone.Model.extend({
         id: null,
         text: '',
         created_at: ''
+    },
+    validation: {
+        text: {
+            required: true,
+        },
     }
 });
 

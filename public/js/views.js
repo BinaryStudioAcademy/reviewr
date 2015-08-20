@@ -450,7 +450,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.stopListening()
         console.log(this.model.isValid());
 
-        if(this.model.isValid()) { 
+        if(this.model.isValid(true)) { 
             this.model.save(null, {
                 success: function(rq) {
                     router.navigate('!/request/' + rq.get("id"), true);
@@ -816,11 +816,23 @@ App.Views.CommentsList = Backbone.View.extend({
     events: {
         'submit': 'storeComment'
     },
+
+    bindings: {
+        '[name=text]': {
+            observe: 'text',
+            setOptions: {
+                validate: true
+            }
+        },
+ 
+    },
+
     initialize: function(options) {
         var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderComment, this);
+        Backbone.Validation.bind(this);
         App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
     },
     render: function() {
@@ -862,15 +874,25 @@ App.Views.CommentsList = Backbone.View.extend({
 
         // rid already exist after render comments
         //var rid = this.options.rid;
-
-        this.collection.create({
-            text: $('#text-input').val(),
-        }, {
-            wait: true
+        this.model.set({
+            id: null,
+            text: $('#text').val(),
         });
-        console.log(comment);
-        $('#text-input').val('');
+        
+        console.log(this.model);
+        if (this.model.isValid(true)) {
 
+            this.collection.create({
+                text: $('#text').val(),
+            }, {
+                wait: true
+            });
+
+
+
+            console.log(comment);
+            $('#text').val('');
+        }
     }
 });
 
