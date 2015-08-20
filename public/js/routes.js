@@ -125,13 +125,13 @@ App.Router = Backbone.Router.extend({
     tags: function() {
         console.log("Route: !/tags");
         tags.url = App.getPrefix() + "/tag";
-        new App.Views.TagsList().render();
+        new App.Views.NewTagsList().render();
     },
 
     popularTags: function(){
         console.log("Route: !/tags/popular");
         tags.url = App.getPrefix() + "/tags/popular";
-        new App.Views.TagsList().render();
+        new App.Views.NewTagsList().render();
     },
 
     tagsCloud: function() {

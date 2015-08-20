@@ -646,6 +646,19 @@
 </script>
 
 <script type="text/template" id="tag-template">
+    <a href="#!/requests/tag/<%= id %>">
+        <span class="label label-success" title="<%= requests_count %>">
+            <%= title %>
+        </span>
+    </a>
+</script>
+
+<script type="text/template" id="tags-list-template">
+    <ul class="tags list-unstyled text-center row">
+    </ul>
+</script>
+
+<script type="text/template" id="new-tag-template">
 <div class="tile">
     <div class="carousel slide" data-ride="carousel">
         <!-- Wrapper for slides -->
@@ -661,7 +674,7 @@
 </div>
 </script>
 
-<script type="text/template" id="tags-list-template">
+<script type="text/template" id="new-tags-list-template">
 <div class="container-fluid">
     <div class="row" id="tags-list">
         <!-- TAGS LIST -->
