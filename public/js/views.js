@@ -725,8 +725,8 @@ App.Views.CommentsList = Backbone.View.extend({
         var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
-        this.collection.on('add', this.renderLastComment, this);
-        //this.poller = Backbone.Poller.get(this.collection, {delay: 3000}).start();
+        this.collection.on('add', this.renderComment, this);
+        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
     },
     render: function() {
         this.stopListening();
@@ -758,7 +758,7 @@ App.Views.CommentsList = Backbone.View.extend({
 
     renderLastComment: function(comment){
         this.renderComment(comment);
-        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        $("html, body").animate({ scrollTop: $(document).height() }, 500);
     },
     storeComment: function(e) {
         e.preventDefault();
