@@ -542,9 +542,11 @@ App.Views.Reviewers = Backbone.View.extend({
 
  App.Views.Tag = Backbone.View.extend({
     model: tag,
-    className: 'col-sm-2 col-xs-4',
-    id: 'tag-tile',
-    template: _.template($('#tag-template').html()),
+    tagName: 'li',
+    className: 'col-md-1',
+    initialize: function(){
+        this.template = _.template($('#tag-template').html());
+    },
     render: function(){
         this.$el.html(this.template( this.model ));
         return this;
@@ -581,6 +583,65 @@ App.Views.Reviewers = Backbone.View.extend({
                         console.log('Tag Model Render');
                     });
                 }
+                $('#spinner').hide();
+            },
+            reset: true
+        });
+    },
+    renderTag: function(tag) {
+        var tagView = new App.Views.Tag({model: tag.toJSON()});
+        this.$el.find('.tags').append(tagView.render().$el);
+    }
+ });
+
+
+/*
+ *---------------------------------------------------
+ *  New Tag View
+ *---------------------------------------------------
+ */
+
+ App.Views.NewTag = Backbone.View.extend({
+    model: tag,
+    className: 'col-sm-2 col-xs-4',
+    id: 'tag-tile',
+    template: _.template($('#new-tag-template').html()),
+    render: function(){
+        this.$el.html(this.template( this.model ));
+        return this;
+    }
+ });
+
+
+ /*
+ *---------------------------------------------------
+ *  New Tags List View
+ *---------------------------------------------------
+ */
+
+ App.Views.NewTagsList = Backbone.View.extend({
+    collection: tags,
+    el: "#main-content",
+    template: _.template($("#new-tags-list-template").html()),
+    initialize: function() {
+        this.collection.on('remove', this.render, this);
+    },
+    render: function(){
+        this.$el.empty();
+        $('#spinner').show();
+        var that = this;
+
+        this.collection.fetch({
+            success: function(tags, res, tag) {
+                if (!tags.length) {
+                    console.log('Render No-Tags view here');
+                } else {
+                    that.$el.html(that.template());
+                    _.each(tags.models, function(tag) {
+                        that.renderTag(tag);
+                        console.log('Tag Model Render');
+                    });
+                }
                 
                 /* carousel initialize */
                 $('.carousel').carousel();
@@ -598,7 +659,7 @@ App.Views.Reviewers = Backbone.View.extend({
         });
     },
     renderTag: function(tag) {
-        var tagView = new App.Views.Tag({model: tag.toJSON()});
+        var tagView = new App.Views.NewTag({model: tag.toJSON()});
         this.$el.find('#tags-list').append(tagView.render().$el);
     }
  });
