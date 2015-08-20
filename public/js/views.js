@@ -887,7 +887,6 @@ App.Views.CommentsList = Backbone.View.extend({
             text: $('#text').val(),
         });
         
-        console.log(this.model);
         if (this.model.isValid(true)) {
 
             this.collection.create({
@@ -895,8 +894,6 @@ App.Views.CommentsList = Backbone.View.extend({
             }, {
                 wait: true
             });
-
-
 
             console.log(comment);
             $('#text').val('');
