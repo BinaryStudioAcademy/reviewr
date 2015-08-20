@@ -541,11 +541,16 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="thumbnail"></div>
-                    <div class="user-info col-md-8">
+                    <div class="user-info col-md-8 text-left">
                         <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                            <%= email %></p>
+                            <%= email %>
+                        </p>
                         <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                            <%= phone %></p>
+                            <%= phone %>
+                        </p>
+                        <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            <a href="#!/requests/user/<%= id %>">His Requests</a>
+                        </p>
                     </div>
                 </div>
             </div>

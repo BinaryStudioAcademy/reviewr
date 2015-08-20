@@ -458,7 +458,7 @@ App.Views.Reviewer = Backbone.View.extend({
     request_id: 0,
     author_id: 0,
     acceptOffers:0,
-    className: "reviewer",
+    className: "reviewer text-center",
     initialize: function(options){
         this.acceptOffers = options.acceptOffers;
         this.request_id = options.request_id;
@@ -725,7 +725,7 @@ App.Views.CommentsList = Backbone.View.extend({
         this.options = options;
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.render, this);
-        this.poller = Backbone.Poller.get(this.collection).start();
+        //this.poller = Backbone.Poller.get(this.collection, {delay: 3000}).start();
     },
     render: function() {
         this.stopListening();
