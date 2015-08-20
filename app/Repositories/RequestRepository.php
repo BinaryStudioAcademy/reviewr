@@ -37,6 +37,7 @@ class RequestRepository implements RequestRepositoryInterface
         $auth_user_id = Auth::user()->id;
         $isReputationUp = ($data->reputation > $review_request->reputation);
         $isReputationDown = ($data->reputation < $review_request->reputation);
+        $isReputationChange = $isReputationUp || $isReputationDown;
 
         if ($isReputationUp) {
             $review_request->votes()->attach($auth_user_id);
@@ -44,7 +45,7 @@ class RequestRepository implements RequestRepositoryInterface
             $review_request->votes()->detach($auth_user_id);
         }
 
-        if ($review_request->user_id == $auth_user_id) {
+        if ($review_request->user_id == $auth_user_id OR $isReputationChange) {
             $review_request->title = $data->title;
             $review_request->details = $data->details;
             $review_request->reputation = $data->reputation;
