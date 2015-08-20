@@ -259,7 +259,8 @@ App.Views.RequestDetails = Backbone.View.extend({
     el: '#main-content',
     initialize: function(){
         this.template = _.template($('#review-request-details-template').html());
-        this.model.on('change', this.render, this);
+        // Temporary blocked because Like btn render all page
+        //this.model.on('change', this.render, this);
     },
     events: {
         'click .back-request': 'back',
