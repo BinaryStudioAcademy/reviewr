@@ -13,25 +13,26 @@
         }
 
     };
-    waitForMsg();
+
+    listenChangeForNotifications();
 }());
 
-function waitForMsg() {
+function listenChangeForNotifications() {
     $.ajax({
     type: 'GET',
     url: App.getPrefix() + '/checknotification',
     async: true,
     cache: false,
+    //timeout: 12,
 
     success: function(data) {
-       // alert('!!');
-        //alert(data);
-        setTimeout('waitForMsg()', 1000);
+        $('#notification').html(data);
+        setTimeout(listenChangeForNotifications, 5000);
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
         console.log('error '+ textStatus + 'errorThrown');
-        setTimeout('waitForMsg()', 15000);
+        setTimeout(listenChangeForNotifications, 5000);
     }
 
-})
+});
 }

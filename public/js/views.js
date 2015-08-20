@@ -630,7 +630,7 @@ App.Views.Reviewers = Backbone.View.extend({
  *---------------------------------------------------
  */
 
- App.Views.Search = Backbone.View.extend({
+  App.Views.Search = Backbone.View.extend({
     el: "#main-content",
     template: _.template($("#search-view-template").html()),
     
@@ -652,7 +652,7 @@ App.Views.Reviewers = Backbone.View.extend({
             type: "POST",
             async: false,
             data: "keyword" + "=" + $("#search-input").val(),
-            url: App.getPrefix() + '/tags/search',
+            url: "/api/v1/tags/search",
             success: function(data) {
                 content = data;
             }

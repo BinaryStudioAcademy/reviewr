@@ -107,7 +107,7 @@ class UserController extends Controller
     }
 
     public function offerOnReviewRequest($user_id, $request_id)
-    {
+    { 
         $user_id = Auth::user()->id;
         $message = $this->requestService->offerOnReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
@@ -115,7 +115,7 @@ class UserController extends Controller
     }
 
     public function myRequests()
-    {
+    {   
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
         return response()->json(['message'=> $user->requests], 200);
@@ -129,12 +129,28 @@ class UserController extends Controller
     }
 
     public function highRept()
-    {
+    { 
         return Response::json($this->requestService->getHighestReputationUsers(), 200);
     }
 
     public function checkNotification()
-    {
-       
+    {   
+        $user = Auth::user();
+        $count = $user->notifications->count();
+        return Response::json($count, 200);
+        // while(true) {
+        //     $currentCount = $user->notifications->count();
+        //     if ($count < $currentCount || $count > $currentCount) {
+        //         return Response::json($currentCount, 200);
+        //     }
+        //      else {
+        //         sleep(5);
+        //         $currentCount = $user->notifications->count();
+        //         continue;
+
+        //      }
+
+
+        // }       
     }
 }
