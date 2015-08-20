@@ -722,9 +722,10 @@ App.Views.CommentsList = Backbone.View.extend({
         'submit': 'storeComment'
     },
     initialize: function(options) {
+        var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
-        this.collection.on('add', this.render, this);
+        this.collection.on('add', this.renderLastComment, this);
         //this.poller = Backbone.Poller.get(this.collection, {delay: 3000}).start();
     },
     render: function() {
@@ -755,6 +756,10 @@ App.Views.CommentsList = Backbone.View.extend({
         this.$el.find('#comments-list').append(commentView.render().el);
     },
 
+    renderLastComment: function(comment){
+        this.renderComment(comment);
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    },
     storeComment: function(e) {
         e.preventDefault();
         this.stopListening();
