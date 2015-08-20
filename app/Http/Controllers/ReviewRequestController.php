@@ -104,7 +104,7 @@ class ReviewRequestController extends Controller
     }
 
     public function myReviewRequest()
-    {session_write_close();
+    {
         return Response::json($this->requestService->getMyRequests(), 200);
     }
 
