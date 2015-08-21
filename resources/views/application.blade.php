@@ -426,7 +426,7 @@
                             </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-star"
-                                  aria-hidden="true"></span><%= reputation %>
+                                  aria-hidden="true"></span><span id="reputation"><%= reputation %></span>
                             &nbsp;
                             <button class="like btn btn-default btn-sm">Like</button>
                         </div>

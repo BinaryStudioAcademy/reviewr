@@ -280,6 +280,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.$el.find('.like').html('Undo like');
         this.$el.find('.like').addClass('undo-like');
         this.$el.find('.like').removeClass('like');
+        $('#reputation').text(this.model.get('reputation'));
         return this;
     },
    
@@ -291,6 +292,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.$el.find('.undo-like').html('Like');
         this.$el.find('.undo-like').addClass('like');
         this.$el.find('.undo-like').removeClass('undo-like');
+        $('#reputation').text(this.model.get('reputation'));
         return this;
     },
 
