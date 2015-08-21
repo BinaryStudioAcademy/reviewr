@@ -149,7 +149,7 @@ class RequestService implements RequestServiceInterface
         $author = $this->getOneUserById($request->user['id']);  
         
         $notification = new Notification();
-        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send your offer for request ' . $request->title;
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send you offer for request ' . $request->title;
         $notification->user_id = $author->id;
         $notification->save();
 
@@ -176,16 +176,16 @@ class RequestService implements RequestServiceInterface
       //  return response()->json(['message'=> 'fail'], 500);
     }
 
-    public function offerOffReviewRequest($user, $request_id) {
+    public function offerOffReviewRequest($user, $req_id) {
         $request = $this->getOneRequestById($req_id);
-        $user = $this->getOneUserById($user_id);
+        $user = $this->getOneUserById($user->id);
         $author = $this->getOneUserById($request->user['id']); 
         $notification = new Notification();
-        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send your offer for request ' . $request->title;
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' undo his offer for request ' . $request->title;
         $notification->user_id = $author->id;
         $notification->save();
 
-        $user->requests()->detach($request_id);
+        $user->requests()->detach($req_id);
         return response()->json(['message'=> 'success'], 200);
     }
 
