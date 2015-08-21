@@ -580,7 +580,6 @@ App.Views.Reviewers = Backbone.View.extend({
  App.Views.Tag = Backbone.View.extend({
     model: tag,
     tagName: 'li',
-    className: 'col-md-1',
     initialize: function(){
         this.template = _.template($('#tag-template').html());
     },
