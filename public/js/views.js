@@ -297,7 +297,7 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     checkVote: function(){
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId.toString());
+        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
 
     render: function(){
@@ -905,7 +905,7 @@ App.Views.CommentsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderComment, this);
         Backbone.Validation.bind(this);
-        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
        
     },
     render: function() {
