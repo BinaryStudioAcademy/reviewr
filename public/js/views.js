@@ -192,7 +192,8 @@ App.Views.Request = Backbone.View.extend({
         this.$el.find('.undo-offer-btn').html('Offer');
         this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
-        this.remove();
+        //If you want finally remove offer from list uncomment this
+        //this.remove();
     },
     render: function(){
         var data = {offer : this.model.toJSON()};
