@@ -220,7 +220,7 @@
                     <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
                 </span>
                 &nbsp;
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 <span class="badge">
                     <%- offer.reputation %>
                 </span>
@@ -428,8 +428,8 @@
                                 <%= user.first_name + ' ' + user.last_name%>
                             </a>
                             &nbsp;
-                            <span class="glyphicon glyphicon-star"
-                                  aria-hidden="true"></span><span id="reputation"><%= reputation %></span>
+                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                            <span id="reputation"><%= reputation %></span>
                             &nbsp;
                             <button class="like btn btn-default btn-sm">Like</button>
                         </div>
