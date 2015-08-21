@@ -16,6 +16,24 @@
 
     };
 
-
-
+    listenChangeForNotifications();
 }());
+
+function listenChangeForNotifications() {
+    $.ajax({
+    type: 'GET',
+    url: App.getPrefix() + '/checknotification',
+    async: true,
+    cache: false,
+
+    success: function(data) {
+        $('#notification').html(data);
+        setTimeout(listenChangeForNotifications, 5000);
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown){
+        console.log('error '+ textStatus + 'errorThrown');
+        setTimeout(listenChangeForNotifications, 5000);
+    }
+
+});
+}

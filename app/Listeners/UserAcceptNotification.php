@@ -37,9 +37,9 @@ class UserAcceptNotification implements ShouldQueue
            'request' => $request,
            'user' =>$offer,
         ];
-
+       
         Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {
-            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
+            $message->to($data['user']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
         });
     }
 }

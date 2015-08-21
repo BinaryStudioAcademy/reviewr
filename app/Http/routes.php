@@ -29,6 +29,9 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('myrequests', 'UserController@myRequests');
         Route::get('reviewrequest/offered_', 'ReviewRequestController@offeredReviewRequests');
         Route::get('reviewrequest/popular', 'ReviewRequestController@popularReviewRequests');
+        Route::get('reviewrequest/last/{number}', 'ReviewRequestController@lastNReviewRequests');
+        Route::get('reviewrequest/upcoming/{period}', 'ReviewRequestController@upcomingForPeriodReviewRequests');
+        Route::get('reviewrequest/upcoming', 'ReviewRequestController@upcomingReviewRequests');
         Route::get('reviewrequest/high_rate', 'ReviewRequestController@highestRatedReviewRequests');
         Route::get('reviewrequest/group/{group_id}', 'ReviewRequestController@sortReviewRequestsByGroups');
         Route::get('reviewrequest/tag/{tag_id}', 'ReviewRequestController@sortReviewRequestsByTags');
@@ -37,7 +40,9 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('reputationUp/{request_id}', 'ReviewRequestController@reputationUp');
         Route::get('reputationDown/{request_id}', 'ReviewRequestController@reputationDown');
         Route::get('usersforrequest/{request_id}', 'ReviewRequestController@usersForRequest');
+        Route::resource('unreadnotifications', 'UserController@unreadNotifications');
         Route::get('users/high_rep', 'UserController@highRept');
+        Route::get('reviewrequest/heigh_rep/{number}', 'ReviewRequestController@getHeighRept');
         Route::resource('user', 'UserController');
         Route::resource('/reviewrequest/{rid}/comment', 'CommentController');
         Route::resource('job', 'JobController');
@@ -53,6 +58,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('tags/popular', 'TagController@popularTags');
         Route::resource('tag', 'TagController');
         Route::resource('badge', 'BadgeController');
-        Route::post('tags/search', "TagController@search");
+        Route::post('tags/search', 'TagController@search');
+        Route::get('checknotification', 'UserController@checkNotification');
     });
 });

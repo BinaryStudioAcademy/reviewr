@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Interfaces\RequestServiceInterface;
+use App\Notification;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use App\Repositories\Interfaces\TagRepositoryInterface;
@@ -108,10 +109,16 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 1; 
                 $request->pivot->save();
-                return response()->json(['message'=> 'fail'], 500);
+                $notification = new Notification();
+                $author = $this->getOneUserById($request->user['id']);
+                $notification->title = 'User ' . $author->first_name .'   '. $author->last_name . ' accept your offer for request ' . $request->title;
+                $notification->user_id = $user_id;
+                $notification->save();
+                $notification->user()->associate($notification);
+                return response()->json(['message'=> 'success'], 200);
             }
         }
-        return response()->json(['message'=> 'success'], 200);
+        return response()->json(['message'=> 'fail'], 500);
         
     }
 
@@ -122,15 +129,33 @@ class RequestService implements RequestServiceInterface
             if ($request->id == $req_id) {
                 $request->pivot->isAccepted = 0; 
                 $request->pivot->save();
+
+                $notification = new Notification();
+                $author = $this->getOneUserById($request->user['id']);
+                $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline your offer for request ' . $request->title;
+                $notification->user_id = $user_id;
+                $notification->save();
+                $notification->user()->associate($notification);
                 return response()->json(['message'=> 'success'], 200);
             }
         }
         return response()->json(['message'=> 'fail'], 500);
     }
 
-    public function offerOnReviewRequest($user_id, $req_id) {
-        $this->getOneRequestById($req_id);
+    public function offerOnReviewRequest($user_id, $req_id) 
+    {
+        $request = $this->getOneRequestById($req_id);
         $user = $this->getOneUserById($user_id);
+        $author = $this->getOneUserById($request->user['id']);  
+        
+        $notification = new Notification();
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send you offer for request ' . $request->title;
+        $notification->user_id = $author->id;
+        $notification->save();
+
+        
+        $notification->user()->associate($notification);
+
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
                 return response()->json(['message'=> 'fail'], 500);
@@ -151,8 +176,16 @@ class RequestService implements RequestServiceInterface
       //  return response()->json(['message'=> 'fail'], 500);
     }
 
-    public function offerOffReviewRequest($user, $request_id) {
-        $user->requests()->detach($request_id);
+    public function offerOffReviewRequest($user, $req_id) {
+        $request = $this->getOneRequestById($req_id);
+        $user = $this->getOneUserById($user->id);
+        $author = $this->getOneUserById($request->user['id']); 
+        $notification = new Notification();
+        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' undo his offer for request ' . $request->title;
+        $notification->user_id = $author->id;
+        $notification->save();
+
+        $user->requests()->detach($req_id);
         return response()->json(['message'=> 'success'], 200);
     }
 
@@ -208,6 +241,26 @@ class RequestService implements RequestServiceInterface
         return $this->userRepository->getByHighestReputation();
     }
 
+    public function getHighRept($number) 
+    {
+        return $this->requestRepository->getHighRept($number);
+    }
+
+    public function upcomingReviewRequests()
+    {
+        return $this->requestRepository->upcomingReviewRequests();
+    }
+    
+    public function lastNReviewRequests($number)
+    {
+        return $this->requestRepository->lastNReviewRequests($number);
+    }
+
+    public function upcomingForPeriodReviewRequests($period)
+    {
+        return $this->requestRepository->upcomingForPeriodReviewRequests($period);
+    }
+
     public function getReviewRequestsByTagId($tag_id)
     {
         return $this->requestRepository->getByTagId($tag_id);
@@ -218,6 +271,12 @@ class RequestService implements RequestServiceInterface
         return $this->tagRepository->getPopular();
     }
 
+
+    public function unreadNotifications($user)
+    {
+        return $this->userRepository->unreadNotifications($user);
+    }
+    
     public function getReviewRequestsByUserId($user_id)
     {
         return $this->requestRepository->getByUserId($user_id);

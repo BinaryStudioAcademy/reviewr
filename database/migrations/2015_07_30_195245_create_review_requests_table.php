@@ -13,6 +13,7 @@ class CreateReviewRequestsTable extends Migration
             $table->string('title');
             $table->text('details');
             $table->integer('reputation');
+            $table->timestamp('date_review');
             $table->timestamps();
             $table->softDeletes();
             $table->integer('user_id')->unsigned();

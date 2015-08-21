@@ -259,7 +259,8 @@ App.Views.RequestDetails = Backbone.View.extend({
     el: '#main-content',
     initialize: function(){
         this.template = _.template($('#review-request-details-template').html());
-        this.model.on('change', this.render, this);
+        // Temporary blocked because Like btn render all page
+        //this.model.on('change', this.render, this);
     },
     events: {
         'click .back-request': 'back',
@@ -272,32 +273,35 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     like: function () {
-        users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
-        users.fetch();
+        //users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
+        //users.fetch();
         this.model.set({'reputation': parseInt(this.model.get('reputation')) + 1});
+        this.model.save();
         this.$el.find('.like').html('Undo like');
         this.$el.find('.like').addClass('undo-like');
         this.$el.find('.like').removeClass('like');
+        $('#reputation').text(this.model.get('reputation'));
         return this;
     },
    
     undoLike: function () {
-        users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
-        users.fetch();
-        this.model.set({'reputation': this.model.get('reputation')-1});
+        //users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
+        //users.fetch();
+        this.model.set({'reputation': parseInt(this.model.get('reputation'))-1});
+        this.model.save();
         this.$el.find('.undo-like').html('Like');
         this.$el.find('.undo-like').addClass('like');
         this.$el.find('.undo-like').removeClass('undo-like');
-       
+        $('#reputation').text(this.model.get('reputation'));
         return this;
     },
 
     checkVote: function(){
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
+        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId.toString());
     },
 
     render: function(){
-        
+       
         var that = this;
 
         this.stopListening();
@@ -314,6 +318,7 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // Fetch Request Reviewers (Offers)
         var reviewersBlock = this.$el.find('.reviewers');
+
         reviewersBlock.empty();
 
         var req_id = this.model.get('id');
@@ -337,6 +342,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         //   }
         //});
         //
+        
         if (this.checkVote()) {
             this.$el.find('.like').html('Undo like');
             this.$el.find('.like').addClass('undo-like');
@@ -407,41 +413,71 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     events: {
         'submit': 'storeRequest'
     },
+    
+    bindings: {
+        '[name=title]': {
+            observe: 'title',
+            setOptions: {
+                validate: true
+            }
+        },
+        '[name=date_review]': {
+            observe: 'date_review',
+            setOptions: {
+                validate: true
+            }
+        }    
+    },
+
     initialize: function(options) {
         this.model = options.model;
+        Backbone.Validation.bind(this);
     },
     storeRequest: function(e) {
         e.preventDefault();
-        
+
         var tags = $('.tags-input').tokenfield('getTokens');
         for (var i = 0; i < tags.length; i++) {
             tags[i]= tags[i].value;
         }
+
         console.log(tags);
         this.model.set({
             id: null,
             title: $('.title-input').val(),
             details: $('.details-input').html(),
             tags: tags,
-            group_id: $('input[name="group-input"]:checked').val()
+            group_id: $('input[name="group-input"]:checked').val(),
+            date_review:  $('#date_review').val(),
         });
-        this.stopListening();
-        this.$el.empty();
-        this.model.save(null, {
-            success: function(rq) {
-                router.navigate('!/request/' + rq.get("id"), true);
-            }
-        });
+
+        this.stopListening()
+        console.log(this.model.isValid());
+
+        if(this.model.isValid(true)) { 
+            this.model.save(null, {
+                success: function(rq) {
+                    router.navigate('!/request/' + rq.get("id"), true);
+                }
+            });
+            this.$el.empty();
+        }
     },
     render: function() {
         this.$el.html(this.template);
-
         // WYSIWYG Editor show
         $('#editor').wysiwyg();
-
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), nowDate.getHours(), nowDate.getMinutes(), 0, 0);
+        $("#date_review").datetimepicker({
+            autoclose: true,
+            startDate: today,
+            format: 'yyyy-mm-dd hh:ii'
+        });
         $('.tags-input').tokenfield();
         return this;
-    }
+    },
+
 });
 
 
@@ -671,7 +707,7 @@ App.Views.Reviewers = Backbone.View.extend({
  *---------------------------------------------------
  */
 
- App.Views.Search = Backbone.View.extend({
+  App.Views.Search = Backbone.View.extend({
     el: "#main-content",
     template: _.template($("#search-view-template").html()),
     
@@ -693,7 +729,7 @@ App.Views.Reviewers = Backbone.View.extend({
             type: "POST",
             async: false,
             data: "keyword" + "=" + $("#search-input").val(),
-            url: "/api/v1/tags/search",
+            url: App.getPrefix() + "/tags/search",
             success: function(data) {
                 content = data;
             }
@@ -753,6 +789,68 @@ App.Views.ConfirmModal = Backbone.View.extend({
 
 /*
  *---------------------------------------------------
+ *  Notification View
+ *---------------------------------------------------
+ */
+
+ App.Views.Notification = Backbone.View.extend({
+    model: notification,
+    tagName: 'li',
+    initialize: function(){
+        this.template = _.template($('#notification-template').html());
+    },
+    render: function(){
+        this.$el.html(this.template( this.model ));
+        return this;
+    }
+ });
+
+
+ /*
+ *---------------------------------------------------
+ *  Notification List View
+ *---------------------------------------------------
+ */
+
+ App.Views.NotificationsList = Backbone.View.extend({
+    collection: notifications,
+    el: "#main-content",
+    template: _.template($("#notifications-list-template").html()),
+    initialize: function() {
+        this.collection.on('remove', this.render, this);
+    },
+    
+    render: function(){
+        this.$el.empty();
+        $('#spinner').show();
+        var that = this;
+
+        this.collection.fetch({
+            success: function(notifications, res, notification) {
+                if (!notifications.length) {
+                    console.log('Render No-Tags view here');
+                } else {
+                    that.$el.html(that.template());
+                    _.each(notifications.models, function(notification) {
+                        that.renderNotifications(notification);
+                        console.log('Tag Model Render');
+                    });
+                }
+                $('#spinner').hide();
+            },
+            reset: true
+        });
+    },
+
+
+    renderNotifications: function(notification) {
+        var notificationView = new App.Views.Notification({model: notification.toJSON()});
+        this.$el.find('.notifications').append(notificationView.render().$el);
+    }
+});
+
+/*
+ *---------------------------------------------------
  *  Comment View
  *---------------------------------------------------
  */
@@ -790,12 +888,25 @@ App.Views.CommentsList = Backbone.View.extend({
     events: {
         'submit': 'storeComment'
     },
+
+    bindings: {
+        '[name=text]': {
+            observe: 'text',
+            setOptions: {
+                validate: true
+            }
+        },
+ 
+    },
+
     initialize: function(options) {
         var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderComment, this);
+        Backbone.Validation.bind(this);
         App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+       
     },
     render: function() {
         this.stopListening();
@@ -820,6 +931,7 @@ App.Views.CommentsList = Backbone.View.extend({
             reset: true
         });
     },
+
     renderComment: function(comment) {
         var commentView = new App.Views.Comment({model: comment.toJSON()});
         this.$el.find('#comments-list').append(commentView.render().el);
@@ -835,15 +947,22 @@ App.Views.CommentsList = Backbone.View.extend({
 
         // rid already exist after render comments
         //var rid = this.options.rid;
-
-        this.collection.create({
-            text: $('#text-input').val(),
-        }, {
-            wait: true
+        this.model.set({
+            id: null,
+            text: $('#text').val(),
         });
-        console.log(comment);
-        $('#text-input').val('');
+        
+        if (this.model.isValid(true)) {
 
+            this.collection.create({
+                text: $('#text').val(),
+            }, {
+                wait: true
+            });
+
+            console.log(comment);
+            $('#text').val('');
+        }
     }
 });
 

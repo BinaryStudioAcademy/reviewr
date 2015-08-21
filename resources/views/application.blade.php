@@ -20,10 +20,11 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"> 
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -100,6 +101,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a></li>
+                     <li><a href="#!/notifications">Notifications <span class="label label-primary" id="notification">0</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}&nbsp;<span class="caret"></span>
@@ -240,6 +242,7 @@
         </div>
         <div class="panel-footer text-center">
             <p class="description"><%- offer.details %></p>
+            <div><b>Date of review:</b> <%- offer.date_review %></div>
             <% if (status) { %>
             <button class="undo-offer-btn btn btn-primary">Undo</button>
             <% } %>
@@ -273,7 +276,8 @@
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Title</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="title-input form-control" name="title" placeholder="Title">
+                                    <input type="text" class="title-input form-control" name="title" id="title" placeholder="Title">
+                                    <span class="help-block hidden"></span>
                                 </div>
                             </div>
 
@@ -331,13 +335,22 @@
                             </div> <!-- End Col-MD-10 -->
 
                             <div class="form-group">
-                                <label class="col-md-1 control-label">Tags</label>
+                                <label class="col-md-1 control-label">Date</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="tags-input form-control" name="hashtags" placeholder="use in this input regexp: #\w+">
+                                    <input type="text" class="form-control"  bootstrap-datepicker data-date-end-date="0d" id="date_review" name='date_review'/>
+                                    <span class="help-block hidden"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
+                                <label class="col-md-1 control-label">Tags</label>
+                                <div class="col-md-11">
+                                    <input type="text" class="tags-input form-control" id="hashtags" placeholder="use in this input regexp: #\w+">
+                                    <span class="help-block hidden"></span>
+                                </div>
+                            </div>
+                           
+                           <div class="form-group">
                                 <label class="col-md-1 control-label">Group</label>
                                 <div class="col-md-11">
                                     <div class="radio">
@@ -400,7 +413,9 @@
                                              aria-hidden="true"></span> <%= created_at %></small>
                             </p>
                             <div id="details"><%= details %></div>
+
                             <ul class="tags list-inline">Request Tags List</ul>
+                             <b>Date of review:</b> <span id="date_review"><%= date_review %></span>
                         </div>
                         <div class="panel-footer">
                             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
@@ -414,7 +429,7 @@
                             </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-star"
-                                  aria-hidden="true"></span><%= reputation %>
+                                  aria-hidden="true"></span><span id="reputation"><%= reputation %></span>
                             &nbsp;
                             <button class="like btn btn-default btn-sm">Like</button>
                         </div>
@@ -437,6 +452,7 @@
                 <!-- Chat View paste here  -->
                 There is no comments yet. Be the first
             </div>
+
         </div>
     </div>
 
@@ -508,11 +524,13 @@
             </div>
             <div class="panel-body">
                 <form class="form-horisontal" id="new-comment-form">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Your message..." name="text" id="text-input">
+                    <div class="input-group form-group">
+                        <input type="text" class="form-control" placeholder="Your message..." name="text" id="text">
+                        
                         <span class="input-group-btn">
                             <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
                         </span>
+                 
                     </div><!-- /input-group -->
                 </form>
             </div>
@@ -696,14 +714,28 @@
     <div class="search-results">Search-Results</div>
 </script>
 
+<script type="text/template" id="notification-template">
+     <%- title %> 
+</script>
+
+<script type="text/template" id="notifications-list-template">
+    <h1>Your notifications</h1>
+    <ul class="notifications list-group">
+    </ul>
+</script>
+
 <!-- VENDOR SCRIPTS -->
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jquery.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jqueryui.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/moment.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.validation.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
@@ -736,6 +768,7 @@ $( document ).ready(function() {
 <script src="{{asset(env('APP_PREFIX', '') .'/js/collections.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/views.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/routes.js')}}"></script>
+
 <!-- END APP SCRIPTS -->
 
 </body>

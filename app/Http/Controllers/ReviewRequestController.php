@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Services\Interfaces\RequestServiceInterface;
@@ -35,7 +36,7 @@ class ReviewRequestController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -154,6 +155,26 @@ class ReviewRequestController extends Controller
         return Response::json($this->requestService->checkVote($request_id, Auth::user()->id), 200);
     }
 
+    public function getHeighRept($number)
+    {
+        return Response::json($this->requestService->getHighRept($number), 200);
+    }
+
+    public function upcomingReviewRequests()
+    {
+        return Response::json($this->requestService->upcomingReviewRequests(), 200);
+    }
+
+    public function lastNReviewRequests($number)
+    {
+        return Response::json($this->requestService->lastNReviewRequests($number), 200);
+    }
+
+    public function upcomingForPeriodReviewRequests($period)
+    {
+        return Response::json($this->requestService->upcomingForPeriodReviewRequests($period), 200);
+    }
+    
     public function sortReviewRequestsByTags($tag_id)
     {
         return Response::json($this->requestService->getReviewRequestsByTagId($tag_id), 200);

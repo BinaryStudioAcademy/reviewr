@@ -94,7 +94,6 @@ class UserController extends Controller
 
     public function acceptReviewRequest($user_id, $request_id)
     {
-       // $user_id = Auth::user()->id;
         $message = $this->requestService->acceptReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'accept');
         return $message;
@@ -102,14 +101,13 @@ class UserController extends Controller
 
     public function declineReviewRequest($user_id, $request_id)
     {
-       // $user_id = Auth::user()->id;
         $message = $this->requestService->declineReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'decline');
         return $message;
     }
 
     public function offerOnReviewRequest($user_id, $request_id)
-    {
+    { 
         $user_id = Auth::user()->id;
         $message = $this->requestService->offerOnReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
@@ -117,7 +115,7 @@ class UserController extends Controller
     }
 
     public function myRequests()
-    {
+    {   
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
         return response()->json(['message'=> $user->requests], 200);
@@ -131,7 +129,22 @@ class UserController extends Controller
     }
 
     public function highRept()
-    {
+    { 
         return Response::json($this->requestService->getHighestReputationUsers(), 200);
     }
+
+    public function checkNotification()
+    {   
+        $user = Auth::user();
+        $count = $user->notifications->count();
+        return Response::json($count, 200);
+    }
+
+    public function unreadNotifications()
+    {   
+        $user = Auth::user();
+        return Response::json($this->requestService->unreadNotifications($user), 200);
+    }
+
+
 }

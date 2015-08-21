@@ -6,7 +6,7 @@ use App;
 use App\ReviewRequest;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 // Temp Use
 use DB;
 // End Temp Use
@@ -25,8 +25,8 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request->details = $data->details;
         $review_request->user_id = Auth::user()->id;
         $review_request->group_id = $data->group_id;
+        $review_request->date_review = $data->date_review.':00';
         $review_request->save();
-
         return $review_request;
     }
 
@@ -34,9 +34,21 @@ class RequestRepository implements RequestRepositoryInterface
     {
         $review_request = ReviewRequest::findOrFail($id);
 
-        if ($review_request->user_id == Auth::user()->id) {
+        $auth_user_id = Auth::user()->id;
+        $isReputationUp = ($data->reputation > $review_request->reputation);
+        $isReputationDown = ($data->reputation < $review_request->reputation);
+        $review_request->reputation = $data->reputation;
+            if ($isReputationUp) {
+                $review_request->votes()->attach($auth_user_id);
+            } elseif ($isReputationDown) {
+                $review_request->votes()->detach($auth_user_id);
+            }
+        $review_request->save();
+        if ($review_request->user_id == $auth_user_id) {
             $review_request->title = $data->title;
             $review_request->details = $data->details;
+           
+
             // There is may be another fields witch need to update
 
             $review_request->save();
@@ -141,7 +153,8 @@ class RequestRepository implements RequestRepositoryInterface
         return false;
     }
 
-    public function reputationUp($request_id, $user_id) {
+    public function reputationUp($request_id, $user_id)
+    {
         $review_request = ReviewRequest::findOrFail($request_id);
         $review_request->reputation = $review_request->reputation + 1;
         $review_request->votes()->attach($user_id);
@@ -149,11 +162,47 @@ class RequestRepository implements RequestRepositoryInterface
   
     }
 
-    public function reputationDown($request_id, $user_id) {
+    public function reputationDown($request_id, $user_id)
+    {
         $review_request = ReviewRequest::findOrFail($request_id);
         $review_request->reputation = $review_request->reputation - 1;
         $review_request->votes()->detach($user_id);
         $review_request->save();
+    }
+
+    public function getHighRept($number)
+    {
+        return ReviewRequest::orderBy('reputation','descs')->take($number)->get();
+    }
+
+    public function upcomingReviewRequests()
+    {
+        return ReviewRequest::where('date_review', '>', Carbon::now())->get();
+    }
+
+    public function lastNReviewRequests($number)
+    {
+        return ReviewRequest::where('date_review', '<', Carbon::now())->take($number)->get();
+    }
+
+    public function upcomingForPeriodReviewRequests($period)
+    {
+        switch($period)
+        {
+            case 'today':
+                return ReviewRequest::where('date_review', '=', Carbon::today())->get();
+                break;
+        
+            case 'week':
+                return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
+            
+            case 'month':
+                return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addMonth()))->get();
+
+            default:
+                return 'exception!';
+                break;
+        }
     }
 
     public function getByTagId($tag_id)
