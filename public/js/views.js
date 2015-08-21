@@ -495,7 +495,7 @@ App.Views.Reviewer = Backbone.View.extend({
     request_id: 0,
     author_id: 0,
     acceptOffers:0,
-    className: "reviewer text-center",
+    className: "reviewer text-center col-md-2 col-sm-3 col-xs-6",
     initialize: function(options){
         this.acceptOffers = options.acceptOffers;
         this.request_id = options.request_id;
