@@ -242,6 +242,7 @@
         </div>
         <div class="panel-footer text-center">
             <p class="description"><%- offer.details %></p>
+            <div><b>Date of review:</b> <%- offer.date_review %></div>
             <% if (status) { %>
             <button class="undo-offer-btn btn btn-primary">Undo</button>
             <% } %>
@@ -412,7 +413,9 @@
                                              aria-hidden="true"></span> <%= created_at %></small>
                             </p>
                             <div id="details"><%= details %></div>
+
                             <ul class="tags list-inline">Request Tags List</ul>
+                             <b>Date of review:</b> <span id="date_review"><%= date_review %></span>
                         </div>
                         <div class="panel-footer">
                             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
