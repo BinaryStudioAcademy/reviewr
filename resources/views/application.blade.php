@@ -517,7 +517,7 @@
         </div>
 
         <!-- COMMENTS LIST -->
-        <div id="comments-list" class="list-group">
+        <div id="comments-list" class="list-group pre-scrollable">
             <!-- SINGLE COMMENT -->
             <!-- SINGLE COMMENT -->
             <!-- SINGLE COMMENT -->
