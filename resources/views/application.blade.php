@@ -208,6 +208,10 @@
         <div class="panel-heading">
             <h2 class="panel-title">
                 <%- offer.title %>
+                <% if (typeof(offer.pivot) != 'undefined' && offer.pivot.isAccepted == 1) { %>
+                    &nbsp;
+                    <span class="label label-success pull-right">Accepted</span>
+                <% } %>
             </h2>
         </div>
         <div class="panel-body">
