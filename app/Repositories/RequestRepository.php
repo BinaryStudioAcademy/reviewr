@@ -40,20 +40,20 @@ class RequestRepository implements RequestRepositoryInterface
             $isReputationUp =  ($data->reputation > $review_request->reputation);
             $isReputationDown = ($data->reputation < $review_request->reputation);
             $review_request->reputation = $data->reputation;
-        }
 
-        // If reputation change save user vote  or delete his vote
-        if ($isReputationUp) {
-            $review_request->votes()->detach($auth_user_id); // temp solution, for removing dubl votes
-            $review_request->votes()->attach($auth_user_id);
-        } elseif ($isReputationDown) {
-            $review_request->votes()->detach($auth_user_id);
+            // If reputation change save user vote  or delete his vote
+            if ($isReputationUp) {
+                $review_request->votes()->detach($auth_user_id); // temp solution, for removing dubl votes
+                $review_request->votes()->attach($auth_user_id);
+            } elseif ($isReputationDown) {
+                $review_request->votes()->detach($auth_user_id);
+            }
         }
 
         // Fill only existing fields (see http://ryanchenkie.com/laravel-put-requests/)
         if ($review_request->user_id == $auth_user_id) {
             $review_request->title = $data->title ? $data->title : $review_request->title;
-            $review_request->details = $data->details ? $data->details: $review_request->details;
+            $review_request->details = $data->has('details') ? $data->details: $review_request->details;
             // Another fields witch are need to update ...
         }
 

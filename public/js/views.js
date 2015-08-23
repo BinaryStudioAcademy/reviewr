@@ -391,8 +391,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 inputclass: 'input-title',
                 name: 'title',
                 success: function(response, newValue) {
-                    that.model.set('title', newValue); //update backbone model
-                    that.model.save(null, {patch: true});
+                    that.model.save({title: newValue}, {patch: true}); //update backbone model
                 }
             });
             $('#details').editable({
@@ -400,8 +399,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 type: 'textarea',
                 name: 'details',
                 success: function(response, newValue) {
-                    that.model.set('details', newValue); //update backbone model
-                    that.model.save(null, {patch: true});
+                    that.model.save({details: newValue}, {patch: true}); //update backbone model
                 }
             });
         }
