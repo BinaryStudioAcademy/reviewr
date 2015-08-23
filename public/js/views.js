@@ -769,17 +769,15 @@ App.Views.ConfirmModal = Backbone.View.extend({
         "click .btn-ok": "runCallBack"
     },
     initialize: function(args){
-        this.$el.find(".modal-body").html("<p>"+args.body+"</p>");
+        var that = this;
+        this.$el.on('hide.bs.modal', function(){
+            that.undelegateEvents();
+        }),
+        this.$el.find('.modal-body').html("<p>"+args.body+"</p>");
         this.cb = args.cb;
     },
     render: function(){
-        this.$el.modal("show");
-    },
-    close: function(){
-        this.$el.modal("close");
-        this.undelegateEvents();
-        this.remove();
-        this.cb = null;
+        this.$el.modal('show');
     },
     runCallBack: function(){
         this.cb();
