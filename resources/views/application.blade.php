@@ -208,6 +208,10 @@
         <div class="panel-heading">
             <h2 class="panel-title">
                 <%- offer.title %>
+                <% if (typeof(offer.pivot) != 'undefined' && offer.pivot.isAccepted == 1) { %>
+                    &nbsp;
+                    <span class="label label-success pull-right">Accepted</span>
+                <% } %>
             </h2>
         </div>
         <div class="panel-body">
@@ -220,7 +224,7 @@
                     <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
                 </span>
                 &nbsp;
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 <span class="badge">
                     <%- offer.reputation %>
                 </span>
@@ -398,7 +402,7 @@
     <div class="wrapper">
         <div class="request-details container">
             <div class="row">
-                <div class="info col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="info col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h2 class="panel-title">
@@ -428,8 +432,8 @@
                                 <%= user.first_name + ' ' + user.last_name%>
                             </a>
                             &nbsp;
-                            <span class="glyphicon glyphicon-star"
-                                  aria-hidden="true"></span><span id="reputation"><%= reputation %></span>
+                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                            <span id="reputation"><%= reputation %></span>
                             &nbsp;
                             <button class="like btn btn-default btn-sm">Like</button>
                         </div>
@@ -437,18 +441,24 @@
 
                 </div>
 
-                <div class="requestor col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="requestor col-lg-4 col-md-4 hidden-sm hidden-xs">
                     <p>Requestor Info</p>
                 </div>
             </div>
             <hr>
-            <div class="reviewers">
+            <div class="reviewers-header">
+                &nbsp;
+                <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                &nbsp;
+                Users who send offer to review request:
+            </div>
+            <div class="reviewers row">
                 <div class="reviewer thumbnail">
                     No Reviewers
                 </div>
             </div>
             <hr>
-            <div id="chat-region">
+            <div id="chat-region" class="row">
                 <!-- Chat View paste here  -->
                 There is no comments yet. Be the first
             </div>
@@ -463,7 +473,7 @@
 
 <script type="text/template" id="reviewer-card-template">
     <div class="thumbnail">
-        <img src="<%= offer.avatar %>" alt="offers" class="thumbnail">
+        <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
         <p><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
         <% if (author_id == userID) { %>
         <% if (offer.pivot.isAccepted) { %>
@@ -511,7 +521,7 @@
         </div>
 
         <!-- COMMENTS LIST -->
-        <div id="comments-list" class="list-group">
+        <div id="comments-list" class="list-group pre-scrollable">
             <!-- SINGLE COMMENT -->
             <!-- SINGLE COMMENT -->
             <!-- SINGLE COMMENT -->

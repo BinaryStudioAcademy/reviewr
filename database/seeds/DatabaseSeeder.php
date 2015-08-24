@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         DB::table('review_requests')->truncate();
         DB::table('comments')->truncate();
         DB::table('tags')->truncate();
+        DB::table('tag_review_request')->truncate();
         DB::table('badges')->truncate();
         DB::table('review_request_user')->truncate();
         DB::statement('SET foreign_key_checks = 1;');

@@ -20,6 +20,7 @@ class ReviewRequestTableSeeder extends Seeder {
                 'title' => $faker->text(25),
                 'details' => $faker->realtext(1000),
                 'reputation' => $faker->randomDigitNotNull,
+                'date_review' => $faker->dateTimeBetween('-1 days', '+15 days'),
                 'user_id' => $faker->randomElement($userIds),
                 'group_id' => $faker->randomElement($groupIds)
             ]);

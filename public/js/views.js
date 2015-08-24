@@ -192,7 +192,8 @@ App.Views.Request = Backbone.View.extend({
         this.$el.find('.undo-offer-btn').html('Offer');
         this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
-        this.remove();
+        //If you want finally remove offer from list uncomment this
+        //this.remove();
     },
     render: function(){
         var data = {offer : this.model.toJSON()};
@@ -275,11 +276,12 @@ App.Views.RequestDetails = Backbone.View.extend({
     like: function () {
         //users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
         //users.fetch();
-        this.model.set({'reputation': parseInt(this.model.get('reputation')) + 1});
-        this.model.save();
-        this.$el.find('.like').html('Undo like');
-        this.$el.find('.like').addClass('undo-like');
-        this.$el.find('.like').removeClass('like');
+        this.model.save({
+            reputation: parseInt(this.model.get('reputation')) + 1
+        }, {
+            patch: true
+        });
+        this.$el.find('.like').html('Undo like').addClass('undo-like').removeClass('like');
         $('#reputation').text(this.model.get('reputation'));
         return this;
     },
@@ -287,17 +289,18 @@ App.Views.RequestDetails = Backbone.View.extend({
     undoLike: function () {
         //users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
         //users.fetch();
-        this.model.set({'reputation': parseInt(this.model.get('reputation'))-1});
-        this.model.save();
-        this.$el.find('.undo-like').html('Like');
-        this.$el.find('.undo-like').addClass('like');
-        this.$el.find('.undo-like').removeClass('undo-like');
+        this.model.save({
+            reputation: parseInt(this.model.get('reputation'))-1
+        }, {
+            patch: true
+        });
+        this.$el.find('.undo-like').html('Like').addClass('like').removeClass('undo-like');
         $('#reputation').text(this.model.get('reputation'));
         return this;
     },
 
     checkVote: function(){
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId.toString());
+        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
 
     render: function(){
@@ -388,8 +391,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 inputclass: 'input-title',
                 name: 'title',
                 success: function(response, newValue) {
-                    that.model.set('title', newValue); //update backbone model
-                    that.model.save(null, {patch: true});
+                    that.model.save({title: newValue}, {patch: true}); //update backbone model
                 }
             });
             $('#details').editable({
@@ -397,8 +399,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 type: 'textarea',
                 name: 'details',
                 success: function(response, newValue) {
-                    that.model.set('details', newValue); //update backbone model
-                    that.model.save(null, {patch: true});
+                    that.model.save({details: newValue}, {patch: true}); //update backbone model
                 }
             });
         }
@@ -494,7 +495,7 @@ App.Views.Reviewer = Backbone.View.extend({
     request_id: 0,
     author_id: 0,
     acceptOffers:0,
-    className: "reviewer text-center",
+    className: "reviewer text-center col-md-2 col-sm-3 col-xs-6",
     initialize: function(options){
         this.acceptOffers = options.acceptOffers;
         this.request_id = options.request_id;
@@ -579,7 +580,6 @@ App.Views.Reviewers = Backbone.View.extend({
  App.Views.Tag = Backbone.View.extend({
     model: tag,
     tagName: 'li',
-    className: 'col-md-1',
     initialize: function(){
         this.template = _.template($('#tag-template').html());
     },
@@ -769,17 +769,15 @@ App.Views.ConfirmModal = Backbone.View.extend({
         "click .btn-ok": "runCallBack"
     },
     initialize: function(args){
-        this.$el.find(".modal-body").html("<p>"+args.body+"</p>");
+        var that = this;
+        this.$el.on('hide.bs.modal', function(){
+            that.undelegateEvents();
+        }),
+        this.$el.find('.modal-body').html("<p>"+args.body+"</p>");
         this.cb = args.cb;
     },
     render: function(){
-        this.$el.modal("show");
-    },
-    close: function(){
-        this.$el.modal("close");
-        this.undelegateEvents();
-        this.remove();
-        this.cb = null;
+        this.$el.modal('show');
     },
     runCallBack: function(){
         this.cb();
@@ -905,7 +903,7 @@ App.Views.CommentsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderComment, this);
         Backbone.Validation.bind(this);
-        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
        
     },
     render: function() {
