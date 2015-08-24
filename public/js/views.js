@@ -288,8 +288,6 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     undoLike: function () {
-        //users.url = App.getPrefix() + '/reputationDown/' + this.model.get('id');
-        //users.fetch();
         this.model.save({
             reputation: parseInt(this.model.get('reputation')) - 1
         }, {
@@ -328,35 +326,11 @@ App.Views.RequestDetails = Backbone.View.extend({
         var req_id = this.model.get('id');
         var user_id = this.model.get('user_id');
 
-        //
-        //var offers;
-        //users.url = App.getPrefix() + '/usersforrequest/' + this.model.get('id');
-        //users.fetch({
-        //async:false,
-        //success: function(requests, res, req) {
-        //        offers = res.message;
-        //   }
-        //});
-        //users.url = App.getPrefix() + '/reviewrequest/'+ this.model.get('id') + '/checkvote';
-        //var check;
-        //users.fetch({
-        //async:false,
-        //success: function(requests, res, req) {
-        //       check = res.toString();
-        //   }
-        //});
-        //
-
         if (this.checkVote()) {
             this.$el.find('.like').html('Undo like');
             this.$el.find('.like').addClass('undo-like');
             this.$el.find('.like').removeClass('like');
         }
-        //
-        //console.log(offers);
-
-        // ????
-        //users.url = App.getPrefix() + '/reviewrequest/'+ this.model.get('id') +'/checkvote';
 
         var reviewers = this.model.get('users');
         _.each(reviewers, function (reviewer, request_id) {
@@ -402,6 +376,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 }
             });
         }
+
         return this;
     }
 });
@@ -483,7 +458,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         arr = _.pluck(arr, 'title');
         $('.tags-input').tokenfield({autocomplete: {source: arr, delay: 100}, showAutocompleteOnFocus: true});
         return this;
-    },
+    }
 
 });
 
@@ -542,6 +517,7 @@ App.Views.Reviewer = Backbone.View.extend({
                 data.status = 'You accepted';
             }
         }
+        ;
         this.$el.html(this.template(data));
 
         return this;
