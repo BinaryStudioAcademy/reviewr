@@ -9,7 +9,7 @@ class TagRepository implements TagRepositoryInterface
 {
     public function all()
     {
-        return Tag::all();
+        return Tag::orderBy('title')->get();
     }
 
     public function create($data)
