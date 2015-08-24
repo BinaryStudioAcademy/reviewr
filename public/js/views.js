@@ -793,7 +793,8 @@ App.Views.ConfirmModal = Backbone.View.extend({
 
  App.Views.Notification = Backbone.View.extend({
     model: notification,
-    tagName: 'li',
+    tagName: 'div',
+    className: 'alert alert-info',
     initialize: function(){
         this.template = _.template($('#notification-template').html());
     },

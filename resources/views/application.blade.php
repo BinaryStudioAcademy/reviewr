@@ -731,8 +731,8 @@
 
 <script type="text/template" id="notifications-list-template">
     <h1>Your notifications</h1>
-    <ul class="notifications list-group">
-    </ul>
+    <div class="notifications list-group">
+    </div>
 </script>
 
 <!-- VENDOR SCRIPTS -->
