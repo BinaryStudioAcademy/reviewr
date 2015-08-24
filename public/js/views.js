@@ -952,13 +952,13 @@ App.Views.CommentsList = Backbone.View.extend({
         
         if (this.model.isValid(true)) {
 
+            var ecs_input = _.escape( $('#text').val() );
             this.collection.create({
-                text: $('#text').val(),
+                text: emojione.shortnameToImage( ecs_input ),
             }, {
                 wait: true
             });
 
-            console.log(comment);
             $('#text').val('');
         }
     }
