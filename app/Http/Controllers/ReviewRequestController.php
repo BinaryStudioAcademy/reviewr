@@ -26,7 +26,7 @@ class ReviewRequestController extends Controller
      */
     public function index()
     {
-        return Response::json($this->requestService->getAllRequests(), 200);
+        return Response::json($this->requestService->getAllRequests(), 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -46,7 +46,7 @@ class ReviewRequestController extends Controller
      */
     public function store(Request $request)
     {
-        return Response::json($this->requestService->createRequest($request), 201);
+        return Response::json($this->requestService->createRequest($request), 201, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -57,7 +57,7 @@ class ReviewRequestController extends Controller
      */
     public function show($id)
     {
-        return Response::json($this->requestService->getOneRequestById($id), 200);
+        return Response::json($this->requestService->getOneRequestById($id), 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
