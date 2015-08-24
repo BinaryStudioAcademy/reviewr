@@ -984,13 +984,19 @@ App.Views.CommentsList = Backbone.View.extend({
 
         this.collection.fetch({
             success: function(model, response, options){
+
+                var requests_count_max = _.max(tags.models, function(tag_model) {
+                    return tag_model.attributes.requests_count;
+                }).attributes.requests_count;
+
                 var words = tags.models.map(function(tag_model) {
                     return {
                         text: tag_model.attributes.title,
-                        weight: _.random(8, 60),
+                        weight: that.getKeyWordWeight(tag_model.attributes.requests_count, requests_count_max),
                         link: "#!/requests/tag/" + tag_model.attributes.id,
                     };
                 });
+                console.log(words);
                 that.cloudRender(words);
                 $('#spinner').hide();
             }});
@@ -998,5 +1004,8 @@ App.Views.CommentsList = Backbone.View.extend({
     cloudRender: function(words){
         this.$el.html('<div id="tags-cloud"></div>');
         $('#tags-cloud').jQCloud(words, {autoResize: true});
+    },
+    getKeyWordWeight: function(count, max_count, min_weight = 10, max_weight = 60) {
+        return Math.round(((count * (max_weight - min_weight)) / max_count) + min_weight);
     }
  });
