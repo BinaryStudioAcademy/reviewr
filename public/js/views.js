@@ -775,7 +775,8 @@ App.Views.ConfirmModal = Backbone.View.extend({
 
 App.Views.Notification = Backbone.View.extend({
     model: notification,
-    tagName: 'li',
+    tagName: 'div',
+    className: 'alert alert-info',
     initialize: function () {
         this.template = _.template($('#notification-template').html());
     },
@@ -883,9 +884,9 @@ App.Views.CommentsList = Backbone.View.extend({
         var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
-        this.collection.on('add', this.renderComment, this);
+        this.collection.on('add', this.renderLastComment, this);
         Backbone.Validation.bind(this);
-        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
 
     },
     render: function () {
@@ -897,18 +898,15 @@ App.Views.CommentsList = Backbone.View.extend({
 
         this.collection.fetch({
             success: function (comments, res, req) {
-                if (!comments.length) {
-                    console.log('Render No-comment view here');
-                } else {
-                    that.$el.html(that.template());
-                    _.each(comments.models, function (comment) {
-                        that.renderComment(comment);
-                        console.log('Comment Render');
-                    });
-                }
+                // Render layout view
+                that.$el.html(that.template());
+                // Render each comment
+                _.each(comments.models, function (comment) {
+                    that.renderComment(comment);
+
+                });
                 $('#spinner').hide();
-            },
-            reset: true
+            }
         });
     },
 
@@ -919,14 +917,16 @@ App.Views.CommentsList = Backbone.View.extend({
 
     renderLastComment: function (comment) {
         this.renderComment(comment);
-        $("html, body").animate({scrollTop: $(document).height()}, 500);
+        lastComment = this.$el.find('#comments-list');
+            if (lastComment[0] != undefined) {
+                        lastComment.animate({scrollTop: lastComment[0].scrollHeight}, 500);
+            }
     },
     storeComment: function (e) {
         e.preventDefault();
         this.stopListening();
 
-        // rid already exist after render comments
-        //var rid = this.options.rid;
+
         this.model.set({
             id: null,
             text: $('#text').val(),
@@ -956,7 +956,7 @@ App.Views.CommentsList = Backbone.View.extend({
 App.Views.TagsCloud = Backbone.View.extend({
     collection: tags,
     el: '#main-content',
-    render: function () {
+    render: function() {
 
         this.$el.empty();
 
@@ -965,30 +965,36 @@ App.Views.TagsCloud = Backbone.View.extend({
         var that = this;
 
         this.collection.fetch({
-            success: function (model, response, options) {
+            success: function(model, response, options){
 
-                var requests_count_max = _.max(tags.models, function (tag_model) {
-                    return tag_model.attributes.requests_count;
-                }).attributes.requests_count;
+                var requests_count_max = _.max(_.map(tags.models, function(tag_model) {
+                    return tag_model.get('requests_count');
+                }));
 
-                var words = tags.models.map(function (tag_model) {
+                var words = tags.models.map(function(tag_model) {
                     return {
-                        text: tag_model.attributes.title,
-                        weight: that.getKeyWordWeight(tag_model.attributes.requests_count, requests_count_max),
-                        link: "#!/requests/tag/" + tag_model.attributes.id,
+                        text: tag_model.get('title'),
+                        weight: that.getKeyWordWeight({count: tag_model.get('requests_count'), max_count: requests_count_max }),
+                        link: "#!/requests/tag/" + tag_model.get('id'),
                     };
                 });
                 console.log(words);
                 that.cloudRender(words);
                 $('#spinner').hide();
-            }
-        });
+            }});
     },
-    cloudRender: function (words) {
+    cloudRender: function(words){
         this.$el.html('<div id="tags-cloud"></div>');
         $('#tags-cloud').jQCloud(words, {autoResize: true});
     },
-    getKeyWordWeight: function (count, max_count, min_weight, max_weight) {
-        return Math.round(((count * (max_weight - min_weight)) / max_count) + min_weight);
+    getKeyWordWeight: function(options) {
+        var def_settings = {
+            min_weight: 10,
+            max_weight: 60,
+        };
+
+        var settings = $.extend({}, def_settings, options);
+
+        return Math.round(((settings.count * (settings.max_weight - settings.min_weight)) / settings.max_count) + settings.min_weight);
     }
 });
