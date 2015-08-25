@@ -154,7 +154,7 @@ class UserController extends Controller
         $user_id =  Crypt::decrypt($hashUser);
         $req_id =  Crypt::decrypt($hashReq);
         $this->acceptReviewRequest($user_id, $req_id);
-        return redirect('/');
+        return redirect()->route('home');
     }
 
     public function  mailDeclineReviewRequest($hashUser, $hashReq)
@@ -162,6 +162,6 @@ class UserController extends Controller
         $user_id =  Crypt::decrypt($hashUser);
         $req_id =  Crypt::decrypt($hashReq);
         $this->acceptReviewRequest($user_id, $req_id);
-        return redirect('/');
+        return redirect()->route('home');
     }
 }
