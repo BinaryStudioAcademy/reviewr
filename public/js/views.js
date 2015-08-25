@@ -902,9 +902,9 @@ App.Views.CommentsList = Backbone.View.extend({
         var that = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
-        this.collection.on('add', this.renderComment, this);
+        this.collection.on('add', this.renderLastComment, this);
         Backbone.Validation.bind(this);
-        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
        
     },
     render: function() {
@@ -934,19 +934,21 @@ App.Views.CommentsList = Backbone.View.extend({
 
     renderLastComment: function(comment){
         this.renderComment(comment);
-        $("html, body").animate({ scrollTop: $(document).height() }, 500);
+        lastComment = this.$el.find('#comments-list');
+        if (lastComment[0] != undefined) {
+            lastComment.animate({scrollTop: lastComment[0].scrollHeight}, 500);
+        }
+
     },
     storeComment: function(e) {
         e.preventDefault();
         this.stopListening();
 
-        // rid already exist after render comments
-        //var rid = this.options.rid;
         this.model.set({
             id: null,
             text: $('#text').val(),
         });
-        
+
         if (this.model.isValid(true)) {
 
             var ecs_input = _.escape( $('#text').val() );
