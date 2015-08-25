@@ -667,7 +667,7 @@
                 <%= first_name + ' ' + last_name %>
                 &nbsp;
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <%= reputation %>
+                <span id="useqr-rep"><%= reputation %></span>
             </h3>
 
         </div>

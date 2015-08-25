@@ -274,15 +274,14 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     like: function () {
-        //users.url = App.getPrefix() + '/reputationUp/' + this.model.get('id');
-        //users.fetch();
         this.model.save({
             reputation: parseInt(this.model.get('reputation')) + 1
         }, {
             patch: true
         });
         this.$el.find('.like').html('Undo like').addClass('undo-like').removeClass('like');
-        $('#reputation').text(this.model.get('reputation'));
+        $('#reputation').html(this.model.get('reputation'));
+        this.$el.find('#user-rep').html(parseInt(this.$el.find("#user-rep").html()) + 1);
         return this;
     },
 
@@ -293,7 +292,8 @@ App.Views.RequestDetails = Backbone.View.extend({
             patch: true
         });
         this.$el.find('.undo-like').html('Like').addClass('like').removeClass('undo-like');
-        $('#reputation').text(this.model.get('reputation'));
+        $('#reputation').html(this.model.get('reputation'));
+        this.$el.find('#user-rep').text(parseInt(this.$el.find("#user-rep").html()) - 1);
         return this;
     },
 
