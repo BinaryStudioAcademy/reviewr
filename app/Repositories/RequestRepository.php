@@ -15,7 +15,7 @@ class RequestRepository implements RequestRepositoryInterface
 {
     public function all()
     {
-        return ReviewRequest::with('user', 'group')->get();
+        return ReviewRequest::with('user', 'group')->orderBy('created_at', 'desc')->get();
     }
 
     public function create($data)
@@ -104,12 +104,12 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function findByField($fieldName, $fieldValue, $columns=['*'])
     {
-        return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->get($columns);
+        return ReviewRequest::with('user', 'group')->where($fieldName, $fieldValue)->orderBy('created_at', 'desc')->get($columns);
     }
 
     public function getOffered($auth_user_id)
     {
-        return App\User::findOrFail($auth_user_id)->requests()->with('user', 'group')->get();
+        return App\User::findOrFail($auth_user_id)->requests()->with('user', 'group')->orderBy('created_at', 'desc')->get();
     }
 
     //---------------------------------------------------------------------------------------------
@@ -122,6 +122,7 @@ class RequestRepository implements RequestRepositoryInterface
                             ->whereIn('id', DB::table('review_request_user')
                                               ->where('user_id', $auth_user_id)
                                               ->lists('review_request_id'))
+                            ->orderBy('created_at', 'desc')
                             ->get();
     }
 
@@ -143,7 +144,7 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function getByGroupId($id)
     {
-        return ReviewRequest::with('user', 'group')->where('group_id', $id)->get();
+        return ReviewRequest::with('user', 'group')->where('group_id', $id)->orderBy('created_at', 'desc')->get();
     }
    
     public function checkVote($request_id, $user_id) {
