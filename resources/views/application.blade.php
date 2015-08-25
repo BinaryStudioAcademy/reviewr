@@ -545,8 +545,6 @@
                     </div><!-- /input-group -->
                 </form>
             </div>
-            <div class="panel-footer text-center">
-            </div>
         </div>
     </div>
 </script>

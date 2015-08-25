@@ -915,19 +915,15 @@ App.Views.CommentsList = Backbone.View.extend({
         var that = this;
 
         this.collection.fetch({
-            success: function(comments, res, req) {
-                if (!comments.length) {
-                    console.log('Render No-comment view here');
-                } else {
-                    that.$el.html(that.template());
-                    _.each(comments.models, function(comment) {
-                        that.renderComment(comment);
-                        console.log('Comment Render');
-                    });
-                }
+            success: function (comments, res, req) {
+                // Render layout view
+                that.$el.html(that.template());
+                // Render each comment
+                _.each(comments.models, function (comment) {
+                    that.renderComment(comment);
+                });
                 $('#spinner').hide();
-            },
-            reset: true
+            }
         });
     },
 
