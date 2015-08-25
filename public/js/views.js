@@ -503,10 +503,9 @@ App.Views.Reviewer = Backbone.View.extend({
     declineOffer: function () {
         reviewers.url = App.getPrefix() + '/user/'+ this.model.id +'/decline/' + this.request_id;
         reviewers.fetch({wait: true});
-        this.$el.find('.decline').html('Accept');
-        this.$el.find('.decline').addClass('accept btn-primary');
-        this.$el.find('.decline').removeClass('decline btn-danger');
-        this.$el.hide();
+        console.log('!!', this.model);
+        this.remove();
+        this.render();
         return this;
     },
     render: function(){
