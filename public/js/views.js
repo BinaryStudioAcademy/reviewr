@@ -453,7 +453,12 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         var arr = [];
         tags.fetch({wait: true,async: false, success: function(requests, res, req) { arr = res; }});
         arr = _.pluck(arr, 'title');
-        $('.tags-input').tokenfield({ autocomplete: { source: arr, delay: 100 }, showAutocompleteOnFocus: true });
+        $(".tags-input").select2({
+                tags:true,
+                tokenSeparators: [',', ' ','    '],
+                data: arr,
+            });
+
         return this;
     }
 

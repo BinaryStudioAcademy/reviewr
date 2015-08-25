@@ -20,6 +20,7 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
@@ -403,11 +404,8 @@
 
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Tags</label>
-
                                 <div class="col-md-11">
-                                    <input type="text" class="tags-input form-control" id="hashtags"
-                                           placeholder="use in this input regexp: #\w+">
-                                    <span class="help-block hidden"></span>
+                                    <select multiple="true" id="tags-input" class="tags-input form-control"></select>
                                 </div>
                             </div>
 
@@ -825,6 +823,7 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.validation.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.full.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>
@@ -864,6 +863,9 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/routes.js')}}"></script>
 
 <!-- END APP SCRIPTS -->
+<script>
+
+</script>
 
 </body>
 </html>
