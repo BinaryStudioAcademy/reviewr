@@ -86,43 +86,43 @@ var reviewers = new App.Collections.Reviewers();
  *---------------------------------------------------
  */
 
- App.Collections.Tags = Backbone.Collection.extend({
- 	url: App.getPrefix() + '/tag',
- 	model: App.Models.Tag
- });
+App.Collections.Tags = Backbone.Collection.extend({
+    url: App.getPrefix() + '/tag',
+    model: App.Models.Tag
+});
 
- //instantiate collection of tags
+//instantiate collection of tags
 
- var tags = new App.Collections.Tags();
+var tags = new App.Collections.Tags();
 
- /*
+/*
  *---------------------------------------------------
  *  Notifications Collection
  *---------------------------------------------------
  */
 
- App.Collections.Notifications = Backbone.Collection.extend({
+App.Collections.Notifications = Backbone.Collection.extend({
     url: App.getPrefix() + '/unreadnotifications',
     model: App.Models.Notification
- });
+});
 
- var notifications = new App.Collections.Notifications   ();
+var notifications = new App.Collections.Notifications();
 
 
- /*
+/*
  *---------------------------------------------------
  *  Tags Collection For Specific Review Request
  *---------------------------------------------------
  */
 
- App.Collections.RequestTags = Backbone.Collection.extend({
- 	url: App.getPrefix() + '/reviewrequest/:id/tags',
- 	model: App.Models.Tag
- });
+App.Collections.RequestTags = Backbone.Collection.extend({
+    url: App.getPrefix() + '/reviewrequest/:id/tags',
+    model: App.Models.Tag
+});
 
- //instantiate collection of tags
+//instantiate collection of tags
 
- var request_tags = new App.Collections.RequestTags();
+var request_tags = new App.Collections.RequestTags();
 
 
 /*

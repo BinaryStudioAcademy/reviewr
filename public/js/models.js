@@ -4,14 +4,14 @@ Backbone.Validation.configure({
 
 _.extend(Backbone.Validation.callbacks, {
     valid: function (view, attr, selector) {
-        var $el = view.$('[name=' + attr + ']'), 
+        var $el = view.$('[name=' + attr + ']'),
             $group = $el.closest('.form-group');
-        
+
         $group.removeClass('has-error');
         $group.find('.help-block').html('').addClass('hidden');
     },
     invalid: function (view, attr, error, selector) {
-        var $el = view.$('[name=' + attr + ']'), 
+        var $el = view.$('[name=' + attr + ']'),
             $group = $el.closest('.form-group');
 
         $group.addClass('has-error');
@@ -64,7 +64,7 @@ App.Models.Request = Backbone.Model.extend({
             rangeLength: [6, 100]
         },
         date_review: {
-             required: true
+            required: true
         }
     }
 });
@@ -100,32 +100,32 @@ var reviewer = new App.Models.Reviewer();
  *---------------------------------------------------
  */
 
- App.Models.Tag = Backbone.Model.extend({
+App.Models.Tag = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/tag",
     defaults: {
         id: null,
         title: ''
     }
- });
+});
 
 
 var tag = new App.Models.Tag();
 
- /*
+/*
  *---------------------------------------------------
  *  Tag Model
  *---------------------------------------------------
  */
 
- App.Models.Notification = Backbone.Model.extend({
+App.Models.Notification = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/notification",
     defaults: {
         id: null,
         title: ''
     }
- });
+});
 
- var notification = new App.Models.Notification();
+var notification = new App.Models.Notification();
 
 
 /*
