@@ -287,7 +287,7 @@ App.Views.RequestDetails = Backbone.View.extend({
 
     undoLike: function () {
         this.model.save({
-            reputation: parseInt(this.model.get('reputation'))-1
+            reputation: parseInt(this.model.get('reputation')) - 1
         }, {
             patch: true
         });
@@ -492,6 +492,7 @@ App.Views.Reviewer = Backbone.View.extend({
         this.$el.find('.accept').html('Decline');
         this.$el.find('.accept').addClass('decline btn-danger');
         this.$el.find('.accept').removeClass('accept btn-primary');
+        this.$el.find('#decline').hide();
         return this;
     },
     declineOffer: function () {
@@ -500,7 +501,7 @@ App.Views.Reviewer = Backbone.View.extend({
         this.$el.find('.decline').html('Accept');
         this.$el.find('.decline').addClass('accept btn-primary');
         this.$el.find('.decline').removeClass('decline btn-danger');
-
+        this.$el.hide();
         return this;
     },
     render: function(){

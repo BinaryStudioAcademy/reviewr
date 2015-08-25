@@ -20,7 +20,7 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
-    <link href="{{ asset(env('APP_PREFIX', '') .'/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
@@ -538,7 +538,12 @@
         <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">Decline</button>
         <% } else { %>
-        <button class="accept btn btn-primary">Accept</button>
+        <div>
+        <p>
+            <button class="accept btn btn-primary">Accept</button>
+            <button class="decline btn btn-danger" id="decline">Decline</button>
+        </p>
+        </div>
         <% } %>
         <% } %>
     </div>
@@ -667,7 +672,7 @@
                 <%= first_name + ' ' + last_name %>
                 &nbsp;
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <span id="useqr-rep"><%= reputation %></span>
+                <span id="user-rep"><%= reputation %></span>
             </h3>
 
         </div>
