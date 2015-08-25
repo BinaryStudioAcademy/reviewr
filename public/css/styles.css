@@ -225,6 +225,10 @@ body {
     text-align: center;
 }
 
+.comments-list .pre-scrollable {
+    overflow-y: auto;
+}
+
 .editable-container .input-large {
     width: 38em;
     height: 20em;
