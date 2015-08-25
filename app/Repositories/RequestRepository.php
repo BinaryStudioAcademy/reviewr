@@ -33,10 +33,15 @@ class RequestRepository implements RequestRepositoryInterface
     public function update($id, $data)
     {
         $review_request = ReviewRequest::findOrFail($id);
+
+
         $auth_user_id = Auth::user()->id;
 
         // Check if the reputation change and Up or Down
         if ($data->has('reputation')) {
+            $author = $review_request->user;
+
+
             $isReputationUp =  ($data->reputation > $review_request->reputation);
             $isReputationDown = ($data->reputation < $review_request->reputation);
             $review_request->reputation = $data->reputation;
@@ -45,9 +50,12 @@ class RequestRepository implements RequestRepositoryInterface
             if ($isReputationUp) {
                 $review_request->votes()->detach($auth_user_id); // temp solution, for removing dubl votes
                 $review_request->votes()->attach($auth_user_id);
+                $author->reputation = $author->reputation + 1;
             } elseif ($isReputationDown) {
                 $review_request->votes()->detach($auth_user_id);
+                $author->reputation = $author->reputation - 1;
             }
+            $author->save();
         }
 
         // Fill only existing fields (see http://ryanchenkie.com/laravel-put-requests/)
