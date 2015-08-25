@@ -545,8 +545,6 @@
                     </div><!-- /input-group -->
                 </form>
             </div>
-            <div class="panel-footer text-center">
-            </div>
         </div>
     </div>
 </script>
@@ -731,8 +729,8 @@
 
 <script type="text/template" id="notifications-list-template">
     <h1>Your notifications</h1>
-    <ul class="notifications list-group">
-    </ul>
+    <div class="notifications list-group">
+    </div>
 </script>
 
 <!-- VENDOR SCRIPTS -->
