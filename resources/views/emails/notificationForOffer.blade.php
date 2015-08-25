@@ -56,8 +56,8 @@ Hello, {{$author->first_name}} {{$author->last_name}} . You have a new user, who
                         <tr>
                         <td class="padded" style="padding: 0;vertical-align: top;padding-left: 25px;padding-right: 50px;word-break: break-word;word-wrap: break-word">
                                 <div class="btn" style="Margin-bottom: 24px;text-align: left">
-                                    <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="localhost:8000/user/{{$user->id}}/accept/{{$request->id}}" target="_blank">Accept</a>
-                                    <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="localhost:8000/user/{{$user->id}}/decline/{{$request->id}}" target="_blank">Decline</a>                             
+                                    <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="http://localhost:8000/api/v1/user/{{$hash_user}}/mailaccept/{{$hash_req}}" target="_blank">Accept!</a>
+                                    <a style="border: 0;border-radius: 4px;display: inline-block;font-size: 12px;font-weight: 700;line-height: 19px;padding: 6px 17px 6px 17px;text-align: center;text-decoration: none;color: #fff;background-color: #5c91ad;box-shadow: 0 3px 0 #4a748a;font-family: sans-serif" href="http://localhost:8000/api/v1/user/{{$hash_user}}/maildecline/{{$hash_req}}" target="_blank">Decline!</a>
                                 </div>
                             </td>
                         </tr>

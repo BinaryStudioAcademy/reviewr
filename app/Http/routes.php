@@ -54,6 +54,8 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         Route::get('user/{user_id}/decline/{request_id}', 'UserController@declineReviewRequest');
         Route::get('user/{user_id}/offeron/{request_id}', 'UserController@offerOnReviewRequest');
         Route::get('user/offeroff/{request_id}', 'UserController@offerOffReviewRequest');
+        Route::get('user/{user_id}/mailaccept/{request_id}', 'UserController@mailAcceptReviewRequest');
+        Route::get('user/{user_id}/maildecline/{request_id}', 'UserController@mailDeclineReviewRequest');
         Route::resource('group', 'GroupController');
         Route::get('tags/popular', 'TagController@popularTags');
         Route::resource('tag', 'TagController');
