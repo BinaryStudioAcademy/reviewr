@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
+
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
+use Illuminate\Contracts\Encryption\DecryptException;
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
     private $requestService;
     private $mailService;
+
     public function __construct(RequestServiceInterface $requestService, MailServiceInterface $mailService)
     {
         $this->requestService = $requestService;
@@ -35,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-    
+
     }
 
     /**
@@ -45,13 +49,13 @@ class UserController extends Controller
      */
     public function store()
     {
-    
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function show($userId)
@@ -62,34 +66,34 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
-    
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function update($id)
     {
-    
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function destroy($id)
     {
-    
+
     }
 
     public function acceptReviewRequest($user_id, $request_id)
@@ -107,7 +111,7 @@ class UserController extends Controller
     }
 
     public function offerOnReviewRequest($user_id, $request_id)
-    { 
+    {
         $user_id = Auth::user()->id;
         $message = $this->requestService->offerOnReviewRequest($user_id, $request_id);
         $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
@@ -115,10 +119,9 @@ class UserController extends Controller
     }
 
     public function myRequests()
-    {   
-        $user_id = Auth::user()->id;
-        $user = User::find($user_id);
-        return response()->json(['message'=> $user->requests], 200);
+    {
+        $user = Auth::user();
+        return response()->json(['message' => $user->requests], 200);
     }
 
     public function offerOffReviewRequest($request_id)
@@ -129,22 +132,36 @@ class UserController extends Controller
     }
 
     public function highRept()
-    { 
+    {
         return Response::json($this->requestService->getHighestReputationUsers(), 200);
     }
 
     public function checkNotification()
-    {   
+    {
         $user = Auth::user();
         $count = $user->notifications->count();
         return Response::json($count, 200);
     }
 
     public function unreadNotifications()
-    {   
+    {
         $user = Auth::user();
         return Response::json($this->requestService->unreadNotifications($user), 200);
     }
 
+    public function mailAcceptReviewRequest($hashUser, $hashReq)
+    {
+        $user_id =  Crypt::decrypt($hashUser);
+        $req_id =  Crypt::decrypt($hashReq);
+        $this->acceptReviewRequest($user_id, $req_id);
+        return redirect()->route('home');
+    }
 
+    public function  mailDeclineReviewRequest($hashUser, $hashReq)
+    {
+        $user_id =  Crypt::decrypt($hashUser);
+        $req_id =  Crypt::decrypt($hashReq);
+        $this->acceptReviewRequest($user_id, $req_id);
+        return redirect()->route('home');
+    }
 }

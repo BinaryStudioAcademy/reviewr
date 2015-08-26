@@ -127,9 +127,8 @@ class RequestService implements RequestServiceInterface
         $user =  $this->getOneUserById($user_id);
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
-                $request->pivot->isAccepted = 0; 
-                $request->pivot->save();
-
+                $user->requests()->detach($req_id);
+                $user->save();
                 $notification = new Notification();
                 $author = $this->getOneUserById($request->user['id']);
                 $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline your offer for request ' . $request->title;
