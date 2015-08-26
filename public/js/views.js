@@ -302,8 +302,25 @@ App.Views.RequestDetails = Backbone.View.extend({
         return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
 
-    render: function () {
+    isAccepted: function () {
+        // Find Object with myOffer info
+        var myOffer = _.findWhere(this.model.get('users'), {id: authUserId});
+        if (myOffer) {
+            // I am accepted or no?
+            return (myOffer.pivot.isAccepted == 1);
+        } else {
+            // I am not offer
+            return false;
+        }
+    },
 
+    isAuthor: function (userId) {
+        // If request user id == logged user
+        return (userId == authUserId);
+    },
+
+    render: function(){
+       
         var that = this;
 
         this.stopListening();
@@ -350,9 +367,13 @@ App.Views.RequestDetails = Backbone.View.extend({
             console.log('render Tag', tag);
         }, this);
 
-        // Render Comments
-        comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
-        new App.Views.CommentsList({'rid': req_id}).render()
+        // Render Comments (if user accepted or author of RR)
+        if (this.isAccepted() || this.isAuthor(user_id)) {
+            comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
+            new App.Views.CommentsList({'rid': req_id}).render()
+        } else {
+            console.log ('Chat is blocked for user: ' + user_id);
+        }
 
 
         // X-Editable field
