@@ -6,7 +6,9 @@ use App\User;
 use App\Events\OfferWasSent;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Services\MailService;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Auth;
 use Mail;
 
 class OfferNotification implements ShouldQueue
@@ -35,6 +37,9 @@ class OfferNotification implements ShouldQueue
            'author' => $author,
            'request' => $request,
            'user' =>$offer,
+           'hash_user' =>Crypt::encrypt($offer->id),
+           'hash_req' =>Crypt::encrypt($request->id),
+
         ];
        
         Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {

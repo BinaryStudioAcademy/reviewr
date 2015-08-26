@@ -24,37 +24,37 @@ App.Router = Backbone.Router.extend({
         "!/tags/cloud": "tagsCloud",
         "!/search": "search"
     },
-    
+
     home: function () {
         this.navigate('!/requests/my', true)
     },
-    
-    users: function() {
+
+    users: function () {
         console.log('Route usersListView');
         users.url = App.getPrefix() + "/user";
         new App.Views.UsersList().render();
     },
 
-    highestReputaionUsers: function() {
+    highestReputaionUsers: function () {
         console.log("Route: !/users/high_rep");
         users.url = App.getPrefix() + "/users/high_rep";
         new App.Views.UsersList().render();
     },
 
-    showUserProfile: function(id) {
+    showUserProfile: function (id) {
         $('#spinner').show();
         var user = new App.Models.User({id: id});
         user.fetch({wait: true}); // with id
         new App.Views.UserProfile({model: user}).render();
     },
 
-    requests: function() {
+    requests: function () {
         console.log('Route RequestListView');
         requests.url = App.getPrefix() + '/reviewrequest';
         new App.Views.RequestsList().render();
     },
 
-    createRequest: function() {
+    createRequest: function () {
         var requestForm = new App.Views.CreateRequestForm({
             el: '#main-content',
             model: new App.Models.Request()
@@ -62,51 +62,51 @@ App.Router = Backbone.Router.extend({
         requestForm.render();
     },
 
-    showMyRequest: function() {
+    showMyRequest: function () {
         console.log('Route MyRequest');
         new App.Views.RequestsList({collection: myRequests}).render();
     },
 
-    offeredRequests: function() {
+    offeredRequests: function () {
         console.log("Route: !/requests/offered");
         new App.Views.RequestsList({collection: offeredRequests}).render();
     },
 
-    popularRequests: function() {
+    popularRequests: function () {
         console.log("Route: !/requests/popular");
         requests.url = App.getPrefix() + "/reviewrequest/popular";
         new App.Views.RequestsList().render();
     },
 
-    highestRatedRequests: function() {
+    highestRatedRequests: function () {
         console.log("Route: !/requests/high_rate");
         requests.url = App.getPrefix() + "/reviewrequest/high_rate";
         new App.Views.RequestsList().render();
     },
 
-    sortRequestsByGroups: function(group_id) {
+    sortRequestsByGroups: function (group_id) {
         console.log("Route: !/requests/group/" + group_id);
         requests.url = App.getPrefix() + "/reviewrequest/group/" + group_id;
         new App.Views.RequestsList().render();
     },
 
-    sortRequestsByUser: function(user_id) {
+    sortRequestsByUser: function (user_id) {
         console.log("Route: !/requests/user/" + user_id);
         requests.url = App.getPrefix() + "/reviewrequest/user/" + user_id;
         new App.Views.RequestsList().render();
     },
 
-    sortRequestsByTags: function(tag_id) {
+    sortRequestsByTags: function (tag_id) {
         requests.url = App.getPrefix() + "/reviewrequest/tag/" + tag_id;
         new App.Views.RequestsList().render();
     },
 
-    showRequestDetails: function(id) {
+    showRequestDetails: function (id) {
 
         var request = new App.Models.Request({id: id});
         console.log('Route requestDetails');
         $('#spinner').show();
-        request.fetch({wait: true}).then(function(){
+        request.fetch({wait: true}).then(function () {
             new App.Views.RequestDetails({model: request}).render();
             $('#spinner').hide();
         });
@@ -123,32 +123,31 @@ App.Router = Backbone.Router.extend({
     },
 
 
-    tags: function() {
+    tags: function () {
         console.log("Route: !/tags");
         tags.url = App.getPrefix() + "/tag";
         new App.Views.NewTagsList().render();
     },
 
-    popularTags: function(){
+    popularTags: function () {
         console.log("Route: !/tags/popular");
         tags.url = App.getPrefix() + "/tags/popular";
         new App.Views.NewTagsList().render();
     },
 
-    tagsCloud: function() {
+    tagsCloud: function () {
         console.log("Route: !/tags/cloud");
         new App.Views.TagsCloud().render();
     },
 
-    search: function() {
+    search: function () {
         console.log("Route: !/search");
         new App.Views.Search().render();
     },
 
-    notifications: function() {
+    notifications: function () {
         new App.Views.NotificationsList().render();
     }
-
 
 
 });
