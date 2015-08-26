@@ -14,6 +14,10 @@ class TagRepository implements TagRepositoryInterface
 
     public function create($data)
     {
+        $tags = Tag::all();
+        foreach($tags as $temp) {
+            if ($data == $temp->title) return $temp;
+        }
         $tag = new Tag();
         $tag->title = $data;
         $tag->save();
