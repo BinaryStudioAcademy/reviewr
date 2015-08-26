@@ -461,7 +461,12 @@
             <hr>
             <div id="chat-region" class="row">
                 <!-- Chat View paste here  -->
-                There is no comments yet. Be the first
+                <div class="col-md-8">
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        Chat is not available, because you not accepted
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -303,12 +303,21 @@ App.Views.RequestDetails = Backbone.View.extend({
         return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
 
-    isAccepted: function (userId){
-        return true;
+    isAccepted: function () {
+        // Find Object with myOffer info
+        var myOffer = _.findWhere(this.model.get('users'), {id: authUserId});
+        if (myOffer) {
+            // I am accepted or no?
+            return (myOffer.pivot.isAccepted == 1);
+        } else {
+            // I am not offer
+            return false;
+        }
     },
 
     isAuthor: function (userId) {
-        return true;
+        // If request user id == logged user
+        return (userId == authUserId);
     },
 
     render: function(){
@@ -384,7 +393,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         }, this);
 
         // Render Comments (if user accepted or author of RR)
-        if (this.isAccepted(user_id) || this.isAuthor(user_id)) {
+        if (this.isAccepted() || this.isAuthor(user_id)) {
             comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
             new App.Views.CommentsList({'rid': req_id}).render()
         } else {
@@ -917,7 +926,7 @@ App.Views.CommentsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderLastComment, this);
         Backbone.Validation.bind(this);
-        App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
+        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000}).start();
        
     },
     render: function() {
