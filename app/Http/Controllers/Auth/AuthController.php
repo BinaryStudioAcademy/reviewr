@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -74,5 +75,10 @@ class AuthController extends Controller
         }
 
         return property_exists($this, 'redirectTo') ? $this->redirectTo : route('home');
+    }
+
+    public function redirectToBinary()
+    {
+        return redirect('http://team.binary-studio.com/auth/');
     }
 }
