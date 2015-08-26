@@ -33,15 +33,11 @@ class RequestRepository implements RequestRepositoryInterface
     public function update($id, $data)
     {
         $review_request = ReviewRequest::findOrFail($id);
-
-
         $auth_user_id = Auth::user()->id;
 
         // Check if the reputation change and Up or Down
         if ($data->has('reputation')) {
             $author = $review_request->user;
-
-
             $isReputationUp =  ($data->reputation > $review_request->reputation);
             $isReputationDown = ($data->reputation < $review_request->reputation);
             $review_request->reputation = $data->reputation;

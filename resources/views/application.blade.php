@@ -317,7 +317,15 @@
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">Date</label>
 
+                                <div class="col-md-11">
+                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
+                                           id="date_review" name='date_review'/>
+                                    <span class="help-block hidden"></span>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Details</label>
@@ -392,15 +400,7 @@
                             </div>
                             <!-- End Col-MD-10 -->
 
-                            <div class="form-group">
-                                <label class="col-md-1 control-label">Date</label>
 
-                                <div class="col-md-11">
-                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
-                                           id="date_review" name='date_review'/>
-                                    <span class="help-block hidden"></span>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Tags</label>

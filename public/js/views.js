@@ -465,18 +465,18 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             format: 'yyyy-mm-dd hh:ii'
         });
 
-        var arr = [];
         tags.fetch({
-            wait: true, async: false, success: function (requests, res, req) {
-                arr = res;
+            wait: true, async: true, success: function (requests, res, req) {
+                res = _.pluck(res, 'title');
+                $(".tags-input").select2({
+                    tags: true,
+                    tokenSeparators: [',', ' '],
+                    data: res,
+                });
             }
         });
-        arr = _.pluck(arr, 'title');
-        $(".tags-input").select2({
-            tags: true,
-            tokenSeparators: [',', ' '],
-            data: arr,
-        });
+
+
 
         return this;
     }
