@@ -303,6 +303,14 @@ App.Views.RequestDetails = Backbone.View.extend({
         return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
 
+    isAccepted: function (userId){
+        return true;
+    },
+
+    isAuthor: function (userId) {
+        return true;
+    },
+
     render: function(){
        
         var that = this;
@@ -375,9 +383,14 @@ App.Views.RequestDetails = Backbone.View.extend({
             console.log('render Tag', tag);
         }, this);
 
-        // Render Comments
-        comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
-        new App.Views.CommentsList({'rid': req_id}).render()
+        // Render Comments (if user accepted or author of RR)
+        if (this.isAccepted(user_id) || this.isAuthor(user_id)) {
+            comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
+            new App.Views.CommentsList({'rid': req_id}).render()
+        } else {
+            console.log ('Chat is blocked for user: ' + user_id);
+        }
+
 
 
 
