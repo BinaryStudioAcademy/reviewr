@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -79,6 +80,21 @@ class AuthController extends Controller
 
     public function redirectToBinary()
     {
-        return redirect('http://team.binary-studio.com/auth/');
+        $cookie = Cookie::make('referer', 'http://team.binary-studio.com/reviewer/auth/binary_callback', 60);
+        return redirect('http://team.binary-studio.com/auth/')->withCookie($cookie);
+    }
+
+    public function handleBinaryCallback()
+    {
+        // temp test user
+        $user = User::firstOrCreate([
+            'first_name' => 'TEST',
+            'lastname'  => 'TEST',
+            'email'     => 'test@email.com'
+        ]);
+
+        Auth::login($user, true);
+
+        return Redirect::to('/');
     }
 }
