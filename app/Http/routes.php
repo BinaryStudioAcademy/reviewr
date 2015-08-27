@@ -25,8 +25,8 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
     ]);
 
     // Registration with Binary routes...
-    Route::get('auth/binary', 'Auth\AuthController@redirectToBinary');
-    Route::get('auth/binary_callback', 'Auth\AuthController@handleBinaryCallback');
+    Route::get('/auth/binary', 'Auth\AuthController@redirectToBinary');
+    Route::get('/auth/binary_callback', 'Auth\AuthController@handleBinaryCallback');
 
     Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
