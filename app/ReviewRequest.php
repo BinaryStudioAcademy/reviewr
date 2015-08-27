@@ -15,9 +15,9 @@ class ReviewRequest extends Model
    
     protected $fillable = ['title', 'details', 'reputation'];
 
-    public static $rules = array(
-        'title'=>'required|min:2|max:100',
-    );
+    protected $hidden = ['updated_at', 'deleted_at'];
+
+    public static $rules = array('title'=>'required|min:2|max:100');
 
     protected $dates = ['deleted_at', 'date_review'];
 
@@ -57,8 +57,4 @@ class ReviewRequest extends Model
     {
         return $this->users()->count();
     }
-
-    
-
-
 }
