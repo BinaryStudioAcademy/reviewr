@@ -534,9 +534,10 @@
 
 <script type="text/template" id="reviewer-card-template">
     <div class="thumbnail">
-        <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
-
-        <p><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
+        <div class="user-inf">
+            <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
+            <p class="user-inf"><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
+        </div>
         <% if (author_id == userID) { %>
         <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">Decline</button>

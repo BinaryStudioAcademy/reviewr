@@ -509,6 +509,7 @@ App.Views.Reviewer = Backbone.View.extend({
     events: {
         'click .accept': 'acceptOffer',
         'click .decline': 'declineOfferConfirm',
+        'click .user-inf': 'show',
     },
     acceptOffer: function () {
         reviewers.url = App.getPrefix() + '/user/' + this.model.id + '/accept/' + this.request_id;
@@ -517,6 +518,12 @@ App.Views.Reviewer = Backbone.View.extend({
         this.$el.find('.accept').addClass('decline btn-danger');
         this.$el.find('.accept').removeClass('accept btn-primary');
         this.$el.find('#decline').hide();
+        return this;
+    },
+    show: function () {
+        // Show popup without change history
+        //router.navigate('!/user/' + this.model.get("id"), true);
+        router.showUserProfile(this.model.id);
         return this;
     },
     declineOfferConfirm: function () {
