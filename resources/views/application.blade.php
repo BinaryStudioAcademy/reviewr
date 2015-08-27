@@ -317,7 +317,15 @@
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">Date</label>
 
+                                <div class="col-md-11">
+                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
+                                           id="date_review" name='date_review'/>
+                                    <span class="help-block hidden"></span>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Details</label>
@@ -392,15 +400,7 @@
                             </div>
                             <!-- End Col-MD-10 -->
 
-                            <div class="form-group">
-                                <label class="col-md-1 control-label">Date</label>
 
-                                <div class="col-md-11">
-                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
-                                           id="date_review" name='date_review'/>
-                                    <span class="help-block hidden"></span>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Tags</label>
@@ -534,18 +534,17 @@
 
 <script type="text/template" id="reviewer-card-template">
     <div class="thumbnail">
-        <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
-
-        <p><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
+        <div class="user-inf">
+            <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
+            <p class="user-inf"><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
+        </div>
         <% if (author_id == userID) { %>
         <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">Decline</button>
         <% } else { %>
-        <div>
-        <p>
-            <button class="accept btn btn-primary">Accept</button>
+        <div style="display:inline">
+            <button class="accept btn btn-primary ">Accept</button>
             <button class="decline btn btn-danger" id="decline">Decline</button>
-        </p>
         </div>
         <% } %>
         <% } %>
