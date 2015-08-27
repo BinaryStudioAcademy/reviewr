@@ -542,7 +542,7 @@
         <button class="decline btn btn-danger">Decline</button>
         <% } else { %>
         <div style="display:inline">
-            <button class="accept btn btn-primary">Accept</button>
+            <button class="accept btn btn-primary ">Accept</button>
             <button class="decline btn btn-danger" id="decline">Decline</button>
         </div>
         <% } %>
