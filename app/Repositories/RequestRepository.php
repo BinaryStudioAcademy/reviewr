@@ -185,12 +185,12 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function upcomingReviewRequests()
     {
-        return ReviewRequest::where('date_review', '>', Carbon::now())->get();
+        return ReviewRequest::with('user', 'group')->where('date_review', '>', Carbon::now())->get();
     }
 
     public function lastNReviewRequests($number)
     {
-        return ReviewRequest::where('date_review', '<', Carbon::now())->take($number)->get();
+        return ReviewRequest::with('user', 'group')->where('date_review', '<', Carbon::now())->take($number)->get();
     }
 
     public function upcomingForPeriodReviewRequests($period)
@@ -198,14 +198,14 @@ class RequestRepository implements RequestRepositoryInterface
         switch($period)
         {
             case 'today':
-                return ReviewRequest::where('date_review', '=', Carbon::today())->get();
+                return ReviewRequest::with('user', 'group')->where('date_review', '=', Carbon::today())->get();
                 break;
         
             case 'week':
-                return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
+                return ReviewRequest::with('user', 'group')->whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
             
             case 'month':
-                return ReviewRequest::whereBetween('date_review', array(Carbon::now(), Carbon::now()->addMonth()))->get();
+                return ReviewRequest::with('user', 'group')->whereBetween('date_review', array(Carbon::now(), Carbon::now()->addMonth()))->get();
 
             default:
                 return 'exception!';
