@@ -80,7 +80,7 @@ class AuthController extends Controller
 
     public function redirectToBinary()
     {
-        $cookie = Cookie::make('referer', 'http://team.binary-studio.com/reviewer/auth/binary_callback', 60);
+        $cookie = Cookie::make('referer', url('reviewer/auth/binary_callback'), 60);
         return redirect('http://team.binary-studio.com/auth/')->withCookie($cookie);
     }
 
