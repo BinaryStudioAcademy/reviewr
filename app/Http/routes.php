@@ -4,7 +4,8 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
 
     Route::get('/', [
         'as'         => 'home',
-        'middleware' => 'auth',
+        //'middleware' => 'auth',
+        'middleware' => 'auth.binary',
         function () {
             return view('application');
         }
@@ -22,6 +23,10 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         'as'   => 'logout',
         'uses' => 'Auth\AuthController@getLogout'
     ]);
+
+    // Registration with Binary routes...
+    Route::get('auth/binary', 'Auth\AuthController@redirectToBinary');
+    Route::get('auth/binary_callback', 'Auth\AuthController@handleBinaryCallback');
 
     Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');
