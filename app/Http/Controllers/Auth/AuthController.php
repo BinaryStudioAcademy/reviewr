@@ -90,9 +90,9 @@ class AuthController extends Controller
         $cookie = $request->cookie('x-access-token');
         // temp test user
         $user = User::firstOrCreate([
-            'first_name' => 'TEST',
-            'last_name'  => 'TEST',
-            'email'      => 'test@email.com',
+            'first_name' => 'B_TEST',
+            'last_name'  => 'B_TEST',
+            'email'      => 'admin@admin.ru',
             'address'    => $cookie // temp for see the cookie
         ]);
 
