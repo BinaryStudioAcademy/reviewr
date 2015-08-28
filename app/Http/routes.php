@@ -4,8 +4,8 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
 
     Route::get('/', [
         'as'         => 'home',
-        'middleware' => 'auth',
-        //'middleware' => 'auth.binary',
+        //'middleware' => 'auth',
+        'middleware' => 'auth.binary',
         function () {
             return view('application');
         }
@@ -32,10 +32,6 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
     Route::post('/auth/binary_callback', [
         'as' => 'login.binary.callback',
         'uses' => 'Auth\AuthController@handleBinaryCallback'
-    ]);
-    Route::get('/auth/binary/logout', [
-        'as' => 'logout.binary',
-        'uses' => 'Auth\AuthController@redirectToBinaryLogout'
     ]);
 
     Route::group([ 'prefix' => 'api/v1' ], function () {
