@@ -185,7 +185,7 @@ class RequestRepository implements RequestRepositoryInterface
 
     public function upcomingReviewRequests()
     {
-        return ReviewRequest::with('user', 'group')->where('date_review', '>', Carbon::now())->get();
+        return ReviewRequest::with('user', 'group', 'users')->where('date_review', '>', Carbon::now())->get();
     }
 
     public function lastNReviewRequests($number)
@@ -198,14 +198,14 @@ class RequestRepository implements RequestRepositoryInterface
         switch($period)
         {
             case 'today':
-                return ReviewRequest::with('user', 'group')->where('date_review', '=', Carbon::today())->get();
+                return ReviewRequest::with('user', 'group', 'users')->where('date_review', '=', Carbon::today())->get();
                 break;
         
             case 'week':
-                return ReviewRequest::with('user', 'group')->whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
+                return ReviewRequest::with('user', 'group', 'users')->whereBetween('date_review', array(Carbon::now(), Carbon::now()->addWeek()))->get();
             
             case 'month':
-                return ReviewRequest::with('user', 'group')->whereBetween('date_review', array(Carbon::now(), Carbon::now()->addMonth()))->get();
+                return ReviewRequest::with('user', 'group', 'users')->whereBetween('date_review', array(Carbon::now(), Carbon::now()->addMonth()))->get();
 
             default:
                 return 'exception!';
