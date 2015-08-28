@@ -80,7 +80,7 @@ class AuthController extends Controller
 
     public function redirectToBinary()
     {
-        return redirect('http://team.binary-studio.com/auth/')->withCookie('referer', 'http://team.binary-studio.com/reviewr/');
+        return redirect('http://team.binary-studio.com/auth/')->withCookie('referer', 'http://team.binary-studio.com/reviewr/auth/binary_callback');
         //return redirect('http://team.binary-studio.com/auth/');
     }
 
