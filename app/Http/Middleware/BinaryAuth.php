@@ -15,8 +15,8 @@ class BinaryAuth
      */
     public function handle($request, Closure $next)
     {
-        if ($request->cookie('x-access-token')) {
-            return redirect('/');
+        if (!$request->cookie('x-access-token')) {
+            return redirect()->route('login.binary');
         }
         return $next($request);
     }

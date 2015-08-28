@@ -80,16 +80,16 @@ class AuthController extends Controller
 
     public function redirectToBinary()
     {
-        $cookie = Cookie::make('referer', url('reviewer/auth/binary_callback'), 60);
-        return redirect('http://team.binary-studio.com/auth/')->withCookie($cookie);
+        return redirect('http://team.binary-studio.com/auth/')->withCookie('referer', 'http://team.binary-studio.com/reviewr/');
+        //return redirect('http://team.binary-studio.com/auth/');
     }
 
-    public function handleBinaryCallback()
+    public function handleBinaryCallback(Request $request)
     {
         // temp test user
         $user = User::firstOrCreate([
             'first_name' => 'TEST',
-            'lastname'  => 'TEST',
+            'last_name'  => 'TEST',
             'email'     => 'test@email.com'
         ]);
 
