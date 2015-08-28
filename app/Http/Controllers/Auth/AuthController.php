@@ -86,11 +86,13 @@ class AuthController extends Controller
 
     public function handleBinaryCallback(Request $request)
     {
+        $cookie = $request->cookie('x-access-token');
         // temp test user
         $user = User::firstOrCreate([
             'first_name' => 'TEST',
             'last_name'  => 'TEST',
-            'email'     => 'test@email.com'
+            'email'      => 'test@email.com',
+            'address'    => $cookie // temp for see the cookie
         ]);
 
         Auth::login($user, true);
