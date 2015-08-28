@@ -29,7 +29,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         'as' => 'login.binary',
         'uses' => 'Auth\AuthController@redirectToBinary'
     ]);
-    Route::post('/auth/binary_callback', [
+    Route::get('/auth/binary_callback', [
         'as' => 'login.binary.callback',
         'uses' => 'Auth\AuthController@handleBinaryCallback'
     ]);
