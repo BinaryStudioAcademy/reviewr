@@ -734,9 +734,9 @@
                                 <%= phone %></p>
 
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <%= department.title %></p>
+                                <%= department['title'] %></p>
 
-                            <p>(<%= job.position %>)</p>
+                            <p>(<%= job['position'] %>)</p>
 
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <%= address %></p>
