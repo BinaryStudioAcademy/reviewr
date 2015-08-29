@@ -109,11 +109,13 @@ class AuthController extends Controller
         // temp test user
         $user = User::firstOrCreate(['email' => $userInfo['email']]);
         $user->update([
-            'first_name' => $userInfo['role'],
-            'last_name'  => str_limit($userInfo['role'], 6, ''),
-            'phone'      => '666-66-666',
+            'bid'        => $userInfo['id'],
+            'role'       => $userInfo['role'],
+            'first_name' => $userInfo['role'], // Temp
+            'last_name'  => str_limit($userInfo['id'], 6, ''), //Temp
+            'phone'      => '666-66-666', // Temp
             'avatar'     => 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($userInfo['email']))) . '?d=retro',
-            'address'    => 'iat: ' . $userInfo['iat']
+            'address'    => 'iat: ' . $userInfo['iat']  // Temp
         ]);
 
         Auth::login($user, true);
