@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Token;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -87,13 +89,31 @@ class AuthController extends Controller
 
     public function handleBinaryCallback(Request $request)
     {
-        $cookie = $request->cookie('x-access-token');
+        //$cookie = $request->cookie('x-access-token');
+        $cookie = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ZGMxMzM5MTg0NmM2OGExYWQ1NmRhYSIsImVtYWlsIjoiYWRtaW5AYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE0NDA2NzM4MDV9.rjYkrSZUnBZ1l_eztXgLen-luSq0dsCbMmWW0onCUvo';
+        $tokenObject = new Token($cookie);
+        $payload = JWTAuth::decode($tokenObject);
+        $userInfo = $payload->toArray();
+        /*  $userInfo
+        array:8 [?
+          "id" => "55dc13391846c68a1ad56daa"
+          "email" => "admin@admin"
+          "role" => "ADMIN"
+          "iat" => 1440673805
+          "iss" => "http://reviewr/auth/binary_callback"
+          "exp" => "1440843412"
+          "nbf" => "1440839812"
+          "jti" => "46aee5367a7ad10d82f40057c874e182"
+        ]
+        */
         // temp test user
-        $user = User::firstOrCreate([
-            'first_name' => 'B_TEST',
-            'last_name'  => 'B_TEST',
-            'email'      => 'admin@admin.ru',
-            'address'    => $cookie // temp for see the cookie
+        $user = User::firstOrCreate(['email' => $userInfo['email']]);
+        $user->update([
+            'first_name' => $userInfo['role'],
+            'last_name'  => str_limit($userInfo['role'], 6, ''),
+            'phone'      => '666-66-666',
+            'avatar'     => 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($userInfo['email']))) . '?d=retro',
+            'address'    => 'iat: ' . $userInfo['iat']
         ]);
 
         Auth::login($user, true);
