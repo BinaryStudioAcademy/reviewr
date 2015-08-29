@@ -127,6 +127,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off"
                                                                   aria-hidden="true"></span>&nbsp;Log Out</a></li>
+                        <li><a href="{{ route('logout.binary') }}"><span class="glyphicon glyphicon-off"
+                                                                  aria-hidden="true"></span>&nbsp;Log Out Binary</a></li>
                     </ul>
                 </li>
             </ul>

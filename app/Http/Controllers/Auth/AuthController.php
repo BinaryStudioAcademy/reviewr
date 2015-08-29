@@ -87,11 +87,17 @@ class AuthController extends Controller
 
     public function handleBinaryCallback(Request $request)
     {
-        //$cookie = $request->cookie('x-access-token');
-        $cookie = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ZGMxMzM5MTg0NmM2OGExYWQ1NmRhYSIsImVtYWlsIjoiYWRtaW5AYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE0NDA2NzM4MDV9.rjYkrSZUnBZ1l_eztXgLen-luSq0dsCbMmWW0onCUvo';
+        $cookie = $request->cookie('x-access-token');
+        //$cookie = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ZGMxMzM5MTg0NmM2OGExYWQ1NmRhYSIsImVtYWlsIjoiYWRtaW5AYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE0NDA2NzM4MDV9.rjYkrSZUnBZ1l_eztXgLen-luSq0dsCbMmWW0onCUvo';
         $user   = UserRepository::getUserByCookie($cookie);
         Auth::login($user, false);
 
         return redirect()->route('home');
+    }
+
+    public function redirectToBinaryLogout()
+    {
+        setcookie('x-access-token', '', -1, '/');
+        return redirect('http://team.binary-studio.com/auth/logout')->withCookie('referer', 'http://team.binary-studio.com/reviewr');
     }
 }
