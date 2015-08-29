@@ -33,7 +33,7 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         'as' => 'login.binary.callback',
         'uses' => 'Auth\AuthController@handleBinaryCallback'
     ]);
-    Route::get('/auth/binary/logout', [
+    Route::get('/auth/binary_logout', [
         'as' => 'logout.binary',
         'uses' => 'Auth\AuthController@redirectToBinaryLogout'
     ]);
