@@ -98,9 +98,10 @@ class AuthController extends Controller
 
     public function redirectToBinaryLogout()
     {
-        Auth::logout();
         Session::flush();
-        $removeCookie = Cookie::forget('x-access-token');
-        return redirect()->route('home')->withCookie($removeCookie);
+        //$removeCookie = Cookie::forget('x-access-token');
+        setcookie('x-access-token', '', -1, '/');
+        //return redirect()->route('home')->withCookie($removeCookie);
+        return redirect()->route('home');
     }
 }
