@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -98,6 +99,8 @@ class AuthController extends Controller
     public function redirectToBinaryLogout()
     {
         Auth::logout();
-        return redirect('http://team.binary-studio.com/auth/logout')->withCookie('referer', 'http://team.binary-studio.com/reviewr');
+        Session::flush();
+        $removeCookie = Cookie::forget('x-access-token');
+        return redirect('http://team.binary-studio.com/auth/logout')->withCookie($removeCookie);
     }
 }
