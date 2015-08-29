@@ -33,6 +33,10 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         'as' => 'login.binary.callback',
         'uses' => 'Auth\AuthController@handleBinaryCallback'
     ]);
+    Route::get('/auth/binary/logout', [
+        'as' => 'logout.binary',
+        'uses' => 'Auth\AuthController@redirectToBinaryLogout'
+    ]);
 
     Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');

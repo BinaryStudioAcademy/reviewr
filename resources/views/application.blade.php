@@ -127,6 +127,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off"
                                                                   aria-hidden="true"></span>&nbsp;Log Out</a></li>
+                        <li><a href="{{ route('logout.binary') }}"><span class="glyphicon glyphicon-off"
+                                                                  aria-hidden="true"></span>&nbsp;Log Out Binary</a></li>
                     </ul>
                 </li>
             </ul>
@@ -734,9 +736,9 @@
                                 <%= phone %></p>
 
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <%= department.title %></p>
+                                <%= department['title'] %></p>
 
-                            <p>(<%= job.position %>)</p>
+                            <p>(<%= job['position'] %>)</p>
 
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <%= address %></p>

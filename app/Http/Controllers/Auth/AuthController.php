@@ -11,6 +11,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Repositories\UserRepository;
 
 class AuthController extends Controller
 {
@@ -82,22 +83,21 @@ class AuthController extends Controller
     public function redirectToBinary()
     {
         return redirect('http://team.binary-studio.com/auth/')->withCookie('referer', 'http://team.binary-studio.com/reviewr/auth/binary_callback');
-        //return redirect('http://team.binary-studio.com/auth/');
     }
 
     public function handleBinaryCallback(Request $request)
     {
         $cookie = $request->cookie('x-access-token');
-        // temp test user
-        $user = User::firstOrCreate([
-            'first_name' => 'B_TEST',
-            'last_name'  => 'B_TEST',
-            'email'      => 'admin@admin.ru',
-            'address'    => $cookie // temp for see the cookie
-        ]);
-
-        Auth::login($user, true);
+        //$cookie = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ZGMxMzM5MTg0NmM2OGExYWQ1NmRhYSIsImVtYWlsIjoiYWRtaW5AYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE0NDA2NzM4MDV9.rjYkrSZUnBZ1l_eztXgLen-luSq0dsCbMmWW0onCUvo';
+        $user   = UserRepository::getUserByCookie($cookie);
+        Auth::login($user, false);
 
         return redirect()->route('home');
+    }
+
+    public function redirectToBinaryLogout()
+    {
+        setcookie('x-access-token', '', -1, '/');
+        return redirect('http://team.binary-studio.com/auth/logout')->withCookie('referer', 'http://team.binary-studio.com/reviewr');
     }
 }
