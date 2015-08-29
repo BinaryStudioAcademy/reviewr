@@ -97,7 +97,7 @@ class AuthController extends Controller
 
     public function redirectToBinaryLogout()
     {
-        setcookie('x-access-token', '', -1, '/');
+        Auth::logout();
         return redirect('http://team.binary-studio.com/auth/logout')->withCookie('referer', 'http://team.binary-studio.com/reviewr');
     }
 }
