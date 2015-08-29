@@ -101,6 +101,6 @@ class AuthController extends Controller
         Auth::logout();
         Session::flush();
         $removeCookie = Cookie::forget('x-access-token');
-        return redirect('http://team.binary-studio.com/auth/logout')->withCookie($removeCookie);
+        return redirect()->route('home')->withCookie($removeCookie);
     }
 }
