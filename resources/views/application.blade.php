@@ -25,6 +25,7 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
+    <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/emojione.min.css') }}" rel="stylesheet">
 
@@ -38,7 +39,7 @@
 <body>
 
 <!-- TEMP NAVIGATION -->
-<nav class="navbar navbar-default navbar-fixed-top" id="temp">
+<nav class="navbar navbar-default navbar-fixed-top" id="header">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -155,6 +156,21 @@
         <!-- SIDEBAR CONTAINER-->
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
+                <hr>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"
+                              aria-hidden="true"></span>&nbsp;{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
+                        &nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('logout') }}"><span class="glyphicon glyphicon-off"
+                                                                  aria-hidden="true"></span>&nbsp;Log Out</a></li>
+                        <li><a href="{{ route('logout.binary') }}"><span class="glyphicon glyphicon-off"
+                                                                         aria-hidden="true"></span>&nbsp;Log Out Binary</a></li>
+                    </ul>
+                </li>
                 <li class="sub-menu-label"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>&nbsp;MAIN
                 </li>
                 <li><a href="#!/request/create">Create review request</a></li>
@@ -180,8 +196,12 @@
                 <li><a href="#!/tags">All</a></li>
                 <li><a href="#!/tags/popular">Popular</a></li>
                 <li><a href="#!/tags/cloud">Cloud</a></li>
+                <hr>
+                <li><a href="#!/notifications">
+                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>
+                </li>
             </ul>
-            <hr>
+
         </div>
         <!-- END SIDEBAR CONTAINER-->
 
@@ -838,6 +858,24 @@
 <!-- END VENDOR SCRIPTS -->
 
 <script>
+    var getHeader = function() {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://team.binary-studio.com/app/header', true);
+        request.send();
+        request.onreadystatechange = function() {
+            if (request.readyState != 4) return;
+            if (request.status != 200) {
+                alert(request.status + ': ' + request.statusText);
+            } else {
+                var headerHtml = request.responseText;
+                var headerContainer = document.getElementById('header');
+                headerContainer.innerHTML =headerHtml;
+                headerFubction();
+            }
+        };
+    };
+    getHeader();
+
     $(document).ready(function () {
 
         $(window).resize(function () {
@@ -860,13 +898,14 @@
     });
 </script>
 
-<script data-main="js/require-config" src=" {{asset(env('APP_PREFIX', '') . '/js/vendor/require/require.min.js')}} "></script>
+{{--<script data-main="js/require-config" src=" {{asset(env('APP_PREFIX', '') . '/js/vendor/require/require.min.js')}} "></script>--}}
 <!-- APP SCRIPTS -->
 <script src="{{asset(env('APP_PREFIX', '') .'/js/app.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/models.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/collections.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/views.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/routes.js')}}"></script>
+<script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
 
 <!-- END APP SCRIPTS -->
 <script>

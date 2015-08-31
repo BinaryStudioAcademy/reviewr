@@ -125,13 +125,13 @@ body {
 }
 
 .sidebar .nav>li>a {
-    padding: 3px 20px;
+    padding: 1px 35px;
     color: #777;
 }
 
 .sub-menu-label {
     padding-left: 10px;
-    border-top: 1px solid #e7e7e7;
+    /*border-top: 1px solid #e7e7e7;*/
     border-bottom: 1px solid #e7e7e7;
     margin-top: 5px;
 }
