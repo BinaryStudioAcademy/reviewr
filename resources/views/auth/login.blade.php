@@ -35,6 +35,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-default">Login</button>
+                                <a href="{{ URL::to('auth/binary') }}" class="btn btn-primary" role="button">Login with Binary</a>
                             </div>
                         </div>
                         </div>
