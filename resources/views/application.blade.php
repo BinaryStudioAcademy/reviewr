@@ -113,10 +113,12 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a>
+                <!-- <li>
+                    <a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a>
+                </li> -->
+                <li><a href="#!/notifications">
+                    <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>
                 </li>
-                <li><a href="#!/notifications">Notifications <span class="label label-primary"
-                                                                   id="notification">0</span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
