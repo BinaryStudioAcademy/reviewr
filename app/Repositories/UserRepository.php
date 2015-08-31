@@ -67,11 +67,12 @@ class UserRepository implements UserRepositoryInterface
         */
         // temp test user
         $user = User::firstOrCreate([ 'email' => $userInfo['email'] ]);
+        $role = array_key_exists('role', $userInfo) ? $userInfo['role'] : "DEVELOPER";
         $user->update([
             'bid'           => $userInfo['id'],
-            'role'          => $userInfo['role'],
-            'first_name'    => $userInfo['role'], // Temp
-            'last_name'     => str_limit($userInfo['id'], 6, ''), //Temp
+            'role'          => $role,
+            'first_name'    => $userInfo['email'], // Temp
+            'last_name'     => '', //Temp
             'phone'         => '666-66-666', // Temp
             'avatar'        => 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($userInfo['email']))) . '?d=retro',
             'address'       => 'iat: ' . $userInfo['iat'],  // Temp
