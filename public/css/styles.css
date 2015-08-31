@@ -419,6 +419,17 @@ body {
     font-weight: lighter;
 }
 
+.tilecaption a {
+    text-decoration: none;
+    color: #FF8C00;
+}
+
+.tilecaption a:hover {
+    text-decoration: none;
+    color: #FF8C00;
+    cursor: pointer;
+}
+
 .tile:hover {
     -webkit-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
     -moz-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
