@@ -422,6 +422,12 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             setOptions: {
                 validate: true
             }
+        },
+        '[name=details]': {
+            observe: 'details',
+            setOptions: {
+                validate: true
+            }
         }
     },
 
@@ -435,7 +441,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.model.set({
             id: null,
             title: $('.title-input').val(),
-            details: $('.details-input').html(),
+            details: $('.details-input').val(),
             tags: $('.tags-input').val(),
             group_id: $('input[name="group-input"]:checked').val(),
             date_review: $('#date_review').val(),
@@ -455,8 +461,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     render: function () {
         this.$el.html(this.template);
-        // WYSIWYG Editor show
-        $('#editor').wysiwyg();
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), nowDate.getHours(), nowDate.getMinutes(), 0, 0);
         $("#date_review").datetimepicker({
@@ -470,6 +474,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
                 res = _.pluck(res, 'title');
                 $(".tags-input").select2({
                     tags: true,
+                    placeholder: "Enter or select a tag for review",
                     tokenSeparators: [',', ' '],
                     data: res,
                 });
