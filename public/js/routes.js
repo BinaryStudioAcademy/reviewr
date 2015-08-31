@@ -2,8 +2,8 @@ App.Router = Backbone.Router.extend({
 
     routes: {
         "": "home",
-        "!/users": "users",
-        "!/users/high_rep": "highestReputaionUsers",
+        /*"!/users": "users",
+        "!/users/high_rep": "highestReputaionUsers",*/
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
         "!/request/create": "createRequest",
@@ -29,7 +29,7 @@ App.Router = Backbone.Router.extend({
         this.navigate('!/requests/my', true)
     },
 
-    users: function () {
+    /*users: function () {
         console.log('Route usersListView');
         users.url = App.getPrefix() + "/user";
         new App.Views.UsersList().render();
@@ -39,7 +39,7 @@ App.Router = Backbone.Router.extend({
         console.log("Route: !/users/high_rep");
         users.url = App.getPrefix() + "/users/high_rep";
         new App.Views.UsersList().render();
-    },
+    },*/
 
     showUserProfile: function (id) {
         $('#spinner').show();
