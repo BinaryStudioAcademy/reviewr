@@ -399,7 +399,7 @@ body {
 /* Tags List Styles */
 
 .tile {
-    background-color: #e5e5e5;
+    background-color: #333;
 }
 
 #tag-tile {
@@ -414,7 +414,7 @@ body {
     -ms-transform: translateY(-50%); 
     margin:0!important;
     text-align: center;
-    color:white;
+    color: #FF8C00;
     font-family: Segoe UI;
     font-weight: lighter;
 }
