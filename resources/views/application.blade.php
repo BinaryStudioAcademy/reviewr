@@ -870,7 +870,7 @@
                 var headerHtml = request.responseText;
                 var headerContainer = document.getElementById('header');
                 headerContainer.innerHTML =headerHtml;
-                headerFubction();
+                headerFunction();
             }
         };
     };
