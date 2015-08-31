@@ -31,19 +31,40 @@ class OfferNotification implements ShouldQueue
     public function handle(OfferWasSent $event)
     {
         $request = $event->request;
-        $offer = $event->offer;
+ //       $offer = $event->offer;
         $author = User::find($request->user_id);
-        $data = [
-           'author' => $author,
-           'request' => $request,
-           'user' =>$offer,
-           'hash_user' =>Crypt::encrypt($offer->id),
-           'hash_req' =>Crypt::encrypt($request->id),
+//        $data = [
+//           'author' => $author,
+//           'request' => $request,
+//           'user' =>$offer,
+//           'hash_user' =>Crypt::encrypt($offer->id),
+//           'hash_req' =>Crypt::encrypt($request->id),
+//
+//        ];
 
-        ];
-       
-        Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {
-            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('You have a new offer to request!');
-        });
+        $url = "http://team.binary-studio.com/app/api/notification";
+        $post_data = array(
+            'title' => 'Notification',
+            'text' => 'You have unread offer for ' . $request->title,
+            'url' => 'team.binary-studio.com/reviewr',
+            'sound' => 'true',
+            'serviceType'=> "Code Review Requests",
+            'users'=> [$author->id]
+
+        );
+        $content = json_encode($post_data);
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+        $json_response = curl_exec($curl);
+        curl_close($curl);
+
+
+//        Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {
+//            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('You have a new offer to request!');
+//        });
     }
 }

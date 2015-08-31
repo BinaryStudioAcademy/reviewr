@@ -16,7 +16,7 @@
 
     };
 
-    listenChangeForNotifications();
+  //  listenChangeForNotifications();
 }());
 
 function listenChangeForNotifications() {

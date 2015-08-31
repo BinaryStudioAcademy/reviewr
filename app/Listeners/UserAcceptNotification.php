@@ -31,15 +31,35 @@ class UserAcceptNotification implements ShouldQueue
     {
         $request = $event->request;
         $offer = $event->offer;
-        $author = User::find($request->user_id);
-        $data = [
-           'author' => $author,
-           'request' => $request,
-           'user' =>$offer,
-        ];
+//       $author = User::find($request->user_id);
+//       $data = [
+//           'author' => $author,
+//           'request' => $request,
+//           'user' =>$offer,
+//        ];
+
+        $url = "http://team.binary-studio.com/app/api/notification";
+        $post_data = array(
+            'title' => 'Notification',
+            'text' => 'Your offer for ' . $request->title . ' was accepted',
+            'url' => 'team.binary-studio.com/reviewr',
+            'sound' => 'true',
+            'serviceType'=> "Code Review Requests",
+            'users'=> [$offer->id]
+
+        );
+        $content = json_encode($post_data);
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+        $json_response = curl_exec($curl);
+        curl_close($curl);
        
-        Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {
-            $message->to($data['user']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
-        });
+//        Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {
+//            $message->to($data['user']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
+//        });
     }
 }
