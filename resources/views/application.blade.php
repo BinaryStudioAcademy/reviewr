@@ -187,10 +187,10 @@
                 <li><a href="#!/requests/group/1">PHP</a></li>
                 <li><a href="#!/requests/group/3">.NET</a></li>
                 <li><a href="#!/requests/group/2">JS</a></li>
-                <li class="sub-menu-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;USERS
+                <!-- <li class="sub-menu-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;USERS
                 </li>
                 <li><a href="#!/users">All</a></li>
-                <li><a href="#!/users/high_rep">Higest reputation</a></li>
+                <li><a href="#!/users/high_rep">Higest reputation</a></li> -->
                 <li class="sub-menu-label"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;TAGS
                 </li>
                 <li><a href="#!/tags">All</a></li>
