@@ -22,7 +22,7 @@ App.Router = Backbone.Router.extend({
         "!/tags/popular": "popularTags",
         "!/notifications": "notifications",
         "!/tags/cloud": "tagsCloud",
-        "!/search": "search"
+        /*"!/search": "search"*/
     },
 
     home: function () {
@@ -140,10 +140,10 @@ App.Router = Backbone.Router.extend({
         new App.Views.TagsCloud().render();
     },
 
-    search: function () {
+    /*search: function () {
         console.log("Route: !/search");
         new App.Views.Search().render();
-    },
+    },*/
 
     notifications: function () {
         new App.Views.NotificationsList().render();
