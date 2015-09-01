@@ -196,9 +196,9 @@
                 <li><a href="#!/tags/popular">Popular</a></li>
                 <li><a href="#!/tags/cloud">Cloud</a></li>
                 <hr>
-                <li><a href="#!/notifications">
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>
-                </li>
+                {{--<li><a href="#!/notifications">--}}
+                        {{--<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>--}}
+                {{--</li>--}}
             </ul>
 
         </div>
