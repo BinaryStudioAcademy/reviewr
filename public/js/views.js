@@ -943,6 +943,8 @@ App.Views.CommentsList = Backbone.View.extend({
             success: function (comments, res, req) {
                 // Render layout view
                 that.$el.html(that.template());
+                // Add smiles autocomplete to id=text field
+                $("#text").textcomplete(tcParams);
                 // Render each comment
                 _.each(comments.models, function (comment) {
                     that.renderComment(comment);

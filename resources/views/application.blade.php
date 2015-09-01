@@ -19,15 +19,14 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
-    <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.min.css') }}" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
     <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/emojione.min.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery.textcomplete.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -585,6 +584,7 @@
                     </div>
                     <!-- /input-group -->
                 </form>
+                <p class="text-muted">For add smile type ':' (colon)</p>
             </div>
         </div>
     </div>
@@ -800,11 +800,11 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.full.min.js')}}"></script>
-<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
-<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jcloud/jqcloud.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/emojione.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.emojione.js')}}"></script>
 <!-- END VENDOR SCRIPTS -->
 <script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
 
