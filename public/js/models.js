@@ -61,9 +61,12 @@ App.Models.Request = Backbone.Model.extend({
     validation: {
         title: {
             required: true,
-            rangeLength: [6, 100]
+            rangeLength: [5, 100]
         },
         date_review: {
+            required: true
+        },
+        details: {
             required: true
         }
     }

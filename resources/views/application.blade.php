@@ -19,15 +19,14 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
-    <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/index.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.min.css') }}" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
     <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/emojione.min.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery.textcomplete.css') }}" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -197,9 +196,9 @@
                 <li><a href="#!/tags/popular">Popular</a></li>
                 <li><a href="#!/tags/cloud">Cloud</a></li>
                 <hr>
-                <li><a href="#!/notifications">
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>
-                </li>
+                {{--<li><a href="#!/notifications">--}}
+                        {{--<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>--}}
+                {{--</li>--}}
             </ul>
 
         </div>
@@ -267,7 +266,7 @@
         <div class="panel-body">
             <p>
                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                <%= offer.created_at %>
+                <%- offer.created_at %>
                 &nbsp;
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
@@ -287,14 +286,14 @@
                 <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
                     <p><b>
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                            <%= offer.user.first_name + ' ' + offer.user.last_name %>
+                            <%- offer.user.first_name + ' ' + offer.user.last_name %>
                         </b></p>
 
-                    <p>Group: <a href="#!/requests/group/<%= offer.group_id %>"><%= offer.group.title %></a></p>
+                    <p>Group: <a href="#!/requests/group/<%- offer.group_id %>"><%- offer.group.title %></a></p>
 
-                    <p><%= offer.user.email %></p>
+                    <p><%- offer.user.email %></p>
 
-                    <p><%= offer.user.phone %></p>
+                    <p><%- offer.user.phone %></p>
                 </div>
             </div>
         </div>
@@ -303,16 +302,25 @@
 
             <div><b>Date of review:</b> <%- offer.date_review %></div>
             <% if (status) { %>
-            <button class="undo-offer-btn btn btn-primary">Undo</button>
+            <button class="undo-offer-btn btn btn-info">
+                <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                Undo
+            </button>
             <% } %>
 
             <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
-            <button class="request-offer-btn btn btn-primary">Offer</button>
+            <button class="request-offer-btn btn btn-warning">
+                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                Offer
+            </button>
             <% } %>
 
-            <button class="request-details-btn btn btn-info">Details</button>
+            <button class="request-details-btn btn btn-success">Details</button>
             <% if (offer.user.id == {{ Auth::user()->id }}) { %>
-            <button class="request-delete-btn btn btn-danger">Delete</button>
+            <button class="request-delete-btn btn btn-danger">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {{--Delete--}}
+            </button>
             <% } %>
         </div>
     </div>
@@ -327,115 +335,47 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Create New Review Request</div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Create New Review Request
+                        </h2>
+                    </div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="#" id="create-request-form">
-
                             <div class="form-group">
-                                <label class="col-md-1 control-label">Title</label>
+                                <label for="title" class="col-md-1 control-label">Title</label>
 
                                 <div class="col-md-11">
                                     <input type="text" class="title-input form-control" name="title" id="title"
-                                           placeholder="Title">
+                                           placeholder="Write title of review request">
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-1 control-label">Date</label>
-
+                                <label for="date_review" class="col-md-1 control-label">Date</label>
                                 <div class="col-md-11">
                                     <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
-                                           id="date_review" name='date_review'/>
+                                           id="date_review" name="date_review" placeholder="Select date of review request">
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="control-label">Details</label>
-
-                                    <div class="btn-toolbar" data-role="editor-toolbar"
-                                         data-target="#editor">
-                                        <div class="btn-group">
-                                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                               title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b
-                                                        class="caret"></b></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a data-edit="fontSize 5" class="fs-Five">Huge</a></li>
-                                                <li><a data-edit="fontSize 3" class="fs-Three">Normal</a></li>
-                                                <li><a data-edit="fontSize 1" class="fs-One">Small</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i
-                                                        class="fa fa-bold"></i></a>
-                                            <a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i
-                                                        class="fa fa-italic"></i></a>
-                                            <a class="btn btn-default" data-edit="strikethrough"
-                                               title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-                                            <a class="btn btn-default" data-edit="underline"
-                                               title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default" data-edit="insertunorderedlist"
-                                               title="Bullet list"><i class="fa fa-list-ul"></i></a>
-                                            <a class="btn btn-default" data-edit="insertorderedlist"
-                                               title="Number list"><i class="fa fa-list-ol"></i></a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default" data-edit="justifyleft"
-                                               title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-                                            <a class="btn btn-default" data-edit="justifycenter"
-                                               title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-                                            <a class="btn btn-default" data-edit="justifyfull"
-                                               title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                               title="Hyperlink"><i class="fa fa-link"></i></a>
-
-                                            <div class="dropdown-menu input-append">
-                                                <input placeholder="URL" type="text" data-edit="createLink"/>
-                                                <button class="btn" type="button">Add</button>
-                                            </div>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i
-                                                        class="fa fa-unlink"></i></a>
-						            <span class="btn btn-default" title="Insert picture (or just drag & drop)"
-                                          id="pictureBtn"> <i class="fa fa-picture-o"></i>
-							            <input type="file" data-role="magic-overlay" data-target="#pictureBtn"
-                                               data-edit="insertImage"
-                                               style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 37px; height: 30px;">
-						            </span>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i
-                                                        class="fa fa-undo"></i></a>
-                                            <a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i
-                                                        class="fa fa-repeat"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div id="editor" class="details-input"></div>
-                                </div>
-
-                            </div>
-                            <!-- End Col-MD-10 -->
-
-
-
                             <div class="form-group">
-                                <label class="col-md-1 control-label">Tags</label>
+                                <label for="details" class="col-md-1 control-label">Details</label>
                                 <div class="col-md-11">
-                                    <select multiple="true" id="tags-input" class="tags-input form-control"></select>
+                                    <textarea id="details" name="details" class="details-input form-control" rows="6" placeholder="Enter some details about review request"></textarea>
+                                    <span class="help-block hidden"></span>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label for="tags-input" class="col-md-1 control-label">Tags</label>
+                                <div class="col-md-11">
+                                    <select multiple="true" id="tags-input" name="tags-input" class="tags-input form-control"  style="width: 100%"></select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label">Group</label>
-
                                 <div class="col-md-11">
                                     <div class="radio">
                                         <label>
@@ -459,8 +399,9 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-default">
+                                <div class="col-md-6 col-md-offset-1">
+                                    <button type="submit" class="btn btn-warning">
+                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                         Create
                                     </button>
                                 </div>
@@ -494,26 +435,26 @@
                         <div class="panel-body">
                             <p>
                                 <small><span class="glyphicon glyphicon-time"
-                                             aria-hidden="true"></span> <%= created_at %></small>
+                                             aria-hidden="true"></span> <%- created_at %></small>
                             </p>
-                            <div id="details"><%= details %></div>
+                            <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
                             <b>Date of review:</b> <span id="date_review"><%= date_review %></span>
                         </div>
                         <div class="panel-footer">
                             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
-                            <a href="#!/requests/group/<%= group_id %>">
-                                <%= group.title %>
+                            <a href="#!/requests/group/<%- group_id %>">
+                                <%- group.title %>
                             </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                            <a href="#!/requests/user/<%= user_id %>">
-                                <%= user.first_name + ' ' + user.last_name%>
+                            <a href="#!/requests/user/<%- user_id %>">
+                                <%- user.first_name + ' ' + user.last_name%>
                             </a>
                             &nbsp;
                             <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                            <span id="reputation"><%= reputation %></span>
+                            <span id="reputation"><%- reputation %></span>
                             &nbsp;
                             <button class="like btn btn-default btn-sm">Like</button>
                         </div>
@@ -560,15 +501,23 @@
     <div class="thumbnail">
         <div class="user-inf">
             <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
-            <p class="user-inf"><b><%= offer.first_name + ' ' + offer.last_name %></b></p>
+            <p class="user-inf"><b><%- offer.first_name + ' ' + offer.last_name %></b></p>
         </div>
         <% if (author_id == userID) { %>
         <% if (offer.pivot.isAccepted) { %>
-        <button class="decline btn btn-danger">Decline</button>
+        <button class="decline btn btn-danger">
+            Decline
+        </button>
         <% } else { %>
         <div style="display:inline">
-            <button class="accept btn btn-primary ">Accept</button>
-            <button class="decline btn btn-danger" id="decline">Decline</button>
+            <button class="accept btn btn-primary ">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                {{--Accept--}}
+            </button>
+            <button class="decline btn btn-danger" id="decline">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {{--Decline--}}
+            </button>
         </div>
         <% } %>
         <% } %>
@@ -581,12 +530,12 @@
     <div class="row">
         <!-- Text -->
         <div class="col-md-10">
-            <strong><%= user.first_name + ' ' + user.last_name %></strong>
+            <strong><%- user.first_name + ' ' + user.last_name %></strong>
 
             <div class="comment-time pull-right text-muted">
                 <small>
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <%= created_at %>
+                    <%- created_at %>
                 </small>
             </div>
             <div class="comment-description"><%= text %></div>
@@ -629,12 +578,13 @@
                         <input type="text" class="form-control" placeholder="Your message..." name="text" id="text">
                         
                         <span class="input-group-btn">
-                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
+                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Send">
                         </span>
 
                     </div>
                     <!-- /input-group -->
                 </form>
+                <p class="text-muted">For add smile type ':' (colon)</p>
             </div>
         </div>
     </div>
@@ -650,10 +600,10 @@
                 <h3 class="panel-title">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     &nbsp;
-                    <%= first_name + ' ' + last_name %>
+                    <%- first_name + ' ' + last_name %>
                     &nbsp;
                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <%= reputation %>
+                    <%- reputation %>
                 </h3>
             </div>
             <div class="panel-body">
@@ -661,15 +611,15 @@
                     <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="thumbnail"></div>
                     <div class="user-info col-md-8 text-left">
                         <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                            <%= email %>
+                            <%- email %>
                         </p>
 
                         <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                            <%= phone %>
+                            <%- phone %>
                         </p>
 
                         <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            <a href="#!/requests/user/<%= id %>">His Requests</a>
+                            <a href="#!/requests/user/<%- id %>">His Requests</a>
                         </p>
                     </div>
                 </div>
@@ -693,10 +643,10 @@
             <h3 class="panel-title">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 &nbsp;
-                <%= first_name + ' ' + last_name %>
+                <%- first_name + ' ' + last_name %>
                 &nbsp;
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <span id="user-rep"><%= reputation %></span>
+                <span id="user-rep"><%- reputation %></span>
             </h3>
 
         </div>
@@ -706,15 +656,15 @@
 
                 <div class="user-info caption">
                     <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        <%= department.title %></p>
+                        <%- department.title %></p>
 
-                    <p>(<%= job.position %>)</p>
+                    <p>(<%- job.position %>)</p>
 
                     <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        <%= email %></p>
+                        <%- email %></p>
 
                     <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                        <%= phone %></p>
+                        <%- phone %></p>
                 </div>
             </div>
 
@@ -738,10 +688,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">
-                        <%= first_name %> <%= last_name %>
+                        <%- first_name %> <%- last_name %>
                         &nbsp;
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <%= reputation %>
+                        <%- reputation %>
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -752,18 +702,18 @@
                         </div>
                         <div class="info col-md-8">
                             <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                <%= email %></p>
+                                <%- email %></p>
 
                             <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                                <%= phone %></p>
+                                <%- phone %></p>
 
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <%= department['title'] %></p>
+                                <%- department['title'] %></p>
 
-                            <p>(<%= job['position'] %>)</p>
+                            <p>(<%- job['position'] %>)</p>
 
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <%= address %></p>
+                                <%- address %></p>
                         </div>
                     </div>
                 </div>
@@ -776,9 +726,9 @@
 </script>
 
 <script type="text/template" id="tag-template">
-    <a href="#!/requests/tag/<%= id %>">
-        <span class="label label-success" title="<%= requests_count %>">
-            <%= title %>
+    <a href="#!/requests/tag/<%- id %>">
+        <span class="label label-success" title="<%- requests_count %>">
+            <%- title %>
         </span>
     </a>
 </script>
@@ -794,10 +744,10 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <h3 class="tilecaption"><a href="#!/requests/tag/<%= id %>"><%= title %></a></h3>
+                    <h3 class="tilecaption"><a href="#!/requests/tag/<%- id %>"><%- title %></a></h3>
                 </div>
                 <div class="item">
-                    <h3 class="tilecaption"><a href="#!/requests/tag/<%= id %>"><%= requests_count %></a></h3>
+                    <h3 class="tilecaption"><a href="#!/requests/tag/<%- id %>"><%- requests_count %></a></h3>
                 </div>
             </div>
         </div>
@@ -850,12 +800,13 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.full.min.js')}}"></script>
-<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/bootstrap-wysiwyg.js')}}"></script>
-<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-wysiwyg/external/jquery.hotkeys.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jcloud/jqcloud.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/emojione.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.emojione.js')}}"></script>
 <!-- END VENDOR SCRIPTS -->
+<script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
 
 <script>
     var getHeader = function() {
@@ -905,7 +856,6 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/collections.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/views.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/routes.js')}}"></script>
-<script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
 
 <!-- END APP SCRIPTS -->
 <script>
