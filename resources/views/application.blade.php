@@ -497,11 +497,19 @@
         </div>
         <% if (author_id == userID) { %>
         <% if (offer.pivot.isAccepted) { %>
-        <button class="decline btn btn-danger">Decline</button>
+        <button class="decline btn btn-danger">
+            Decline
+        </button>
         <% } else { %>
         <div style="display:inline">
-            <button class="accept btn btn-primary ">Accept</button>
-            <button class="decline btn btn-danger" id="decline">Decline</button>
+            <button class="accept btn btn-primary ">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                {{--Accept--}}
+            </button>
+            <button class="decline btn btn-danger" id="decline">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {{--Decline--}}
+            </button>
         </div>
         <% } %>
         <% } %>
@@ -562,7 +570,7 @@
                         <input type="text" class="form-control" placeholder="Your message..." name="text" id="text">
                         
                         <span class="input-group-btn">
-                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Save">
+                            <input class="btn btn-success" type="submit" form="new-comment-form" value="Send">
                         </span>
 
                     </div>
