@@ -303,16 +303,25 @@
 
             <div><b>Date of review:</b> <%- offer.date_review %></div>
             <% if (status) { %>
-            <button class="undo-offer-btn btn btn-primary">Undo</button>
+            <button class="undo-offer-btn btn btn-info">
+                <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                Undo
+            </button>
             <% } %>
 
             <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
-            <button class="request-offer-btn btn btn-primary">Offer</button>
+            <button class="request-offer-btn btn btn-warning">
+                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                Offer
+            </button>
             <% } %>
 
-            <button class="request-details-btn btn btn-info">Details</button>
+            <button class="request-details-btn btn btn-success">Details</button>
             <% if (offer.user.id == {{ Auth::user()->id }}) { %>
-            <button class="request-delete-btn btn btn-danger">Delete</button>
+            <button class="request-delete-btn btn btn-danger">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {{--Delete--}}
+            </button>
             <% } %>
         </div>
     </div>
