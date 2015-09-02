@@ -198,7 +198,9 @@ class RequestRepository implements RequestRepositoryInterface
         switch($period)
         {
             case 'today':
-                return ReviewRequest::with('user', 'group', 'users')->where('date_review', '=', Carbon::today())->get();
+                $start = new Carbon('now');
+                $end =(new Carbon('now'))->hour(23)->minute(59)->second(59);
+                return ReviewRequest::with('user', 'group', 'users')->whereBetween('date_review', array($start, $end))->get();
                 break;
         
             case 'week':
