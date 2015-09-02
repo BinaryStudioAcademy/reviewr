@@ -1034,7 +1034,7 @@ App.Views.TagsCloud = Backbone.View.extend({
     },
     cloudRender: function(words){
         this.$el.html('<div id="tags-cloud"></div>');
-        $('#tags-cloud').jQCloud(words, {autoResize: true});
+        $('#tags-cloud').jQCloud(words, {autoResize: true, colors: ["#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"]});
     },
     getKeyWordWeight: function(options) {
         var def_settings = {
