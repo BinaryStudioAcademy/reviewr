@@ -832,8 +832,46 @@
 <!-- VENDOR SCRIPTS -->
 
 <script src="{{asset(env('APP_PREFIX', '') .'/js/all.js')}}"></script>
+
+<!-- END VENDOR SCRIPTS -->
 <script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
 
+
+<script>
+    var getHeader = function() {
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://team.binary-studio.com/app/header', true);
+        request.send();
+        request.onreadystatechange = function() {
+            if (request.readyState != 4) return;
+            if (request.status != 200) {
+                alert(request.status + ': ' + request.statusText);
+            } else {
+                var headerHtml = request.responseText;
+                var headerContainer = document.getElementById('header');
+                headerContainer.innerHTML =headerHtml;
+                headerFunction();
+            }
+        };
+    };
+    getHeader();
+    $(document).ready(function () {
+        $(window).resize(function () {
+            if (this.resizeTO) clearTimeout(this.resizeTO);
+            this.resizeTO = setTimeout(function () {
+                $(this).trigger('resizeEnd');
+            }, 10);
+        });
+        $(window).bind('resizeEnd', function () {
+            $(".tile").height($(".tile").width());
+            $(".carousel").height($(".tile").width());
+            $(".item").height($(".tile").width());
+        });
+        // Smiles config
+        emojione.unicodeAlt = false;
+        emojione.ascii = true;
+    });
+</script>
 
 </body>
 </html>
