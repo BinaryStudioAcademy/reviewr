@@ -1,0 +1,444 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+    display: none;
+}
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 50px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        /*background-color: #f5f5f5;*/
+        border-right: 1px solid #eee;
+    }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+}
+
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+    padding: 20px;
+}
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
+
+.main .page-header {
+    margin-top: 0;
+}
+
+/*
+ * Sidebar Button
+ */
+
+.sidebar-btn {
+    position: relative;
+    float: left;
+    padding: 0 10px;
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: 15px;
+    color: #777;
+}
+
+/*
+ * ****************************************************************************
+ */
+
+ /*
+  * redefinition of some properties
+  */
+
+ #temp {
+    background-color: white;
+ }
+
+ .navbar-default .navbar-nav>.open>a,
+ .navbar-default .navbar-nav>.open>a:focus,
+ .navbar-default .navbar-nav>.open>a:hover {
+    background-color: transparent;
+}
+
+.dropdown-menu {
+    border: 1px solid #e7e7e7;
+    /*border: 1px solid rgba(0,0,0,.15);*/
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.sidebar .nav>li>a {
+    padding: 1px 35px;
+    color: #777;
+}
+
+.sub-menu-label {
+    padding-left: 10px;
+    /*border-top: 1px solid #e7e7e7;*/
+    border-bottom: 1px solid #e7e7e7;
+    margin-top: 5px;
+}
+
+/*
+ * ****************************************************************************
+ */
+
+@media (max-width: 767px) {
+    .sidebar-btn {
+        display: none;
+    }
+}
+
+.sub-menu-header {
+    background-color: #e5e5e5;
+}
+
+.request {
+    padding: 15px;
+    /*background-color: #f8f8f8;*/
+}
+
+.status, .rating, .description {
+    text-align: center;
+}
+
+.description {
+    height: 60px;
+    overflow: hidden;
+}
+
+
+/* Request details style*/
+
+.request-details {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    background-color: #e5e5e5;
+}
+.rating {
+    background: gray;
+    text-align: center;
+}
+
+.tags {
+    padding: 10px;
+}
+.requestor {
+    text-align: center;
+}
+
+.requestor .thumbnail{
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.user-info {
+    overflow: hidden;
+}
+
+.user-info p{
+    /*margin-bottom: 5px;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.reviewers {
+    /*text-align: center;*/
+}
+.reviewer {
+    display: inline-block;
+    min-width: 130px;
+}
+
+.reviewer p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chat {
+    width: 100%;
+    height: 200px;
+    background-color: #cccccc;
+    margin-bottom: 20px;
+    line-height: 200px;
+    text-align: center;
+}
+
+.comments-list .pre-scrollable {
+    overflow-y: auto;
+}
+
+.editable-container .input-large {
+    width: 38em;
+    height: 20em;
+}
+
+.editable-container .input-title {
+    width: 30em;
+}
+
+/* SPINNER START*/
+
+#spinner {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: none;
+}
+
+.spinner {
+    -webkit-animation: rotator 1.4s linear infinite;
+    animation: rotator 1.4s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+
+@keyframes rotator {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+    }
+}
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    -webkit-transform-origin: center;
+    -ms-transform-origin: center;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+    animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+    25% {
+        stroke: #DE3E35;
+    }
+    50% {
+        stroke: #F7C223;
+    }
+    75% {
+        stroke: #1B9A59;
+    }
+    100% {
+        stroke: #4285F4;
+    }
+}
+
+@keyframes colors {
+    0% {
+        stroke: #4285F4;
+    }
+    25% {
+        stroke: #DE3E35;
+    }
+    50% {
+        stroke: #F7C223;
+    }
+    75% {
+        stroke: #1B9A59;
+    }
+    100% {
+        stroke: #4285F4;
+    }
+}
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+    50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 187;
+    }
+    50% {
+        stroke-dashoffset: 46.75;
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+    100% {
+        stroke-dashoffset: 187;
+        -webkit-transform: rotate(450deg);
+        transform: rotate(450deg);
+    }
+}
+
+/* SPINNER END*/
+
+/*
+ * ****************************************************************************
+ */
+
+/* Hidden/Mobile Menu/Menu[Sidebar] */
+
+@media (min-width: 768px) {
+    .sidebar-hidden {
+        display: none;
+    }
+}
+
+/* End Hidden/Mobile Menu/Menu[Sidebar] */
+
+/*
+ * ****************************************************************************
+ */
+
+/* Tags Cloud Page Template */
+
+#tags-cloud {
+    width: 100%;
+    min-height: 400px;
+    /*background-color: gray;*/
+}
+
+/* End Tags Cloud Page Template */
+
+/*
+ * ****************************************************************************
+ */
+
+/* Tags List Styles */
+
+.tile {
+    background-color: #333;
+}
+
+#tag-tile {
+    padding: 5px;
+}
+
+.tilecaption {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%); 
+    margin:0!important;
+    text-align: center;
+    color: #FF8C00;
+    font-family: Segoe UI;
+    font-weight: lighter;
+}
+
+.tilecaption a {
+    text-decoration: none;
+    color: #FF8C00;
+}
+
+.tilecaption a:hover {
+    text-decoration: none;
+    color: #FF8C00;
+    cursor: pointer;
+}
+
+.tile:hover {
+    -webkit-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+    -moz-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+    -ms-transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+    transform: scale(0.97) perspective(400px) rotateY(0deg) rotateX(0deg);
+}
+
+/* End Tags List Styles */
+
+/*
+ * ****************************************************************************
+ */

@@ -4,8 +4,8 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
 
     Route::get('/', [
         'as'         => 'home',
-        //'middleware' => 'auth',
-        'middleware' => 'auth.binary',
+      'middleware' => 'auth',
+     //   'middleware' => 'auth.binary',
         function () {
             return view('application');
         }
