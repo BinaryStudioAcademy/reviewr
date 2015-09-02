@@ -48,6 +48,7 @@ class UserAcceptNotification implements ShouldQueue
             'users'=> [$offer->id]
 
         );
+        $cookie = $_COOKIE['x-access-token'];
         $content = json_encode($post_data);
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HEADER, false);
@@ -55,6 +56,7 @@ class UserAcceptNotification implements ShouldQueue
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+        curl_setopt($curl, CURLOPT_COOKIE, "x-access-token=".$cookie);
         $json_response = curl_exec($curl);
         curl_close($curl);
        

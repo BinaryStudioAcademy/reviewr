@@ -37,3 +37,20 @@ function listenChangeForNotifications() {
 
     });
 }
+
+
+var enableSubmit = function(ele) {
+    $(ele).removeAttr("disabled");
+};
+
+$(document).on('click', '.like', function () {
+    var that = this;
+    $(this).attr("disabled", true);
+    setTimeout(function() { enableSubmit(that) }, 1000);
+});
+
+$(document).on('click', '.undo-like', function () {
+    var that = this;
+    $(this).attr("disabled", true);
+    setTimeout(function() { enableSubmit(that) }, 1000);
+});

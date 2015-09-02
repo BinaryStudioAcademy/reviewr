@@ -14,7 +14,6 @@
     <link rel="icon" href="">
 
     <title>Reviewer - Binary Academy</title>
-
     <link href="{{ asset(env('APP_PREFIX', '') . '/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
@@ -27,7 +26,8 @@
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/emojione.min.css') }}" rel="stylesheet">
     <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery.textcomplete.css') }}" rel="stylesheet">
-
+    {{--<link href="{{ asset(env('APP_PREFIX', '') . '/css/all.css') }}" rel="stylesheet">--}}
+    <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -840,6 +840,7 @@
     </div>
 </script>
 
+{{--<script src="{{asset(env('APP_PREFIX', '') .'/js/all.js')}}"></script>--}}
 <!-- VENDOR SCRIPTS -->
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jquery.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap.js')}}"></script>
@@ -880,26 +881,21 @@
         };
     };
     getHeader();
-
     $(document).ready(function () {
-
         $(window).resize(function () {
             if (this.resizeTO) clearTimeout(this.resizeTO);
             this.resizeTO = setTimeout(function () {
                 $(this).trigger('resizeEnd');
             }, 10);
         });
-
         $(window).bind('resizeEnd', function () {
             $(".tile").height($(".tile").width());
             $(".carousel").height($(".tile").width());
             $(".item").height($(".tile").width());
         });
-
         // Smiles config
         emojione.unicodeAlt = false;
         emojione.ascii = true;
-
     });
 </script>
 
