@@ -52,8 +52,10 @@ class OfferNotification implements ShouldQueue
             'users'=> [$author->id]
 
         );
+        $cookie = $_COOKIE['x-access-token'];
         $content = json_encode($post_data);
         $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_COOKIE, "x-access-token=".$cookie);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
