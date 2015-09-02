@@ -365,7 +365,7 @@
             <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
             <button class="request-offer-btn btn btn-warning">
                 <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-                Offer
+                Join
             </button>
             <% } %>
 
