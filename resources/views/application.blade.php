@@ -27,7 +27,7 @@
 <body>
 
 <!-- TEMP NAVIGATION -->
-<nav class="navbar navbar-default navbar-fixed-top" id="header">
+<!-- <nav class="navbar navbar-default navbar-fixed-top" id="header">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -101,11 +101,11 @@
                 </li>
 
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right"> -->
                 <!-- <li>
                     <a href="#!/search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Search</a>
                 </li> -->
-                <li><a href="#!/notifications">
+                <!-- <li><a href="#!/notifications">
                     <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Notifications&nbsp;<span class="label label-primary" id="notification">0</span></a>
                 </li>
                 <li class="dropdown">
@@ -125,7 +125,7 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav> -->
 <!-- END TEMP NAVIGATION -->
 
 <script>
@@ -142,7 +142,7 @@
     <div class="row">
 
         <!-- SIDEBAR CONTAINER-->
-        <div class="col-sm-3 col-md-2 sidebar">
+        <!-- <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <hr>
                 <li class="dropdown">
@@ -174,12 +174,12 @@
                 </li>
                 <li><a href="#!/requests/group/1">PHP</a></li>
                 <li><a href="#!/requests/group/3">.NET</a></li>
-                <li><a href="#!/requests/group/2">JS</a></li>
+                <li><a href="#!/requests/group/2">JS</a></li> -->
                 <!-- <li class="sub-menu-label"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;USERS
                 </li>
                 <li><a href="#!/users">All</a></li>
                 <li><a href="#!/users/high_rep">Higest reputation</a></li> -->
-                <li class="sub-menu-label"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;TAGS
+                <!-- <li class="sub-menu-label"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;TAGS
                 </li>
                 <li><a href="#!/tags">All</a></li>
                 <li><a href="#!/tags/popular">Popular</a></li>
@@ -190,8 +190,62 @@
                 {{--</li>--}}
             </ul>
 
-        </div>
+        </div> -->
         <!-- END SIDEBAR CONTAINER-->
+
+        <!-- NEW SIDEBAR -->
+        <nav class="navbar navbar-default sidebar" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#!/requests/my">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
+                            <ul class="dropdown-menu forAnimate" role="menu">
+                                <li><a href="#!/request/create">Create</a></li>
+                                <li><a href="#!/requests/my">My</a></li>
+                                <li><a href="#!/requests/offered">Offers</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">LogOut</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Review requests <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-list-alt"></span></a>
+                            <ul class="dropdown-menu forAnimate" role="menu">
+                                <li><a href="#!/requests">All</a></li>
+                                <li><a href="#!/requests/popular">Popular</a></li>
+                                <li><a href="#!/requests/high_rate">Hight rating</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-large"></span></a>
+                            <ul class="dropdown-menu forAnimate" role="menu">
+                                <li><a href="#!/requests/group/1">PHP</a></li>
+                                <li><a href="#!/requests/group/3">.NET</a></li>
+                                <li><a href="#!/requests/group/2">JS</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tags <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a>
+                            <ul class="dropdown-menu forAnimate" role="menu">
+                                <li><a href="#!/tags">All</a></li>
+                                <li><a href="#!/tags/popular">Popular</a></li>
+                                <li><a href="#!/tags/cloud">Cloud</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END NEW SIDEBAR -->
 
         <!-- POPUP CONTAINER -->
         <div id="popup">
@@ -227,7 +281,7 @@
         <!-- END SPINNER PRELOADER -->
 
         <!-- CONTENT CONTAINER -->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="main">
             <div class="row" id="main-content">
                 <!-- MAIN CONTENT HERE -->
             </div>
@@ -300,7 +354,7 @@
             <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
             <button class="request-offer-btn btn btn-warning">
                 <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-                Offer
+                Join
             </button>
             <% } %>
 
@@ -778,17 +832,7 @@
 <!-- VENDOR SCRIPTS -->
 
 <script src="{{asset(env('APP_PREFIX', '') .'/js/all.js')}}"></script>
-
-
-
-
-
-
-
-
-<!-- END VENDOR SCRIPTS -->
 <script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
-
 
 
 </body>

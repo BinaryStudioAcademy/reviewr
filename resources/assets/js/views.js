@@ -350,7 +350,10 @@ App.Views.RequestDetails = Backbone.View.extend({
         }
 
         var reviewers = this.model.get('users');
-        _.each(reviewers, function (reviewer, request_id) {
+        if(_.isEmpty(reviewers)) {
+            this.$el.find('.reviewers-header').append(' There are no reviewers for now');
+        } else {
+            _.each(reviewers, function (reviewer, request_id) {
             reviewersBlock.append((new App.Views.Reviewer({
                 model: reviewer,
                 request_id: req_id,
@@ -358,6 +361,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 acceptOffers: reviewers
             }) ).render().el);
         }, this);
+        }
 
         // Render Request Tags
         var request_tags_list = this.$el.find(".tags");
@@ -422,6 +426,12 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             setOptions: {
                 validate: true
             }
+        },
+        '[name=details]': {
+            observe: 'details',
+            setOptions: {
+                validate: true
+            }
         }
     },
 
@@ -435,7 +445,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.model.set({
             id: null,
             title: $('.title-input').val(),
-            details: $('.details-input').html(),
+            details: $('.details-input').val(),
             tags: $('.tags-input').val(),
             group_id: $('input[name="group-input"]:checked').val(),
             date_review: $('#date_review').val(),
@@ -455,8 +465,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     },
     render: function () {
         this.$el.html(this.template);
-        // WYSIWYG Editor show
-        //$('#editor').wysiwyg();
         var nowDate = new Date();
         var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), nowDate.getHours(), nowDate.getMinutes(), 0, 0);
         $("#date_review").datetimepicker({
@@ -470,6 +478,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
                 res = _.pluck(res, 'title');
                 $(".tags-input").select2({
                     tags: true,
+                    placeholder: "Enter or select a tag for review",
                     tokenSeparators: [',', ' '],
                     data: res,
                 });
@@ -938,6 +947,8 @@ App.Views.CommentsList = Backbone.View.extend({
             success: function (comments, res, req) {
                 // Render layout view
                 that.$el.html(that.template());
+                // Add smiles autocomplete to id=text field
+                $("#text").textcomplete(tcParams);
                 // Render each comment
                 _.each(comments.models, function (comment) {
                     that.renderComment(comment);
@@ -1023,7 +1034,7 @@ App.Views.TagsCloud = Backbone.View.extend({
     },
     cloudRender: function(words){
         this.$el.html('<div id="tags-cloud"></div>');
-        $('#tags-cloud').jQCloud(words, {autoResize: true});
+        $('#tags-cloud').jQCloud(words, {autoResize: true, colors: ["#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"]});
     },
     getKeyWordWeight: function(options) {
         var def_settings = {
