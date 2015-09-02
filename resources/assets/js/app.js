@@ -48,7 +48,7 @@ $(document).on('click', '.like', function () {
     setTimeout(function() { enableSubmit(that) }, 1000);
 });
 
-$(document).on('click', '.undo-like', fungit ction () {
+$(document).on('click', '.undo-like', function () {
     var that = this;
     $(this).attr("disabled", true);
     setTimeout(function() { enableSubmit(that) }, 1000);

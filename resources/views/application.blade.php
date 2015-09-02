@@ -14,8 +14,19 @@
     <link rel="icon" href="">
 
     <title>Reviewer - Binary Academy</title>
-
-    <link href="{{ asset(env('APP_PREFIX', '') . '/css/all.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') . '/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-tokenfield.css')}}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/tokenfield-typeahead.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-editable.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/jqcloud.min.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/styles.css') }}" rel="stylesheet">
+    <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/emojione.min.css') }}" rel="stylesheet">
+    <link href="{{ asset(env('APP_PREFIX', '') .'/css/jquery.textcomplete.css') }}" rel="stylesheet">
+    {{--<link href="{{ asset(env('APP_PREFIX', '') . '/css/all.css') }}" rel="stylesheet">--}}
     <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -829,13 +840,28 @@
     </div>
 </script>
 
+{{--<script src="{{asset(env('APP_PREFIX', '') .'/js/all.js')}}"></script>--}}
 <!-- VENDOR SCRIPTS -->
-
-<script src="{{asset(env('APP_PREFIX', '') .'/js/all.js')}}"></script>
-
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jquery.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jqueryui.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-tokenfield.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/typeahead.bundle.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/moment.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/underscore/underscore.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.validation.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.stickit.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/backbone/backbone.poller.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/select2/select2.full.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap-editable.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jcloud/jqcloud.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/emojione.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.min.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.emojione.js')}}"></script>
 <!-- END VENDOR SCRIPTS -->
 <script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
-
 
 <script>
     var getHeader = function() {
@@ -872,6 +898,15 @@
         emojione.ascii = true;
     });
 </script>
+
+{{--<script data-main="js/require-config" src=" {{asset(env('APP_PREFIX', '') . '/js/vendor/require/require.min.js')}} "></script>--}}
+<!-- APP SCRIPTS -->
+<script src="{{asset(env('APP_PREFIX', '') .'/js/app.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/models.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/collections.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/views.js')}}"></script>
+<script src="{{asset(env('APP_PREFIX', '') .'/js/routes.js')}}"></script>
+<!-- END APP SCRIPTS -->
 
 </body>
 </html>
