@@ -860,6 +860,7 @@
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/emojione.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.min.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery.textcomplete.emojione.js')}}"></script>
+<script src="http://autobahn.s3.amazonaws.com/js/autobahn.min.js"></script>
 <!-- END VENDOR SCRIPTS -->
 <script src="http://team.binary-studio.com/app/javascripts/header.js"></script>
 
