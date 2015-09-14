@@ -28,9 +28,18 @@ class CommentRepository implements CommentRepositoryInterface
             'review_request_id' => $rid
         ]);
 
-        $last_comment_id = $comment->id;
 
-        return $comment->with('user')->find($last_comment_id);
+        $last_comment_id = $comment->id;
+        $last_comment = $comment->with('user')->find($last_comment_id);
+
+        // Push last comment with user to all subscribers
+        $data = [
+            'topic_id' => 'onNewMessageInRequest_' . $rid,
+            'data'     => $last_comment
+        ];
+        \App\Socket\Pusher::sendDataToServer($data);
+
+        return $last_comment;
     }
 
     public function update($id, $data)
