@@ -933,13 +933,13 @@ App.Views.CommentsList = Backbone.View.extend({
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderLastComment, this);
         Backbone.Validation.bind(this);
-        App.poller = Backbone.Poller.get(this.collection, {delay: 2000});
+        //App.poller = Backbone.Poller.get(this.collection, {delay: 2000});
 
         //Web socket subscriber
         ab.connect(
             'ws://' + window.location.hostname + ':8080',
             function(session) {
-                App.poller.stop();
+                //App.poller.stop();
                 session.subscribe('request/' + that.options.rid + '/comments', function(topic, data) {
                     console.log('New Message: ', topic, data);
                     that.collection.add(data.data);
@@ -948,7 +948,7 @@ App.Views.CommentsList = Backbone.View.extend({
             function(code, reason, detail) {
                 console.warn('WebSocket connection closed (code, reason, detail): ', code, reason, detail);
                 // If connection failed use alternative method 'live poling'
-                App.poller.start();
+                //App.poller.start();
             },
             {
                 'maxRetries': 60,
