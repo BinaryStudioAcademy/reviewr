@@ -34,7 +34,7 @@ class CommentRepository implements CommentRepositoryInterface
 
         // Push last comment with user to all subscribers
         $data = [
-            'topic_id' => 'onNewMessageInRequest_' . $rid,
+            'topic_id' => 'request/' . $rid . '/comments',
             'data'     => $last_comment
         ];
         \App\Socket\Pusher::sendDataToServer($data);
