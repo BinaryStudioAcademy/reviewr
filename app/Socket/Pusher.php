@@ -22,7 +22,8 @@ class Pusher extends BasePusher
     {
         $context = new \ZMQContext();
         $socket  = $context->getSocket(\ZMQ::SOCKET_PUSH, 'my pusher');
-        $socket->connect("tcp://localhost:5555");
+        $port = env('WEBSOCKET_PORT', 5555);
+        $socket->connect('tcp://127.0.0.1:' . $port);
 
         $socket->send(json_encode($data));
     }
