@@ -937,7 +937,7 @@ App.Views.CommentsList = Backbone.View.extend({
 
         //Web socket subscriber
         ab.connect(
-            'ws://' + window.location.hostname + ':8080',
+            'ws://' + window.location.hostname + ':' + App.websocketPort + App.getPrefix(),
             function(session) {
                 //App.poller.stop();
                 session.subscribe('request/' + that.options.rid + '/comments', function(topic, data) {

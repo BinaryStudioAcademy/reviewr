@@ -60,7 +60,7 @@ class PushServer extends Command
 
         // Set up our WebSocket server for clients wanting real-time updates
         $webSock = new ReactServer($loop);
-        $webSock->listen(8080, '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
+        $webSock->listen(env('WEBSOCKET_CONNECTION', 5588), '0.0.0.0'); // Binding to 0.0.0.0 means remotes can connect
         $webServer = new IoServer(
             new HttpServer(
                 new WsServer(
