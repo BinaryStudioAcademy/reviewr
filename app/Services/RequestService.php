@@ -70,7 +70,7 @@ class RequestService implements RequestServiceInterface
     public function updateRequest($id, $data)
     {
         //dd($id, $data);
-        $request = $this->requestRepository->update($id, $data);
+        $request = $this->requestRepository->update($data, $id);
         // tags for request update
         //foreach ($data->tags as $tag_id => $tag_item) {
         //    $tag = $this->tagRepository->update($tag_id, $tag_item);
@@ -93,13 +93,13 @@ class RequestService implements RequestServiceInterface
 
     public function getOneUserById($id)
     {   
-        return $this->userRepository->OneById($id);
+        return $this->userRepository->findWithRelations($id, ['job', 'department']);
           
     }
 
     public function getOneRequestById($id)
     {
-        return $this->requestRepository->OneById($id);
+        return $this->requestRepository->find($id);
     }
 
     public function acceptReviewRequest($user_id, $req_id)

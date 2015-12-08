@@ -12,7 +12,7 @@ class TagRepository implements TagRepositoryInterface
         return Tag::orderBy('title')->get();
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         $tags = Tag::all();
         foreach($tags as $temp) {
@@ -24,9 +24,9 @@ class TagRepository implements TagRepositoryInterface
         return $tag;
     }
 
-    public function OneById($id) {}
+    public function find($id) {}
 
-    public function update($id, $data) {}
+    public function update(array $data, $id) {}
 
     public function delete($id)
     {

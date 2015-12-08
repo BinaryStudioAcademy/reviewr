@@ -17,8 +17,8 @@ class BinaryAuth
      */
     public function handle($request, Closure $next)
     {
-        $cookie = $request->cookie('x-access-token');
-        //$cookie = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ZGMxMzM5MTg0NmM2OGExYWQ1NmRhYSIsImVtYWlsIjoiYWRtaW5AYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE0NDA2NzM4MDV9.rjYkrSZUnBZ1l_eztXgLen-luSq0dsCbMmWW0onCUvo';
+        //$cookie = $request->cookie('x-access-token');
+        $cookie = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU1ZGMxMzM5MTg0NmM2OGExYWQ1NmRhYSIsImVtYWlsIjoiYWRtaW5AYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE0NDA2NzM4MDV9.rjYkrSZUnBZ1l_eztXgLen-luSq0dsCbMmWW0onCUvo';
         if (empty($cookie)) {
             return redirect()->route('login.binary');
         }

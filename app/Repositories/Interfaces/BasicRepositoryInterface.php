@@ -6,11 +6,11 @@ interface BasicRepositoryInterface
 {
     public function all();
 
-    public function OneById($id); //TODO Refactor to 'find($id)'
+    public function find($id);
 
-    public function create($data);
+    public function create(array $data);
 
-    public function update($id, $data);
+    public function update(array $data, $id);
 
     public function delete($id);
 }

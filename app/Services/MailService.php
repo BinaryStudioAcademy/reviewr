@@ -24,8 +24,8 @@ class MailService implements MailServiceInterface
       }
 
     public function sendNotification($user_id, $req_id, $action) {
-        $user = $this->userRepository->OneById($user_id);
-        $request = $this->requestRepository->OneById($req_id);
+        $user = $this->userRepository->findWithRelations($user_id, ['job', 'department']);
+        $request = $this->requestRepository->find($req_id);
 
         switch ($action) {
             case 'accept':

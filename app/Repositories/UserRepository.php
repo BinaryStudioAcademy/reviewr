@@ -2,37 +2,36 @@
 
 namespace App\Repositories;
 
-use App;
 use DB;
 use App\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Tymon\JWTAuth\Token;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Prettus\Repository\Criteria\RequestCriteria;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends Repository implements UserRepositoryInterface
 {
-    public function all()
+    /**
+     * Specify Model class name
+     *
+     * @return string
+     */
+    public function model()
     {
-        return User::orderBy('first_name')->get();
+        return User::class;
     }
 
-    public function OneById($id)
+    /**
+     * Boot up the repository, pushing criteria
+     */
+    public function boot()
     {
-    	return User::with('job', 'department')->findOrFail($id);
-    }
-
-    public function create($data) {}
-
-    public function update($id, $data) {}
-
-    public function delete($id)
-    {
-        return User::findOrFail($id)->delete();
+        $this->pushCriteria(app(RequestCriteria::class));
     }
 
     public function getByHighestReputation()
     {
-        return User::orderBy('reputation', 'desc')->get();
+        return $this->model->orderBy('reputation', 'desc')->get();
     }
 
     public function unreadNotifications($user)
@@ -82,6 +81,4 @@ class UserRepository implements UserRepositoryInterface
 
         return $user;
     }
-
-
 }
