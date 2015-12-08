@@ -15,6 +15,7 @@ class RequestService implements RequestServiceInterface
     private $userRepository;
     private $requestRepository;
     private $tagRepository;
+
     
     public function __construct(
     UserRepositoryInterface $userRepository,
@@ -268,12 +269,6 @@ class RequestService implements RequestServiceInterface
     public function getPopularTags()
     {
         return $this->tagRepository->getPopular();
-    }
-
-
-    public function unreadNotifications($user)
-    {
-        return $this->userRepository->unreadNotifications($user);
     }
     
     public function getReviewRequestsByUserId($user_id)

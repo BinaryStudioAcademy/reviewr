@@ -6,6 +6,7 @@ use App\Services\Interfaces\MailServiceInterface;
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\RequestRepositoryInterface;
+use App\Repositories\Interfaces\NotificationRepositoryInterface;
 use App\Events\OfferWasSent;
 use App\Events\UserWasAccept;
 use App\Events\UserWasDecline;
@@ -15,12 +16,16 @@ class MailService implements MailServiceInterface
 {
     private $userRepository;
     private $requestRepository;
+    private $notificationRepository;
     
-    public function __construct(UserRepositoryInterface $userRepository,
-        RequestRepositoryInterface $requestRepository
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        RequestRepositoryInterface $requestRepository,
+        NotificationRepositoryInterface $notificationRepository
     ) {
         $this->userRepository = $userRepository;
         $this->requestRepository = $requestRepository;
+        $this->notificationRepository = $notificationRepository;
       }
 
     public function sendNotification($user_id, $req_id, $action) {
@@ -40,6 +45,16 @@ class MailService implements MailServiceInterface
                 \Event::fire(new OfferWasSent($request, $user));
                 break;
         }
-       
+    }
+
+    public function unreadNotifications($user_id)
+    {
+        $notifications = $this->notificationRepository->findWhere(["user_id" => $user_id]);
+
+        foreach ($notifications as $notification) {
+            $this->notificationRepository->delete($notification->id);
+        }
+
+        return $notifications;
     }
 }

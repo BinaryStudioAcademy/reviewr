@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Token;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Prettus\Repository\Criteria\RequestCriteria;
 
-class UserRepository extends Repository implements UserRepositoryInterface
+class UserRepository extends PrettusRepository implements UserRepositoryInterface
 {
     /**
      * Specify Model class name
@@ -33,14 +33,6 @@ class UserRepository extends Repository implements UserRepositoryInterface
     {
         return $this->model->orderBy('reputation', 'desc')->get();
     }
-
-    public function unreadNotifications($user)
-    {
-        $notifications = $user->notifications;
-        DB::table('notifications')->where('user_id', $user->id)->delete();
-        return $notifications;
-    }
-
 
     /**
      * @param $cookie

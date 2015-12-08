@@ -146,7 +146,7 @@ class UserController extends Controller
     public function unreadNotifications()
     {
         $user = Auth::user();
-        return Response::json($this->requestService->unreadNotifications($user), 200);
+        return Response::json($this->mailService->unreadNotifications($user->id), 200);
     }
 
     public function mailAcceptReviewRequest($hashUser, $hashReq)

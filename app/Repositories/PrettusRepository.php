@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-abstract class Repository extends BaseRepository implements RepositoryInterface
+abstract class PrettusRepository extends BaseRepository implements RepositoryInterface
 {
     /**
      * @param $id
