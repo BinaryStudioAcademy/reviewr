@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Response;
 use App\Services\Auth\Contracts\AuthServiceInterface;
 use App\Services\Auth\Exceptions\TokenInCookieExpiredException;
 use App\Services\Auth\Exceptions\AuthException;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -94,7 +95,9 @@ class AuthController extends Controller
 
     public function getLogout(Request $request)
     {
-        return 'logout';
+        Session::flush();
+        setcookie('x-access-token', '', -1, '/');
+        return Response::json(null, 200, []);
     }
 
    /*public function redirectToBinaryLogout()

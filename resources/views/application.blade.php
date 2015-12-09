@@ -73,7 +73,7 @@
                                 <li><a href="#!/requests/my">My Review Request</a></li>
                                 <li><a href="#!/requests/offered">My Offers</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">LogOut</a></li>
+                                <li><a href="#!/logout">LogOut</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

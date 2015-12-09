@@ -2,8 +2,6 @@ App.Router = Backbone.Router.extend({
 
     routes: {
         "": "home",
-        /*"!/users": "users",
-        "!/users/high_rep": "highestReputaionUsers",*/
         "!/user/:id": "showUserProfile",
         "!/requests": "requests",
         "!/request/create": "createRequest",
@@ -22,24 +20,12 @@ App.Router = Backbone.Router.extend({
         "!/tags/popular": "popularTags",
         "!/notifications": "notifications",
         "!/tags/cloud": "tagsCloud",
-        /*"!/search": "search"*/
+        "!/logout": "logout"
     },
 
     home: function () {
         this.navigate('!/requests/my', true)
     },
-
-    /*users: function () {
-        console.log('Route usersListView');
-        users.url = App.getPrefix() + "/user";
-        new App.Views.UsersList().render();
-    },
-
-    highestReputaionUsers: function () {
-        console.log("Route: !/users/high_rep");
-        users.url = App.getPrefix() + "/users/high_rep";
-        new App.Views.UsersList().render();
-    },*/
 
     showUserProfile: function (id) {
         $('#spinner').show();
@@ -110,16 +96,6 @@ App.Router = Backbone.Router.extend({
             new App.Views.RequestDetails({model: request}).render();
             $('#spinner').hide();
         });
-
-        //reviewers.url = App.getPrefix() + '/reviewrequest/' + id + '/offers';
-        //request_tags.url = App.getPrefix() + '/reviewrequest/' + id + '/tags';
-        //
-        //
-        //request_tags.fetch({wait: true});
-        //reviewers.fetch({wait: true}).then(function(){
-        //    new App.Views.RequestDetails({model: request}).render();
-        //});
-
     },
 
 
@@ -140,16 +116,19 @@ App.Router = Backbone.Router.extend({
         new App.Views.TagsCloud().render();
     },
 
-    /*search: function () {
-        console.log("Route: !/search");
-        new App.Views.Search().render();
-    },*/
-
     notifications: function () {
         new App.Views.NotificationsList().render();
+    },
+    
+    logout: function () {
+        $.ajax({
+            url: '/auth/logout',
+            success: function () {
+                location.assign("/");
+            },
+            dataType: 'json'
+        });
     }
-
-
 });
 
 var router = new App.Router();
