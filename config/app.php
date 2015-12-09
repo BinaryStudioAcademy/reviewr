@@ -144,18 +144,20 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
 
         /*
          * Reviewer New Service Providers
          */
         App\Providers\RepositoriesServiceProvider::class,
         App\Providers\ServicesServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\RemoteDataGrabberProvider::class,
 
         /*
          * Other Service Providers
          */
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
     ],
 

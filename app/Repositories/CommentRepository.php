@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Comment;
-use App\Repositories\Interfaces\CommentRepositoryInterface;
+use App\Repositories\Contracts\CommentRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 class CommentRepository implements CommentRepositoryInterface
@@ -13,12 +13,12 @@ class CommentRepository implements CommentRepositoryInterface
         return Comment::all();
     }
 
-    public function OneById($id)
+    public function find($id)
     {
         return Comment::with('user')->findOrFail($id);
     }
 
-    public function create($data) {}
+    public function create(array $data) {}
 
     public function addCommentToRequest($data, $rid)
     {
@@ -42,7 +42,7 @@ class CommentRepository implements CommentRepositoryInterface
         return $last_comment;
     }
 
-    public function update($id, $data)
+    public function update(array $data, $id)
     {
         $comment = Comment::findOrFail($id);
 

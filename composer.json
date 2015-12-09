@@ -10,7 +10,8 @@
         "illuminate/html": "~5.0",
         "tymon/jwt-auth": "0.5.*",
         "cboden/ratchet": "^0.3.3",
-        "react/zmq": "0.2.*|0.3.*"
+        "react/zmq": "0.2.*|0.3.*",
+        "prettus/l5-repository": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

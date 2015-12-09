@@ -17,7 +17,7 @@ $app = new Illuminate\Foundation\Application(
 
 /*
 |--------------------------------------------------------------------------
-| Bind Important Interfaces
+| Bind Important Contracts
 |--------------------------------------------------------------------------
 |
 | Next, we need to bind some important interfaces into the container so

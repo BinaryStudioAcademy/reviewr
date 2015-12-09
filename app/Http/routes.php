@@ -4,39 +4,21 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
 
     Route::get('/', [
         'as'         => 'home',
-        //'middleware' => 'auth',
-        'middleware' => 'auth.binary',
+        'middleware' => 'auth',
         function () {
             return view('application');
         }
     ]);
 
-    Route::get('/auth/login', [
-        'as'   => 'login.get',
-        'uses' => 'Auth\AuthController@getLogin'
-    ]);
-    Route::post('/auth/login', [
-        'as'   => 'login.post',
-        'uses' => 'Auth\AuthController@postLogin'
-    ]);
+    // Auth routes
     Route::get('/auth/logout', [
         'as'   => 'logout',
         'uses' => 'Auth\AuthController@getLogout'
     ]);
 
-    // Registration with Binary routes...
-    Route::get('/auth/binary', [
-        'as' => 'login.binary',
-        'uses' => 'Auth\AuthController@redirectToBinary'
-    ]);
-    Route::get('/auth/binary_callback', [
-        'as' => 'login.binary.callback',
-        'uses' => 'Auth\AuthController@handleBinaryCallback'
-    ]);
-    Route::get('/auth/binary_logout', [
-        'as' => 'logout.binary',
-        'uses' => 'Auth\AuthController@redirectToBinaryLogout'
-    ]);
+    // Auth mockups
+    Route::get('/auth', 'Mockups\AuthController@auth');
+    Route::get('/auth/me/{binary_id}', 'Mockups\AuthController@profile');
 
     Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get('reviewrequest/my', 'ReviewRequestController@myReviewRequest');

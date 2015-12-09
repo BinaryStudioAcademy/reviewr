@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Notification;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\RequestRepositoryInterface;
-use App\Repositories\Interfaces\TagRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\RequestRepositoryInterface;
+use App\Repositories\Contracts\TagRepositoryInterface;
 use App;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +15,7 @@ class RequestService implements RequestServiceInterface
     private $userRepository;
     private $requestRepository;
     private $tagRepository;
+
     
     public function __construct(
     UserRepositoryInterface $userRepository,
@@ -70,7 +71,7 @@ class RequestService implements RequestServiceInterface
     public function updateRequest($id, $data)
     {
         //dd($id, $data);
-        $request = $this->requestRepository->update($id, $data);
+        $request = $this->requestRepository->update($data, $id);
         // tags for request update
         //foreach ($data->tags as $tag_id => $tag_item) {
         //    $tag = $this->tagRepository->update($tag_id, $tag_item);
@@ -93,13 +94,13 @@ class RequestService implements RequestServiceInterface
 
     public function getOneUserById($id)
     {   
-        return $this->userRepository->OneById($id);
+        return $this->userRepository->findWithRelations($id, ['job', 'department']);
           
     }
 
     public function getOneRequestById($id)
     {
-        return $this->requestRepository->OneById($id);
+        return $this->requestRepository->find($id);
     }
 
     public function acceptReviewRequest($user_id, $req_id)
@@ -268,12 +269,6 @@ class RequestService implements RequestServiceInterface
     public function getPopularTags()
     {
         return $this->tagRepository->getPopular();
-    }
-
-
-    public function unreadNotifications($user)
-    {
-        return $this->userRepository->unreadNotifications($user);
     }
     
     public function getReviewRequestsByUserId($user_id)

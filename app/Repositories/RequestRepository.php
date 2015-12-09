@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App;
 use App\ReviewRequest;
-use App\Repositories\Interfaces\RequestRepositoryInterface;
+use App\Repositories\Contracts\RequestRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 // Temp Use
@@ -18,7 +18,7 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->orderBy('created_at', 'desc')->get();
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         $review_request = new ReviewRequest;
         $review_request->title = $data->title;
@@ -30,7 +30,7 @@ class RequestRepository implements RequestRepositoryInterface
         return $review_request;
     }
 
-    public function update($id, $data)
+    public function update(array $data, $id)
     {
         $review_request = ReviewRequest::findOrFail($id);
         $auth_user_id = Auth::user()->id;
@@ -79,7 +79,7 @@ class RequestRepository implements RequestRepositoryInterface
         }
     }
 
-    public function OneById($id)
+    public function find($id)
     {
         return ReviewRequest::with([
             'user.job',
