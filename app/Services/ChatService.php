@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\Interfaces\CommentRepositoryInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Services\Interfaces\ChatServiceInterface;
 
 class ChatService implements ChatServiceInterface

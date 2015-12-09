@@ -150,6 +150,8 @@ return [
          */
         App\Providers\RepositoriesServiceProvider::class,
         App\Providers\ServicesServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\RemoteDataGrabberProvider::class,
 
         /*
          * Other Service Providers

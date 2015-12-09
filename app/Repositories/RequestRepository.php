@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App;
 use App\ReviewRequest;
-use App\Repositories\Interfaces\RequestRepositoryInterface;
+use App\Repositories\Contracts\RequestRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 // Temp Use

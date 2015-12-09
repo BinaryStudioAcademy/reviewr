@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Notification;
-use App\Repositories\Interfaces\NotificationRepositoryInterface;
+use App\Repositories\Contracts\NotificationRepositoryInterface;
 use Prettus\Repository\Criteria\RequestCriteria;
 
 class NotificationRepository extends PrettusRepository implements NotificationRepositoryInterface

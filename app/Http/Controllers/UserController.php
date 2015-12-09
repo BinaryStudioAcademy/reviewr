@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Response;
 
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
-use Illuminate\Contracts\Encryption\DecryptException;
-use App\User;
 use Auth;
 
 class UserController extends Controller

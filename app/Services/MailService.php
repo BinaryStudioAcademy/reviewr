@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Services\Interfaces\MailServiceInterface;
 use App\Services\Interfaces\RequestServiceInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\RequestRepositoryInterface;
-use App\Repositories\Interfaces\NotificationRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\RequestRepositoryInterface;
+use App\Repositories\Contracts\NotificationRepositoryInterface;
 use App\Events\OfferWasSent;
 use App\Events\UserWasAccept;
 use App\Events\UserWasDecline;

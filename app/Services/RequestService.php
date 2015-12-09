@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Notification;
-use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Repositories\Interfaces\RequestRepositoryInterface;
-use App\Repositories\Interfaces\TagRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\RequestRepositoryInterface;
+use App\Repositories\Contracts\TagRepositoryInterface;
 use App;
 use Illuminate\Support\Facades\Auth;
 

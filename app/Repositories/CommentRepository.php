@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Comment;
-use App\Repositories\Interfaces\CommentRepositoryInterface;
+use App\Repositories\Contracts\CommentRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 class CommentRepository implements CommentRepositoryInterface

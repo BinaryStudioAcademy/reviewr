@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Tag;
-use App\Repositories\Interfaces\TagRepositoryInterface;
+use App\Repositories\Contracts\TagRepositoryInterface;
 
 class TagRepository implements TagRepositoryInterface
 {

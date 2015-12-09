@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Response;
+use App\Services\Auth\Contracts\AuthServiceInterface;
 
 class AuthController extends Controller
 {
@@ -30,31 +32,18 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     protected $redirectAfterLogout;
+    protected $authService;
 
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AuthServiceInterface $authService)
     {
         $this->middleware('guest', ['except' => 'getLogout']);
         $this->redirectAfterLogout = route('home');
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        $this->authService = $authService;
     }
 
     /**
@@ -72,7 +61,43 @@ class AuthController extends Controller
         ]);
     }
 
-    public function redirectPath()
+    public function getLogin(Request $request) {
+        $cookie = $request->cookie('x-access-token');
+
+        if(!empty($cookie)) {
+            try {
+                $user = $this->authService->loginByCookie(
+                    $request->cookie('x-access-token')
+                );
+            } catch (TokenInCookieExpiredException $e) {
+                return Redirect::to(env('AUTH_REDIRECT'))
+                    ->withCookie(
+                        'referer',
+                        url(env('SERVER_PREFIX', '') . '/')
+                    );
+            } catch (AuthException $e) {
+                // Redirect to the authorisation server if user is not authorised
+                return Redirect::to(url(env('AUTH_REDIRECT')))
+                    ->withCookie(
+                        'referer',
+                        url(env('SERVER_PREFIX', '') . '/')
+                    );
+            }
+        } else {
+            return Redirect::to(url(env('AUTH_REDIRECT')))
+                ->withCookie(
+                    'referer',
+                    url(env('SERVER_PREFIX', '') . '/')
+                );
+        }
+
+        return Response::json($user, 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function getLogout()
+    {}
+
+   /* public function redirectPath()
     {
         if (property_exists($this, 'redirectPath')) {
             return $this->redirectPath;
@@ -104,5 +129,5 @@ class AuthController extends Controller
         //return redirect()->route('home')->withCookie($removeCookie);
         return redirect('http://team.binary-studio.com/auth/logout');
         //return redirect()->route('home');
-    }
+    }*/
 }

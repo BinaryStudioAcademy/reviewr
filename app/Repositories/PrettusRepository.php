@@ -16,4 +16,17 @@ abstract class PrettusRepository extends BaseRepository implements RepositoryInt
     {
         return $this->with($relations)->find($id);
     }
+
+    public function updateFirstOrCreate(array $keyAttributes, array $attributes=[])
+    {
+        $attrs = array_merge($keyAttributes, $attributes);
+        $collection = $this->findWhere($keyAttributes);
+
+        if (!$collection->isEmpty()) {
+            $instance = $collection->first();
+            return $this->update($attrs, $instance->id);
+        }
+
+        return $this->create($attrs);
+    }
 }

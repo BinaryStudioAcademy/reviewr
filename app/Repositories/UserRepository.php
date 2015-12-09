@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use DB;
 use App\User;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Tymon\JWTAuth\Token;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Prettus\Repository\Criteria\RequestCriteria;

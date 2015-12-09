@@ -4,13 +4,13 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
 
     Route::get('/', [
         'as'         => 'home',
-        //'middleware' => 'auth',
-        'middleware' => 'auth.binary',
+        'middleware' => 'auth',
         function () {
             return view('application');
         }
     ]);
 
+    // Auth routes
     Route::get('/auth/login', [
         'as'   => 'login.get',
         'uses' => 'Auth\AuthController@getLogin'
@@ -23,6 +23,11 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         'as'   => 'logout',
         'uses' => 'Auth\AuthController@getLogout'
     ]);
+
+    // Auth mockups
+    Route::get('/auth', 'Mockups\AuthController@auth');
+    Route::get('/auth/logout', 'Mockups\AuthController@logout');
+    Route::get('/auth/me/{binary_id}', 'Mockups\AuthController@profile');
 
     // Registration with Binary routes...
     Route::get('/auth/binary', [
