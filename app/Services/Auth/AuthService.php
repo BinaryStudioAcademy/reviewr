@@ -73,10 +73,7 @@ class AuthService implements AuthServiceInterface
 
         // Return an actual user model if login passes
         if (Auth::check()) {
-            return $this->userRepository->findWithRelations(
-                Auth::id(),
-                ['localRole']
-            );
+            return $this->userRepository->find(Auth::id());
         } else {
             throw new AuthException('Login error. User is not authorized.');
         }
@@ -104,7 +101,7 @@ class AuthService implements AuthServiceInterface
     {
         $userPayload = $this->extractUserDataFromCookie($cookie);
 
-        try {
+            try {
             $user = $this->userUpdater->updateBaseInfo($userPayload);
         } catch (RepositoryException $e) {
             throw new AuthException($e->getMessage(), null, $e);
@@ -120,6 +117,8 @@ class AuthService implements AuthServiceInterface
                 $e->getMessage()
             );
         }
+
+        return $user;
     }
 
     public function updateUser(array $data, $id)

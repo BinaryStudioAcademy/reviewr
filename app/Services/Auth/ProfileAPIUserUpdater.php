@@ -42,29 +42,13 @@ class ProfileAPIUserUpdater extends UserUpdater
         $preparedInfo = $this->prepareBaseInfo($userInfo);
 
         $user = $this->userRepository->updateFirstOrCreate(
-            ['binary_id' => $preparedInfo['binary_id']],
+            [
+                'binary_id' => $preparedInfo['binary_id'],
+            ],
             $preparedInfo
         );
 
-        // 'global_role_id' property is not allowed to the mass assignment for
-        // some security reasons
-        $entitledUser = $this->userRepository->setProtectedProperty(
-            $user,
-            'global_role_id',
-            $preparedInfo['global_role_id']
-        );
-
-        // Setting a default local role if it's absent
-        if (!$entitledUser->local_role_id) {
-            $role = $this->roleLocalRepository->firstWhere(['title' => 'USER']);
-            $entitledUser = $this->userRepository->setProtectedProperty(
-                $entitledUser,
-                'local_role_id',
-                $role->id
-            );
-        }
-
-        return $entitledUser;
+        return $user;
     }
 
     /**
