@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Guzzle\Http\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
@@ -96,17 +97,10 @@ class AuthController extends Controller
     public function getLogout(Request $request)
     {
         Session::flush();
+        $cookie = $request->cookie('x-access-token');
         setcookie('x-access-token', '', -1, '/');
-        return Response::json(null, 200, []);
-    }
 
-   /*public function redirectToBinaryLogout()
-    {
-        Session::flush();
-        //$removeCookie = Cookie::forget('x-access-token');
-        setcookie('x-access-token', '', -1, '/');
-        //return redirect()->route('home')->withCookie($removeCookie);
-        return redirect('http://team.binary-studio.com/auth/logout');
-        //return redirect()->route('home');
-    }*/
+        return Redirect::to(url(env('AUTH_LOGOUT')))
+            ->withCookie('x-access-token', $cookie);
+    }
 }

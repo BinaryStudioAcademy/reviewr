@@ -121,13 +121,8 @@ App.Router = Backbone.Router.extend({
     },
     
     logout: function () {
-        $.ajax({
-            url: '/auth/logout',
-            success: function () {
-                location.assign("/");
-            },
-            dataType: 'json'
-        });
+        var logoutUrl = 'http://' + window.location.hostname + App.getSitePrefix() + '/auth/logout';
+        window.location.assign(logoutUrl);
     }
 });
 

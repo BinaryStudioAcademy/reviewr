@@ -13,6 +13,10 @@
             return this.prefix + this.apiPrefix
         },
 
+        getSitePrefix: function () {
+            return this.prefix;
+        },
+
         poller: ''
 
     };
