@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Requests;
 
-use App\Services\Interfaces\RequestServiceInterface;
+use App;
+use App\Services\Requests\Contracts\RequestServiceInterface;
 use App\Notification;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\RequestRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
-use App;
 use Illuminate\Contracts\Auth\Guard;
+use App\Services\Requests\Exceptions\RequestServiceException;
 
 class RequestService implements RequestServiceInterface
 {
@@ -144,12 +145,30 @@ class RequestService implements RequestServiceInterface
         return response()->json(['message'=> 'fail'], 500);
     }
 
-    public function offerOnReviewRequest($user_id, $req_id) 
+    public function offerOnReviewRequest($user_id, $req_id)
     {
         $request = $this->getOneRequestById($req_id);
         $user = $this->getOneUserById($user_id); // internal id
-        $author = $this->getOneUserById($request->user['id']);  
-        
+        $author = $this->getOneUserById($request->user['id']);
+
+        //TODO: Add a check if user and author are different people
+        if ($user->id === $author->id) {
+            throw new RequestServiceException('User cannot offer a review for'
+            . 'his own request');
+        }
+
+        // Check if this user offered a review for this request
+        //TODO: change to the repo usage
+        foreach ($user->requests as $request) {
+            if ($request->id == $req_id) {
+                return response()->json(['message'=> 'fail'], 500); //TODO: return exception,
+                //      make responce from controller
+            }
+        }
+
+        $user->requests()->attach($req_id);
+
+        // Sending notification
         $notification = new Notification();
         $notification->title = 'User '
                              . $user->first_name
@@ -161,17 +180,6 @@ class RequestService implements RequestServiceInterface
         $notification->save(); //TODO: Change to the repository usage
         $notification->user()->associate($notification);
 
-        //TODO: Add a check if user and author are different people
-
-        // Check if this user offered a review for this request
-        foreach ($user->requests as $request) {  //TODO: change to the repo usage
-            if ($request->id == $req_id) {
-                return response()->json(['message'=> 'fail'], 500); //TODO: return exception,
-                                                                    //      make responce from controller
-            }
-        }
-
-        $user->requests()->attach($req_id);
         return response()->json(['message'=> 'success'], 200);
     }
 

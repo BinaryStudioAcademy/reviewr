@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\MailService;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
-use App\Services\Interfaces\RequestServiceInterface;
+use App\Services\Requests\Contracts\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
 use Illuminate\Contracts\Auth\Guard;
 

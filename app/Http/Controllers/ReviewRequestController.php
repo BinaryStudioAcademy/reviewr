@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\RequestServiceInterface;
+use App\Services\Requests\Contracts\RequestServiceInterface;
 use App\ReviewRequest;
 use Illuminate\Support\Facades\Auth;
 use App\User;
