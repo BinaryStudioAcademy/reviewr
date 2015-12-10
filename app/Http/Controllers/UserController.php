@@ -25,6 +25,8 @@ class UserController extends Controller
         MailServiceInterface $mailService,
         Guard $guard
     ) {
+        $this->middleware('auth');
+
         $this->requestService = $requestService;
         $this->mailService = $mailService;
         $this->guard = $guard;
@@ -125,13 +127,13 @@ class UserController extends Controller
 
         // Checks if the current user id according the id in route
         if (!$binary_id === $user->binary_id) {
-            return response()->json(['message'=> 'fail'], 500);
+            return response()->json(['message'=> 'User mismatched'], 500);
         }
 
         try {
             $this->requestService->offerOnReviewRequest($user->id, $request_id);
         } catch (RequestServiceException $e) {
-            return response()->json(['message'=> 'fail'], 500);
+            return response()->json(['message'=> $e->getMessage()], 500);
         }
 
         $this->mailService->sendNotification(

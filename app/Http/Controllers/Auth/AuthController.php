@@ -91,7 +91,7 @@ class AuthController extends Controller
                 );
         }
 
-        return redirect()->route('home');
+        return Redirect::intended();
     }
 
     public function getLogout(Request $request)
