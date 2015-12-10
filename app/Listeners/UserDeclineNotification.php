@@ -12,16 +12,6 @@ use Mail;
 class UserDeclineNotification implements ShouldQueue
 {
     /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Handle the event.
      *
      * @param  UserWasDecline  $event
@@ -39,7 +29,7 @@ class UserDeclineNotification implements ShouldQueue
             'url' => 'team.binary-studio.com/reviewr',
             'sound' => 'true',
             'serviceType'=> "Code Review Requests",
-            'users'=> [$offer->id]
+            'users'=> [$offer->binary_id]
         );
         $content = json_encode($post_data);
         $cookie = $_COOKIE['x-access-token'];

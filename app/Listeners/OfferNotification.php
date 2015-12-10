@@ -14,15 +14,6 @@ use Mail;
 class OfferNotification implements ShouldQueue
 {
     /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Handle the event.
      *
      * @param  OfferWasSent  $event
@@ -40,13 +31,13 @@ class OfferNotification implements ShouldQueue
             'url' => 'team.binary-studio.com/reviewr',
             'sound' => 'true',
             'serviceType'=> "Code Review Requests",
-            'users'=> [$author->id]
+            'users'=> [$author->binary_id]
 
         );
         $cookie = $_COOKIE['x-access-token'];
         $content = json_encode($post_data);
         $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_COOKIE, "x-access-token=".$cookie);
+        curl_setopt($curl, CURLOPT_COOKIE, "x-access-token=" . $cookie);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));

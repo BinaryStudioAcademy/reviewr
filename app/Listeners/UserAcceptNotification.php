@@ -12,16 +12,6 @@ use Mail;
 class UserAcceptNotification implements ShouldQueue
 {
     /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Handle the event.
      *
      * @param  UserWasAccept  $event
@@ -39,7 +29,7 @@ class UserAcceptNotification implements ShouldQueue
             'url' => 'team.binary-studio.com/reviewr',
             'sound' => 'true',
             'serviceType'=> "Code Review Requests",
-            'users'=> [$offer->id]
+            'users'=> [$offer->binary_id]
 
         );
         $cookie = $_COOKIE['x-access-token'];
