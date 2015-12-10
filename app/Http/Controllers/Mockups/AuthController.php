@@ -109,7 +109,7 @@ class AuthController extends Controller
             'id' => '55dc13391846c68a1ad56da3',
         ];
 
-        $this->currentUser = $this->dev;
+        $this->currentUser = $this->admin;
     }
 
     /**

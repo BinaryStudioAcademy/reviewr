@@ -50,7 +50,8 @@ class AuthService implements AuthServiceInterface
         try {
             $this->guard->logout();
         } catch(\Exception $e) {
-            $errorMessage = $e->getMessage() . ' Logout error. User is not authorized.';
+            $errorMessage = $e->getMessage()
+                . ' Logout error. User is not authorized.';
             Log::error($errorMessage);
             throw new AuthException($errorMessage, null, $e);
         }
@@ -76,7 +77,9 @@ class AuthService implements AuthServiceInterface
         if ($this->guard->check()) {
             return $this->userRepository->find($this->guard->id());
         } else {
-            $errorMessage = 'Login error. User is not authorized. (binary_id: ' . $user->binary_id . ')';
+            $errorMessage = 'Login error. User is not authorized. (binary_id: '
+                . $user->binary_id
+                . ')';
             Log::error($errorMessage);
             throw new AuthException($errorMessage);
         }

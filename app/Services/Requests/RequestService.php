@@ -1,31 +1,34 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Requests;
 
-use App\Services\Interfaces\RequestServiceInterface;
+use App;
+use App\Services\Requests\Contracts\RequestServiceInterface;
 use App\Notification;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\RequestRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
-use App;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
+use App\Services\Requests\Exceptions\RequestServiceException;
 
 class RequestService implements RequestServiceInterface
 {
-    private $userRepository;
-    private $requestRepository;
-    private $tagRepository;
+    protected $userRepository;
+    protected $requestRepository;
+    protected $tagRepository;
+    protected $guard;
 
-    
     public function __construct(
     UserRepositoryInterface $userRepository,
     RequestRepositoryInterface $requestRepository,
-    TagRepositoryInterface $tagRepository
-) {
-    $this->userRepository = $userRepository;
-    $this->requestRepository = $requestRepository;
-    $this->tagRepository = $tagRepository;
-}
+    TagRepositoryInterface $tagRepository,
+    Guard $guard
+    ) {
+        $this->userRepository = $userRepository;
+        $this->requestRepository = $requestRepository;
+        $this->tagRepository = $tagRepository;
+        $this->guard = $guard;
+    }
 
     public function getAllUsers()
     {
@@ -39,12 +42,12 @@ class RequestService implements RequestServiceInterface
 
     public function getMyRequests()
     {
-        return $this->requestRepository->findByField('user_id', Auth::user()->id);
+        return $this->requestRepository->findByField('user_id', $this->guard->user()->id);
     }
 
     public function getOfferedRequests()
     {
-        return $this->requestRepository->getOffered(Auth::user()->id);
+        return $this->requestRepository->getOffered($this->guard->user()->id);
     }
 
     public function getAllTags()
@@ -55,11 +58,15 @@ class RequestService implements RequestServiceInterface
     public function createRequest($data)
     {
         $request = $this->requestRepository->create($data);
-        foreach ($data->tags as $tag) {
-            $tag = $this->tagRepository->create($tag);
-            $request->tags()->attach($tag->id);
-            $request->save();
+
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $tag = $this->tagRepository->create(['title' => $tag]);
+                $request->tags()->attach($tag->id);
+                $request->save();
+            }
         }
+
         return $request;
     }
 
@@ -134,7 +141,7 @@ class RequestService implements RequestServiceInterface
                 $author = $this->getOneUserById($request->user['id']);
                 $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline your offer for request ' . $request->title;
                 $notification->user_id = $user_id;
-                $notification->save();
+                $notification->save(); // TODO: Change to the repository usage
                 $notification->user()->associate($notification);
                 return response()->json(['message'=> 'success'], 200);
             }
@@ -142,38 +149,53 @@ class RequestService implements RequestServiceInterface
         return response()->json(['message'=> 'fail'], 500);
     }
 
-    public function offerOnReviewRequest($user_id, $req_id) 
+    public function offerOnReviewRequest($user_id, $req_id)
     {
         $request = $this->getOneRequestById($req_id);
-        $user = $this->getOneUserById($user_id);
-        $author = $this->getOneUserById($request->user['id']);  
-        
-        $notification = new Notification();
-        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send you offer for request ' . $request->title;
-        $notification->user_id = $author->id;
-        $notification->save();
+        $user = $this->getOneUserById($user_id); // internal id
+        $author = $this->getOneUserById($request->user['id']);
 
-        
-        $notification->user()->associate($notification);
+        //TODO: Add a check if user and author are different people
+        if ($user->id === $author->id) {
+            throw new RequestServiceException('User cannot offer a review for'
+            . 'his own request');
+        }
 
+        // Check if this user offered a review for this request
+        //TODO: change to the repo usage
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
-                return response()->json(['message'=> 'fail'], 500);
+                throw new RequestServiceException('User have already offered '
+                    . 'a review for this request');
             }
         }
+
         $user->requests()->attach($req_id);
-        return response()->json(['message'=> 'success'], 200);
+
+        // Sending notification
+        $notification = new Notification();
+        $notification->title = 'User '
+                             . $user->first_name
+                             . '   '
+                             . $user->last_name
+                             . ' send you offer for request '
+                             . $request->title;
+        $notification->user_id = $author->id;
+        $notification->save(); //TODO: Change to the repository usage
+        $notification->user()->associate($notification);
+
+        return $request;
     }
 
 
     public function checkUserForRequest($user_id, $req_id) {
         $user = $this->getOneUserById($user_id);
+
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
                 return response()->json(['message'=> 'success'], 200);
             }
         }
-      //  return response()->json(['message'=> 'fail'], 500);
     }
 
     public function offerOffReviewRequest($user, $req_id) {
@@ -203,7 +225,7 @@ class RequestService implements RequestServiceInterface
 
     public function getOfferedReviewRequests_()
     {
-        return $this->requestRepository->getOffered_(Auth::user()->id);
+        return $this->requestRepository->getOffered_($this->guard->user()->id);
     }
 
     public function getPopularReviewRequests()

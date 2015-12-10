@@ -6,7 +6,7 @@ use App\Tag;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 
-use App\Services\Interfaces\RequestServiceInterface;
+use App\Services\Requests\Contracts\RequestServiceInterface;
 
 class TagController extends Controller
 {

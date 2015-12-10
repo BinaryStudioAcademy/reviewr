@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Services\Interfaces\MailServiceInterface;
-use App\Services\Interfaces\RequestServiceInterface;
+use App\Services\Requests\Contracts\RequestServiceInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\RequestRepositoryInterface;
 use App\Repositories\Contracts\NotificationRepositoryInterface;
