@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Response;
 use App\Services\Requests\Contracts\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
 use Illuminate\Contracts\Auth\Guard;
-
+use App\Services\Requests\Exceptions\RequestServiceException;
 
 class UserController extends Controller
 {
@@ -128,10 +128,19 @@ class UserController extends Controller
             return response()->json(['message'=> 'fail'], 500);
         }
 
-        $message = $this->requestService->offerOnReviewRequest($user->id, $request_id);
-        $this->mailService->sendNotification($user->id, $request_id, 'sent_offer'); // Check if notifications works
+        try {
+            $this->requestService->offerOnReviewRequest($user->id, $request_id);
+        } catch (RequestServiceException $e) {
+            return response()->json(['message'=> 'fail'], 500);
+        }
 
-        return $message;
+        $this->mailService->sendNotification(
+            $user->id,
+            $request_id,
+            'sent_offer'
+        ); // Check if notifications works
+
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function myRequests()

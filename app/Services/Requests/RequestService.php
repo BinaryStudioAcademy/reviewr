@@ -161,8 +161,8 @@ class RequestService implements RequestServiceInterface
         //TODO: change to the repo usage
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
-                return response()->json(['message'=> 'fail'], 500); //TODO: return exception,
-                //      make responce from controller
+                throw new RequestServiceException('User have already offered '
+                    . 'a review for this request');
             }
         }
 
@@ -180,7 +180,7 @@ class RequestService implements RequestServiceInterface
         $notification->save(); //TODO: Change to the repository usage
         $notification->user()->associate($notification);
 
-        return response()->json(['message'=> 'success'], 200);
+        return $request;
     }
 
 
