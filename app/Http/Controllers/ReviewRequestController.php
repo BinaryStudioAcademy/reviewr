@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Services\Requests\Contracts\RequestServiceInterface;
-use App\ReviewRequest;
 use Illuminate\Support\Facades\Auth;
-use App\User;
 
 class ReviewRequestController extends Controller
 {
@@ -36,7 +33,7 @@ class ReviewRequestController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -46,7 +43,10 @@ class ReviewRequestController extends Controller
      */
     public function store(Request $request)
     {
-        return Response::json($this->requestService->createRequest($request), 201, [], JSON_NUMERIC_CHECK);
+        $data = $request->all();
+        $newReviewRequest = $this->requestService->createRequest($data);
+
+        return Response::json($newReviewRequest, 201, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -79,7 +79,10 @@ class ReviewRequestController extends Controller
      */
     public function update($id, Request $request)
     {
-        return $this->requestService->updateRequest($id, $request);
+        $data = $request->all();
+        $updatedRequest = $this->requestService->updateRequest($id, $data);
+
+        return $updatedRequest;
     }
 
     /**

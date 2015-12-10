@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Creativeorange\Gravatar\Facades\Gravatar;
+use Creativeorange\Gravatar\Exceptions\InvalidEmailException;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -16,8 +18,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public $timestamps = false;
 
-    protected $fillable = [ 'first_name', 'last_name', 'email', 'phone', 'avatar', 'thumb_avatar', 'address', 'bid',
-        'role', 'job_id', 'department_id', 'binary_id'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone', '
+        avatar', 'thumb_avatar', 'address', 'bid', 'role', 'job_id',
+        'department_id', 'binary_id'];
 
     protected $hidden = [ 'password', 'remember_token' ];
 
@@ -27,7 +30,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'email'=>'required|min:2|email',
         'phone'=>'min:6|max:11|integer'
 
-   );
+    );
+
     public function comments()
     {
         return $this->hasMany('App\Comment');
@@ -62,5 +66,38 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function notifications()
     {
         return $this->hasMany('App\Notification');
+    }
+
+    public function getAvatarAttribute($avatar)
+    {
+        return $this->getAvatarPlaceholder($avatar);
+    }
+
+    public function getThumbAvatarAttribute($avatar)
+    {
+        return $this->getAvatarPlaceholder($avatar);
+    }
+
+    private function getAvatarPlaceholder($avatar)
+    {
+        if (empty($avatar)) {
+            try {
+                return Gravatar::get(
+                    $this->attributes['email'],
+                    [
+                        'fallback' => 'identicon'
+                    ]
+                );
+            } catch (InvalidEmailException $e) {
+                return Gravatar::get(
+                    'example@example.com',
+                    [
+                        'fallback' => 'identicon'
+                    ]
+                );
+            }
+        }
+
+        return $avatar;
     }
 }

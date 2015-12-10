@@ -58,11 +58,15 @@ class RequestService implements RequestServiceInterface
     public function createRequest($data)
     {
         $request = $this->requestRepository->create($data);
-        foreach ($data->tags as $tag) {
-            $tag = $this->tagRepository->create($tag);
-            $request->tags()->attach($tag->id);
-            $request->save();
+
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $tag = $this->tagRepository->create(['title' => $tag]);
+                $request->tags()->attach($tag->id);
+                $request->save();
+            }
         }
+
         return $request;
     }
 

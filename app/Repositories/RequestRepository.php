@@ -21,11 +21,11 @@ class RequestRepository implements RequestRepositoryInterface
     public function create(array $data)
     {
         $review_request = new ReviewRequest;
-        $review_request->title = $data->title;
-        $review_request->details = $data->details;
+        $review_request->title = $data['title'];
+        $review_request->details = $data['details'];
         $review_request->user_id = Auth::user()->id;
-        $review_request->group_id = $data->group_id;
-        $review_request->date_review = $data->date_review.':00';
+        $review_request->group_id = $data['group_id'];
+        $review_request->date_review = $data['date_review'] . ':00';
         $review_request->save();
         return $review_request;
     }
@@ -36,11 +36,11 @@ class RequestRepository implements RequestRepositoryInterface
         $auth_user_id = Auth::user()->id;
 
         // Check if the reputation change and Up or Down
-        if ($data->has('reputation')) {
+        if (isset($data['reputation'])) {
             $author = $review_request->user;
-            $isReputationUp =  ($data->reputation > $review_request->reputation);
-            $isReputationDown = ($data->reputation < $review_request->reputation);
-            $review_request->reputation = $data->reputation;
+            $isReputationUp =  ($data['reputation'] > $review_request->reputation);
+            $isReputationDown = ($data['reputation'] < $review_request->reputation);
+            $review_request->reputation = $data['reputation'];
 
             // If reputation change save user vote  or delete his vote
             if ($isReputationUp) {
@@ -51,13 +51,14 @@ class RequestRepository implements RequestRepositoryInterface
                 $review_request->votes()->detach($auth_user_id);
                 $author->reputation = $author->reputation - 1;
             }
+
             $author->save();
         }
 
         // Fill only existing fields (see http://ryanchenkie.com/laravel-put-requests/)
         if ($review_request->user_id == $auth_user_id) {
-            $review_request->title = $data->title ? $data->title : $review_request->title;
-            $review_request->details = $data->has('details') ? $data->details: $review_request->details;
+            $review_request->title = $data['title'] ? $data['title'] : $review_request->title;
+            $review_request->details = isset($data['details']) ? $data['details'] : $review_request->details;
             // Another fields witch are need to update ...
         }
 
@@ -70,6 +71,7 @@ class RequestRepository implements RequestRepositoryInterface
     public function delete($id)
     {
         $review_request = ReviewRequest::findOrFail($id);
+
         if ($review_request->user_id == Auth::user()->id) {
             $removed = $review_request; // store removed item for returning
             $review_request->delete();

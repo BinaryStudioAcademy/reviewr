@@ -158,7 +158,7 @@ return [
          */
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
-
+        Creativeorange\Gravatar\GravatarServiceProvider::class,
     ],
 
     /*

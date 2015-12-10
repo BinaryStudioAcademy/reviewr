@@ -558,16 +558,23 @@
                 <img src="<%= avatar %>" alt="avatar" width="120" height="120" class="thumbnail">
 
                 <div class="user-info caption">
+                    <% if (department) { %>
                     <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                         <%- department.title %></p>
+                    <% } %>
 
+                    <% if (job) { %>
                     <p>(<%- job.position %>)</p>
+                    <% } %>
 
                     <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                         <%- email %></p>
 
+                    <% if (phone) { %>
                     <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                         <%- phone %></p>
+                    <% } %>
+
                 </div>
             </div>
 
