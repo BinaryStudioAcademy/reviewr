@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MailService;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
 
@@ -12,6 +13,10 @@ use Auth;
 class UserController extends Controller
 {
     private $requestService;
+
+    /**
+     * @var MailService $mailService
+     */
     private $mailService;
 
     public function __construct(RequestServiceInterface $requestService, MailServiceInterface $mailService)
@@ -110,9 +115,12 @@ class UserController extends Controller
 
     public function offerOnReviewRequest($user_id, $request_id)
     {
+        // Check if authorisation works here (there must be a token)
+        // Check if the current user id according the id in route
+
         $user_id = Auth::user()->id;
         $message = $this->requestService->offerOnReviewRequest($user_id, $request_id);
-        $this->mailService->sendNotification($user_id, $request_id, 'sent_offer');
+        $this->mailService->sendNotification($user_id, $request_id, 'sent_offer'); // Check if notifications works
         return $message;
     }
 

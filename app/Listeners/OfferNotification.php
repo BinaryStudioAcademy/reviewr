@@ -31,16 +31,7 @@ class OfferNotification implements ShouldQueue
     public function handle(OfferWasSent $event)
     {
         $request = $event->request;
- //       $offer = $event->offer;
         $author = User::find($request->user_id);
-//        $data = [
-//           'author' => $author,
-//           'request' => $request,
-//           'user' =>$offer,
-//           'hash_user' =>Crypt::encrypt($offer->id),
-//           'hash_req' =>Crypt::encrypt($request->id),
-//
-//        ];
 
         $url = "http://team.binary-studio.com/app/api/notification";
         $post_data = array(
@@ -63,7 +54,6 @@ class OfferNotification implements ShouldQueue
         curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
         $json_response = curl_exec($curl);
         curl_close($curl);
-
 
 //        Mail::send('emails.notificationForOffer',  $data, function ($message) use ($data) {
 //            $message->to($data['author']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('You have a new offer to request!');

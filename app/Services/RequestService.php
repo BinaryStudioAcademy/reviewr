@@ -134,7 +134,7 @@ class RequestService implements RequestServiceInterface
                 $author = $this->getOneUserById($request->user['id']);
                 $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline your offer for request ' . $request->title;
                 $notification->user_id = $user_id;
-                $notification->save();
+                $notification->save(); // TODO: Change to the repository usage
                 $notification->user()->associate($notification);
                 return response()->json(['message'=> 'success'], 200);
             }
@@ -145,22 +145,30 @@ class RequestService implements RequestServiceInterface
     public function offerOnReviewRequest($user_id, $req_id) 
     {
         $request = $this->getOneRequestById($req_id);
-        $user = $this->getOneUserById($user_id);
+        $user = $this->getOneUserById($user_id); // internal id
         $author = $this->getOneUserById($request->user['id']);  
         
         $notification = new Notification();
-        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' send you offer for request ' . $request->title;
+        $notification->title = 'User '
+                             . $user->first_name
+                             . '   '
+                             . $user->last_name
+                             . ' send you offer for request '
+                             . $request->title;
         $notification->user_id = $author->id;
-        $notification->save();
-
-        
+        $notification->save(); //TODO: Change to the repository usage
         $notification->user()->associate($notification);
 
-        foreach ($user->requests as $request) {
+        //TODO: Add a check if user and author are different people
+
+        // Check if this user offered a review for this request
+        foreach ($user->requests as $request) {  //TODO: change to the repo usage
             if ($request->id == $req_id) {
-                return response()->json(['message'=> 'fail'], 500);
+                return response()->json(['message'=> 'fail'], 500); //TODO: return exception,
+                                                                    //      make responce from controller
             }
         }
+
         $user->requests()->attach($req_id);
         return response()->json(['message'=> 'success'], 200);
     }
@@ -168,6 +176,7 @@ class RequestService implements RequestServiceInterface
 
     public function checkUserForRequest($user_id, $req_id) {
         $user = $this->getOneUserById($user_id);
+
         foreach ($user->requests as $request) {
             if ($request->id == $req_id) {
                 return response()->json(['message'=> 'success'], 200);

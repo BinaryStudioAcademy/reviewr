@@ -31,12 +31,6 @@ class UserAcceptNotification implements ShouldQueue
     {
         $request = $event->request;
         $offer = $event->offer;
-//       $author = User::find($request->user_id);
-//       $data = [
-//           'author' => $author,
-//           'request' => $request,
-//           'user' =>$offer,
-//        ];
 
         $url = "http://team.binary-studio.com/app/api/notification";
         $post_data = array(

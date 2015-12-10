@@ -141,13 +141,14 @@ App.Views.Request = Backbone.View.extend({
         'click .undo-offer-btn': 'undoOfferConfirm'
     },
     createOffers: function () {
-        reviewers.url = App.getPrefix() + '/user/0/offeron/' + this.model.get('id');
+        reviewers.url = App.getPrefix()
+            + '/user/0/offeron/'
+            + this.model.get('id');
         reviewers.fetch({wait: true});
         this.model.set({'offers_count': this.current() + 1});
         this.$el.find('.request-offer-btn').html('Undo');
         this.$el.find('.request-offer-btn').addClass('undo-offer-btn');
         this.$el.find('.request-offer-btn').removeClass('request-offer-btn');
-
 
         return this;
     },

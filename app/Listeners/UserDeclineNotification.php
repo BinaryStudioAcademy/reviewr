@@ -31,13 +31,6 @@ class UserDeclineNotification implements ShouldQueue
     {
         $request = $event->request;
         $offer = $event->offer;
-//       $author = User::find($request->user_id);
-//       $data = [
-//           'author' => $author,
-//           'request' => $request,
-//           'user' =>$offer,
-//        ];
-
 
         $url = "http://team.binary-studio.com/app/api/notification";
         $post_data = array(
@@ -59,7 +52,6 @@ class UserDeclineNotification implements ShouldQueue
         curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
         $json_response = curl_exec($curl);
         curl_close($curl);
-
 
 //        Mail::send('emails.notificationForDecline',  $data, function ($message) use ($data) {
 //            $message->to($data['user']->email, $data['user']->first_name .' ' . $data['user']->last_name)->subject('Notification from reviewer');
