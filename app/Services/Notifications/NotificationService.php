@@ -23,7 +23,7 @@ class NotificationService implements NotificationServiceInterface
             'text'        => $data['text'],
             'url'         => $data['url'],
             'sound'       => true,
-            'serviceType' => 'Reviewr',
+            'serviceType' => 'Reviewer',
             'users'       => $data['users'],
         ];
         $notificationInfo = json_encode($notificationInfo);
