@@ -8,24 +8,26 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\RequestRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use App;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
 
 class RequestService implements RequestServiceInterface
 {
-    private $userRepository;
-    private $requestRepository;
-    private $tagRepository;
+    protected $userRepository;
+    protected $requestRepository;
+    protected $tagRepository;
+    protected $guard;
 
-    
     public function __construct(
     UserRepositoryInterface $userRepository,
     RequestRepositoryInterface $requestRepository,
-    TagRepositoryInterface $tagRepository
-) {
-    $this->userRepository = $userRepository;
-    $this->requestRepository = $requestRepository;
-    $this->tagRepository = $tagRepository;
-}
+    TagRepositoryInterface $tagRepository,
+    Guard $guard
+    ) {
+        $this->userRepository = $userRepository;
+        $this->requestRepository = $requestRepository;
+        $this->tagRepository = $tagRepository;
+        $this->guard = $guard;
+    }
 
     public function getAllUsers()
     {
@@ -39,12 +41,12 @@ class RequestService implements RequestServiceInterface
 
     public function getMyRequests()
     {
-        return $this->requestRepository->findByField('user_id', Auth::user()->id);
+        return $this->requestRepository->findByField('user_id', $this->guard->user()->id);
     }
 
     public function getOfferedRequests()
     {
-        return $this->requestRepository->getOffered(Auth::user()->id);
+        return $this->requestRepository->getOffered($this->guard->user()->id);
     }
 
     public function getAllTags()
@@ -155,7 +157,7 @@ class RequestService implements RequestServiceInterface
                              . $user->last_name
                              . ' send you offer for request '
                              . $request->title;
-        $notification->user_id = $author->id;
+        $notification->user_id = $author->binary_id;
         $notification->save(); //TODO: Change to the repository usage
         $notification->user()->associate($notification);
 
@@ -182,7 +184,6 @@ class RequestService implements RequestServiceInterface
                 return response()->json(['message'=> 'success'], 200);
             }
         }
-      //  return response()->json(['message'=> 'fail'], 500);
     }
 
     public function offerOffReviewRequest($user, $req_id) {
@@ -212,7 +213,7 @@ class RequestService implements RequestServiceInterface
 
     public function getOfferedReviewRequests_()
     {
-        return $this->requestRepository->getOffered_(Auth::user()->id);
+        return $this->requestRepository->getOffered_($this->guard->user()->id);
     }
 
     public function getPopularReviewRequests()

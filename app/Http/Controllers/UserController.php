@@ -5,24 +5,29 @@ namespace App\Http\Controllers;
 use App\Services\MailService;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Response;
-
 use App\Services\Interfaces\RequestServiceInterface;
 use App\Services\Interfaces\MailServiceInterface;
-use Auth;
+use Illuminate\Contracts\Auth\Guard;
+
 
 class UserController extends Controller
 {
-    private $requestService;
+    protected $requestService;
+    protected $guard;
 
     /**
      * @var MailService $mailService
      */
     private $mailService;
 
-    public function __construct(RequestServiceInterface $requestService, MailServiceInterface $mailService)
-    {
+    public function __construct(
+        RequestServiceInterface $requestService,
+        MailServiceInterface $mailService,
+        Guard $guard
+    ) {
         $this->requestService = $requestService;
         $this->mailService = $mailService;
+        $this->guard = $guard;
     }
 
     /**
@@ -113,26 +118,31 @@ class UserController extends Controller
         return $message;
     }
 
-    public function offerOnReviewRequest($user_id, $request_id)
+    public function offerOnReviewRequest($binary_id, $request_id)
     {
-        // Check if authorisation works here (there must be a token)
-        // Check if the current user id according the id in route
+        //TODO: Check if authorisation works here (there must be a token)
+        $user = $this->guard->user();
 
-        $user_id = Auth::user()->id;
-        $message = $this->requestService->offerOnReviewRequest($user_id, $request_id);
-        $this->mailService->sendNotification($user_id, $request_id, 'sent_offer'); // Check if notifications works
+        // Checks if the current user id according the id in route
+        if (!$binary_id === $user->binary_id) {
+            return response()->json(['message'=> 'fail'], 500);
+        }
+
+        $message = $this->requestService->offerOnReviewRequest($user->id, $request_id);
+        $this->mailService->sendNotification($user->id, $request_id, 'sent_offer'); // Check if notifications works
+
         return $message;
     }
 
     public function myRequests()
     {
-        $user = Auth::user();
+        $user = $this->guard->user();
         return response()->json(['message' => $user->requests], 200);
     }
 
     public function offerOffReviewRequest($request_id)
     {
-        $user = Auth::user();
+        $user = $this->guard->user();
         $message = $this->requestService->offerOffReviewRequest($user, $request_id);
         return $message;
     }
@@ -144,14 +154,14 @@ class UserController extends Controller
 
     public function checkNotification()
     {
-        $user = Auth::user();
+        $user = $this->guard->user();
         $count = $user->notifications->count();
         return Response::json($count, 200);
     }
 
     public function unreadNotifications()
     {
-        $user = Auth::user();
+        $user = $this->guard->user();
         return Response::json($this->mailService->unreadNotifications($user->id), 200);
     }
 

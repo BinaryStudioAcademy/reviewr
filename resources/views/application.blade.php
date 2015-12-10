@@ -41,6 +41,7 @@
 
 <script>
     var authUserId = "{{ Auth::user()->id }}";
+    var authUserBinaryId = "{{ Auth::user()->binary_id }}";
     window.APP_PREFIX = "{{ env('APP_PREFIX', '') }}";
 </script>
 

@@ -142,7 +142,9 @@ App.Views.Request = Backbone.View.extend({
     },
     createOffers: function () {
         reviewers.url = App.getPrefix()
-            + '/user/0/offeron/'
+            + '/user/'
+            + authUserBinaryId
+            + '/offeron/'
             + this.model.get('id');
         reviewers.fetch({wait: true});
         this.model.set({'offers_count': this.current() + 1});
