@@ -180,7 +180,7 @@ class RequestService implements RequestServiceInterface
                              . $user->last_name
                              . ' send you offer for request '
                              . $request->title;
-        $notification->user_id = $author->binary_id;
+        $notification->user_id = $author->id;
         $notification->save(); //TODO: Change to the repository usage
         $notification->user()->associate($notification);
 

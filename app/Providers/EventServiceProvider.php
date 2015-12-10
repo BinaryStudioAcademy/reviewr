@@ -14,13 +14,13 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\OfferWasSent' => [
-            'App\Listeners\OfferNotification',
+            'App\Listeners\DeliveryHandlers\HttpHandlers\OfferNotification',
         ],
         'App\Events\UserWasAccept' => [
-            'App\Listeners\UserAcceptNotification',
+            'App\Listeners\DeliveryHandlers\HttpHandlers\UserAcceptNotification',
         ],
         'App\Events\UserWasDecline' => [
-            'App\Listeners\UserDeclineNotification',
+            'App\Listeners\DeliveryHandlers\HttpHandlers\UserDeclineNotification',
         ],
     ];
 
