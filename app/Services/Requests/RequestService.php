@@ -133,14 +133,14 @@ class RequestService implements RequestServiceInterface
     public function declineReviewRequest($user_id, $req_id)
     {
         $declinedUser = $this->getOneUserById($user_id);
-        $request = $this->requestRepository->find($req_id);
+        $reviewRequest = $this->requestRepository->find($req_id);
 
         // Marking the offer as declined
         $declinedUser->requests()->detach($req_id);
         $declinedUser->save();
 
-        Event::fire(new UserWasDeclined($request, $declinedUser));
-        return response()->json(['message'=> 'success'], 200);
+        Event::fire(new UserWasDeclined($reviewRequest, $declinedUser));
+        return $reviewRequest;
     }
 
     public function offerOnReviewRequest($user_id, $req_id)
@@ -186,9 +186,10 @@ class RequestService implements RequestServiceInterface
 
     public function offerOffReviewRequest($user, $req_id) {
         $user = $this->getOneUserById($user->id);
-
         $user->requests()->detach($req_id);
-        return response()->json(['message'=> 'success'], 200);
+
+        $reviewRequest = $this->requestRepository->find($req_id);
+        return $reviewRequest;
     }
 
     public function usersForRequest($request_id) {

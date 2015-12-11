@@ -17,8 +17,6 @@ class UserController extends Controller
         RequestServiceInterface $requestService,
         Guard $guard
     ) {
-        $this->middleware('auth');
-
         $this->requestService = $requestService;
         $this->guard = $guard;
     }
@@ -34,26 +32,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int $id
@@ -64,49 +42,16 @@ class UserController extends Controller
         return Response::json($this->requestService->getOneUserById($userId), 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function update($id)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-
-    }
-
     public function acceptReviewRequest($author_id, $request_id)
     {
         $message = $this->requestService->acceptReviewRequest($author_id, $request_id);
-        return $message;
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function declineReviewRequest($author_id, $request_id)
     {
-        $message = $this->requestService->declineReviewRequest($author_id, $request_id);
-        return $message;
+        $this->requestService->declineReviewRequest($author_id, $request_id);
+        return response()->json(['message'=> 'User mismatched'], 500);
     }
 
     public function offerOnReviewRequest($binary_id, $request_id)
@@ -138,8 +83,9 @@ class UserController extends Controller
     public function offerOffReviewRequest($request_id)
     {
         $user = $this->guard->user();
-        $message = $this->requestService->offerOffReviewRequest($user, $request_id);
-        return $message;
+        $this->requestService->offerOffReviewRequest($user, $request_id);
+
+        response()->json(['message'=> 'success'], 200);
     }
 
     public function highRept()
@@ -151,6 +97,7 @@ class UserController extends Controller
     {
         $user = $this->guard->user();
         $count = $user->notifications->count();
+
         return Response::json($count, 200);
     }
 
@@ -159,6 +106,7 @@ class UserController extends Controller
         $user_id =  Crypt::decrypt($hashUser);
         $req_id =  Crypt::decrypt($hashReq);
         $this->acceptReviewRequest($user_id, $req_id);
+
         return redirect()->route('home');
     }
 
@@ -167,6 +115,7 @@ class UserController extends Controller
         $user_id =  Crypt::decrypt($hashUser);
         $req_id =  Crypt::decrypt($hashReq);
         $this->acceptReviewRequest($user_id, $req_id);
+
         return redirect()->route('home');
     }
 }
