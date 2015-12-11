@@ -12,6 +12,7 @@ class CommentController extends Controller
 
     public function __construct(ChatServiceInterface $chatService)
     {
+        parent::__construct();
         $this->chatService = $chatService;
     }
 

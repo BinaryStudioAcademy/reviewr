@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Response;
 
 class BadgeController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *

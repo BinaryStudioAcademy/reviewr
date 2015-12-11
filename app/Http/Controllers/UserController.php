@@ -17,6 +17,7 @@ class UserController extends Controller
         RequestServiceInterface $requestService,
         Guard $guard
     ) {
+        parent::__construct();
         $this->requestService = $requestService;
         $this->guard = $guard;
     }
