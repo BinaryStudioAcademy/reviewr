@@ -132,18 +132,6 @@ class RequestService implements RequestServiceInterface
 
     public function declineReviewRequest($user_id, $req_id)
     {
-        $user =  $this->getOneUserById($user_id);
-        foreach ($user->requests as $request) {
-            if ($request->id == $req_id) {
-                $user->requests()->detach($req_id);
-                $user->save();
-
-                return response()->json(['message'=> 'success'], 200);
-            }
-        }
-        return response()->json(['message'=> 'fail'], 500);
-
-
         $declinedUser = $this->getOneUserById($user_id);
         $request = $this->requestRepository->find($req_id);
 

@@ -31,6 +31,5 @@ class RepositoriesServiceProvider extends ServiceProvider
         $this->app->singleton('App\Repositories\Contracts\DepartmentRepositoryInterface', 'App\Repositories\DepartmentRepository');
         $this->app->singleton('App\Repositories\Contracts\JobRepositoryInterface', 'App\Repositories\JobRepository');
         $this->app->singleton('App\Repositories\Contracts\BadgeRepositoryInterface', 'App\Repositories\BadgeRepository');
-        $this->app->singleton('App\Repositories\Contracts\NotificationRepositoryInterface', 'App\Repositories\NotificationRepository');
     }
 }
