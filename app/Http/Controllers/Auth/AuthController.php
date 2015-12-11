@@ -73,21 +73,21 @@ class AuthController extends Controller
                 return Redirect::to(env('AUTH_REDIRECT'))
                     ->withCookie(
                         'referer',
-                        url(env('SERVER_PREFIX', '') . '/')
+                        url(env('APP_PREFIX', '') . '/')
                     );
             } catch (AuthException $e) {
                 // Redirect to the authorisation server if user is not authorised
                 return Redirect::to(url(env('AUTH_REDIRECT')))
                     ->withCookie(
                         'referer',
-                        url(env('SERVER_PREFIX', '') . '/')
+                        url(env('APP_PREFIX', '') . '/')
                     );
             }
         } else {
             return Redirect::to(url(env('AUTH_REDIRECT')))
                 ->withCookie(
                     'referer',
-                    url(env('SERVER_PREFIX', '') . '/')
+                    url(env('APP_PREFIX', '') . '/')
                 );
         }
 
