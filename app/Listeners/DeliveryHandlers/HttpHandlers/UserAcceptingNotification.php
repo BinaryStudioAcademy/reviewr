@@ -13,22 +13,21 @@ class UserAcceptingNotification extends HttpDeliveryHandler implements ShouldQue
     /**
      * Handle the event.
      *
-     * @param  UserWasAccepted  $event
+     * @param  UserWasAccepted $event
      * @return void
      */
     public function handle(UserWasAccepted $event)
     {
-        $prefix = env('SERVER_PREFIX', '');
-        $url = url($prefix);
-
         $request = $event->request;
-        $offer = $event->offer;
+        $acceptedUser = $event->acceptedUser;
+        $prefix = env('SERVER_PREFIX', '');
+        $url = url($prefix . '#!/request/' . $request->id);
 
         $this->delivery->send([
             'title' => 'Offer accepted',
             'text'  => 'Your offer for ' . $request->title . ' was accepted',
             'url'   => $url,
-            'users'=> [$offer->binary_id]
+            'users'=> [$acceptedUser->binary_id]
         ]);
 
 //      Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {

@@ -17,17 +17,16 @@ class UserDecliningNotification extends HttpDeliveryHandler implements ShouldQue
      */
     public function handle(UserWasDeclined $event)
     {
-        $prefix = env('SERVER_PREFIX', '');
-        $url = url($prefix);
-
         $request = $event->request;
-        $offer = $event->declinedUser;
+        $declinedUser = $event->declinedUser;
+        $prefix = env('SERVER_PREFIX', '');
+        $url = url($prefix . '#!/request/' . $request->id);
 
         $this->delivery->send([
             'title' => 'Offer declined',
             'text' => 'Your offer for ' . $request->title . ' was declined',
             'url'   => $url,
-            'users'=> [$offer->binary_id]
+            'users'=> [$declinedUser->binary_id]
         ]);
 
 //      Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {

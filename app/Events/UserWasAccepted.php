@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\ReviewRequest;
 use Illuminate\Queue\SerializesModels;
+use App\User;
 
 class UserWasAccepted extends Event
 {

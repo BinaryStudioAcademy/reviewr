@@ -8,8 +8,8 @@ use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Contracts\RequestRepositoryInterface;
 use App\Repositories\Contracts\NotificationRepositoryInterface;
 use App\Events\OfferWasSent;
-use App\Events\UserWasAccept;
-use App\Events\UserWasDecline;
+use App\Events\UserWasAccepted;
+use App\Events\UserWasDeclined;
 use App\ReviewRequest; 
 
 class MailService implements MailServiceInterface
@@ -34,15 +34,17 @@ class MailService implements MailServiceInterface
 
         switch ($action) {
             case 'accept':
-                \Event::fire(new UserWasAccept($request, $user));
+                \Event::fire(new UserWasAccepted($request, $user));
                 break;
 
             case 'decline':
-                \Event::fire(new UserWasDecline($request, $user));
+                \Event::fire(new UserWasDeclined($request, $user));
                 break;
 
             case 'sent_offer':
-                \Event::fire(new OfferWasSent($request, $user));
+                $author = $this->userRepository->find($request->user_id);
+
+                \Event::fire(new OfferWasSent($request, $user, $author));
                 break;
         }
     }

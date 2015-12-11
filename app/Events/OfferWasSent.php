@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\ReviewRequest;
 use Illuminate\Queue\SerializesModels;
+use App\User;
 
 class OfferWasSent extends Event
 {
@@ -11,16 +12,22 @@ class OfferWasSent extends Event
 
     public $request;
     public $offeredUser;
+    public $author;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(ReviewRequest $request, User $offeredUser)
+    public function __construct(
+        ReviewRequest $request,
+        User $offeredUser,
+        User $author
+    )
     {
         $this->request = $request;
         $this->offeredUser = $offeredUser;
+        $this->author = $author;
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace App\Events;
 
 use App\ReviewRequest;
-use App\User;
 use Illuminate\Queue\SerializesModels;
+use App\User;
 
 class UserWasDeclined extends Event
 {
