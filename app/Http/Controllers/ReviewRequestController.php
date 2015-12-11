@@ -27,16 +27,6 @@ class ReviewRequestController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -58,17 +48,6 @@ class ReviewRequestController extends Controller
     public function show($id)
     {
         return Response::json($this->requestService->getOneRequestById($id), 200, [], JSON_NUMERIC_CHECK);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        
     }
 
     /**
