@@ -13,6 +13,7 @@ class ReviewRequestController extends Controller
 
     public function __construct(RequestServiceInterface $requestService)
     {
+        parent::__construct();
         $this->requestService = $requestService;
     }
 
