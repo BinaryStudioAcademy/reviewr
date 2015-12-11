@@ -614,16 +614,24 @@
                             <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                 <%- email %></p>
 
+                            <% if (phone) { %>
                             <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                                 <%- phone %></p>
+                            <% } %>
 
+                            <% if (department) { %>
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <%- department['title'] %></p>
+                            <% } %>
 
+                            <% if (job) { %>
                             <p>(<%- job['position'] %>)</p>
+                            <% } %>
 
+                            <% if (address) { %>
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <%- address %></p>
+                            <% } %>
                         </div>
                     </div>
                 </div>
