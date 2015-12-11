@@ -23,7 +23,7 @@ class OfferSendingNotification extends HttpDeliveryHandler implements ShouldQueu
         $request = $event->request;
         $author = $event->author;
         $offeredUser = $event->offeredUser;
-        $prefix = env('SERVER_PREFIX', '');
+        $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $request->id);
 
         $text = 'User '
@@ -35,7 +35,7 @@ class OfferSendingNotification extends HttpDeliveryHandler implements ShouldQueu
             . '"';
 
         $this->delivery->send([
-            'title' => 'New offer',
+            'title' => 'New review offer',
             'text' => $text,
             'url'   => $url,
             'users'=> [$author->binary_id]

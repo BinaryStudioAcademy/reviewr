@@ -20,11 +20,11 @@ class UserAcceptingNotification extends HttpDeliveryHandler implements ShouldQue
     {
         $request = $event->request;
         $acceptedUser = $event->acceptedUser;
-        $prefix = env('SERVER_PREFIX', '');
+        $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $request->id);
 
         $this->delivery->send([
-            'title' => 'Offer accepted',
+            'title' => 'Your offer was accepted',
             'text'  => 'Your offer for ' . $request->title . ' was accepted',
             'url'   => $url,
             'users'=> [$acceptedUser->binary_id]
