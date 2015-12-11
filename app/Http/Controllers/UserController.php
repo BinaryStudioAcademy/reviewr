@@ -106,17 +106,15 @@ class UserController extends Controller
 
     }
 
-    public function acceptReviewRequest($user_id, $request_id)
+    public function acceptReviewRequest($author_id, $request_id)
     {
-        $message = $this->requestService->acceptReviewRequest($user_id, $request_id);
-        $this->mailService->sendNotification($user_id, $request_id, 'accept');
+        $message = $this->requestService->acceptReviewRequest($author_id, $request_id);
         return $message;
     }
 
-    public function declineReviewRequest($user_id, $request_id)
+    public function declineReviewRequest($author_id, $request_id)
     {
-        $message = $this->requestService->declineReviewRequest($user_id, $request_id);
-        $this->mailService->sendNotification($user_id, $request_id, 'decline');
+        $message = $this->requestService->declineReviewRequest($author_id, $request_id);
         return $message;
     }
 
@@ -124,6 +122,7 @@ class UserController extends Controller
     {
         //TODO: Check if authorisation works here (there must be a token)
         $user = $this->guard->user();
+        $reviewRequest = $this->requestService->getOneRequestById($request_id);
 
         // Checks if the current user id according the id in route
         if (!$binary_id === $user->binary_id) {
@@ -135,12 +134,6 @@ class UserController extends Controller
         } catch (RequestServiceException $e) {
             return response()->json(['message'=> $e->getMessage()], 500);
         }
-
-        $this->mailService->sendNotification(
-            $user->id,
-            $request_id,
-            'sent_offer'
-        ); // Check if notifications works
 
         return response()->json(['message'=> 'success'], 200);
     }
