@@ -3,26 +3,24 @@
 namespace App\Events;
 
 use App\ReviewRequest;
-use App\User;
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserWasAccept extends Event
+class UserWasAccepted extends Event
 {
     use SerializesModels;
 
     public $request;
-    public $offer;
+    public $acceptedUser;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(ReviewRequest $request, User $offer)
+    public function __construct(ReviewRequest $request, User $acceptedUser)
     {
         $this->request = $request;
-        $this->offer = $offer;
+        $this->acceptedUser = $acceptedUser;
     }
 
     /**

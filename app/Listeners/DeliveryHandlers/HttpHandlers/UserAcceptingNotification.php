@@ -2,21 +2,21 @@
 
 namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
-use App\Events\UserWasAccept;
+use App\Events\UserWasAccepted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 use App\Listeners\Contracts\HttpDeliveryHandler;
 
 
-class UserAcceptNotification extends HttpDeliveryHandler implements ShouldQueue
+class UserAcceptingNotification extends HttpDeliveryHandler implements ShouldQueue
 {
     /**
      * Handle the event.
      *
-     * @param  UserWasAccept  $event
+     * @param  UserWasAccepted  $event
      * @return void
      */
-    public function handle(UserWasAccept $event)
+    public function handle(UserWasAccepted $event)
     {
         $prefix = env('SERVER_PREFIX', '');
         $url = url($prefix);

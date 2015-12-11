@@ -2,32 +2,34 @@
 
 namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
-use App\Events\UserWasDecline;
+use App\User;
+use App\Events\OfferWasSent;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Auth;
 use App\Listeners\Contracts\HttpDeliveryHandler;
 use Mail;
 
-class UserDeclineNotification extends HttpDeliveryHandler implements ShouldQueue
+class OfferSendingNotification extends HttpDeliveryHandler implements ShouldQueue
 {
     /**
      * Handle the event.
      *
-     * @param  UserWasAccept  $event
+     * @param  OfferWasSent  $event
      * @return void
      */
-    public function handle(UserWasDecline $event)
+    public function handle(OfferWasSent $event)
     {
         $prefix = env('SERVER_PREFIX', '');
         $url = url($prefix);
 
         $request = $event->request;
-        $offer = $event->offer;
+        $author = User::find($request->user_id);
 
         $this->delivery->send([
-            'title' => 'Offer declined',
-            'text' => 'Your offer for ' . $request->title . ' was declined',
+            'title' => 'New offer',
+            'text' => 'You have unread offer for ' . $request->title,
             'url'   => $url,
-            'users'=> [$offer->binary_id]
+            'users'=> [$author->binary_id]
         ]);
 
 //      Mail::send('emails.notificationForAccept',  $data, function ($message) use ($data) {
