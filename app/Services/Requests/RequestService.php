@@ -10,6 +10,10 @@ use App\Repositories\Contracts\RequestRepositoryInterface;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use Illuminate\Contracts\Auth\Guard;
 use App\Services\Requests\Exceptions\RequestServiceException;
+use Illuminate\Support\Facades\Event;
+use App\Events\UserWasAccepted;
+use App\Events\UserWasDeclined;
+use App\Events\OfferWasSent;
 
 class RequestService implements RequestServiceInterface
 {
@@ -112,41 +116,31 @@ class RequestService implements RequestServiceInterface
 
     public function acceptReviewRequest($user_id, $req_id)
     {
-        $user =  $this->getOneUserById($user_id);
-        foreach ($user->requests as $request) {
-            if ($request->id == $req_id) {
-                $request->pivot->isAccepted = 1; 
-                $request->pivot->save();
-                $notification = new Notification();
-                $author = $this->getOneUserById($request->user['id']);
-                $notification->title = 'User ' . $author->first_name .'   '. $author->last_name . ' accept your offer for request ' . $request->title;
-                $notification->user_id = $user_id;
-                $notification->save();
-                $notification->user()->associate($notification);
-                return response()->json(['message'=> 'success'], 200);
-            }
-        }
-        return response()->json(['message'=> 'fail'], 500);
-        
+        $acceptedUser = $this->getOneUserById($user_id);
+        $request = $this->requestRepository->find($req_id);
+
+        // Marking the offer as accepted
+        $request->users()->updateExistingPivot(
+            $user_id,
+            ['isAccepted' => 1],
+            false
+        );
+
+        Event::fire(new UserWasAccepted($request, $acceptedUser));
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function declineReviewRequest($user_id, $req_id)
     {
-        $user =  $this->getOneUserById($user_id);
-        foreach ($user->requests as $request) {
-            if ($request->id == $req_id) {
-                $user->requests()->detach($req_id);
-                $user->save();
-                $notification = new Notification();
-                $author = $this->getOneUserById($request->user['id']);
-                $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' decline your offer for request ' . $request->title;
-                $notification->user_id = $user_id;
-                $notification->save(); // TODO: Change to the repository usage
-                $notification->user()->associate($notification);
-                return response()->json(['message'=> 'success'], 200);
-            }
-        }
-        return response()->json(['message'=> 'fail'], 500);
+        $declinedUser = $this->getOneUserById($user_id);
+        $request = $this->requestRepository->find($req_id);
+
+        // Marking the offer as declined
+        $declinedUser->requests()->detach($req_id);
+        $declinedUser->save();
+
+        Event::fire(new UserWasDeclined($request, $declinedUser));
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function offerOnReviewRequest($user_id, $req_id)
@@ -173,16 +167,8 @@ class RequestService implements RequestServiceInterface
         $user->requests()->attach($req_id);
 
         // Sending notification
-        $notification = new Notification();
-        $notification->title = 'User '
-                             . $user->first_name
-                             . '   '
-                             . $user->last_name
-                             . ' send you offer for request '
-                             . $request->title;
-        $notification->user_id = $author->id;
-        $notification->save(); //TODO: Change to the repository usage
-        $notification->user()->associate($notification);
+        $author = $this->userRepository->find($request->user_id);
+        \Event::fire(new OfferWasSent($request, $user, $author));
 
         return $request;
     }
@@ -199,13 +185,7 @@ class RequestService implements RequestServiceInterface
     }
 
     public function offerOffReviewRequest($user, $req_id) {
-        $request = $this->getOneRequestById($req_id);
         $user = $this->getOneUserById($user->id);
-        $author = $this->getOneUserById($request->user['id']); 
-        $notification = new Notification();
-        $notification->title = 'User ' . $user->first_name .'   '. $user->last_name . ' undo his offer for request ' . $request->title;
-        $notification->user_id = $author->id;
-        $notification->save();
 
         $user->requests()->detach($req_id);
         return response()->json(['message'=> 'success'], 200);

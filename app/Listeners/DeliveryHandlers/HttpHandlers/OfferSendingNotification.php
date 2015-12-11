@@ -8,8 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Auth;
 use App\Listeners\Contracts\HttpDeliveryHandler;
 use Mail;
+use App\Repositories\Contracts\UserRepositoryInterface;
 
-class OfferNotification extends HttpDeliveryHandler implements ShouldQueue
+class OfferSendingNotification extends HttpDeliveryHandler implements ShouldQueue
 {
     /**
      * Handle the event.
@@ -19,15 +20,23 @@ class OfferNotification extends HttpDeliveryHandler implements ShouldQueue
      */
     public function handle(OfferWasSent $event)
     {
-        $prefix = env('SERVER_PREFIX', '');
-        $url = url($prefix);
-
         $request = $event->request;
-        $author = User::find($request->user_id);
+        $author = $event->author;
+        $offeredUser = $event->offeredUser;
+        $prefix = env('SERVER_PREFIX', '');
+        $url = url($prefix . '#!/request/' . $request->id);
+
+        $text = 'User '
+            . $offeredUser->first_name
+            . ' '
+            . $offeredUser->last_name
+            . ' send you offer for request "'
+            . $request->title
+            . '"';
 
         $this->delivery->send([
             'title' => 'New offer',
-            'text' => 'You have unread offer for ' . $request->title,
+            'text' => $text,
             'url'   => $url,
             'users'=> [$author->binary_id]
         ]);

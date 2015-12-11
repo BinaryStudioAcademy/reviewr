@@ -25,7 +25,6 @@ class ServicesServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\Services\Interfaces\AchieveServiceInterface', 'App\Services\AchieveService');
         $this->app->bind('App\Services\Interfaces\ChatServiceInterface', 'App\Services\ChatService');
-        $this->app->bind('App\Services\Interfaces\MailServiceInterface', 'App\Services\MailService');
         $this->app->bind('App\Services\Requests\Contracts\RequestServiceInterface', 'App\Services\Requests\RequestService');
     }
 }

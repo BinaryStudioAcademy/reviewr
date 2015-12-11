@@ -516,7 +516,6 @@ App.Views.Reviewer = Backbone.View.extend({
         this.author_id = options.author_id;
         this.template = _.template($('#reviewer-card-template').html());
         //this.on('change', this.render, this);
-
     },
     events: {
         'click .accept': 'acceptOffer',

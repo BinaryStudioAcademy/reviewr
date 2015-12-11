@@ -44,18 +44,7 @@ class UserRepository extends PrettusRepository implements UserRepositoryInterfac
         $tokenObject = new Token($cookie);
         $payload     = JWTAuth::decode($tokenObject);
         $userInfo    = $payload->toArray();
-        /*  $userInfo
-        array:8 [?
-          "id" => "55dc13391846c68a1ad56daa"
-          "email" => "admin@admin"
-          "role" => "ADMIN"
-          "iat" => 1440673805
-          "iss" => "http://reviewr/auth/binary_callback"
-          "exp" => "1440843412"
-          "nbf" => "1440839812"
-          "jti" => "46aee5367a7ad10d82f40057c874e182"
-        ]
-        */
+
         // temp test user
         $user = User::firstOrCreate([ 'email' => $userInfo['email'] ]);
         $role = array_key_exists('role', $userInfo) ? $userInfo['role'] : "DEVELOPER";
