@@ -160,7 +160,7 @@
         <div class="panel-body">
             <p>
                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                <%- offer.created_at %>
+                <%- offer.formatted_created_at %>
                 &nbsp;
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
@@ -186,15 +186,12 @@
                     <p>Group: <a href="#!/requests/group/<%- offer.group_id %>"><%- offer.group.title %></a></p>
 
                     <p><%- offer.user.email %></p>
-
-                    <p><%- offer.user.phone %></p>
                 </div>
             </div>
         </div>
         <div class="panel-footer text-center">
             <p class="description"><%- offer.details %></p>
 
-            <div><b>Date of review:</b> <%- offer.date_review %></div>
             <% if (status) { %>
             <button class="undo-offer-btn btn btn-info">
                 <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
@@ -329,12 +326,14 @@
                         <div class="panel-body">
                             <p>
                                 <small><span class="glyphicon glyphicon-time"
-                                             aria-hidden="true"></span> <%- created_at %></small>
+                                             aria-hidden="true"></span> <%- formatted_created_at %></small>
                             </p>
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
-                            <b>Date of review:</b> <span id="date_review"><%= date_review %></span>
+                            <% if(formatted_date_review) { %>
+                            <b>Date of review:</b> <span id="date_review"><%= formatted_date_review %></span>
+                            <% } %>
                         </div>
                         <div class="panel-footer">
                             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
@@ -429,7 +428,7 @@
             <div class="comment-time pull-right text-muted">
                 <small>
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <%- created_at %>
+                    <%- formatted_created_at %>
                 </small>
             </div>
             <div class="comment-description"><%= text %></div>
@@ -508,10 +507,6 @@
                             <%- email %>
                         </p>
 
-                        <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                            <%- phone %>
-                        </p>
-
                         <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             <a href="#!/requests/user/<%- id %>">His Requests</a>
                         </p>
@@ -560,12 +555,6 @@
 
                     <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                         <%- email %></p>
-
-                    <% if (phone) { %>
-                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                        <%- phone %></p>
-                    <% } %>
-
                 </div>
             </div>
 
@@ -605,13 +594,8 @@
                             <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                 <%- email %></p>
 
-                            <% if (phone) { %>
-                            <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                                <%- phone %></p>
-                            <% } %>
-
                             <% if (department) { %>
-                            <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            <p><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
                                 <%- department['title'] %></p>
                             <% } %>
 
@@ -619,9 +603,9 @@
                             <p>(<%- job['position'] %>)</p>
                             <% } %>
 
-                            <% if (address) { %>
+                            <% if (country && city) { %>
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <%- address %></p>
+                                <%- city %>, <%- country %></p>
                             <% } %>
                         </div>
                     </div>
@@ -640,6 +624,10 @@
             <%- title %>
         </span>
     </a>
+</script>
+
+<script type="text/template" id="tags-list-template">
+    <ul class="tags list-unstyled text-center row"></ul>
 </script>
 
 <script type="text/template" id="new-tag-template">

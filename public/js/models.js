@@ -21,19 +21,63 @@ _.extend(Backbone.Validation.callbacks, {
 
 /*
  *---------------------------------------------------
+ *  Model mixins
+ *---------------------------------------------------
+ */
+App.ModelMixins = {
+    DateFormatting: {
+        turnOnDateFormatting: function (fields) {
+            var self = this;
+
+            this.on('sync', function () {
+                self.attachFormattedDate(fields);
+            });
+        },
+
+        attachFormattedDate: function (fields) {
+            var self = this;
+
+            _.each(fields, function (field) {
+                if (self.has(field)) {
+                    self.set(
+                        'formatted_' + field,
+                        self.formatDate(self.get(field))
+                    );
+                }
+            })
+        },
+
+        formatDate: function (oldDate) {
+            var date = new Date(oldDate);
+
+            var options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: false
+            };
+
+            return date.toLocaleString("en-US", options);
+        }
+    }
+};
+
+/*
+ *---------------------------------------------------
  *  Users Model
  *---------------------------------------------------
  */
-
 App.Models.User = Backbone.Model.extend({
     urlRoot: App.getPrefix() + '/user',
     defaults: {
         first_name: '',
         last_name: '',
         email: '',
-        phone: '',
         avatar: '',
-        address: '',
+        country: '',
+        city: '',
         reputation: ''
     }
 });
@@ -45,64 +89,67 @@ var user = new App.Models.User();
  *  Request Model
  *---------------------------------------------------
  */
-
-App.Models.Request = Backbone.Model.extend({
-    urlRoot: App.getPrefix() + '/reviewrequest',
-    defaults: {
-        title: '',
-        details: '',
-        date_review: '',
-        tags: '',
-        group: '',
-        created_at: '',
-        reputation: ''
-    },
-
-    validation: {
-        title: {
-            required: true,
-            rangeLength: [5, 100]
+App.Models.Request = Backbone.Model.extend(
+    _.extend({}, App.ModelMixins.DateFormatting, {
+        urlRoot: App.getPrefix() + '/reviewrequest',
+        defaults: {
+            title: '',
+            details: '',
+            date_review: '',
+            formatted_date_review: undefined,
+            tags: '',
+            group: '',
+            created_at: '',
+            formatted_created_at: undefined,
+            reputation: ''
         },
-        date_review: {
-            required: true
+
+        validation: {
+            title: {
+                required: true,
+                rangeLength: [5, 100]
+            },
+            date_review: {
+                required: false
+            },
+            details: {
+                required: true
+            }
         },
-        details: {
-            required: true
+
+        initialize: function () {
+            this.turnOnDateFormatting(['date_review', 'created_at']);
         }
-    }
-});
+    })
+);
 
 var request = new App.Models.Request();
-
 
 /*
  *---------------------------------------------------
  *  Reviewer Model
  *---------------------------------------------------
  */
-
 App.Models.Reviewer = Backbone.Model.extend({
     urlRoot: App.getPrefix() + '/reviewer',
     defaults: {
         first_name: '',
         last_name: '',
         email: '',
-        phone: '',
         avatar: '',
-        address: '',
+        country: '',
+        city: '',
         reputation: ''
     }
 });
 
 var reviewer = new App.Models.Reviewer();
 
-
 /*
  *---------------------------------------------------
  *  Tag Model
  *---------------------------------------------------
  */
-
 App.Models.Tag = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/tag",
     defaults: {
@@ -111,7 +158,6 @@ App.Models.Tag = Backbone.Model.extend({
     }
 });
 
-
 var tag = new App.Models.Tag();
 
 /*
@@ -119,7 +165,6 @@ var tag = new App.Models.Tag();
  *  Tag Model
  *---------------------------------------------------
  */
-
 App.Models.Notification = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/notification",
     defaults: {
@@ -130,25 +175,30 @@ App.Models.Notification = Backbone.Model.extend({
 
 var notification = new App.Models.Notification();
 
-
 /*
  *---------------------------------------------------
  *  Comment Model
  *---------------------------------------------------
  */
-
-App.Models.Comment = Backbone.Model.extend({
-    defaults: {
-        id: null,
-        text: '',
-        created_at: ''
-    },
-    validation: {
-        text: {
-            required: true,
+App.Models.Comment = Backbone.Model.extend(
+    _.extend({}, App.ModelMixins.DateFormatting, {
+        defaults: {
+            id: null,
+            text: '',
+            created_at: '',
+            formatted_created_at: undefined
         },
-    }
-});
+        validation: {
+            text: {
+                required: true,
+            }
+        },
+
+        initialize: function () {
+            this.turnOnDateFormatting(['created_at']);
+        }
+    })
+);
 
 var comment = new App.Models.Comment();
 

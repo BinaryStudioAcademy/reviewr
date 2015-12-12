@@ -227,6 +227,7 @@ App.Views.RequestsList = Backbone.View.extend({
                     console.log('Render empty view here!!');
                 } else {
                     _.each(requests.models, function (rq) {
+                        rq.attachFormattedDate(['date_review', 'created_at']);
                         that.renderRequest(rq, offers);
                     });
                 }
@@ -360,7 +361,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         // Render Comments (if user accepted or author of RR)
         if (this.isAccepted() || this.isAuthor(user_id)) {
             comments.url = App.getPrefix() + '/reviewrequest/' + req_id + '/comment';
-            new App.Views.CommentsList({'rid': req_id}).render()
+            new App.Views.CommentsList({'rid': req_id}).render();
         } else {
             console.log ('Chat is blocked for user: ' + user_id);
         }

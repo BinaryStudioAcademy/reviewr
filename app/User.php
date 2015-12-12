@@ -18,8 +18,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public $timestamps = false;
 
-    protected $fillable = ['first_name', 'last_name', 'email', 'phone', '
-        avatar', 'thumb_avatar', 'address', 'bid', 'role', 'job_id',
+    protected $fillable = ['first_name', 'last_name', 'email', 'avatar',
+        'thumb_avatar', 'country', 'city', 'bid', 'role', 'job_id',
         'department_id', 'binary_id'];
 
     protected $hidden = [ 'password', 'remember_token' ];
@@ -28,8 +28,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'first_name'=>'required|min:2|alpha',
         'last_name'=>'required|min:2|alpha',
         'email'=>'required|min:2|email',
-        'phone'=>'min:6|max:11|integer'
-
     );
 
     public function comments()

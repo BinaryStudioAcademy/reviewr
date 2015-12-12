@@ -23,8 +23,7 @@ var users = new App.Collections.Users();
 
 App.Collections.Requests = Backbone.Collection.extend({
     url: App.getPrefix() + '/reviewrequest',
-    model: App.Models.Request
-
+    model: App.Models.Request,
 });
 
 //instantiate collection of requests
