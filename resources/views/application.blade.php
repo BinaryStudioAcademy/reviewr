@@ -642,6 +642,10 @@
     </a>
 </script>
 
+<script type="text/template" id="tags-list-template">
+    <ul class="tags list-unstyled text-center row"></ul>
+</script>
+
 <script type="text/template" id="new-tag-template">
     <div class="tile">
         <div class="carousel slide" data-ride="carousel">
