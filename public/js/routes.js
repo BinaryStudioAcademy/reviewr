@@ -15,10 +15,7 @@ App.Router = Backbone.Router.extend({
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest",
-        "!/tags": "tags",
-        "!/tags/popular": "popularTags",
         "!/notifications": "notifications",
-        "!/tags/cloud": "tagsCloud",
         "!/logout": "logout"
     },
 
@@ -80,27 +77,12 @@ App.Router = Backbone.Router.extend({
     },
 
     showRequestDetails: function (id) {
-
         var request = new App.Models.Request({id: id});
         $('#spinner').show();
         request.fetch({wait: true}).then(function () {
             new App.Views.RequestDetails({model: request}).render();
             $('#spinner').hide();
         });
-    },
-
-    tags: function () {
-        tags.url = App.getPrefix() + "/tag";
-        new App.Views.NewTagsList().render();
-    },
-
-    popularTags: function () {
-        tags.url = App.getPrefix() + "/tags/popular";
-        new App.Views.NewTagsList().render();
-    },
-
-    tagsCloud: function () {
-        new App.Views.TagsCloud().render();
     },
 
     notifications: function () {

@@ -3,7 +3,6 @@
  *  Global App View
  *---------------------------------------------------
  */
-
 App.Views.App = Backbone.View.extend({
     initialize: function () {
     }
@@ -14,9 +13,7 @@ App.Views.App = Backbone.View.extend({
  *  User View
  *---------------------------------------------------
  */
-
 // Backbone Views for one user card
-
 App.Views.User = Backbone.View.extend({
     model: user,
     template: _.template($('#user-card-template').html()),
@@ -38,7 +35,6 @@ App.Views.User = Backbone.View.extend({
 });
 
 // Backbone Views for author of request (also use model user, but another template)
-
 App.Views.Author = Backbone.View.extend({
     model: user,
     template: _.template($('#author-card-template').html()),
@@ -60,7 +56,6 @@ App.Views.Author = Backbone.View.extend({
 });
 
 // Backbone Views for all users
-
 App.Views.UsersList = Backbone.View.extend({
     collection: users,
     el: '#main-content',
@@ -91,7 +86,6 @@ App.Views.UsersList = Backbone.View.extend({
 });
 
 // Backbone Views for user profile
-
 App.Views.UserProfile = Backbone.View.extend({
     model: user,
     el: '#popup',
@@ -114,15 +108,12 @@ App.Views.UserProfile = Backbone.View.extend({
     }
 });
 
-
 /*
  *---------------------------------------------------
  *  Review Request View
  *---------------------------------------------------
  */
-
 // Backbone Views for one request card
-
 App.Views.Request = Backbone.View.extend({
     model: request,
     offers: 0,
@@ -210,7 +201,6 @@ App.Views.Request = Backbone.View.extend({
 });
 
 // Backbone Views for all review requests
-
 App.Views.RequestsList = Backbone.View.extend({
     collection: requests,
     el: '#main-content',
@@ -253,7 +243,6 @@ App.Views.RequestsList = Backbone.View.extend({
 });
 
 // Backbone Views for Review Request Details
-
 App.Views.RequestDetails = Backbone.View.extend({
     model: request,
     el: '#main-content',
@@ -494,9 +483,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
  *  Reviewer View
  *---------------------------------------------------
  */
-
 // Backbone Views for one reviewer small card
-
 App.Views.Reviewer = Backbone.View.extend({
     model: reviewer,
     request_id: 0,
@@ -567,7 +554,6 @@ App.Views.Reviewer = Backbone.View.extend({
 });
 
 // Backbone Views for all reviewers
-
 App.Views.Reviewers = Backbone.View.extend({
     collection: reviewers,
     el: '#main-content',
@@ -594,13 +580,11 @@ App.Views.Reviewers = Backbone.View.extend({
     }
 });
 
-
 /*
  *---------------------------------------------------
  *  Tag View
  *---------------------------------------------------
  */
-
 App.Views.Tag = Backbone.View.extend({
     model: tag,
     tagName: 'li',
@@ -613,13 +597,11 @@ App.Views.Tag = Backbone.View.extend({
     }
 });
 
-
 /*
  *---------------------------------------------------
  *  Tags List View
  *---------------------------------------------------
  */
-
 App.Views.TagsList = Backbone.View.extend({
     collection: tags,
     el: "#main-content",
@@ -653,13 +635,11 @@ App.Views.TagsList = Backbone.View.extend({
     }
 });
 
-
 /*
  *---------------------------------------------------
  *  New Tag View
  *---------------------------------------------------
  */
-
 App.Views.NewTag = Backbone.View.extend({
     model: tag,
     className: 'col-sm-2 col-xs-4',
@@ -671,64 +651,11 @@ App.Views.NewTag = Backbone.View.extend({
     }
 });
 
-
-/*
- *---------------------------------------------------
- *  New Tags List View
- *---------------------------------------------------
- */
-
-App.Views.NewTagsList = Backbone.View.extend({
-    collection: tags,
-    el: "#main-content",
-    template: _.template($("#new-tags-list-template").html()),
-    initialize: function () {
-        this.collection.on('remove', this.render, this);
-    },
-    render: function () {
-        this.$el.empty();
-        $('#spinner').show();
-        var that = this;
-
-        this.collection.fetch({
-            success: function (tags, res, tag) {
-                if (!tags.length) {
-                    console.log('Render No-Tags view here');
-                } else {
-                    that.$el.html(that.template());
-                    _.each(tags.models, function (tag) {
-                        that.renderTag(tag);
-                    });
-                }
-
-                /* carousel initialize */
-                $('.carousel').carousel();
-                /* end carousel initialize */
-
-                /* ready element resize */
-                $(".tile").height($(".tile").width());
-                $(".carousel").height($(".tile").width());
-                $(".item").height($(".tile").width());
-                /* ready element resize */
-
-                $('#spinner').hide();
-            },
-            reset: true
-        });
-    },
-    renderTag: function (tag) {
-        var tagView = new App.Views.NewTag({model: tag.toJSON()});
-        this.$el.find('#tags-list').append(tagView.render().$el);
-    }
-});
-
-
 /*
  *---------------------------------------------------
  *  Search View
  *---------------------------------------------------
  */
-
 App.Views.Search = Backbone.View.extend({
     el: "#main-content",
     template: _.template($("#search-view-template").html()),
@@ -778,7 +705,6 @@ App.Views.Search = Backbone.View.extend({
  *  Confirm Modal View
  *---------------------------------------------------
  */
-
 App.Views.ConfirmModal = Backbone.View.extend({
     el: "#confirm-modal",
     events: {
@@ -800,13 +726,11 @@ App.Views.ConfirmModal = Backbone.View.extend({
     }
 });
 
-
 /*
  *---------------------------------------------------
  *  Notification View
  *---------------------------------------------------
  */
-
 App.Views.Notification = Backbone.View.extend({
     model: notification,
     tagName: 'div',
@@ -820,13 +744,11 @@ App.Views.Notification = Backbone.View.extend({
     }
 });
 
-
 /*
  *---------------------------------------------------
  *  Notification List View
  *---------------------------------------------------
  */
-
 App.Views.NotificationsList = Backbone.View.extend({
     collection: notifications,
     el: "#main-content",
@@ -868,9 +790,7 @@ App.Views.NotificationsList = Backbone.View.extend({
  *  Comment View
  *---------------------------------------------------
  */
-
 // Backbone Views for one comment
-
 App.Views.Comment = Backbone.View.extend({
     model: comment,
     className: 'list-group-item single-comment',
@@ -891,9 +811,7 @@ App.Views.Comment = Backbone.View.extend({
     }
 });
 
-
 // Backbone Views for comments list
-
 App.Views.CommentsList = Backbone.View.extend({
     model: comment,
     collection: comments,
@@ -1000,57 +918,5 @@ App.Views.CommentsList = Backbone.View.extend({
 
             $('#text').val('');
         }
-    }
-});
-
-
-/*
- *---------------------------------------------------
- *  Tags Cloud Page View
- *---------------------------------------------------
- */
-
-App.Views.TagsCloud = Backbone.View.extend({
-    collection: tags,
-    el: '#main-content',
-    render: function() {
-
-        this.$el.empty();
-
-        $('#spinner').show();
-
-        var that = this;
-
-        this.collection.fetch({
-            success: function(model, response, options){
-
-                var requests_count_max = _.max(_.map(tags.models, function(tag_model) {
-                    return tag_model.get('requests_count');
-                }));
-
-                var words = tags.models.map(function(tag_model) {
-                    return {
-                        text: tag_model.get('title'),
-                        weight: that.getKeyWordWeight({count: tag_model.get('requests_count'), max_count: requests_count_max }),
-                        link: "#!/requests/tag/" + tag_model.get('id'),
-                    };
-                });
-                that.cloudRender(words);
-                $('#spinner').hide();
-            }});
-    },
-    cloudRender: function(words){
-        this.$el.html('<div id="tags-cloud"></div>');
-        $('#tags-cloud').jQCloud(words, {autoResize: true, colors: ["#fc4e2a", "#fd8d3c", "#feb24c", "#fed976", "#ffeda0", "#ffffcc"]});
-    },
-    getKeyWordWeight: function(options) {
-        var def_settings = {
-            min_weight: 10,
-            max_weight: 60,
-        };
-
-        var settings = $.extend({}, def_settings, options);
-
-        return Math.round(((settings.count * (settings.max_weight - settings.min_weight)) / settings.max_count) + settings.min_weight);
     }
 });
