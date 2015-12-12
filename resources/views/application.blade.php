@@ -332,7 +332,9 @@
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
+                            <% if(date_review) { %>
                             <b>Date of review:</b> <span id="date_review"><%= date_review %></span>
+                            <% } %>
                         </div>
                         <div class="panel-footer">
                             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>

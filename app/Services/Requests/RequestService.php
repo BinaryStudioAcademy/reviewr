@@ -63,6 +63,10 @@ class RequestService implements RequestServiceInterface
     {
         $request = $this->requestRepository->create($data);
 
+//        if (!is_null($data['date_review'])) {
+//            $data['date_review'] = date_create($data['date_review']);
+//        }
+
         if (isset($data['tags'])) {
             foreach ($data['tags'] as $tag) {
                 $tag = $this->tagRepository->create(['title' => $tag]);

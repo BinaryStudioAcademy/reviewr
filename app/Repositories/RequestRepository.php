@@ -60,7 +60,7 @@ class RequestRepository implements RequestRepositoryInterface
 
         // Fill only existing fields (see http://ryanchenkie.com/laravel-put-requests/)
         if ($review_request->user_id == $auth_user_id) {
-            $review_request->title = $data['title'] ? $data['title'] : $review_request->title;
+            $review_request->title = isset($data['title']) ? $data['title'] : $review_request->title;
             $review_request->details = isset($data['details']) ? $data['details'] : $review_request->details;
             // Another fields witch are need to update ...
         }

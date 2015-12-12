@@ -10,7 +10,6 @@ class ReviewRequest extends Model
     use SoftDeletes;
 
     protected $table = 'review_requests';
-
     public $timestamps = true;
 
     protected $fillable = ['title', 'details', 'reputation', 'date_review',
