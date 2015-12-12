@@ -66,7 +66,6 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#!/requests/my">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">

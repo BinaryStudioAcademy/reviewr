@@ -1,5 +1,4 @@
 App.Router = Backbone.Router.extend({
-
     routes: {
         "": "home",
         "!/user/:id": "showUserProfile",
@@ -24,7 +23,7 @@ App.Router = Backbone.Router.extend({
     },
 
     home: function () {
-        this.navigate('!/requests/my', true)
+        this.navigate('!/requests', true)
     },
 
     showUserProfile: function (id) {
@@ -35,7 +34,6 @@ App.Router = Backbone.Router.extend({
     },
 
     requests: function () {
-        console.log('Route RequestListView');
         requests.url = App.getPrefix() + '/reviewrequest';
         new App.Views.RequestsList().render();
     },
@@ -49,35 +47,29 @@ App.Router = Backbone.Router.extend({
     },
 
     showMyRequest: function () {
-        console.log('Route MyRequest');
         new App.Views.RequestsList({collection: myRequests}).render();
     },
 
     offeredRequests: function () {
-        console.log("Route: !/requests/offered");
         new App.Views.RequestsList({collection: offeredRequests}).render();
     },
 
     popularRequests: function () {
-        console.log("Route: !/requests/popular");
         requests.url = App.getPrefix() + "/reviewrequest/popular";
         new App.Views.RequestsList().render();
     },
 
     highestRatedRequests: function () {
-        console.log("Route: !/requests/high_rate");
         requests.url = App.getPrefix() + "/reviewrequest/high_rate";
         new App.Views.RequestsList().render();
     },
 
     sortRequestsByGroups: function (group_id) {
-        console.log("Route: !/requests/group/" + group_id);
         requests.url = App.getPrefix() + "/reviewrequest/group/" + group_id;
         new App.Views.RequestsList().render();
     },
 
     sortRequestsByUser: function (user_id) {
-        console.log("Route: !/requests/user/" + user_id);
         requests.url = App.getPrefix() + "/reviewrequest/user/" + user_id;
         new App.Views.RequestsList().render();
     },
@@ -90,7 +82,6 @@ App.Router = Backbone.Router.extend({
     showRequestDetails: function (id) {
 
         var request = new App.Models.Request({id: id});
-        console.log('Route requestDetails');
         $('#spinner').show();
         request.fetch({wait: true}).then(function () {
             new App.Views.RequestDetails({model: request}).render();
@@ -98,21 +89,17 @@ App.Router = Backbone.Router.extend({
         });
     },
 
-
     tags: function () {
-        console.log("Route: !/tags");
         tags.url = App.getPrefix() + "/tag";
         new App.Views.NewTagsList().render();
     },
 
     popularTags: function () {
-        console.log("Route: !/tags/popular");
         tags.url = App.getPrefix() + "/tags/popular";
         new App.Views.NewTagsList().render();
     },
 
     tagsCloud: function () {
-        console.log("Route: !/tags/cloud");
         new App.Views.TagsCloud().render();
     },
 

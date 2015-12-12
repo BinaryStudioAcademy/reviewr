@@ -18,10 +18,7 @@
         },
 
         poller: ''
-
     };
-
-  //  listenChangeForNotifications();
 }());
 
 function listenChangeForNotifications() {
