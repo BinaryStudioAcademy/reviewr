@@ -92,14 +92,6 @@
                                 <li><a href="#!/requests/group/2">JS</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tags <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a>
-                            <ul class="dropdown-menu forAnimate" role="menu">
-                                <li><a href="#!/tags">All</a></li>
-                                <li><a href="#!/tags/popular">Popular</a></li>
-                                <li><a href="#!/tags/cloud">Cloud</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -650,11 +642,6 @@
     </a>
 </script>
 
-<script type="text/template" id="tags-list-template">
-    <ul class="tags list-unstyled text-center row">
-    </ul>
-</script>
-
 <script type="text/template" id="new-tag-template">
     <div class="tile">
         <div class="carousel slide" data-ride="carousel">
@@ -667,14 +654,6 @@
                     <h3 class="tilecaption"><a href="#!/requests/tag/<%- id %>"><%- requests_count %></a></h3>
                 </div>
             </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/template" id="new-tags-list-template">
-    <div class="container-fluid">
-        <div class="row" id="tags-list">
-            <!-- TAGS LIST -->
         </div>
     </div>
 </script>
