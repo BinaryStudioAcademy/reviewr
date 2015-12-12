@@ -80,7 +80,6 @@ App.Views.UsersList = Backbone.View.extend({
                     _.each(users.models, function (user) {
                         var userView = new App.Views.User({model: user});
                         that.$el.append(userView.render().$el);
-                        console.log('render User');
                     });
                 }
                 $('#spinner').hide();
@@ -109,7 +108,6 @@ App.Views.UserProfile = Backbone.View.extend({
     },
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
-        console.log('render UserProfile');
         $('#spinner').hide();
         $('#myModal').modal();
         return this;
@@ -219,7 +217,6 @@ App.Views.RequestsList = Backbone.View.extend({
     initialize: function () {
     },
     render: function () {
-        console.log(this.collection);
         this.stopListening();
         this.$el.empty();
         $('#spinner').show();
@@ -233,7 +230,6 @@ App.Views.RequestsList = Backbone.View.extend({
                 offers = res.message;
             }
         });
-        console.log(offers);
 
         this.collection.fetch({
             success: function (requests, res, req) {
@@ -242,7 +238,6 @@ App.Views.RequestsList = Backbone.View.extend({
                 } else {
                     _.each(requests.models, function (rq) {
                         that.renderRequest(rq, offers);
-                        console.log('render Request');
                     });
                 }
                 $('#spinner').hide();
@@ -371,7 +366,6 @@ App.Views.RequestDetails = Backbone.View.extend({
         request_tags_list.empty();
         _.each(tags, function (tag) {
             request_tags_list.append((new App.Views.Tag({model: tag}) ).render().el);
-            console.log('render Tag', tag);
         }, this);
 
         // Render Comments (if user accepted or author of RR)
@@ -455,7 +449,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         });
 
         this.stopListening()
-        console.log(this.model.isValid());
 
         if (this.model.isValid(true)) {
             this.model.save(null, {
@@ -590,7 +583,6 @@ App.Views.Reviewers = Backbone.View.extend({
             success: function (reviewers, res, reviewer) {
                 _.each(requests.models, function (reviewer) {
                     that.renderReviewer(reviewer);
-                    console.log('Reviewer Model Render');
                 });
             },
             reset: true
@@ -648,7 +640,6 @@ App.Views.TagsList = Backbone.View.extend({
                     that.$el.html(that.template());
                     _.each(tags.models, function (tag) {
                         that.renderTag(tag);
-                        console.log('Tag Model Render');
                     });
                 }
                 $('#spinner').hide();
@@ -707,7 +698,6 @@ App.Views.NewTagsList = Backbone.View.extend({
                     that.$el.html(that.template());
                     _.each(tags.models, function (tag) {
                         that.renderTag(tag);
-                        console.log('Tag Model Render');
                     });
                 }
 
@@ -765,22 +755,17 @@ App.Views.Search = Backbone.View.extend({
                 content = data;
             }
         });
-        console.log(content);
         return content;
     },
 
     render: function () {
-        console.log("Render Search Page Template");
         this.$el.empty();
         this.$el.html(this.template);
     },
 
     renderResults: function (res) {
         var search_results_div = this.$el.find(".search-results");
-
         search_results_div.empty();
-
-        console.log("Render Search Results");
 
         _.each(res, function (r) {
             search_results_div.append('<div class="thumbnail text-center">' + '<p>' + r.id + '</p>' + '<p>' + r.title + '</p>' + '</div>');
@@ -863,7 +848,6 @@ App.Views.NotificationsList = Backbone.View.extend({
                     that.$el.html(that.template());
                     _.each(notifications.models, function (notification) {
                         that.renderNotifications(notification);
-                        console.log('Tag Model Render');
                     });
                 }
                 $('#spinner').hide();
@@ -943,7 +927,6 @@ App.Views.CommentsList = Backbone.View.extend({
             function(session) {
                 //App.poller.stop();
                 session.subscribe('request/' + that.options.rid + '/comments', function(topic, data) {
-                    console.log('New Message: ', topic, data);
                     that.collection.add(data.data);
                 });
             },
@@ -1052,7 +1035,6 @@ App.Views.TagsCloud = Backbone.View.extend({
                         link: "#!/requests/tag/" + tag_model.get('id'),
                     };
                 });
-                console.log(words);
                 that.cloudRender(words);
                 $('#spinner').hide();
             }});
