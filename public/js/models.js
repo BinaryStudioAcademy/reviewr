@@ -24,16 +24,15 @@ _.extend(Backbone.Validation.callbacks, {
  *  Users Model
  *---------------------------------------------------
  */
-
 App.Models.User = Backbone.Model.extend({
     urlRoot: App.getPrefix() + '/user',
     defaults: {
         first_name: '',
         last_name: '',
         email: '',
-        phone: '',
         avatar: '',
-        address: '',
+        country: '',
+        city: '',
         reputation: ''
     }
 });
@@ -45,7 +44,6 @@ var user = new App.Models.User();
  *  Request Model
  *---------------------------------------------------
  */
-
 App.Models.Request = Backbone.Model.extend({
     urlRoot: App.getPrefix() + '/reviewrequest',
     defaults: {
@@ -64,7 +62,7 @@ App.Models.Request = Backbone.Model.extend({
             rangeLength: [5, 100]
         },
         date_review: {
-            required: true
+            required: false
         },
         details: {
             required: true
@@ -74,35 +72,31 @@ App.Models.Request = Backbone.Model.extend({
 
 var request = new App.Models.Request();
 
-
 /*
  *---------------------------------------------------
  *  Reviewer Model
  *---------------------------------------------------
  */
-
 App.Models.Reviewer = Backbone.Model.extend({
     urlRoot: App.getPrefix() + '/reviewer',
     defaults: {
         first_name: '',
         last_name: '',
         email: '',
-        phone: '',
         avatar: '',
-        address: '',
+        country: '',
+        city: '',
         reputation: ''
     }
 });
 
 var reviewer = new App.Models.Reviewer();
 
-
 /*
  *---------------------------------------------------
  *  Tag Model
  *---------------------------------------------------
  */
-
 App.Models.Tag = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/tag",
     defaults: {
@@ -111,7 +105,6 @@ App.Models.Tag = Backbone.Model.extend({
     }
 });
 
-
 var tag = new App.Models.Tag();
 
 /*
@@ -119,7 +112,6 @@ var tag = new App.Models.Tag();
  *  Tag Model
  *---------------------------------------------------
  */
-
 App.Models.Notification = Backbone.Model.extend({
     urlRoot: App.getPrefix() + "/notification",
     defaults: {
@@ -130,13 +122,11 @@ App.Models.Notification = Backbone.Model.extend({
 
 var notification = new App.Models.Notification();
 
-
 /*
  *---------------------------------------------------
  *  Comment Model
  *---------------------------------------------------
  */
-
 App.Models.Comment = Backbone.Model.extend({
     defaults: {
         id: null,
@@ -146,7 +136,7 @@ App.Models.Comment = Backbone.Model.extend({
     validation: {
         text: {
             required: true,
-        },
+        }
     }
 });
 

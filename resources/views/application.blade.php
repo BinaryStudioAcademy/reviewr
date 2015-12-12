@@ -186,8 +186,6 @@
                     <p>Group: <a href="#!/requests/group/<%- offer.group_id %>"><%- offer.group.title %></a></p>
 
                     <p><%- offer.user.email %></p>
-
-                    <p><%- offer.user.phone %></p>
                 </div>
             </div>
         </div>
@@ -508,10 +506,6 @@
                             <%- email %>
                         </p>
 
-                        <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                            <%- phone %>
-                        </p>
-
                         <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             <a href="#!/requests/user/<%- id %>">His Requests</a>
                         </p>
@@ -560,12 +554,6 @@
 
                     <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                         <%- email %></p>
-
-                    <% if (phone) { %>
-                    <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                        <%- phone %></p>
-                    <% } %>
-
                 </div>
             </div>
 
@@ -605,13 +593,8 @@
                             <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                 <%- email %></p>
 
-                            <% if (phone) { %>
-                            <p><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                                <%- phone %></p>
-                            <% } %>
-
                             <% if (department) { %>
-                            <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            <p><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
                                 <%- department['title'] %></p>
                             <% } %>
 
@@ -619,9 +602,9 @@
                             <p>(<%- job['position'] %>)</p>
                             <% } %>
 
-                            <% if (address) { %>
+                            <% if (country && city) { %>
                             <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                                <%- address %></p>
+                                <%- city %>, <%- country %></p>
                             <% } %>
                         </div>
                     </div>

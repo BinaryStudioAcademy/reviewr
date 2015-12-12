@@ -18,14 +18,17 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->orderBy('created_at', 'desc')->get();
     }
 
-    public function create(array $data)
+    public function create(array $attributes)
     {
-        $review_request = new ReviewRequest;
-        $review_request->title = $data['title'];
-        $review_request->details = $data['details'];
-        $review_request->user_id = Auth::user()->id;
-        $review_request->group_id = $data['group_id'];
-        $review_request->date_review = $data['date_review'] . ':00';
+        $attributes['user_id'] = Auth::user()->id;
+
+        if (!empty($attributes['date_review'])) {
+            $attributes['date_review'] = $attributes['date_review'] . ':00';
+        } else {
+            unset($attributes['date_review']);
+        }
+
+        $review_request = new ReviewRequest($attributes);
         $review_request->save();
         return $review_request;
     }
