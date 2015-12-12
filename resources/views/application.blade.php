@@ -160,7 +160,7 @@
         <div class="panel-body">
             <p>
                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                <%- offer.created_at %>
+                <%- offer.formatted_created_at %>
                 &nbsp;
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
@@ -192,7 +192,6 @@
         <div class="panel-footer text-center">
             <p class="description"><%- offer.details %></p>
 
-            <div><b>Date of review:</b> <%- offer.date_review %></div>
             <% if (status) { %>
             <button class="undo-offer-btn btn btn-info">
                 <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
@@ -327,13 +326,13 @@
                         <div class="panel-body">
                             <p>
                                 <small><span class="glyphicon glyphicon-time"
-                                             aria-hidden="true"></span> <%- created_at %></small>
+                                             aria-hidden="true"></span> <%- formatted_created_at %></small>
                             </p>
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
-                            <% if(date_review) { %>
-                            <b>Date of review:</b> <span id="date_review"><%= date_review %></span>
+                            <% if(formatted_date_review) { %>
+                            <b>Date of review:</b> <span id="date_review"><%= formatted_date_review %></span>
                             <% } %>
                         </div>
                         <div class="panel-footer">
@@ -429,7 +428,7 @@
             <div class="comment-time pull-right text-muted">
                 <small>
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <%- created_at %>
+                    <%- formatted_created_at %>
                 </small>
             </div>
             <div class="comment-description"><%= text %></div>

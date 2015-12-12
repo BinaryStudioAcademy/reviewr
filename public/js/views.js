@@ -227,6 +227,7 @@ App.Views.RequestsList = Backbone.View.extend({
                     console.log('Render empty view here!!');
                 } else {
                     _.each(requests.models, function (rq) {
+                        rq.attachFormattedDate(['date_review', 'created_at']);
                         that.renderRequest(rq, offers);
                     });
                 }

@@ -23,7 +23,9 @@ class RequestRepository implements RequestRepositoryInterface
         $attributes['user_id'] = Auth::user()->id;
 
         if (!empty($attributes['date_review'])) {
-            $attributes['date_review'] = $attributes['date_review'] . ':00';
+            $formattedDated = (new \DateTime($attributes['date_review']))
+                ->format('Y-m-d H:i:s');
+            $attributes['date_review'] = $formattedDated;
         } else {
             unset($attributes['date_review']);
         }
