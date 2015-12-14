@@ -31,27 +31,27 @@ class RequestRepository implements RequestRepositoryInterface
         return $data;
     }
 
-    public function create(array $data)
+    public function create(array $attributes)
     {
-        $data['user_id'] = Auth::user()->id;
-        $data = $this->attachFormattedDateTime($data);
+        $attributes['user_id'] = Auth::user()->id;
+        $attributes = $this->attachFormattedDateTime($attributes);
 
-        $review_request = new ReviewRequest($data);
+        $review_request = new ReviewRequest($attributes);
         $review_request->save();
         return $review_request;
     }
 
-    public function update(array $data, $id)
+    public function update(array $attributes, $id)
     {
         $review_request = ReviewRequest::findOrFail($id);
         $auth_user_id = Auth::user()->id;
 
         // Check if the reputation change and Up or Down
-        if (isset($data['reputation'])) {
+        if (isset($attributes['reputation'])) {
             $author = $review_request->user;
-            $isReputationUp =  ($data['reputation'] > $review_request->reputation);
-            $isReputationDown = ($data['reputation'] < $review_request->reputation);
-            $review_request->reputation = $data['reputation'];
+            $isReputationUp =  ($attributes['reputation'] > $review_request->reputation);
+            $isReputationDown = ($attributes['reputation'] < $review_request->reputation);
+            $review_request->reputation = $attributes['reputation'];
 
             // If reputation change save user vote  or delete his vote
             if ($isReputationUp) {
@@ -66,8 +66,8 @@ class RequestRepository implements RequestRepositoryInterface
             $author->save();
         }
 
-        $data = $this->attachFormattedDateTime($data);
-        $review_request->update($data);
+        $attributes = $this->attachFormattedDateTime($attributes);
+        $review_request->update($attributes);
         return $review_request;
     }
 

@@ -49,7 +49,6 @@ App.ModelMixins = {
                     );
                 } else {
                     self.set('formatted_' + field, null);
-                    debugger;
                 }
             })
         },

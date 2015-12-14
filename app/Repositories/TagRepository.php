@@ -12,23 +12,23 @@ class TagRepository implements TagRepositoryInterface
         return Tag::orderBy('title')->get();
     }
 
-    public function create(array $data)
+    public function create(array $attributes)
     {
         $tags = Tag::all();
 
         foreach($tags as $temp) {
-            if ($data == $temp->title) return $temp;
+            if ($attributes == $temp->title) return $temp;
         }
 
         $tag = new Tag();
-        $tag->title = $data['title'];
+        $tag->title = $attributes['title'];
         $tag->save();
         return $tag;
     }
 
     public function find($id) {}
 
-    public function update(array $data, $id) {}
+    public function update(array $attributes, $id) {}
 
     public function delete($id)
     {

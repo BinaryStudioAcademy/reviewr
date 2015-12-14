@@ -18,7 +18,7 @@ class CommentRepository implements CommentRepositoryInterface
         return Comment::with('user')->findOrFail($id);
     }
 
-    public function create(array $data) {}
+    public function create(array $attributes) {}
 
     public function addCommentToRequest($data, $rid)
     {
@@ -42,12 +42,12 @@ class CommentRepository implements CommentRepositoryInterface
         return $last_comment;
     }
 
-    public function update(array $data, $id)
+    public function update(array $attributes, $id)
     {
         $comment = Comment::findOrFail($id);
 
         if ($comment->user_id == Auth::user()->id) {
-            $comment->text = $data->text;
+            $comment->text = $attributes->text;
             $comment->save();
 
             return $comment;

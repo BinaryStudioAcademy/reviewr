@@ -8,9 +8,9 @@ interface BasicRepositoryInterface
 
     public function find($id);
 
-    public function create(array $data);
+    public function create(array $attributes);
 
-    public function update(array $data, $id);
+    public function update(array $attributes, $id);
 
     public function delete($id);
 }

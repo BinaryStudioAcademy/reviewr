@@ -292,7 +292,9 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     showDeleteButton: function () {
-        $('.delete-date-review').show();
+        if (this.isAuthor(this.model.get('user_id'))) {
+            $('.delete-date-review').show();
+        }
     },
 
     hideDeleteButton: function () {

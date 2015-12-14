@@ -330,7 +330,7 @@
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
-                                <% } else { %>
+                                <% } else if (user_id == authUserId) { %>
                                 <b>Date of review: </b><a href="#" id="date_review">Assign</a>
                                 <% } %>
                             </span>
