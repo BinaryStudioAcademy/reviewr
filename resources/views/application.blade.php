@@ -218,11 +218,8 @@
 
 </script>
 
-
 {{-- Create Review Request Form backbone template--}}
-
 <script type="text/template" id="create-request-form-template">
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
@@ -237,7 +234,6 @@
                         <form class="form-horizontal" role="form" method="POST" action="#" id="create-request-form">
                             <div class="form-group">
                                 <label for="title" class="col-md-1 control-label">Title</label>
-
                                 <div class="col-md-11">
                                     <input type="text" class="title-input form-control" name="title" id="title"
                                            placeholder="Write title of review request">
@@ -306,11 +302,8 @@
 
 </script>
 
-
 {{-- Review Request details backbone template--}}
-
 <script type="text/template" id="review-request-details-template">
-
     <div class="wrapper">
         <div class="request-details container">
             <div class="row">
@@ -332,7 +325,9 @@
 
                             <ul class="tags list-inline">Request Tags List</ul>
                             <% if(formatted_date_review) { %>
-                            <b>Date of review:</b> <span id="date_review"><%= formatted_date_review %></span>
+                            <b>Date of review: </b><a href="#" id="date_review"><%- formatted_date_review %></a><span class="delete-date-review">   Clear</span>
+                            <% } else { %>
+                            <b>Date of review: </b><a href="#" id="date_review">Assign</a>
                             <% } %>
                         </div>
                         <div class="panel-footer">
@@ -524,7 +519,6 @@
 </script>
 
 {{-- Author request backbone template--}}
-
 <script type="text/template" id="author-card-template">
 
     <div class="panel panel-success">

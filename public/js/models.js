@@ -32,6 +32,10 @@ App.ModelMixins = {
             this.on('sync', function () {
                 self.attachFormattedDate(fields);
             });
+
+            this.on('change', function () {
+                self.attachFormattedDate(fields);
+            });
         },
 
         attachFormattedDate: function (fields) {
@@ -43,6 +47,9 @@ App.ModelMixins = {
                         'formatted_' + field,
                         self.formatDate(self.get(field))
                     );
+                } else {
+                    self.set('formatted_' + field, null);
+                    debugger;
                 }
             })
         },

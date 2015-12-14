@@ -18,19 +18,25 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->orderBy('created_at', 'desc')->get();
     }
 
-    public function create(array $attributes)
+    protected function attachFormattedDateTime(array $data)
     {
-        $attributes['user_id'] = Auth::user()->id;
-
-        if (!empty($attributes['date_review'])) {
-            $formattedDated = (new \DateTime($attributes['date_review']))
+        if (!empty($data['date_review'])) {
+            $formattedDated = (new \DateTime($data['date_review']))
                 ->format('Y-m-d H:i:s');
-            $attributes['date_review'] = $formattedDated;
+            $data['date_review'] = $formattedDated;
         } else {
-            unset($attributes['date_review']);
+            $data['date_review'] = null;
         }
 
-        $review_request = new ReviewRequest($attributes);
+        return $data;
+    }
+
+    public function create(array $data)
+    {
+        $data['user_id'] = Auth::user()->id;
+        $data = $this->attachFormattedDateTime($data);
+
+        $review_request = new ReviewRequest($data);
         $review_request->save();
         return $review_request;
     }
@@ -60,17 +66,9 @@ class RequestRepository implements RequestRepositoryInterface
             $author->save();
         }
 
-        // Fill only existing fields (see http://ryanchenkie.com/laravel-put-requests/)
-        if ($review_request->user_id == $auth_user_id) {
-            $review_request->title = isset($data['title']) ? $data['title'] : $review_request->title;
-            $review_request->details = isset($data['details']) ? $data['details'] : $review_request->details;
-            // Another fields witch are need to update ...
-        }
-
-        $review_request->save();
-
+        $data = $this->attachFormattedDateTime($data);
+        $review_request->update($data);
         return $review_request;
-
     }
 
     public function delete($id)
