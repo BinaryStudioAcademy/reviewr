@@ -18,34 +18,40 @@ class RequestRepository implements RequestRepositoryInterface
         return ReviewRequest::with('user', 'group')->orderBy('created_at', 'desc')->get();
     }
 
+    protected function attachFormattedDateTime(array $data)
+    {
+        if (!empty($data['date_review'])) {
+            $formattedDated = (new \DateTime($data['date_review']))
+                ->format('Y-m-d H:i:s');
+            $data['date_review'] = $formattedDated;
+        } else {
+            $data['date_review'] = null;
+        }
+
+        return $data;
+    }
+
     public function create(array $attributes)
     {
         $attributes['user_id'] = Auth::user()->id;
-
-        if (!empty($attributes['date_review'])) {
-            $formattedDated = (new \DateTime($attributes['date_review']))
-                ->format('Y-m-d H:i:s');
-            $attributes['date_review'] = $formattedDated;
-        } else {
-            unset($attributes['date_review']);
-        }
+        $attributes = $this->attachFormattedDateTime($attributes);
 
         $review_request = new ReviewRequest($attributes);
         $review_request->save();
         return $review_request;
     }
 
-    public function update(array $data, $id)
+    public function update(array $attributes, $id)
     {
         $review_request = ReviewRequest::findOrFail($id);
         $auth_user_id = Auth::user()->id;
 
         // Check if the reputation change and Up or Down
-        if (isset($data['reputation'])) {
+        if (isset($attributes['reputation'])) {
             $author = $review_request->user;
-            $isReputationUp =  ($data['reputation'] > $review_request->reputation);
-            $isReputationDown = ($data['reputation'] < $review_request->reputation);
-            $review_request->reputation = $data['reputation'];
+            $isReputationUp =  ($attributes['reputation'] > $review_request->reputation);
+            $isReputationDown = ($attributes['reputation'] < $review_request->reputation);
+            $review_request->reputation = $attributes['reputation'];
 
             // If reputation change save user vote  or delete his vote
             if ($isReputationUp) {
@@ -60,17 +66,9 @@ class RequestRepository implements RequestRepositoryInterface
             $author->save();
         }
 
-        // Fill only existing fields (see http://ryanchenkie.com/laravel-put-requests/)
-        if ($review_request->user_id == $auth_user_id) {
-            $review_request->title = isset($data['title']) ? $data['title'] : $review_request->title;
-            $review_request->details = isset($data['details']) ? $data['details'] : $review_request->details;
-            // Another fields witch are need to update ...
-        }
-
-        $review_request->save();
-
+        $attributes = $this->attachFormattedDateTime($attributes);
+        $review_request->update($attributes);
         return $review_request;
-
     }
 
     public function delete($id)

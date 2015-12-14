@@ -85,15 +85,7 @@ class RequestService implements RequestServiceInterface
 
     public function updateRequest($id, $data)
     {
-        //dd($id, $data);
         $request = $this->requestRepository->update($data, $id);
-        // tags for request update
-        //foreach ($data->tags as $tag_id => $tag_item) {
-        //    $tag = $this->tagRepository->update($tag_id, $tag_item);
-        //    $tag->save();
-        //    $request->save();
-        //}
-
         return $request;
     }
 

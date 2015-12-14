@@ -184,8 +184,6 @@ App.Views.Request = Backbone.View.extend({
         this.$el.find('.undo-offer-btn').html('Offer');
         this.$el.find('.undo-offer-btn').addClass('request-offer-btn');
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
-        //If you want finally remove offer from list uncomment this
-        //this.remove();
     },
     render: function () {
         var data = {offer: this.model.toJSON()};
@@ -249,13 +247,15 @@ App.Views.RequestDetails = Backbone.View.extend({
     el: '#main-content',
     initialize: function () {
         this.template = _.template($('#review-request-details-template').html());
-        // Temporary blocked because Like btn render all page
-        //this.model.on('change', this.render, this);
+        this.model.on('change:formatted_date_review', this.render, this);
     },
     events: {
         'click .back-request': 'back',
         'click .like': 'like',
         'click .undo-like': 'undoLike',
+        'click .delete-date-review': 'clearDateReview',
+        'mouseenter .date-review': 'showDeleteButton',
+        'mouseleave .date-review': 'hideDeleteButton'
     },
     back: function () {
         router.navigate('!/requests', true);
@@ -286,6 +286,21 @@ App.Views.RequestDetails = Backbone.View.extend({
         return this;
     },
 
+    clearDateReview: function () {
+        this.model.set('date_review', null);
+        this.model.save({date_review: null}, {patch: true}); //update backbone model
+    },
+
+    showDeleteButton: function () {
+        if (this.isAuthor(this.model.get('user_id'))) {
+            $('.delete-date-review').show();
+        }
+    },
+
+    hideDeleteButton: function () {
+        $('.delete-date-review').hide();
+    },
+
     checkVote: function () {
         return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
@@ -307,10 +322,8 @@ App.Views.RequestDetails = Backbone.View.extend({
         return (userId == authUserId);
     },
 
-    render: function(){
-       
-        var that = this;
-
+    render: function () {
+        var self = this;
         this.stopListening();
 
         // Fetch All Request Details
@@ -342,13 +355,14 @@ App.Views.RequestDetails = Backbone.View.extend({
             this.$el.find('.reviewers-header').append(' There are no reviewers for now');
         } else {
             _.each(reviewers, function (reviewer, request_id) {
-            reviewersBlock.append((new App.Views.Reviewer({
-                model: reviewer,
-                request_id: req_id,
-                author_id: user_id,
-                acceptOffers: reviewers
-            }) ).render().el);
-        }, this);
+            reviewersBlock.append(
+                (new App.Views.Reviewer({
+                    model: reviewer,
+                    request_id: req_id,
+                    author_id: user_id,
+                    acceptOffers: reviewers
+                })).render().el);
+            }, this);
         }
 
         // Render Request Tags
@@ -366,9 +380,7 @@ App.Views.RequestDetails = Backbone.View.extend({
             console.log ('Chat is blocked for user: ' + user_id);
         }
 
-
         // X-Editable field
-
         // Check review request belong to auth user
         if (this.model.get('user_id') == authUserId) {
             $('#title').editable({
@@ -377,15 +389,38 @@ App.Views.RequestDetails = Backbone.View.extend({
                 inputclass: 'input-title',
                 name: 'title',
                 success: function (response, newValue) {
-                    that.model.save({title: newValue}, {patch: true}); //update backbone model
+                    self.model.save({title: newValue}, {patch: true}); //update backbone model
                 }
             });
+
             $('#details').editable({
                 mode: 'inline',
                 type: 'textarea',
                 name: 'details',
                 success: function (response, newValue) {
-                    that.model.save({details: newValue}, {patch: true}); //update backbone model
+                    self.model.save({details: newValue}, {patch: true}); //update backbone model
+                }
+            });
+
+            $('#date_review').editable({
+                mode: 'popup',
+                type: 'datetime',
+                name: 'date_review',
+                format: 'yyyy-mm-dd hh:ii',
+                display: false,
+                clear: 'Clear the date',
+                autoclose: true,
+                success: function (response, newValue) {
+                    var globalDateTime = newValue.getFullYear()
+                        + '-'
+                        + newValue.getMonth()
+                        + '-'
+                        + newValue.getDate()
+                        + ' '
+                        + newValue.getHours()
+                        + ':'
+                        + newValue.getMinutes();
+                    self.model.save({date_review: globalDateTime}, {patch: true}); //update backbone model
                 }
             });
         }
@@ -452,11 +487,19 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template);
         var nowDate = new Date();
-        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), nowDate.getHours(), nowDate.getMinutes(), 0, 0);
+        var today = new Date(
+            nowDate.getFullYear(),
+            nowDate.getMonth(),
+            nowDate.getDate(),
+            nowDate.getHours(),
+            nowDate.getMinutes(),
+            0,
+            0
+        );
+
         $("#date_review").datetimepicker({
             autoclose: true,
-            startDate: today,
-            format: 'yyyy-mm-dd hh:ii'
+            startDate: today
         });
 
         tags.fetch({
@@ -470,8 +513,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
                 });
             }
         });
-
-
 
         return this;
     }

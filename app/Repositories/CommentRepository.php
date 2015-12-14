@@ -42,12 +42,12 @@ class CommentRepository implements CommentRepositoryInterface
         return $last_comment;
     }
 
-    public function update(array $data, $id)
+    public function update(array $attributes, $id)
     {
         $comment = Comment::findOrFail($id);
 
         if ($comment->user_id == Auth::user()->id) {
-            $comment->text = $data->text;
+            $comment->text = $attributes->text;
             $comment->save();
 
             return $comment;

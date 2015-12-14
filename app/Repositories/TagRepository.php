@@ -28,7 +28,7 @@ class TagRepository implements TagRepositoryInterface
 
     public function find($id) {}
 
-    public function update(array $data, $id) {}
+    public function update(array $attributes, $id) {}
 
     public function delete($id)
     {
