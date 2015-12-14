@@ -580,3 +580,12 @@ section{
 .sidebar {
     z-index: 1000;
 }
+
+.entry-control {
+    display: none;
+}
+
+span.date-review {
+    display: inline-block;
+    min-height: 25px;
+}

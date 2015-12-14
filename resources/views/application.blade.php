@@ -325,10 +325,15 @@
 
                             <ul class="tags list-inline">Request Tags List</ul>
                             <% if(formatted_date_review) { %>
-                            <b>Date of review: </b><a href="#" id="date_review"><%- formatted_date_review %></a><span class="delete-date-review">   Clear</span>
-                            <% } else { %>
-                            <b>Date of review: </b><a href="#" id="date_review">Assign</a>
-                            <% } %>
+                            <span class="date-review">
+                                <b>Date of review: </b>
+                                <a href="#" id="date_review"><%- formatted_date_review %></a>
+                                &nbsp;
+                                <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
+                                <% } else { %>
+                                <b>Date of review: </b><a href="#" id="date_review">Assign</a>
+                                <% } %>
+                            </span>
                         </div>
                         <div class="panel-footer">
                             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>

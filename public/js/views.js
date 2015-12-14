@@ -253,7 +253,9 @@ App.Views.RequestDetails = Backbone.View.extend({
         'click .back-request': 'back',
         'click .like': 'like',
         'click .undo-like': 'undoLike',
-        'click .delete-date-review': 'clearDateReview'
+        'click .delete-date-review': 'clearDateReview',
+        'mouseenter .date-review': 'showDeleteButton',
+        'mouseleave .date-review': 'hideDeleteButton'
     },
     back: function () {
         router.navigate('!/requests', true);
@@ -289,6 +291,14 @@ App.Views.RequestDetails = Backbone.View.extend({
         this.model.save({date_review: null}, {patch: true}); //update backbone model
     },
 
+    showDeleteButton: function () {
+        $('.delete-date-review').show();
+    },
+
+    hideDeleteButton: function () {
+        $('.delete-date-review').hide();
+    },
+
     checkVote: function () {
         return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
     },
@@ -312,7 +322,6 @@ App.Views.RequestDetails = Backbone.View.extend({
 
     render: function () {
         var self = this;
-
         this.stopListening();
 
         // Fetch All Request Details
