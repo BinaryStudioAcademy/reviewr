@@ -45,8 +45,10 @@ abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
     /**
      * Returns the message for event.
      *
-     * @var array $arguments Can contain keys request and oldDate
+     * array['request'] ReviewRequest Defines the changed request.
+     * array['oldDate'] DateTime Defines an old date of review.
      *
+     * @var array $arguments see above
      * @return string
      */
     abstract protected function getMessageText(array $arguments);

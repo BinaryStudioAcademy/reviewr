@@ -37,8 +37,10 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
     /**
      * Returns the message for event.
      *
-     * @var array $arguments Contains keys request and oldDate
+     * array['request'] ReviewRequest Defines the changed request.
+     * array['oldDate'] DateTime Defines an old date of review.
      *
+     * @var array $arguments see above
      * @return string
      */
     protected function getMessageText(array $arguments)

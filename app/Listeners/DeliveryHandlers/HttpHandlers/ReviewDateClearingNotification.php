@@ -10,7 +10,10 @@ class ReviewDateClearingNotification extends ReviewDateNotificationHandler imple
     /**
      * Returns the message for event.
      *
-     * @var array $arguments Contains key request
+     * array['request'] ReviewRequest Defines the changed request.
+     *
+     * @var array $arguments see above
+     * @return string
      */
     protected function getMessageText(array $arguments)
     {
