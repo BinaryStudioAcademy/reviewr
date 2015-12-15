@@ -15,13 +15,13 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
         $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $reviewRequest->id);
         $text = $this->getMessageText([
-            $reviewRequest,
-            $event->oldReviewDate
+            'request' => $reviewRequest,
+            'oldDate' => $event->oldReviewDate
         ]);
 
         $acceptedUsersIds = array_map(
             function ($user) {
-                return $user->binary_id;
+                return $user['binary_id'];
             },
             $event->acceptedUsers
         );
