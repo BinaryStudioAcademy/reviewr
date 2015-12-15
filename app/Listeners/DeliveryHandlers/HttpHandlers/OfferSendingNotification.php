@@ -4,11 +4,9 @@ namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
 use App\Events\OfferWasSent;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Auth;
-use App\Listeners\Contracts\ReviewDateNotificationHandler;
-use Mail;
+use App\Listeners\Contracts\HttpDeliveryHandler;
 
-class OfferSendingNotification extends ReviewDateNotificationHandler implements ShouldQueue
+class OfferSendingNotification extends HttpDeliveryHandler implements ShouldQueue
 {
     /**
      * Handle the event.

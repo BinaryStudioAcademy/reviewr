@@ -25,11 +25,11 @@ abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
     {
         $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $event->request->id);
-        $text = $this->getMessageText([$event->request]);
+        $text = $this->getMessageText(['request' => $event->request]);
 
         $acceptedUsersIds = array_map(
             function ($user) {
-                return $user->binary_id;
+                return $user['binary_id'];
             },
             $event->acceptedUsers
         );

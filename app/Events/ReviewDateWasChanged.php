@@ -12,6 +12,10 @@ class ReviewDateWasChanged extends ReviewDateEvent
     /**
      * Create a new event instance.
      *
+     * @var RequestReview $request
+     * @var DateTime $oldReviewDate
+     * @var array[] $acceptedUsers
+     *
      * @return void
      */
     public function __construct(
