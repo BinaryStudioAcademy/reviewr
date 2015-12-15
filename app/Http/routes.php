@@ -22,8 +22,9 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
     ]);
 
     // Auth mockups
-    Route::get('/auth', 'Mockups\AuthController@auth');
-    Route::get('/auth/me/{binary_id}', 'Mockups\AuthController@profile');
+    Route::get('/auth-mock', 'Mockups\AuthController@auth');
+    Route::get('/auth-mock/logout', 'Mockups\AuthController@logout');
+    Route::get('/auth-mock/me/{binary_id}', 'Mockups\AuthController@profile');
 
     Route::group([ 'prefix' => 'api/v1' ], function () {
         Route::get(

@@ -222,6 +222,10 @@ App.Views.RequestsList = Backbone.View.extend({
         this.collection.fetch({
             success: function (requests, res, req) {
                 if (!requests.length) {
+                    var emptyView = new App.Views.EmptyView({
+                        message: 'Please, create your very first request.'
+                    });
+                    emptyView.render();
                     console.log('Render empty view here!!');
                 } else {
                     _.each(requests.models, function (rq) {
@@ -462,6 +466,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         this.model = options.model;
         Backbone.Validation.bind(this);
     },
+
     storeRequest: function (e) {
         e.preventDefault();
 
@@ -485,6 +490,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             this.$el.empty();
         }
     },
+
     render: function () {
         this.$el.html(this.template);
         var nowDate = new Date();
@@ -517,7 +523,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
 
         return this;
     }
-
 });
 
 
@@ -961,5 +966,19 @@ App.Views.CommentsList = Backbone.View.extend({
 
             $('#text').val('');
         }
+    }
+});
+
+App.Views.EmptyView = Backbone.View.extend({
+    template: _.template($("#empty-list-template").html()),
+    el: '#main-content',
+
+    initialize: function (options) {
+        this.options = options;
+    },
+
+    render: function () {
+        this.$el.html(this.template(this.options));
+        return this;
     }
 });
