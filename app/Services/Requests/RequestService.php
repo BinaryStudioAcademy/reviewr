@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Event;
 use App\Events\UserWasAccepted;
 use App\Events\UserWasDeclined;
 use App\Events\OfferWasSent;
+use App\Events\ReviewDateWasAssigned;
+use App\Events\ReviewDateWasChanged;
+use App\Events\ReviewDateWasCleared;
 
 class RequestService implements RequestServiceInterface
 {
@@ -85,7 +88,31 @@ class RequestService implements RequestServiceInterface
 
     public function updateRequest($id, $data)
     {
-        $request = $this->requestRepository->update($data, $id);
+        $request = $this->requestRepository->find($id);
+        $oldRequestDate = $request->date_review;
+
+        $savedRequest = $this->requestRepository->update($data, $id);
+
+        $acceptedUsers = $this->usersForRequest($id);
+
+        if ($oldRequestDate != null && $savedRequest->date == null) {
+            Event::fire(new ReviewDateWasCleared(
+                $savedRequest,
+                $acceptedUsers
+            ));
+        } elseif ($oldRequestDate == null && $savedRequest->date != null) {
+            Event::fire(new ReviewDateWasAssigned(
+                $savedRequest,
+                $acceptedUsers
+            ));
+        } elseif ($savedRequest->date != $oldRequestDate) {
+            Event::fire(new ReviewDateWasChanged(
+                $savedRequest,
+                $oldRequestDate,
+                $acceptedUsers
+            ));
+        }
+
         return $request;
     }
 
@@ -164,7 +191,7 @@ class RequestService implements RequestServiceInterface
 
         // Sending notification
         $author = $this->userRepository->find($request->user_id);
-        \Event::fire(new OfferWasSent($request, $user, $author));
+        Event::fire(new OfferWasSent($request, $user, $author));
 
         return $request;
     }
@@ -189,12 +216,10 @@ class RequestService implements RequestServiceInterface
     }
 
     public function usersForRequest($request_id) {
-
-        $request = $this->getOneRequestById($request_id);
-        $users = $request->users()->wherePivot('isAccepted', 1)->get();
-        return $users;
+        return $this->requestRepository->getAcceptedUsersForRequest($request_id);
     }
- 
+
+
     public function searchTagsByKeyWord($keyword)
     {
         return $this->tagRepository->searchByKeyWord($keyword);

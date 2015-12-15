@@ -5,6 +5,8 @@ namespace App\Events;
 use App\ReviewRequest;
 use Illuminate\Queue\SerializesModels;
 use App\User;
+use App\Events\Contracts\Event;
+
 
 class UserWasAccepted extends Event
 {

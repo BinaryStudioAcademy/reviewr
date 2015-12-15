@@ -22,6 +22,15 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserWasDeclined' => [
             'App\Listeners\DeliveryHandlers\HttpHandlers\UserDecliningNotification',
         ],
+        'App\Events\ReviewDateWasAssigned' => [
+            'App\Listeners\DeliveryHandlers\HttpHandlers\ReviewDateAssigningNotification',
+        ],
+        'App\Events\ReviewDateWasChanged' => [
+            'App\Listeners\DeliveryHandlers\HttpHandlers\ReviewDateChangingNotification',
+        ],
+        'App\Events\ReviewDateWasCleared' => [
+            'App\Listeners\DeliveryHandlers\HttpHandlers\ReviewDateClearingNotification',
+        ],
     ];
 
     /**

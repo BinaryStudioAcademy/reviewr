@@ -4,10 +4,10 @@ namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
 use App\Events\UserWasDeclined;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Listeners\Contracts\HttpDeliveryHandler;
+use App\Listeners\Contracts\ReviewDateNotificationHandler;
 use Mail;
 
-class UserDecliningNotification extends HttpDeliveryHandler implements ShouldQueue
+class UserDecliningNotification extends ReviewDateNotificationHandler implements ShouldQueue
 {
     /**
      * Handle the event.
