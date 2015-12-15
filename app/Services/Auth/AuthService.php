@@ -42,21 +42,6 @@ class AuthService implements AuthServiceInterface
         $this->guard = $guard;
     }
 
-    /*
-     * Only local logout
-     */
-    public function logout()
-    {
-        try {
-            $this->guard->logout();
-        } catch(\Exception $e) {
-            $errorMessage = $e->getMessage()
-                . ' Logout error. User is not authorized.';
-            Log::error($errorMessage);
-            throw new AuthException($errorMessage, null, $e);
-        }
-    }
-
     public function getUser()
     {
         if ($this->guard->check()) {
@@ -171,5 +156,20 @@ class AuthService implements AuthServiceInterface
         }
 
         return $users;
+    }
+
+    /*
+     * Only local logout
+     */
+    public function logout()
+    {
+        try {
+            $this->guard->logout();
+        } catch(\Exception $e) {
+            $errorMessage = $e->getMessage()
+                . ' Logout error. User is not authorized.';
+            Log::error($errorMessage);
+            throw new AuthException($errorMessage, null, $e);
+        }
     }
 }

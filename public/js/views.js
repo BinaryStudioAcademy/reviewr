@@ -410,6 +410,7 @@ App.Views.RequestDetails = Backbone.View.extend({
                 display: false,
                 clear: 'Clear the date',
                 autoclose: true,
+                placement: 'right',
                 success: function (response, newValue) {
                     var globalDateTime = newValue.getFullYear()
                         + '-'
