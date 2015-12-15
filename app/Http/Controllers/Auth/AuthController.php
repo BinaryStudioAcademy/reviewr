@@ -15,6 +15,8 @@ use App\Services\Auth\Contracts\AuthServiceInterface;
 use App\Services\Auth\Exceptions\TokenInCookieExpiredException;
 use App\Services\Auth\Exceptions\AuthException;
 use Illuminate\Support\Facades\Session;
+use App\Services\RemoteDataGrabber\Contracts\DataGrabberInterface;
+use App\Services\RemoteDataGrabber\Exceptions\RemoteDataGrabberException;
 
 class AuthController extends Controller
 {
@@ -94,13 +96,40 @@ class AuthController extends Controller
         return Redirect::intended();
     }
 
-    public function getLogout(Request $request)
+    public function getLogout(
+        Request $request,
+        DataGrabberInterface $dataGrabber
+    )
     {
-        Session::flush();
         $cookie = $request->cookie('x-access-token');
-        setcookie('x-access-token', '', -1, '/');
 
-        return Redirect::to(url(env('AUTH_LOGOUT')))
-            ->withCookie('x-access-token', $cookie);
+        try {
+            $this->authService->logout();
+
+            $logoutResult = (array)$dataGrabber->getFromJson(
+                url(env('AUTH_LOGOUT')),
+                [CURLOPT_COOKIE => 'x-access-token=' . $cookie]
+            );
+        } catch (AuthException $e) {
+            $message = 'Internal logout error: ' . $e->getMessage();
+
+            return Response::json([
+                'error' => [$message]
+            ], 500);
+        } catch (RemoteDataGrabberException $e) {
+            $message = 'Remote logout error: ' . $e->getMessage();
+
+            return Response::json([
+                'error' => [$message]
+            ], 500);
+        }
+
+        setcookie('x-access-token', '', -1, '/');
+        Session::flush(); // I don't know if this is neccesary
+
+        return Redirect::to(url($this->redirectAfterLogout));
+
+        // Use in case of ajax query and redirecting from the front-end
+        //return Response::json($logoutResult, 200, null, JSON_NUMERIC_CHECK);
     }
 }
