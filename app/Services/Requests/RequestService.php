@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Event;
 use App\Events\UserWasAccepted;
 use App\Events\UserWasDeclined;
 use App\Events\OfferWasSent;
+use App\Events\ReviewDateWasAssigned;
+use App\Events\ReviewDateWasChanged;
+use App\Events\ReviewDateWasCleared;
 
 class RequestService implements RequestServiceInterface
 {
@@ -85,8 +88,35 @@ class RequestService implements RequestServiceInterface
 
     public function updateRequest($id, $data)
     {
-        $request = $this->requestRepository->update($data, $id);
-        return $request;
+        $request = $this->requestRepository->find($id);
+        $savedRequest = $this->requestRepository->update($data, $id);
+        $acceptedUsers = $this->getUsersForRequest($id)->toArray();
+
+        if(empty($acceptedUsers)) {
+            return $savedRequest;
+        }
+
+        $oldRequestDate = $request->date_review;
+
+        if (!is_null($oldRequestDate) && is_null($savedRequest->date_review)) {
+            Event::fire(new ReviewDateWasCleared(
+                $savedRequest,
+                $acceptedUsers
+            ));
+        } elseif (is_null($oldRequestDate) && !is_null($savedRequest->date_review)) {
+            Event::fire(new ReviewDateWasAssigned(
+                $savedRequest,
+                $acceptedUsers
+            ));
+        } elseif ($savedRequest->date_review != $oldRequestDate) {
+            Event::fire(new ReviewDateWasChanged(
+                $savedRequest,
+                $oldRequestDate,
+                $acceptedUsers
+            ));
+        }
+
+        return $savedRequest;
     }
 
     public function getSpecificRequestOffers($id)
@@ -164,7 +194,7 @@ class RequestService implements RequestServiceInterface
 
         // Sending notification
         $author = $this->userRepository->find($request->user_id);
-        \Event::fire(new OfferWasSent($request, $user, $author));
+        Event::fire(new OfferWasSent($request, $user, $author));
 
         return $request;
     }
@@ -188,13 +218,12 @@ class RequestService implements RequestServiceInterface
         return $reviewRequest;
     }
 
-    public function usersForRequest($request_id) {
-
+    public function getUsersForRequest($request_id) {
         $request = $this->getOneRequestById($request_id);
-        $users = $request->users()->wherePivot('isAccepted', 1)->get();
-        return $users;
+        return $request->users()->wherePivot('isAccepted', 1)->get();
     }
- 
+
+
     public function searchTagsByKeyWord($keyword)
     {
         return $this->tagRepository->searchByKeyWord($keyword);
