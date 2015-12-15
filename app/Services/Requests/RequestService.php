@@ -89,9 +89,14 @@ class RequestService implements RequestServiceInterface
     public function updateRequest($id, $data)
     {
         $request = $this->requestRepository->find($id);
-        $oldRequestDate = $request->date_review;
         $savedRequest = $this->requestRepository->update($data, $id);
         $acceptedUsers = $this->getUsersForRequest($id)->toArray();
+
+        if(empty($acceptedUsers)) {
+            return $savedRequest;
+        }
+
+        $oldRequestDate = $request->date_review;
 
         if (!is_null($oldRequestDate) && is_null($savedRequest->date_review)) {
             Event::fire(new ReviewDateWasCleared(
