@@ -12,16 +12,19 @@ class ReviewDateClearingNotification extends ReviewDateNotificationHandler imple
      *
      * @return string
      */
-    public function getMessageText(...$arguments)
+    protected function getMessageText(...$arguments)
     {
         $reviewRequest = $arguments[0];
         $text = sprintf(
-            "Review request %s date postponed for undetermined time.",
-            [
-                $reviewRequest->title,
-            ]
+            "Review %s was postponed for undetermined time.",
+            $reviewRequest->title
         );
 
         return $text;
+    }
+
+    protected function getTitle()
+    {
+        return 'Review was postponed';
     }
 }

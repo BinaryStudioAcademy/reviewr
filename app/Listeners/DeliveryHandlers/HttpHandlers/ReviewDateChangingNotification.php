@@ -2,17 +2,19 @@
 
 namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
+use App\Events\ReviewDateWasChanged;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Listeners\Contracts\ReviewDateNotificationHandler;
 
 class ReviewDateChangingNotification extends ReviewDateNotificationHandler implements ShouldQueue
 {
-    public function handle(ReviewDateWasAssigned $event)
+    public function handle(ReviewDateWasChanged $event)
     {
+        $reviewRequest = $event->request;
         $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $reviewRequest->id);
         $text = $this->getMessageText(
-            $event->request,
+            $reviewRequest,
             $event->oldReviewDate
         );
 
@@ -24,7 +26,7 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
         );
 
         $this->delivery->send([
-            'title' => 'New review offer',
+            'title' => $this->getTitle(),
             'text' => $text,
             'url'   => $url,
             'users'=> $acceptedUsersIds,
@@ -36,21 +38,24 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
      *
      * @return string
      */
-    public function getMessageText(...$arguments)
+    protected function getMessageText(...$arguments)
     {
         $reviewRequest = $arguments[0];
         $oldReviewDate = $arguments[1];
 
         $text = sprintf(
-            "Review request %s date changed from %s to %s",
-            [
-                $reviewRequest->title,
-                $oldReviewDate,
-                $reviewRequest->date
-            ]
+            "Review %s date was changed from %s to %s",
+            $reviewRequest->title,
+            $oldReviewDate->toDateTimeString(),
+            $reviewRequest->date_review->toDateTimeString()
         );
 
         return $text;
+    }
+
+    protected function getTitle()
+    {
+        return 'Review date was changed';
     }
 }
 

@@ -90,22 +90,20 @@ class RequestService implements RequestServiceInterface
     {
         $request = $this->requestRepository->find($id);
         $oldRequestDate = $request->date_review;
-
         $savedRequest = $this->requestRepository->update($data, $id);
+        $acceptedUsers = $this->getUsersForRequest($id)->toArray();
 
-        $acceptedUsers = $this->usersForRequest($id);
-
-        if ($oldRequestDate != null && $savedRequest->date == null) {
+        if (!is_null($oldRequestDate) && is_null($savedRequest->date_review)) {
             Event::fire(new ReviewDateWasCleared(
                 $savedRequest,
                 $acceptedUsers
             ));
-        } elseif ($oldRequestDate == null && $savedRequest->date != null) {
+        } elseif (is_null($oldRequestDate) && !is_null($savedRequest->date_review)) {
             Event::fire(new ReviewDateWasAssigned(
                 $savedRequest,
                 $acceptedUsers
             ));
-        } elseif ($savedRequest->date != $oldRequestDate) {
+        } elseif ($savedRequest->date_review != $oldRequestDate) {
             Event::fire(new ReviewDateWasChanged(
                 $savedRequest,
                 $oldRequestDate,
@@ -215,8 +213,9 @@ class RequestService implements RequestServiceInterface
         return $reviewRequest;
     }
 
-    public function usersForRequest($request_id) {
-        return $this->requestRepository->getAcceptedUsersForRequest($request_id);
+    public function getUsersForRequest($request_id) {
+        $request = $this->getOneRequestById($request_id);
+        return $request->users()->wherePivot('isAccepted', 1)->get();
     }
 
 

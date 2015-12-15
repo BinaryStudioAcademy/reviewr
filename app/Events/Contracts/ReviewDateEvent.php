@@ -3,6 +3,7 @@
 namespace App\Events\Contracts;
 
 use App\ReviewRequest;
+use Illuminate\Queue\SerializesModels;
 
 abstract class ReviewDateEvent extends Event
 {

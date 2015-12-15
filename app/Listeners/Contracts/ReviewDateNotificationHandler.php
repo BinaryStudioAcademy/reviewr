@@ -2,6 +2,7 @@
 namespace App\Listeners\Contracts;
 
 use App\Services\Notifications\NotificationService;
+use App\Events\Contracts\ReviewDateEvent;
 
 
 abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
@@ -20,7 +21,7 @@ abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
      * @param  ReviewDateWasAssigned  $event
      * @return void
      */
-    public function handle(ReviewDateWasAssigned $event)
+    public function handle(ReviewDateEvent $event)
     {
         $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $event->request->id);
@@ -34,12 +35,14 @@ abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
         );
 
         $this->delivery->send([
-            'title' => 'New review offer',
+            'title' => $this->getTitle(),
             'text'  => $text,
             'url'   => $url,
             'users' => $acceptedUsersIds,
         ]);
     }
 
-    abstract function getMessageText(...$arguments);
+    abstract protected function getMessageText(...$arguments);
+
+    abstract protected function getTitle();
 }

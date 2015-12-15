@@ -12,17 +12,20 @@ class ReviewDateAssigningNotification extends ReviewDateNotificationHandler impl
      *
      * @return string
      */
-    public function getMessageText(...$arguments)
+    protected function getMessageText(...$arguments)
     {
         $reviewRequest = $arguments[0];
         $text = sprintf(
-            "Review request %s date assigned on %s",
-            [
-                $reviewRequest->title,
-                $reviewRequest->date
-            ]
+            "Review %s date was assigned on %s",
+            $reviewRequest->title,
+            $reviewRequest->date_review->toDateTimeString()
         );
 
         return $text;
+    }
+
+    protected function getTitle()
+    {
+        return 'Review date was assigned';
     }
 }

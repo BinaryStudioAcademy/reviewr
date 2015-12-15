@@ -62,10 +62,4 @@ class UserRepository extends PrettusRepository implements UserRepositoryInterfac
 
         return $user;
     }
-
-    public function getAcceptedUsersForRequest($request_id)
-    {
-        $request = $this->getOneRequestById($request_id);
-        return $request->users()->wherePivot('isAccepted', 1)->get();
-    }
 }
