@@ -46,14 +46,14 @@ App.Router = Backbone.Router.extend({
     showMyRequest: function () {
         new App.Views.RequestsList({
             collection: myRequests,
-            messageForEmptyView: "You haven't created any request yet"
+            messageForEmptyView: "You haven't created any requests yet"
         }).render();
     },
 
     offeredRequests: function () {
         new App.Views.RequestsList({
             collection: offeredRequests,
-            messageForEmptyView: "You haven't offered any request review yet"
+            messageForEmptyView: "You haven't offered any requests review yet"
         }).render();
     },
 
