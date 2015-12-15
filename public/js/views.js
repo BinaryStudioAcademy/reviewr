@@ -202,14 +202,18 @@ App.Views.Request = Backbone.View.extend({
 App.Views.RequestsList = Backbone.View.extend({
     collection: requests,
     el: '#main-content',
-    initialize: function () {
+    messageForEmptyView: 'There is no requests yet',
+    initialize: function (options) {
+        if (options && options.messageForEmptyView) {
+            this.messageForEmptyView = options.messageForEmptyView;
+        }
     },
     render: function () {
         this.stopListening();
         this.$el.empty();
         $('#spinner').show();
 
-        var that = this;
+        var self = this;
         var offers;
         reviewers.url = App.getPrefix() + '/myrequests';
         reviewers.fetch({
@@ -223,14 +227,13 @@ App.Views.RequestsList = Backbone.View.extend({
             success: function (requests, res, req) {
                 if (!requests.length) {
                     var emptyView = new App.Views.EmptyView({
-                        message: 'Please, create your very first request.'
+                        message: self.messageForEmptyView
                     });
                     emptyView.render();
-                    console.log('Render empty view here!!');
                 } else {
                     _.each(requests.models, function (rq) {
                         rq.attachFormattedDate(['date_review', 'created_at']);
-                        that.renderRequest(rq, offers);
+                        self.renderRequest(rq, offers);
                     });
                 }
                 $('#spinner').hide();
