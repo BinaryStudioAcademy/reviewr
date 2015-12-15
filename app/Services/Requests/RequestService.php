@@ -116,7 +116,7 @@ class RequestService implements RequestServiceInterface
             ));
         }
 
-        return $request;
+        return $savedRequest;
     }
 
     public function getSpecificRequestOffers($id)

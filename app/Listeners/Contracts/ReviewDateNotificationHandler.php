@@ -25,7 +25,7 @@ abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
     {
         $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $event->request->id);
-        $text = $this->getMessageText($event->request);
+        $text = $this->getMessageText([$event->request]);
 
         $acceptedUsersIds = array_map(
             function ($user) {
@@ -42,7 +42,19 @@ abstract class ReviewDateNotificationHandler extends HttpDeliveryHandler
         ]);
     }
 
-    abstract protected function getMessageText(...$arguments);
+    /**
+     * Returns the message for event.
+     *
+     * @var array $arguments Can contain keys request and oldDate
+     *
+     * @return string
+     */
+    abstract protected function getMessageText(array $arguments);
 
+    /**
+     * Returns the notification title
+     *
+     * @return string
+     */
     abstract protected function getTitle();
 }

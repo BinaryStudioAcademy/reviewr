@@ -16,7 +16,7 @@ class ReviewDateWasChanged extends ReviewDateEvent
      */
     public function __construct(
         ReviewRequest $request,
-        $oldReviewDate,
+        \DateTime $oldReviewDate,
         array $acceptedUsers
     ) {
         parent::__construct($request, $acceptedUsers);

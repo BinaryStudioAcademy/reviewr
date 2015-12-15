@@ -3,6 +3,7 @@
 namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
 use App\Events\ReviewDateWasChanged;
+use App\Listeners\Exceptions\NotificationHandlerException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Listeners\Contracts\ReviewDateNotificationHandler;
 
@@ -13,10 +14,10 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
         $reviewRequest = $event->request;
         $prefix = env('APP_PREFIX', '');
         $url = url($prefix . '#!/request/' . $reviewRequest->id);
-        $text = $this->getMessageText(
+        $text = $this->getMessageText([
             $reviewRequest,
             $event->oldReviewDate
-        );
+        ]);
 
         $acceptedUsersIds = array_map(
             function ($user) {
@@ -34,14 +35,22 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
     }
 
     /**
-     * Create the event listener.
+     * Returns the message for event.
+     *
+     * @var array $arguments Contains keys request and oldDate
      *
      * @return string
      */
-    protected function getMessageText(...$arguments)
+    protected function getMessageText(array $arguments)
     {
-        $reviewRequest = $arguments[0];
-        $oldReviewDate = $arguments[1];
+        if (!isset($arguments['request']) || !isset($arguments['oldDate'])) {
+            throw new NotificationHandlerException(
+                "Necessary argument in missing."
+            );
+        }
+
+        $reviewRequest = $arguments['request'];
+        $oldReviewDate = $arguments['oldDate'];
 
         $text = sprintf(
             "Review %s date was changed from %s to %s",
@@ -53,6 +62,11 @@ class ReviewDateChangingNotification extends ReviewDateNotificationHandler imple
         return $text;
     }
 
+    /**
+     * Returns the notification title
+     *
+     * @return string
+     */
     protected function getTitle()
     {
         return 'Review date was changed';

@@ -8,13 +8,19 @@ use App\Listeners\Contracts\ReviewDateNotificationHandler;
 class ReviewDateAssigningNotification extends ReviewDateNotificationHandler implements ShouldQueue
 {
     /**
-     * Create the event listener.
+     * Returns the message for event.
      *
-     * @return string
+     * @var array $arguments Contains key request
      */
-    protected function getMessageText(...$arguments)
+    protected function getMessageText(array $arguments)
     {
-        $reviewRequest = $arguments[0];
+        if (!isset($arguments['request'])) {
+            throw new NotificationHandlerException(
+                "Necessary argument in missing."
+            );
+        }
+
+        $reviewRequest = $arguments['request'];
         $text = sprintf(
             "Review %s date was assigned on %s",
             $reviewRequest->title,
@@ -24,6 +30,11 @@ class ReviewDateAssigningNotification extends ReviewDateNotificationHandler impl
         return $text;
     }
 
+    /**
+     * Returns the notification title
+     *
+     * @return string
+     */
     protected function getTitle()
     {
         return 'Review date was assigned';
