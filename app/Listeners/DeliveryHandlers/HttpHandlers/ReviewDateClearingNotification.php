@@ -4,6 +4,7 @@ namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Listeners\Contracts\ReviewDateNotificationHandler;
+use App\Listeners\Exceptions\NotificationHandlerException;
 
 class ReviewDateClearingNotification extends ReviewDateNotificationHandler implements ShouldQueue
 {

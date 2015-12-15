@@ -3,12 +3,13 @@
 namespace App\Listeners\DeliveryHandlers\HttpHandlers;
 
 use App\Events\UserWasAccepted;
+use App\Listeners\Contracts\HttpDeliveryHandler;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Mail;
 use App\Listeners\Contracts\ReviewDateNotificationHandler;
 
 
-class UserAcceptingNotification extends ReviewDateNotificationHandler implements ShouldQueue
+class UserAcceptingNotification extends HttpDeliveryHandler implements ShouldQueue
 {
     /**
      * Handle the event.
