@@ -102,6 +102,7 @@ class AuthController extends Controller
     )
     {
         $cookie = $request->cookie('x-access-token');
+        $redirect = Redirect::to(url($this->redirectAfterLogout));
 
         try {
             $this->authService->logout();
@@ -111,23 +112,21 @@ class AuthController extends Controller
                 [CURLOPT_COOKIE => 'x-access-token=' . $cookie]
             );
         } catch (AuthException $e) {
-            return Redirect::to(url(env('AUTH_REDIRECT')))
+            $redirect =  Redirect::to(url(env('AUTH_LOGOUT')))
                 ->withCookie(
-                    'referer',
+                    'x-access-token',
                     url(env('APP_PREFIX', '') . '/')
                 );
         } catch (RemoteDataGrabberException $e) {
-            return Redirect::to(url(env('AUTH_REDIRECT')))
+            $redirect = Redirect::to(url(env('AUTH_LOGOUT')))
                 ->withCookie(
-                    'referer',
+                    'x-access-token',
                     url(env('APP_PREFIX', '') . '/')
                 );
         }
 
-        setcookie('x-access-token', '', -1, '/');
         Session::flush(); // I don't know if this is neccesary
-
-        return Redirect::to(url($this->redirectAfterLogout));
+        return $redirect;
 
         // Use in case of ajax query and redirecting from the front-end
         //return Response::json($logoutResult, 200, null, JSON_NUMERIC_CHECK);
