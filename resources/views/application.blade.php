@@ -669,6 +669,13 @@
     </div>
 </script>
 
+<script type="text/template" id="empty-list-template">
+    <div class="placeholder">
+        {{--<h1>No items</h1>--}}
+        <div><%- message %></div>
+    </div>
+</script>
+
 <!-- VENDOR SCRIPTS -->
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/jquery/jquery.js')}}"></script>
 <script src="{{asset(env('APP_PREFIX', '') .'/js/vendor/bootstrap/bootstrap.js')}}"></script>

@@ -44,11 +44,17 @@ App.Router = Backbone.Router.extend({
     },
 
     showMyRequest: function () {
-        new App.Views.RequestsList({collection: myRequests}).render();
+        new App.Views.RequestsList({
+            collection: myRequests,
+            messageForEmptyView: "You haven't created any request yet"
+        }).render();
     },
 
     offeredRequests: function () {
-        new App.Views.RequestsList({collection: offeredRequests}).render();
+        new App.Views.RequestsList({
+            collection: offeredRequests,
+            messageForEmptyView: "You haven't offered any request review yet"
+        }).render();
     },
 
     popularRequests: function () {
@@ -58,7 +64,9 @@ App.Router = Backbone.Router.extend({
 
     highestRatedRequests: function () {
         requests.url = App.getPrefix() + "/reviewrequest/high_rate";
-        new App.Views.RequestsList().render();
+        new App.Views.RequestsList({
+            messageForEmptyView: "There is nothing to rate yet"
+        }).render();
     },
 
     sortRequestsByGroups: function (group_id) {
