@@ -111,17 +111,17 @@ class AuthController extends Controller
                 [CURLOPT_COOKIE => 'x-access-token=' . $cookie]
             );
         } catch (AuthException $e) {
-            $message = 'Internal logout error: ' . $e->getMessage();
-
-            return Response::json([
-                'error' => [$message]
-            ], 500);
+            return Redirect::to(url(env('AUTH_REDIRECT')))
+                ->withCookie(
+                    'referer',
+                    url(env('APP_PREFIX', '') . '/')
+                );
         } catch (RemoteDataGrabberException $e) {
-            $message = 'Remote logout error: ' . $e->getMessage();
-
-            return Response::json([
-                'error' => [$message]
-            ], 500);
+            return Redirect::to(url(env('AUTH_REDIRECT')))
+                ->withCookie(
+                    'referer',
+                    url(env('APP_PREFIX', '') . '/')
+                );
         }
 
         setcookie('x-access-token', '', -1, '/');
