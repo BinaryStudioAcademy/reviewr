@@ -15,8 +15,26 @@ App.Router = Backbone.Router.extend({
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest",
-        "!/notifications": "notifications",
         "!/logout": "logout"
+    },
+
+    execute: function(callback, args, name) {
+        if (!App.CurrentUser) {
+            var currentUser = new App.Models.CurrentUser();
+            var urlToReturn = Backbone.history.fragment;
+
+            $.when(currentUser.getFromServer(urlToReturn)).done(function (user) {
+                App.CurrentUser = user;
+
+                if (!Backbone.history.navigate(urlToReturn, { trigger: true })) {
+                    Backbone.history.loadUrl(urlToReturn);
+                }
+            });
+
+            return false;
+        } else {
+            callback.apply(this, args);
+        }
     },
 
     home: function () {
@@ -93,16 +111,60 @@ App.Router = Backbone.Router.extend({
         });
     },
 
-    notifications: function () {
-        new App.Views.NotificationsList().render();
-    },
-    
+    // For logout throw the local link
     logout: function () {
-        var logoutUrl = 'http://' + window.location.hostname + '/' + App.getSitePrefix() + '/auth/logout';
+        var logoutUrl = 'http://'
+            + window.location.hostname
+            + '/' + App.getSitePrefix()
+            + '/users/logout';
+
         window.location.assign(logoutUrl);
     }
 });
 
-var router = new App.Router();
+// Overriding for using token authorization
+var sync = Backbone.sync;
+Backbone.sync = function (method, model, options) {
+    var error = function () {};
+    var success = function () {};
 
+    if (options.error) {
+        error = options.error;
+    }
+
+    options.error = function (xhr, textStatus, errorThrown) {
+        // If user is not authorized
+        if (xhr.status === 401 ) {
+            var urlToReturn = Backbone.history.fragment;
+            // Fetch user from server
+            var currentUser = new App.Models.CurrentUser();
+
+            $.when(currentUser.getFromServer(urlToReturn)).done(function (user) {
+                App.CurrentUser = user;
+
+                if (!Backbone.history.navigate(urlToReturn, { trigger: true })) {
+                    Backbone.history.loadUrl(urlToReturn);
+                }
+            });
+        } else if (xhr.status === 303 ) {
+            location.reload();
+        } else if (xhr.status === 302 ) {
+            document.location = xhr.responseJSON.redirectTo;
+        } else {
+            error(xhr, textStatus, errorThrown);
+        }
+    };
+
+    if (options.success) {
+        success = options.success;
+    }
+
+    options.success = function (resp) {
+        success(resp);
+    };
+
+    return sync(method, model, options);
+};
+
+var router = new App.Router();
 Backbone.history.start();

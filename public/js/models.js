@@ -67,6 +67,69 @@ App.ModelMixins = {
 
             return date.toLocaleString("en-US", options);
         }
+    },
+
+    DefererAPI: {
+        deferOperation: function (operation, item, attrs, customOptions) {
+            var defer = $.Deferred();
+
+            var options = {
+                success: function (data, response, options) {
+                    defer.resolve(data);
+                },
+                error: function (model, xhr, options) {
+                    if (xhr.statusCode('500')) {
+                        var error = JSON.parse(xhr.responseText);
+                        var errorMessage = error.description ||
+                            "Sever error: cannot fetch the entity data";
+                        defer.reject({
+                            error: errorMessage
+                        });
+                    } else {
+                        var errors = JSON.parse(xhr.responseText);
+                        defer.reject(errors);
+                    }
+                }
+            };
+
+            // defining a defer object for custom success and error callbacks
+            if (customOptions) {
+                var func;
+                if (customOptions.success) {
+                    func = customOptions.success;
+
+                    options.success = function (data, response, options) {
+                        this.defer = defer;
+                        func.apply(this, [data, response, options]);
+                    };
+
+                    delete customOptions.success;
+                }
+
+                if (customOptions.error) {
+                    func = customOptions.error;
+
+                    options.error = function (data, response, options) {
+                        this.defer = defer;
+                        func.apply(this, [data, response, options]);
+                    };
+
+                    delete customOptions.error;
+                }
+
+                options =_.extend(options, customOptions);
+            }
+
+            attrs = attrs || [];
+
+            if (operation == 'save') {
+                item[operation](attrs, options);
+            } else {
+                item[operation](options);
+            }
+
+            return defer.promise();
+        }
     }
 };
 
@@ -89,6 +152,40 @@ App.Models.User = Backbone.Model.extend({
 });
 
 var user = new App.Models.User();
+
+// Current user
+App.Models.CurrentUser = App.Models.User.extend(
+    _.extend({}, App.ModelMixins.DefererAPI, {
+        getFromServer: function (nextUrl) {
+            var self = this;
+
+            if (nextUrl) {
+                this.redirect = nextUrl;
+            }
+
+            // Returns promise
+            return this.deferOperation('fetch', self, [], {
+                wait: true,
+                async: false
+            });
+        },
+
+        url : function(){
+            var url = this.urlRoot;
+
+            if(this.redirect) {
+                url = url + "/?redirect=" + encodeURIComponent(this.redirect);
+            }
+
+            return url;
+        },
+
+        initialize: function (options) {
+            this.options = options;
+            this.urlRoot = App.prefix + '/users/login';
+        }
+    })
+);
 
 /*
  *---------------------------------------------------
@@ -165,21 +262,6 @@ App.Models.Tag = Backbone.Model.extend({
 });
 
 var tag = new App.Models.Tag();
-
-/*
- *---------------------------------------------------
- *  Tag Model
- *---------------------------------------------------
- */
-App.Models.Notification = Backbone.Model.extend({
-    urlRoot: App.getPrefix() + "/notification",
-    defaults: {
-        id: null,
-        title: ''
-    }
-});
-
-var notification = new App.Models.Notification();
 
 /*
  *---------------------------------------------------

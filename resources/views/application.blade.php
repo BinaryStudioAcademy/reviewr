@@ -32,21 +32,13 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
-
 <body>
 
 <div id="header"></div>
 
 <script>
-    var authUserId = "{{ Auth::user()->id }}";
-    var authUserBinaryId = "{{ Auth::user()->binary_id }}";
     window.APP_PREFIX = "{{ env('APP_PREFIX', '') }}";
-</script>
-
-<script>
-    var userID = "{{ Auth::user()->id }}";
 </script>
 
 <!-- MAIN CONTAINER -->
@@ -75,6 +67,8 @@
                                 <li><a href="#!/request/create">Create Review</a></li>
                                 <li><a href="#!/requests/my">My Review Request</a></li>
                                 <li><a href="#!/requests/offered">My Offers</a></li>
+                                {{--<li class="divider"></li>--}}
+                                {{--<li><a href="#!/logout">LogOut</a></li>--}}
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -200,7 +194,7 @@
             </button>
             <% } %>
 
-            <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
+            <% if (!status && offer.user.id != App.CurrentUser.get('id')) { %>
             <button class="request-offer-btn btn btn-warning">
                 <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
                 Join
@@ -208,10 +202,10 @@
             <% } %>
 
             <button class="request-details-btn btn btn-success">Details</button>
-            <% if (offer.user.id == {{ Auth::user()->id }}) { %>
+            <% if (offer.user.id == App.CurrentUser.get('id')) { %>
             <button class="request-delete-btn btn btn-danger">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {{--Delete--}}
+                Delete
             </button>
             <% } %>
         </div>
@@ -331,7 +325,7 @@
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
-                                <% } else if (user_id == authUserId) { %>
+                                <% } else if (user_id == App.CurrentUser.get('id')) { %>
                                 <b>Date of review: </b><a href="#" id="date_review">Assign</a>
                                 <% } %>
                             </span>
@@ -397,7 +391,7 @@
             <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail big">
             <p class="user-inf"><b><%- offer.first_name + ' ' + offer.last_name %></b></p>
         </div>
-        <% if (author_id == userID) { %>
+        <% if (author_id == App.CurrentUser.get('id')) { %>
         <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">
             Decline
@@ -660,9 +654,6 @@
     <div class="search-results">Search-Results</div>
 </script>
 
-<script type="text/template" id="notification-template">
-     <%- title %>
-</script>
 
 <script type="text/template" id="notifications-list-template">
     <h1>Your notifications</h1>

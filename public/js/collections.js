@@ -96,20 +96,6 @@ var tags = new App.Collections.Tags();
 
 /*
  *---------------------------------------------------
- *  Notifications Collection
- *---------------------------------------------------
- */
-
-App.Collections.Notifications = Backbone.Collection.extend({
-    url: App.getPrefix() + '/unreadnotifications',
-    model: App.Models.Notification
-});
-
-var notifications = new App.Collections.Notifications();
-
-
-/*
- *---------------------------------------------------
  *  Tags Collection For Specific Review Request
  *---------------------------------------------------
  */

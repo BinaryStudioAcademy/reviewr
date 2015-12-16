@@ -5,6 +5,7 @@
  */
 App.Views.App = Backbone.View.extend({
     initialize: function () {
+        //
     }
 });
 
@@ -132,7 +133,7 @@ App.Views.Request = Backbone.View.extend({
     createOffers: function () {
         reviewers.url = App.getPrefix()
             + '/user/'
-            + authUserBinaryId
+            + App.CurrentUser.get('binary_id')
             + '/offeron/'
             + this.model.get('id');
         reviewers.fetch({wait: true});
@@ -309,12 +310,12 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     checkVote: function () {
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), authUserId);
+        return _.contains(_.pluck(this.model.get('votes'), 'id'), App.CurrentUser.get('id'));
     },
 
     isAccepted: function () {
         // Find Object with myOffer info
-        var myOffer = _.findWhere(this.model.get('users'), {id: authUserId});
+        var myOffer = _.findWhere(this.model.get('users'), {id: App.CurrentUser.get('id')});
         if (myOffer) {
             // I am accepted or no?
             return (myOffer.pivot.isAccepted == 1);
@@ -326,7 +327,7 @@ App.Views.RequestDetails = Backbone.View.extend({
 
     isAuthor: function (userId) {
         // If request user id == logged user
-        return (userId == authUserId);
+        return (userId == App.CurrentUser.get('id'));
     },
 
     render: function () {
@@ -389,7 +390,7 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // X-Editable field
         // Check review request belong to auth user
-        if (this.model.get('user_id') == authUserId) {
+        if (this.model.get('user_id') == App.CurrentUser.get('id')) {
             $('#title').editable({
                 mode: 'inline',
                 type: 'text',
@@ -513,7 +514,9 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         });
 
         tags.fetch({
-            wait: true, async: true, success: function (requests, res, req) {
+            wait: true,
+            async: true,
+            success: function (requests, res, req) {
                 res = _.pluck(res, 'title');
                 $(".tags-input").select2({
                     tags: true,
@@ -779,65 +782,6 @@ App.Views.ConfirmModal = Backbone.View.extend({
 
 /*
  *---------------------------------------------------
- *  Notification View
- *---------------------------------------------------
- */
-App.Views.Notification = Backbone.View.extend({
-    model: notification,
-    tagName: 'div',
-    className: 'alert alert-info',
-    initialize: function () {
-        this.template = _.template($('#notification-template').html());
-    },
-    render: function () {
-        this.$el.html(this.template(this.model));
-        return this;
-    }
-});
-
-/*
- *---------------------------------------------------
- *  Notification List View
- *---------------------------------------------------
- */
-App.Views.NotificationsList = Backbone.View.extend({
-    collection: notifications,
-    el: "#main-content",
-    template: _.template($("#notifications-list-template").html()),
-    initialize: function () {
-        this.collection.on('remove', this.render, this);
-    },
-
-    render: function () {
-        this.$el.empty();
-        $('#spinner').show();
-        var that = this;
-
-        this.collection.fetch({
-            success: function (notifications, res, notification) {
-                if (!notifications.length) {
-                    console.log('Render No-Tags view here');
-                } else {
-                    that.$el.html(that.template());
-                    _.each(notifications.models, function (notification) {
-                        that.renderNotifications(notification);
-                    });
-                }
-                $('#spinner').hide();
-            },
-            reset: true
-        });
-    },
-
-
-    renderNotifications: function (notification) {
-        var notificationView = new App.Views.Notification({model: notification.toJSON()});
-        this.$el.find('.notifications').append(notificationView.render().$el);
-    }
-});
-
-/*
- *---------------------------------------------------
  *  Comment View
  *---------------------------------------------------
  */
@@ -878,8 +822,7 @@ App.Views.CommentsList = Backbone.View.extend({
             setOptions: {
                 validate: true
             }
-        },
-
+        }
     },
 
     initialize: function (options) {

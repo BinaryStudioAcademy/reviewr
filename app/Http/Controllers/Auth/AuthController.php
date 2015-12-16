@@ -43,7 +43,9 @@ class AuthController extends Controller
      */
     public function __construct(AuthServiceInterface $authService)
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+//        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('auth', ['only' => ['logout']]);
+
         $this->redirectAfterLogout = route('home');
         $this->authService = $authService;
     }
@@ -65,6 +67,12 @@ class AuthController extends Controller
 
     public function getLogin(Request $request) {
         $cookie = $request->cookie('x-access-token');
+        $referer = url(env('APP_PREFIX', '')) . '#' . $request->get('redirect');
+
+        $redirectToAuth = Response::json(
+            ['redirectTo' => url(env('AUTH_REDIRECT'))],
+            302
+        )->withCookie('referer', $referer);
 
         if(!empty($cookie)) {
             try {
@@ -79,21 +87,13 @@ class AuthController extends Controller
                     );
             } catch (AuthException $e) {
                 // Redirect to the authorisation server if user is not authorised
-                return Redirect::to(url(env('AUTH_REDIRECT')))
-                    ->withCookie(
-                        'referer',
-                        url(env('APP_PREFIX', '') . '/')
-                    );
+                return $redirectToAuth;
             }
         } else {
-            return Redirect::to(url(env('AUTH_REDIRECT')))
-                ->withCookie(
-                    'referer',
-                    url(env('APP_PREFIX', '') . '/')
-                );
+            return $redirectToAuth;
         }
 
-        return Redirect::intended();
+        return Response::json($user, 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function getLogout(
