@@ -90,6 +90,11 @@ App.Models.User = Backbone.Model.extend({
 
 var user = new App.Models.User();
 
+// Current user
+App.Models.CurrentUser = App.Models.User.extend({
+    urlRoot: App.getPrefix() + '/users/login',
+});
+
 /*
  *---------------------------------------------------
  *  Request Model

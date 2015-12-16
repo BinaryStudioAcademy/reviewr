@@ -11,12 +11,12 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
     ]);
 
     // Auth routes
-    Route::get('/auth/login', [
+    Route::get('/users/login', [
         'as'   => 'login.get',
         'uses' => 'Auth\AuthController@getLogin'
     ]);
     
-    Route::get('/auth/logout', [
+    Route::get('/users/logout', [
         'as'   => 'logout',
         'uses' => 'Auth\AuthController@getLogout'
     ]);

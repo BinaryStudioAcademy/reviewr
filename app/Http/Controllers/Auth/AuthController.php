@@ -68,7 +68,7 @@ class AuthController extends Controller
 
         if(!empty($cookie)) {
             try {
-                $user = $this->authService->loginByCookie(
+                $user = $this->authService->getUserFromCookie(
                     $request->cookie('x-access-token')
                 );
             } catch (TokenInCookieExpiredException $e) {
@@ -79,21 +79,19 @@ class AuthController extends Controller
                     );
             } catch (AuthException $e) {
                 // Redirect to the authorisation server if user is not authorised
-                return Redirect::to(url(env('AUTH_REDIRECT')))
-                    ->withCookie(
-                        'referer',
-                        url(env('APP_PREFIX', '') . '/')
-                    );
+                return Response::json(
+                    ['redirectTo' => url(env('AUTH_REDIRECT'))],
+                    302
+                )->withCookie('referer', url(env('APP_PREFIX', '') . '/'));
             }
         } else {
-            return Redirect::to(url(env('AUTH_REDIRECT')))
-                ->withCookie(
-                    'referer',
-                    url(env('APP_PREFIX', '') . '/')
-                );
+            return Response::json(
+                ['redirectTo' => url(env('AUTH_REDIRECT'))],
+                302
+            )->withCookie('referer', url(env('APP_PREFIX', '') . '/'));
         }
 
-        return Redirect::intended();
+        return Response::json($user, 200, [], JSON_NUMERIC_CHECK);
     }
 
     public function getLogout(
