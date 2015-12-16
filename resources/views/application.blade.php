@@ -72,8 +72,8 @@
                                 <li><a href="#!/request/create">Create Review</a></li>
                                 <li><a href="#!/requests/my">My Review Request</a></li>
                                 <li><a href="#!/requests/offered">My Offers</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#!/logout">LogOut</a></li>
+                                {{--<li class="divider"></li>--}}
+                                {{--<li><a href="#!/logout">LogOut</a></li>--}}
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -657,6 +657,13 @@
         </form>
     </div>
     <div class="search-results">Search-Results</div>
+</script>
+
+
+<script type="text/template" id="notifications-list-template">
+    <h1>Your notifications</h1>
+    <div class="notifications list-group">
+    </div>
 </script>
 
 <script type="text/template" id="empty-list-template">
