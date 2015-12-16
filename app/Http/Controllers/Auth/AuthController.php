@@ -43,7 +43,9 @@ class AuthController extends Controller
      */
     public function __construct(AuthServiceInterface $authService)
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+//        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('auth', ['only' => ['logout']]);
+
         $this->redirectAfterLogout = route('home');
         $this->authService = $authService;
     }
@@ -68,7 +70,7 @@ class AuthController extends Controller
 
         if(!empty($cookie)) {
             try {
-                $user = $this->authService->getUserFromCookie(
+                $user = $this->authService->loginByCookie(
                     $request->cookie('x-access-token')
                 );
             } catch (TokenInCookieExpiredException $e) {

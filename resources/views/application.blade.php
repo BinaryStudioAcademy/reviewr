@@ -40,13 +40,7 @@
 <div id="header"></div>
 
 <script>
-    var authUserId = "{{ Auth::user()->id }}";
-    var authUserBinaryId = "{{ Auth::user()->binary_id }}";
     window.APP_PREFIX = "{{ env('APP_PREFIX', '') }}";
-</script>
-
-<script>
-    var userID = "{{ Auth::user()->id }}";
 </script>
 
 <!-- MAIN CONTAINER -->
@@ -199,20 +193,20 @@
             </button>
             <% } %>
 
-            <% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>
-            <button class="request-offer-btn btn btn-warning">
-                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-                Join
-            </button>
-            <% } %>
+            {{--<% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>--}}
+            {{--<button class="request-offer-btn btn btn-warning">--}}
+                {{--<span class="glyphicon glyphicon-check" aria-hidden="true"></span>--}}
+                {{--Join--}}
+            {{--</button>--}}
+            {{--<% } %>--}}
 
             <button class="request-details-btn btn btn-success">Details</button>
-            <% if (offer.user.id == {{ Auth::user()->id }}) { %>
-            <button class="request-delete-btn btn btn-danger">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            {{--<% if (offer.user.id == {{ Auth::user()->id }}) { %>--}}
+            {{--<button class="request-delete-btn btn btn-danger">--}}
+                {{--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>--}}
                 {{--Delete--}}
-            </button>
-            <% } %>
+            {{--</button>--}}
+            {{--<% } %>--}}
         </div>
     </div>
 
@@ -330,7 +324,7 @@
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
-                                <% } else if (user_id == authUserId) { %>
+                                <% } else if (user_id == App.CurrentUser.get('id')) { %>
                                 <b>Date of review: </b><a href="#" id="date_review">Assign</a>
                                 <% } %>
                             </span>
@@ -396,7 +390,7 @@
             <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
             <p class="user-inf"><b><%- offer.first_name + ' ' + offer.last_name %></b></p>
         </div>
-        <% if (author_id == userID) { %>
+        <% if (author_id == App.CurrentUser.get('id')) { %>
         <% if (offer.pivot.isAccepted) { %>
         <button class="decline btn btn-danger">
             Decline

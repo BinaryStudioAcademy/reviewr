@@ -18,6 +18,26 @@ App.Router = Backbone.Router.extend({
         "!/logout": "logout"
     },
 
+    execute: function(callback, args, name) {
+        if (!App.CurrentUser) {
+            var currentUser = new App.Models.CurrentUser();
+
+            $.when(currentUser.getFromServer()).done(function (user) {
+                App.CurrentUser = user;
+                var url = Backbone.history.fragment;
+
+                if (!Backbone.history.navigate(url, { trigger: true })) {
+                    Backbone.history.loadUrl(url);
+                }
+            });
+
+            return false;
+        } else {
+            console.log('User\'s here!');
+            callback.apply(this, args);
+        }
+    },
+
     home: function () {
         this.navigate('!/requests', true)
     },
@@ -103,6 +123,51 @@ App.Router = Backbone.Router.extend({
     }
 });
 
-var router = new App.Router();
+// Overriding for using token authorization
+var sync = Backbone.sync;
+Backbone.sync = function (method, model, options) {
+    var error = function () {};
+    var success = function () {};
 
+    if (options.error) {
+        error = options.error;
+    }
+
+    options.error = function (xhr, textStatus, errorThrown) {
+        // If user is not authorized
+        if (xhr.status === 401 ) {
+            // Fetch user from server
+            var user = new App.Models.CurrentUser();
+            user.fetch({wait: true});
+
+            // Assign user
+            App.CurrentUser = user;
+
+            // Move back to the necessary route
+            var url =  Backbone.history.fragment;
+
+            if (!Backbone.history.navigate(url, { trigger: true })) {
+                Backbone.history.loadUrl(url);
+            }
+        } else if (xhr.status === 303 ) {
+            location.reload();
+        } else if (xhr.status === 302 ) {
+            document.location = xhr.responseJSON.redirectTo;
+        } else {
+            error(xhr, textStatus, errorThrown);
+        }
+    };
+
+    if (options.success) {
+        success = options.success;
+    }
+
+    options.success = function (resp) {
+        success(resp);
+    };
+
+    return sync(method, model, options);
+};
+
+var router = new App.Router();
 Backbone.history.start();
