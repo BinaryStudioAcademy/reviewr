@@ -58,6 +58,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
                     <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#!/requests">Home <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">
@@ -167,7 +170,7 @@
 
             <div class="row user-data">
                 <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
-                    <img src="<%= offer.user.avatar %>" class="thumbnail img-responsive" alt="">
+                    <img src="<%= offer.user.avatar %>" class="img-thumbnail big" alt="">
                 </div>
                 <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
                     <p><b>
@@ -177,7 +180,7 @@
 
                     <p>Group: <a href="#!/requests/group/<%- offer.group_id %>"><%- offer.group.title %></a></p>
 
-                    <p><%- offer.user.email %></p>
+                    <p><a href="mailto:<%- offer.user.email %>"><%- offer.user.email %></a></p>
                 </div>
             </div>
         </div>
@@ -385,7 +388,7 @@
 <script type="text/template" id="reviewer-card-template">
     <div class="thumbnail">
         <div class="user-inf">
-            <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail">
+            <img src="<%= offer.avatar %>" alt="offers" class="img-thumbnail big">
             <p class="user-inf"><b><%- offer.first_name + ' ' + offer.last_name %></b></p>
         </div>
         <% if (author_id == App.CurrentUser.get('id')) { %>
@@ -493,10 +496,10 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="thumbnail"></div>
+                    <div class="col-md-4"><img src="<%= avatar %>" alt="avatar" class="img-thumbnail big"></div>
                     <div class="user-info col-md-8 text-left">
                         <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                            <%- email %>
+                            <a href="mailto:<%- email %>"><%- email %></a>
                         </p>
 
                         <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -532,7 +535,7 @@
         </div>
         <div class="panel-body">
             <div class="thumbnail">
-                <img src="<%= avatar %>" alt="avatar" width="120" height="120" class="thumbnail">
+                <img src="<%= avatar %>" alt="avatar" class="thumbnail big">
 
                 <div class="user-info caption">
                     <% if (department) { %>
@@ -545,7 +548,7 @@
                     <% } %>
 
                     <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        <%- email %></p>
+                        <a href="mailto:<%- email %>"><%- email %></a></p>
                 </div>
             </div>
 
@@ -578,12 +581,12 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="photo col-md-4 text-center">
-                            <img src="<%= avatar %>" alt="avatar" width="140" heigth="140"
-                                 class="img-thumbnail img-responsive">
+                            <img src="<%= avatar %>" alt="avatar"
+                                 class="img-thumbnail big">
                         </div>
                         <div class="info col-md-8">
                             <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                <%- email %></p>
+                                <a href="mailto:<%- email %>"><%- email %></a></p>
 
                             <% if (department) { %>
                             <p><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
