@@ -618,3 +618,14 @@ ul.forAnimate li a:hover {
     background-color: #6E6E6E !important;
     color: inherit !important;
 }
+
+.img-thumbnail.big {
+    max-width: 90px;
+    max-height: 90px;
+    width: 100%;
+}
+
+.img-thumbnail.medium {
+    width: 70px;
+    height: 70px;
+}
