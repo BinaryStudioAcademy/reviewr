@@ -779,65 +779,6 @@ App.Views.ConfirmModal = Backbone.View.extend({
 
 /*
  *---------------------------------------------------
- *  Notification View
- *---------------------------------------------------
- */
-App.Views.Notification = Backbone.View.extend({
-    model: notification,
-    tagName: 'div',
-    className: 'alert alert-info',
-    initialize: function () {
-        this.template = _.template($('#notification-template').html());
-    },
-    render: function () {
-        this.$el.html(this.template(this.model));
-        return this;
-    }
-});
-
-/*
- *---------------------------------------------------
- *  Notification List View
- *---------------------------------------------------
- */
-App.Views.NotificationsList = Backbone.View.extend({
-    collection: notifications,
-    el: "#main-content",
-    template: _.template($("#notifications-list-template").html()),
-    initialize: function () {
-        this.collection.on('remove', this.render, this);
-    },
-
-    render: function () {
-        this.$el.empty();
-        $('#spinner').show();
-        var that = this;
-
-        this.collection.fetch({
-            success: function (notifications, res, notification) {
-                if (!notifications.length) {
-                    console.log('Render No-Tags view here');
-                } else {
-                    that.$el.html(that.template());
-                    _.each(notifications.models, function (notification) {
-                        that.renderNotifications(notification);
-                    });
-                }
-                $('#spinner').hide();
-            },
-            reset: true
-        });
-    },
-
-
-    renderNotifications: function (notification) {
-        var notificationView = new App.Views.Notification({model: notification.toJSON()});
-        this.$el.find('.notifications').append(notificationView.render().$el);
-    }
-});
-
-/*
- *---------------------------------------------------
  *  Comment View
  *---------------------------------------------------
  */
@@ -878,8 +819,7 @@ App.Views.CommentsList = Backbone.View.extend({
             setOptions: {
                 validate: true
             }
-        },
-
+        }
     },
 
     initialize: function (options) {

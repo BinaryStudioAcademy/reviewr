@@ -168,21 +168,6 @@ var tag = new App.Models.Tag();
 
 /*
  *---------------------------------------------------
- *  Tag Model
- *---------------------------------------------------
- */
-App.Models.Notification = Backbone.Model.extend({
-    urlRoot: App.getPrefix() + "/notification",
-    defaults: {
-        id: null,
-        title: ''
-    }
-});
-
-var notification = new App.Models.Notification();
-
-/*
- *---------------------------------------------------
  *  Comment Model
  *---------------------------------------------------
  */

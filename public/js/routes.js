@@ -15,7 +15,6 @@ App.Router = Backbone.Router.extend({
         "!/request/:id/offer": "offerRequest",
         "!/request/:id/accept": "acceptRequest",
         "!/request/:id/decline": "declineRequest",
-        "!/notifications": "notifications",
         "!/logout": "logout"
     },
 
@@ -93,10 +92,6 @@ App.Router = Backbone.Router.extend({
         });
     },
 
-    notifications: function () {
-        new App.Views.NotificationsList().render();
-    },
-    
     logout: function () {
         var logoutUrl = 'http://' + window.location.hostname + '/' + App.getSitePrefix() + '/auth/logout';
         window.location.assign(logoutUrl);

@@ -659,16 +659,6 @@
     <div class="search-results">Search-Results</div>
 </script>
 
-<script type="text/template" id="notification-template">
-     <%- title %>
-</script>
-
-<script type="text/template" id="notifications-list-template">
-    <h1>Your notifications</h1>
-    <div class="notifications list-group">
-    </div>
-</script>
-
 <script type="text/template" id="empty-list-template">
     <div class="placeholder">
         {{--<h1>No items</h1>--}}
