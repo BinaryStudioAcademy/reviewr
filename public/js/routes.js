@@ -21,19 +21,18 @@ App.Router = Backbone.Router.extend({
     execute: function(callback, args, name) {
         if (!App.CurrentUser) {
             var currentUser = new App.Models.CurrentUser();
+            var urlToReturn = Backbone.history.fragment;
 
-            $.when(currentUser.getFromServer()).done(function (user) {
+            $.when(currentUser.getFromServer(urlToReturn)).done(function (user) {
                 App.CurrentUser = user;
-                var url = Backbone.history.fragment;
 
-                if (!Backbone.history.navigate(url, { trigger: true })) {
-                    Backbone.history.loadUrl(url);
+                if (!Backbone.history.navigate(urlToReturn, { trigger: true })) {
+                    Backbone.history.loadUrl(urlToReturn);
                 }
             });
 
             return false;
         } else {
-            console.log('User\'s here!');
             callback.apply(this, args);
         }
     },
@@ -136,19 +135,17 @@ Backbone.sync = function (method, model, options) {
     options.error = function (xhr, textStatus, errorThrown) {
         // If user is not authorized
         if (xhr.status === 401 ) {
+            var urlToReturn = Backbone.history.fragment;
             // Fetch user from server
-            var user = new App.Models.CurrentUser();
-            user.fetch({wait: true});
+            var currentUser = new App.Models.CurrentUser();
 
-            // Assign user
-            App.CurrentUser = user;
+            $.when(currentUser.getFromServer(urlToReturn)).done(function (user) {
+                App.CurrentUser = user;
 
-            // Move back to the necessary route
-            var url =  Backbone.history.fragment;
-
-            if (!Backbone.history.navigate(url, { trigger: true })) {
-                Backbone.history.loadUrl(url);
-            }
+                if (!Backbone.history.navigate(urlToReturn, { trigger: true })) {
+                    Backbone.history.loadUrl(urlToReturn);
+                }
+            });
         } else if (xhr.status === 303 ) {
             location.reload();
         } else if (xhr.status === 302 ) {

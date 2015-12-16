@@ -67,6 +67,12 @@ class AuthController extends Controller
 
     public function getLogin(Request $request) {
         $cookie = $request->cookie('x-access-token');
+        $referer = url(env('APP_PREFIX', '')) . '#' . $request->get('redirect');
+
+        $redirectToAuth = Response::json(
+            ['redirectTo' => url(env('AUTH_REDIRECT'))],
+            302
+        )->withCookie('referer', $referer);
 
         if(!empty($cookie)) {
             try {
@@ -81,16 +87,10 @@ class AuthController extends Controller
                     );
             } catch (AuthException $e) {
                 // Redirect to the authorisation server if user is not authorised
-                return Response::json(
-                    ['redirectTo' => url(env('AUTH_REDIRECT'))],
-                    302
-                )->withCookie('referer', url(env('APP_PREFIX', '') . '/'));
+                return $redirectToAuth;
             }
         } else {
-            return Response::json(
-                ['redirectTo' => url(env('AUTH_REDIRECT'))],
-                302
-            )->withCookie('referer', url(env('APP_PREFIX', '') . '/'));
+            return $redirectToAuth;
         }
 
         return Response::json($user, 200, [], JSON_NUMERIC_CHECK);

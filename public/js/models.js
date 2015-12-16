@@ -156,16 +156,32 @@ var user = new App.Models.User();
 // Current user
 App.Models.CurrentUser = App.Models.User.extend(
     _.extend({}, App.ModelMixins.DefererAPI, {
-        getFromServer: function () {
+        getFromServer: function (nextUrl) {
             var self = this;
+
+            if (nextUrl) {
+                this.redirect = nextUrl;
+            }
 
             // Returns promise
             return this.deferOperation('fetch', self, [], {
-                wait: true
+                wait: true,
+                async: false
             });
         },
 
-        initialize: function () {
+        url : function(){
+            var url = this.urlRoot;
+
+            if(this.redirect) {
+                url = url + "/?redirect=" + encodeURIComponent(this.redirect);
+            }
+
+            return url;
+        },
+
+        initialize: function (options) {
+            this.options = options;
             this.urlRoot = App.prefix + '/users/login';
         }
     })
