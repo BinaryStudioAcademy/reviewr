@@ -194,20 +194,20 @@
             </button>
             <% } %>
 
-            {{--<% if (!status && offer.user.id != {{ Auth::user()->id }}) { %>--}}
-            {{--<button class="request-offer-btn btn btn-warning">--}}
-                {{--<span class="glyphicon glyphicon-check" aria-hidden="true"></span>--}}
-                {{--Join--}}
-            {{--</button>--}}
-            {{--<% } %>--}}
+            <% if (!status && offer.user.id != App.CurrentUser.get('id')) { %>
+            <button class="request-offer-btn btn btn-warning">
+                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                Join
+            </button>
+            <% } %>
 
             <button class="request-details-btn btn btn-success">Details</button>
-            {{--<% if (offer.user.id == {{ Auth::user()->id }}) { %>--}}
-            {{--<button class="request-delete-btn btn btn-danger">--}}
-                {{--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>--}}
-                {{--Delete--}}
-            {{--</button>--}}
-            {{--<% } %>--}}
+            <% if (offer.user.id == App.CurrentUser.get('id')) { %>
+            <button class="request-delete-btn btn btn-danger">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Delete
+            </button>
+            <% } %>
         </div>
     </div>
 
