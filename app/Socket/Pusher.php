@@ -37,8 +37,11 @@ class Pusher extends BasePusher
     public function broadcastData($jsonDataToSend)
     {
         $entryData = json_decode($jsonDataToSend, true);
-
         $subscribedTopics = $this->getSubscribedTopics();
+
+        if (!isset($entryData['topic_id']) || empty($entryData['topic_id'])) {
+            return;
+        }
 
         if (isset( $subscribedTopics[$entryData['topic_id']] )) {
             $topic = $subscribedTopics[$entryData['topic_id']];
@@ -46,6 +49,5 @@ class Pusher extends BasePusher
             // re-send the data to all the clients subscribed to that category
             $topic->broadcast($entryData);
         }
-
     }
 }
