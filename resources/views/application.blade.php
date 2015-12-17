@@ -141,7 +141,6 @@
 {{-- One Review Request card backbone template--}}
 
 <script type="text/template" id="request-card-template">
-
     <div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">
@@ -153,10 +152,7 @@
             </h2>
         </div>
         <div class="panel-body">
-            <p>
-                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                <%- offer.formatted_created_at %>
-                &nbsp;
+            <p class="request-shot-info">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
                     <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
@@ -166,6 +162,14 @@
                 <span class="badge">
                     <%- offer.reputation %>
                 </span>
+                &nbsp;
+
+                <% if(offer.formatted_date_review) { %>
+                <span class="date-review" title="Review date">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <%- offer.formatted_date_review %>
+                </span>
+                <% } %>
             </p>
 
             <div class="row user-data">
@@ -210,7 +214,6 @@
             <% } %>
         </div>
     </div>
-
 </script>
 
 {{-- Create Review Request Form backbone template--}}
@@ -238,8 +241,10 @@
                             <div class="form-group">
                                 <label for="date_review" class="col-md-1 control-label">Date</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
-                                           id="date_review" name="date_review" placeholder="Select date of review request">
+                                    <input type="text" class="form-control hidden" id="date_review" name="date_review">
+                                    <span id="date_review_view" bootstrap-datepicker data-date-end-date="0d">Select date of review request</span>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
@@ -319,15 +324,16 @@
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
-                            <% if(formatted_date_review) { %>
                             <span class="date-review">
                                 <b>Date of review: </b>
+                                <% if(formatted_date_review) { %>
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                 <% } else if (user_id == App.CurrentUser.get('id')) { %>
-                                <b>Date of review: </b><a href="#" id="date_review">Assign</a>
+                                <a href="#" id="date_review">Assign</a>
                                 <% } %>
+                                <span class="help-block hidden">Please, check all components of the date</span>
                             </span>
                         </div>
                         <div class="panel-footer">

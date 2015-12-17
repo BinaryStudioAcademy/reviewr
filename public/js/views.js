@@ -310,12 +310,22 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     checkVote: function () {
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), App.CurrentUser.get('id'));
+        return _.contains(
+            _.pluck(
+                this.model.get('votes'), 'id'),
+            App.CurrentUser.get('id')
+        );
     },
 
     isAccepted: function () {
         // Find Object with myOffer info
-        var myOffer = _.findWhere(this.model.get('users'), {id: App.CurrentUser.get('id')});
+        var myOffer = _.findWhere(
+            this.model.get('users'),
+            {
+                id: App.CurrentUser.get('id')
+            }
+        );
+
         if (myOffer) {
             // I am accepted or no?
             return (myOffer.pivot.isAccepted == 1);
@@ -328,6 +338,21 @@ App.Views.RequestDetails = Backbone.View.extend({
     isAuthor: function (userId) {
         // If request user id == logged user
         return (userId == App.CurrentUser.get('id'));
+    },
+
+    showDateError: function () {
+        $('.date-review').addClass('has-error');
+        $('.date-review .help-block').removeClass('hidden');
+        var self = this;
+
+        setTimeout(function () {
+            self.hideDateError();
+        }, 2000)
+    },
+
+    hideDateError: function () {
+        $('.date-review').removeClass('has-error');
+        $('.date-review .help-block').addClass('hidden');
     },
 
     render: function () {
@@ -346,7 +371,6 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // Fetch Request Reviewers (Offers)
         var reviewersBlock = this.$el.find('.reviewers');
-
         reviewersBlock.empty();
 
         var req_id = this.model.get('id');
@@ -359,6 +383,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         }
 
         var reviewers = this.model.get('users');
+
         if(_.isEmpty(reviewers)) {
             this.$el.find('.reviewers-header').append(' There are no reviewers for now');
         } else {
@@ -414,21 +439,26 @@ App.Views.RequestDetails = Backbone.View.extend({
                 mode: 'popup',
                 type: 'datetime',
                 name: 'date_review',
-                format: 'yyyy-mm-dd hh:ii',
                 display: false,
                 clear: 'Clear the date',
                 autoclose: true,
                 placement: 'right',
+                setStartDate: new Date(),
+                datetimepicker: {
+                    startDate: new Date(),
+                    todayBtn: true,
+                    minuteStep: 10
+                },
                 success: function (response, newValue) {
-                    var globalDateTime = newValue.getFullYear()
-                        + '-'
-                        + newValue.getMonth()
-                        + '-'
-                        + newValue.getDate()
-                        + ' '
-                        + newValue.getHours()
-                        + ':'
-                        + newValue.getMinutes();
+                    var oldValue = self.model.roungToMinutes(new Date());
+                    newValue = self.model.roungToMinutes(newValue);
+
+                    if (newValue.getTime() === oldValue.getTime()) {
+                        self.showDateError();
+                        return;
+                    }
+
+                    var globalDateTime = self.model.formatToGlobal(newValue);
                     self.model.save({date_review: globalDateTime}, {patch: true}); //update backbone model
                 }
             });
@@ -442,7 +472,8 @@ App.Views.RequestDetails = Backbone.View.extend({
 App.Views.CreateRequestForm = Backbone.View.extend({
     template: _.template($('#create-request-form-template').html()),
     events: {
-        'submit': 'storeRequest'
+        'submit': 'storeRequest',
+        'click .delete-date-review': 'clearDateReview'
     },
 
     bindings: {
@@ -483,7 +514,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             date_review: $('#date_review').val(),
         });
 
-        this.stopListening()
+        this.stopListening();
 
         if (this.model.isValid(true)) {
             this.model.save(null, {
@@ -495,7 +526,21 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         }
     },
 
+    clearDateReview: function () {
+        $('#date_review').val('');
+        $('#date_review_view').html('Select date of review request');
+    },
+
+    showDeleteButton: function () {
+        $('.delete-date-review').show();
+    },
+
+    hideDeleteButton: function () {
+        $('.delete-date-review').hide();
+    },
     render: function () {
+        var self = this;
+
         this.$el.html(this.template);
         var nowDate = new Date();
         var today = new Date(
@@ -508,9 +553,34 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             0
         );
 
-        $("#date_review").datetimepicker({
+        $('#date_review_view').editable({
+            mode: 'popup',
+            type: 'datetime',
+            name: 'date_review',
+            display: false,
+            clear: 'Clear the date',
             autoclose: true,
-            startDate: today
+            placement: 'right',
+            setStartDate: new Date(),
+            datetimepicker: {
+                startDate: new Date(),
+                todayBtn: true,
+                minuteStep: 10
+            },
+            success: function (response, newValue) {
+                var oldValue = self.model.roungToMinutes(new Date());
+                newValue = self.model.roungToMinutes(newValue);
+
+                if (newValue.getTime() === oldValue.getTime()) {
+                    //self.showDateError();
+                    return;
+                    console.log('Datetime input error')
+                }
+
+                self.showDeleteButton();
+                $('#date_review').val(self.model.formatToGlobal(newValue));
+                $('#date_review_view').html(self.model.formatToString(newValue));
+            }
         });
 
         tags.fetch({
@@ -522,7 +592,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
                     tags: true,
                     placeholder: "Enter or select a tag for review",
                     tokenSeparators: [',', ' '],
-                    data: res,
+                    data: res
                 });
             }
         });
