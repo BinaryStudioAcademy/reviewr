@@ -154,10 +154,13 @@
                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                 <%- offer.formatted_created_at %>
                 &nbsp;
+                
+                <% if(_.isEqual(offer.offers_count, 0)) { %>
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
-                    <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
+                    <%- offer.offers_count %>
                 </span>
+                <% } %>
             </p>
 
             <div class="row user-data">
