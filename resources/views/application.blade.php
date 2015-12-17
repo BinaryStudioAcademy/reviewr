@@ -64,7 +64,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">
                                 <li><a href="#!/request/create">Create Review</a></li>
-                                <li><a href="#!/requests/my">My Review Request</a></li>
+                                <li><a href="#!/requests/my">My Review Requests</a></li>
                                 <li><a href="#!/requests/offered">My Offers</a></li>
                                 {{--<li class="divider"></li>--}}
                                 {{--<li><a href="#!/logout">LogOut</a></li>--}}
@@ -81,7 +81,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-large"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">
                                 <li><a href="#!/requests/group/1">PHP</a></li>
-                                <li><a href="#!/requests/group/3">.NET</a></li>
+                                <li><a href="#!/requests/group/3">.Net</a></li>
                                 <li><a href="#!/requests/group/2">JS</a></li>
                             </ul>
                         </li>
@@ -150,15 +150,25 @@
             </h2>
         </div>
         <div class="panel-body">
+            <p class="request-shot-info">
             <p>
-                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                <%- offer.formatted_created_at %>
-                &nbsp;
-                
                 <% if(_.isEqual(offer.offers_count, 0)) { %>
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
                     <%- offer.offers_count %>
+                </span>
+                <% } %>
+                &nbsp;
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                <span class="badge">
+                    <%- offer.reputation %>
+                </span>
+                &nbsp;
+
+                <% if(offer.formatted_date_review) { %>
+                <span class="date-review" title="Review date">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <%- offer.formatted_date_review %>
                 </span>
                 <% } %>
             </p>
@@ -232,8 +242,10 @@
                             <div class="form-group">
                                 <label for="date_review" class="col-md-1 control-label">Date</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
-                                           id="date_review" name="date_review" placeholder="Select date of review request">
+                                    <input type="text" class="form-control hidden" id="date_review" name="date_review">
+                                    <span id="date_review_view" bootstrap-datepicker data-date-end-date="0d">Select date of review request</span>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
@@ -262,7 +274,7 @@
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="group-input" value="2">
-                                            .NET
+                                            .Net
                                         </label>
                                     </div>
                                     <div class="radio">
@@ -311,15 +323,16 @@
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
-                            <% if(formatted_date_review) { %>
                             <span class="date-review">
                                 <b>Date of review: </b>
+                                <% if(formatted_date_review) { %>
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                 <% } else if (user_id == App.CurrentUser.get('id')) { %>
-                                <b>Date of review: </b><a href="#" id="date_review">Assign</a>
+                                <a href="#" id="date_review">Assign</a>
                                 <% } %>
+                                <span class="help-block hidden">Please, check all components of the date</span>
                             </span>
                         </div>
                         <div class="panel-footer">
@@ -357,7 +370,7 @@
                 <div class="col-md-8">
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        Chat is not available, because you not accepted
+                        Chat is not available, because your offer was not accepted
                     </div>
                 </div>
             </div>

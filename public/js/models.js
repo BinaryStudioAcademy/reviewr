@@ -45,7 +45,7 @@ App.ModelMixins = {
                 if (self.has(field)) {
                     self.set(
                         'formatted_' + field,
-                        self.formatDate(self.get(field))
+                        self.formatToString(self.get(field))
                     );
                 } else {
                     self.set('formatted_' + field, null);
@@ -53,7 +53,7 @@ App.ModelMixins = {
             })
         },
 
-        formatDate: function (oldDate) {
+        formatToString: function (oldDate) {
             var date = new Date(oldDate);
 
             var options = {
@@ -66,6 +66,28 @@ App.ModelMixins = {
             };
 
             return date.toLocaleString("en-US", options);
+        },
+
+        formatToGlobal: function (date) {
+            var month = date.getMonth() + 1;
+            var globalDateTime = date.getFullYear()
+                + '-'
+                + month
+                + '-'
+                + date.getDate()
+                + ' '
+                + date.getHours()
+                + ':'
+                + date.getMinutes();
+
+            return globalDateTime;
+        },
+
+        roungToMinutes: function (date) {
+            date.setSeconds(0);
+            date.setMilliseconds(0);
+
+            return date;
         }
     },
 
