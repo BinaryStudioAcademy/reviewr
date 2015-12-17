@@ -319,15 +319,16 @@
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
-                            <% if(formatted_date_review) { %>
                             <span class="date-review">
                                 <b>Date of review: </b>
+                                <% if(formatted_date_review) { %>
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                 <% } else if (user_id == App.CurrentUser.get('id')) { %>
-                                <b>Date of review: </b><a href="#" id="date_review">Assign</a>
+                                <a href="#" id="date_review">Assign</a>
                                 <% } %>
+                                <span class="help-block hidden">Please, check all components of the date</span>
                             </span>
                         </div>
                         <div class="panel-footer">

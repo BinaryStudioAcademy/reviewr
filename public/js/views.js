@@ -330,6 +330,21 @@ App.Views.RequestDetails = Backbone.View.extend({
         return (userId == App.CurrentUser.get('id'));
     },
 
+    showDateError: function () {
+        $('.date-review').addClass('has-error');
+        $('.date-review .help-block').removeClass('hidden');
+        var self = this;
+
+        setTimeout(function () {
+            self.hideDateError();
+        }, 2000)
+    },
+
+    hideDateError: function () {
+        $('.date-review').removeClass('has-error');
+        $('.date-review .help-block').addClass('hidden');
+    },
+
     render: function () {
         var self = this;
         this.stopListening();
@@ -414,15 +429,32 @@ App.Views.RequestDetails = Backbone.View.extend({
                 mode: 'popup',
                 type: 'datetime',
                 name: 'date_review',
-                format: 'yyyy-mm-dd hh:ii',
                 display: false,
                 clear: 'Clear the date',
                 autoclose: true,
                 placement: 'right',
+                setStartDate: new Date(),
+                datetimepicker: {
+                    startDate: new Date(),
+                    todayBtn: true,
+                    minuteStep: 10
+                },
                 success: function (response, newValue) {
+                    var oldValue = new Date();
+                    oldValue.setSeconds(0);
+                    oldValue.setMilliseconds(0);
+                    newValue.setSeconds(0);
+                    newValue.setMilliseconds(0);
+
+                    if (newValue.getTime() === oldValue.getTime()) {
+                        self.showDateError();
+                        return;
+                    }
+
+                    var month = newValue.getMonth() + 1;
                     var globalDateTime = newValue.getFullYear()
                         + '-'
-                        + newValue.getMonth()
+                        + month
                         + '-'
                         + newValue.getDate()
                         + ' '
