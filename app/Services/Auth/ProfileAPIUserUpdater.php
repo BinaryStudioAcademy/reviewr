@@ -10,6 +10,7 @@ use App\Services\Auth\Exceptions\UpdatingFailureException;
 use App\User;
 use App\Services\RemoteDataGrabber\Exceptions\RemoteDataGrabberException;
 use App\Repositories\Contracts\RoleGlobalRepository;
+use Illuminate\Database\QueryException;
 
 /**
  * Class ProfileAPIUserUpdater
@@ -41,12 +42,18 @@ class ProfileAPIUserUpdater extends UserUpdater
         $userInfo = $payload->toArray();
         $preparedInfo = $this->prepareBaseInfo($userInfo);
 
-        $user = $this->userRepository->updateFirstOrCreate(
-            [
-                'binary_id' => $preparedInfo['binary_id'],
-            ],
-            $preparedInfo
-        );
+        try {
+            $user = $this->userRepository->updateFirstOrCreate(
+                [
+                    'binary_id' => $preparedInfo['binary_id'],
+                ],
+                $preparedInfo
+            );
+        } catch (QueryException $e) {
+            throw new UpdatingFailureException(
+                'Cannot update the base user info: the new email isn\'t unique.'
+            );
+        }
 
         return $user;
     }
@@ -81,7 +88,18 @@ class ProfileAPIUserUpdater extends UserUpdater
 
         $remoteInfoArray = (array)$remoteInfo[0];
         $preparedUserInfo = $this->prepareAdditionalInfo($remoteInfoArray);
-        $user = $this->userRepository->update($preparedUserInfo, $user->id);
+
+        try {
+            $user = $this->userRepository->update($preparedUserInfo, $user->id);
+        } catch (RepositoryException $e) {
+            throw new UpdatingFailureException(
+                'Cannot update the additional user info: the new email isn\'t unique.'
+            );
+        } catch (QueryException $e) {
+            throw new UpdatingFailureException(
+                'Cannot update the additional user info: the new email isn\'t unique.'
+            );
+        }
 
         return $user;
     }

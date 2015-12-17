@@ -204,6 +204,7 @@ App.Views.RequestsList = Backbone.View.extend({
     collection: requests,
     el: '#main-content',
     messageForEmptyView: 'There is no requests yet',
+
     initialize: function (options) {
         if (options && options.messageForEmptyView) {
             this.messageForEmptyView = options.messageForEmptyView;
@@ -259,38 +260,12 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
     events: {
         'click .back-request': 'back',
-        'click .like': 'like',
-        'click .undo-like': 'undoLike',
         'click .delete-date-review': 'clearDateReview',
         'mouseenter .date-review': 'showDeleteButton',
         'mouseleave .date-review': 'hideDeleteButton'
     },
     back: function () {
         router.navigate('!/requests', true);
-        return this;
-    },
-
-    like: function () {
-        this.model.save({
-            reputation: parseInt(this.model.get('reputation')) + 1
-        }, {
-            patch: true
-        });
-        this.$el.find('.like').html('Undo like').addClass('undo-like').removeClass('like');
-        $('#reputation').html(this.model.get('reputation'));
-        this.$el.find('#user-rep').html(parseInt(this.$el.find("#user-rep").html()) + 1);
-        return this;
-    },
-
-    undoLike: function () {
-        this.model.save({
-            reputation: parseInt(this.model.get('reputation')) - 1
-        }, {
-            patch: true
-        });
-        this.$el.find('.undo-like').html('Like').addClass('like').removeClass('undo-like');
-        $('#reputation').html(this.model.get('reputation'));
-        this.$el.find('#user-rep').text(parseInt(this.$el.find("#user-rep").html()) - 1);
         return this;
     },
 
@@ -307,10 +282,6 @@ App.Views.RequestDetails = Backbone.View.extend({
 
     hideDeleteButton: function () {
         $('.delete-date-review').hide();
-    },
-
-    checkVote: function () {
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), App.CurrentUser.get('id'));
     },
 
     isAccepted: function () {
@@ -351,12 +322,6 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         var req_id = this.model.get('id');
         var user_id = this.model.get('user_id');
-
-        if (this.checkVote()) {
-            this.$el.find('.like').html('Undo like');
-            this.$el.find('.like').addClass('undo-like');
-            this.$el.find('.like').removeClass('like');
-        }
 
         var reviewers = this.model.get('users');
         if(_.isEmpty(reviewers)) {

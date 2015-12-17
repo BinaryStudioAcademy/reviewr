@@ -18,8 +18,6 @@ interface RequestRepositoryInterface extends BasicRepositoryInterface
 
     public function getPopular();
 
-    public function getHighestRated();
-
     public function getByGroupId($id);
 
     public function getByTagId($tag_id);

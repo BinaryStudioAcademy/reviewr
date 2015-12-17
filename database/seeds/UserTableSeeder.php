@@ -21,7 +21,6 @@ class UserTableSeeder extends Seeder
             'country' => $faker->country,
             'city' => $faker->city,
             'password' => bcrypt('password'),
-            'reputation' => $faker->randomDigitNotNull,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -34,7 +33,6 @@ class UserTableSeeder extends Seeder
             'country' => $faker->country,
             'city' => $faker->city,
             'password' => bcrypt('password'),
-            'reputation' => $faker->randomDigitNotNull,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -47,7 +45,6 @@ class UserTableSeeder extends Seeder
             'country' => $faker->country,
             'city' => $faker->city,
             'password' => bcrypt('password'),
-            'reputation' => $faker->randomDigitNotNull,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -61,7 +58,6 @@ class UserTableSeeder extends Seeder
             'country' => $faker->country,
             'city' => $faker->city,
             'password' => bcrypt('password'),
-            'reputation' => $faker->randomDigitNotNull,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -74,7 +70,6 @@ class UserTableSeeder extends Seeder
             'country' => $faker->country,
             'city' => $faker->city,
             'password' => bcrypt('password'),
-            'reputation' => $faker->randomDigitNotNull,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -87,7 +82,6 @@ class UserTableSeeder extends Seeder
             'country' => $faker->country,
             'city' => $faker->city,
             'password' => bcrypt('password'),
-            'reputation' => $faker->randomDigitNotNull,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -102,7 +96,6 @@ class UserTableSeeder extends Seeder
                 'country' => $faker->country,
                 'city' => $faker->city,
                 'password' => bcrypt('password'),
-                'reputation' => $faker->randomDigitNotNull,
                 'job_id' => $faker->randomElement($jobIds),
                 'department_id' => $faker->randomElement($departmentIds)
             ]);

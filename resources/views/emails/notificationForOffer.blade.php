@@ -35,7 +35,6 @@ Hello, {{$author->first_name}} {{$author->last_name}} . You have a new user, who
                                 <p style="Margin-top: 0;color: #60666d;font-size: 13px;font-family: sans-serif;">Address: {{$user->address}}</p>
                                 <p style="Margin-top: 0;color: #60666d;font-size: 13px;font-family: sans-serif;">Phone: {{$user->phone}}</p>
                                 <p style="Margin-top: 0;color: #60666d;font-size: 13px;font-family: sans-serif;">Email: {{$user->email}}</p>
-                                <p style="Margin-top: 0;color: #60666d;font-size: 13px;font-family: sans-serif;">Reputation: {{$user->reputation}}</p>
                             </td>
                         </tr>
                     </tbody>

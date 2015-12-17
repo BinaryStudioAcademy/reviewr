@@ -66,6 +66,7 @@ class AuthService implements AuthServiceInterface
                 . $user->binary_id
                 . ')';
             Log::error($errorMessage);
+
             throw new AuthException($errorMessage);
         }
     }
@@ -92,9 +93,9 @@ class AuthService implements AuthServiceInterface
     {
         $userPayload = $this->extractUserDataFromCookie($cookie);
 
-            try {
+        try {
             $user = $this->userUpdater->updateBaseInfo($userPayload);
-        } catch (RepositoryException $e) {
+        } catch (UpdatingFailureException $e) {
             throw new AuthException($e->getMessage(), null, $e);
         }
 

@@ -46,26 +46,6 @@ class RequestRepository implements RequestRepositoryInterface
         $review_request = ReviewRequest::findOrFail($id);
         $auth_user_id = Auth::user()->id;
 
-        // Check if the reputation change and Up or Down
-        if (isset($attributes['reputation'])) {
-            $author = $review_request->user;
-            $isReputationUp =  ($attributes['reputation'] > $review_request->reputation);
-            $isReputationDown = ($attributes['reputation'] < $review_request->reputation);
-            $review_request->reputation = $attributes['reputation'];
-
-            // If reputation change save user vote  or delete his vote
-            if ($isReputationUp) {
-                $review_request->votes()->detach($auth_user_id); // temp solution, for removing dubl votes
-                $review_request->votes()->attach($auth_user_id);
-                $author->reputation = $author->reputation + 1;
-            } elseif ($isReputationDown) {
-                $review_request->votes()->detach($auth_user_id);
-                $author->reputation = $author->reputation - 1;
-            }
-
-            $author->save();
-        }
-
         $attributes = $this->attachFormattedDateTime($attributes);
         $review_request->update($attributes);
         return $review_request;
@@ -91,7 +71,6 @@ class RequestRepository implements RequestRepositoryInterface
             'user.department',
             'group',
             'tags',
-            'votes',
             'users'
         ])->findOrFail($id);
     }
@@ -146,46 +125,9 @@ class RequestRepository implements RequestRepositoryInterface
     // End Temp Solution
     //---------------------------------------------------------------------------------------------
 
-    public function getHighestRated()
-    {
-        return ReviewRequest::with('user', 'group')->orderBy('reputation', 'desc')->get();
-    }
-
     public function getByGroupId($id)
     {
         return ReviewRequest::with('user', 'group')->where('group_id', $id)->orderBy('created_at', 'desc')->get();
-    }
-   
-    public function checkVote($request_id, $user_id) {
-        $review_request = ReviewRequest::findOrFail($request_id);
-        foreach ($review_request->votes as $vote) {
-            if ($vote->id == $user_id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function reputationUp($request_id, $user_id)
-    {
-        $review_request = ReviewRequest::findOrFail($request_id);
-        $review_request->reputation = $review_request->reputation + 1;
-        $review_request->votes()->attach($user_id);
-        $review_request->save();
-  
-    }
-
-    public function reputationDown($request_id, $user_id)
-    {
-        $review_request = ReviewRequest::findOrFail($request_id);
-        $review_request->reputation = $review_request->reputation - 1;
-        $review_request->votes()->detach($user_id);
-        $review_request->save();
-    }
-
-    public function getHighRept($number)
-    {
-        return ReviewRequest::orderBy('reputation','descs')->take($number)->get();
     }
 
     public function upcomingReviewRequests()

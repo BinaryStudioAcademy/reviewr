@@ -34,11 +34,7 @@ interface RequestServiceInterface
 
     public function getPopularReviewRequests();
 
-    public function getHighestRatedReviewRequests();
-
     public function getReviewRequestsByGroupId($id);
-
-    public function getHighestReputationUsers();
 
     public function getReviewRequestsByTagId($tag_id);
 

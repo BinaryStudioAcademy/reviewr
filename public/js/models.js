@@ -146,8 +146,7 @@ App.Models.User = Backbone.Model.extend({
         email: '',
         avatar: '',
         country: '',
-        city: '',
-        reputation: ''
+        city: ''
     }
 });
 
@@ -203,8 +202,7 @@ App.Models.Request = Backbone.Model.extend(
             tags: '',
             group: '',
             created_at: '',
-            formatted_created_at: undefined,
-            reputation: ''
+            formatted_created_at: undefined
         },
 
         validation: {
@@ -241,8 +239,7 @@ App.Models.Reviewer = Backbone.Model.extend({
         email: '',
         avatar: '',
         country: '',
-        city: '',
-        reputation: ''
+        city: ''
     }
 });
 
