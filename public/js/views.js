@@ -310,12 +310,22 @@ App.Views.RequestDetails = Backbone.View.extend({
     },
 
     checkVote: function () {
-        return _.contains(_.pluck(this.model.get('votes'), 'id'), App.CurrentUser.get('id'));
+        return _.contains(
+            _.pluck(
+                this.model.get('votes'), 'id'),
+            App.CurrentUser.get('id')
+        );
     },
 
     isAccepted: function () {
         // Find Object with myOffer info
-        var myOffer = _.findWhere(this.model.get('users'), {id: App.CurrentUser.get('id')});
+        var myOffer = _.findWhere(
+            this.model.get('users'),
+            {
+                id: App.CurrentUser.get('id')
+            }
+        );
+
         if (myOffer) {
             // I am accepted or no?
             return (myOffer.pivot.isAccepted == 1);
@@ -361,7 +371,6 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // Fetch Request Reviewers (Offers)
         var reviewersBlock = this.$el.find('.reviewers');
-
         reviewersBlock.empty();
 
         var req_id = this.model.get('id');
@@ -374,6 +383,7 @@ App.Views.RequestDetails = Backbone.View.extend({
         }
 
         var reviewers = this.model.get('users');
+
         if(_.isEmpty(reviewers)) {
             this.$el.find('.reviewers-header').append(' There are no reviewers for now');
         } else {
