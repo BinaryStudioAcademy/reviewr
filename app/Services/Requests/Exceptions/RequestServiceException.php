@@ -2,6 +2,5 @@
 
 namespace App\Services\Requests\Exceptions;
 
-class RequestServiceException extends \RuntimeException {
-    //
-}
+class RequestServiceException extends \RuntimeException
+{}
