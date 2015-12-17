@@ -141,7 +141,6 @@
 {{-- One Review Request card backbone template--}}
 
 <script type="text/template" id="request-card-template">
-
     <div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">
@@ -153,10 +152,7 @@
             </h2>
         </div>
         <div class="panel-body">
-            <p>
-                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                <%- offer.formatted_created_at %>
-                &nbsp;
+            <p class="request-shot-info">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
                     <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
@@ -166,6 +162,14 @@
                 <span class="badge">
                     <%- offer.reputation %>
                 </span>
+                &nbsp;
+
+                <% if(offer.formatted_date_review) { %>
+                <span class="date-review" title="Review date">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    <%- offer.formatted_date_review %>
+                </span>
+                <% } %>
             </p>
 
             <div class="row user-data">
@@ -210,7 +214,6 @@
             <% } %>
         </div>
     </div>
-
 </script>
 
 {{-- Create Review Request Form backbone template--}}
