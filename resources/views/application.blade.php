@@ -44,7 +44,6 @@
 <!-- MAIN CONTAINER -->
 <div class="container-fluid">
     <div class="row">
-
         <!-- NEW SIDEBAR -->
         <nav class="navbar navbar-default sidebar" role="navigation">
             <div class="container-fluid">
@@ -76,7 +75,6 @@
                             <ul class="dropdown-menu forAnimate" role="menu">
                                 <li><a href="#!/requests">All</a></li>
                                 <li><a href="#!/requests/popular">Popular</a></li>
-                                <li><a href="#!/requests/high_rate">Hight rating</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -153,10 +151,13 @@
         </div>
         <div class="panel-body">
             <p class="request-shot-info">
+            <p>
+                <% if(_.isEqual(offer.offers_count, 0)) { %>
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
-                    <%- _.isEqual(offer.offers_count, 0) ? 'no' : offer.offers_count %>
+                    <%- offer.offers_count %>
                 </span>
+                <% } %>
                 &nbsp;
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 <span class="badge">
@@ -284,7 +285,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-1">
                                     <button type="submit" class="btn btn-warning">
@@ -299,7 +299,6 @@
             </div>
         </div>
     </div>
-
 </script>
 
 {{-- Review Request details backbone template--}}
@@ -346,16 +345,9 @@
                             <a href="#!/requests/user/<%- user_id %>">
                                 <%- user.first_name + ' ' + user.last_name%>
                             </a>
-                            &nbsp;
-                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                            <span id="reputation"><%- reputation %></span>
-                            &nbsp;
-                            <button class="like btn btn-default btn-sm">Like</button>
                         </div>
                     </div>
-
                 </div>
-
                 <div class="requestor col-lg-4 col-md-4 hidden-sm hidden-xs">
                     <p>Requestor Info</p>
                 </div>
@@ -374,7 +366,7 @@
             </div>
             <hr>
             <div id="chat-region" class="row">
-                <!-- Chat View paste here  -->
+                <!-- Chat View paste here -->
                 <div class="col-md-8">
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -382,10 +374,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
 </script>
 
 
@@ -470,11 +460,9 @@
                 <form class="form-horisontal" id="new-comment-form">
                     <div class="input-group form-group">
                         <input type="text" class="form-control" placeholder="Your message..." name="text" id="text">
-                        
                         <span class="input-group-btn">
                             <input class="btn btn-success" type="submit" form="new-comment-form" value="Send">
                         </span>
-
                     </div>
                     <!-- /input-group -->
                 </form>
@@ -495,9 +483,6 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     &nbsp;
                     <%- first_name + ' ' + last_name %>
-                    &nbsp;
-                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                    <%- reputation %>
                 </h3>
             </div>
             <div class="panel-body">
@@ -507,7 +492,6 @@
                         <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                             <a href="mailto:<%- email %>"><%- email %></a>
                         </p>
-
                         <p><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             <a href="#!/requests/user/<%- id %>">His Requests</a>
                         </p>
@@ -533,15 +517,12 @@
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 &nbsp;
                 <%- first_name + ' ' + last_name %>
-                &nbsp;
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <span id="user-rep"><%- reputation %></span>
             </h3>
 
         </div>
         <div class="panel-body">
             <div class="thumbnail">
-                <img src="<%= avatar %>" alt="avatar" class="thumbnail big">
+                <img src="<%= avatar %>" alt="avatar" class="img-thumbnail big">
 
                 <div class="user-info caption">
                     <% if (department) { %>
@@ -579,9 +560,6 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">
                         <%- first_name %> <%- last_name %>
-                        &nbsp;
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        <%- reputation %>
                     </h4>
                 </div>
                 <div class="modal-body">

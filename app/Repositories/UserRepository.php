@@ -29,11 +29,6 @@ class UserRepository extends PrettusRepository implements UserRepositoryInterfac
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    public function getByHighestReputation()
-    {
-        return $this->model->orderBy('reputation', 'desc')->get();
-    }
-
     /**
      * @param $cookie
      *

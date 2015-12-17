@@ -3,9 +3,14 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersVote extends Migration
+class DropUsersVoteTable extends Migration
 {
     public function up()
+    {
+        Schema::drop('user_vote');
+    }
+
+    public function down()
     {
         Schema::create('user_vote', function(Blueprint $table) {
             $table->increments('id');
@@ -14,18 +19,13 @@ class CreateUsersVote extends Migration
         });
         Schema::table('user_vote', function(Blueprint $table) {
             $table->foreign('review_request_id')->references('id')->on('review_requests')
-                        ->onDelete('restrict')
-                        ->onUpdate('restrict');
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
         Schema::table('user_vote', function(Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')
-                        ->onDelete('restrict')
-                        ->onUpdate('restrict');
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
-    }
-
-    public function down()
-    {
-        Schema::drop('user_vote');
     }
 }

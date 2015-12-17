@@ -7,7 +7,6 @@ App.Router = Backbone.Router.extend({
         "!/requests/my": "showMyRequest",
         "!/requests/offered": "offeredRequests",
         "!/requests/popular": "popularRequests",
-        "!/requests/high_rate": "highestRatedRequests",
         "!/requests/group/:group_id": "sortRequestsByGroups",
         "!/requests/user/:user_id": "sortRequestsByUser",
         "!/requests/tag/:tag_id": "sortRequestsByTags",
@@ -44,7 +43,10 @@ App.Router = Backbone.Router.extend({
     showUserProfile: function (id) {
         $('#spinner').show();
         var user = new App.Models.User({id: id});
-        user.fetch({wait: true}); // with id
+        user.fetch({
+            wait: true,
+            async: false
+        }); // with id
         new App.Views.UserProfile({model: user}).render();
     },
 
@@ -78,13 +80,6 @@ App.Router = Backbone.Router.extend({
     popularRequests: function () {
         requests.url = App.getPrefix() + "/reviewrequest/popular";
         new App.Views.RequestsList().render();
-    },
-
-    highestRatedRequests: function () {
-        requests.url = App.getPrefix() + "/reviewrequest/high_rate";
-        new App.Views.RequestsList({
-            messageForEmptyView: "There is nothing to rate yet"
-        }).render();
     },
 
     sortRequestsByGroups: function (group_id) {

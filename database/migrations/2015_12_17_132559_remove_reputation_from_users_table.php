@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsersTable extends Migration
+class RemoveReputationFromUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,7 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('address');
-            $table->dropColumn('phone');
-
-            $table->string('country')->nullable();
-            $table->string('city')->nullable();
+            $table->dropColumn('reputation');
         });
     }
 
@@ -29,11 +25,7 @@ class UpdateUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->nullable();
-            $table->string('phone');
-
-            $table->dropColumn('country');
-            $table->dropColumn('city');
+            $table->integer('reputation');
         });
     }
 }

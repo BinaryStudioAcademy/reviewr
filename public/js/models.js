@@ -169,7 +169,8 @@ App.Models.User = Backbone.Model.extend({
         avatar: '',
         country: '',
         city: '',
-        reputation: ''
+        department: undefined,
+        job: undefined
     }
 });
 
@@ -225,8 +226,7 @@ App.Models.Request = Backbone.Model.extend(
             tags: '',
             group: '',
             created_at: '',
-            formatted_created_at: undefined,
-            reputation: ''
+            formatted_created_at: undefined
         },
 
         validation: {
@@ -263,8 +263,7 @@ App.Models.Reviewer = Backbone.Model.extend({
         email: '',
         avatar: '',
         country: '',
-        city: '',
-        reputation: ''
+        city: ''
     }
 });
 
@@ -305,6 +304,7 @@ App.Models.Comment = Backbone.Model.extend(
         },
 
         initialize: function () {
+            this.attachFormattedDate(['created_at']);
             this.turnOnDateFormatting(['created_at']);
         }
     })

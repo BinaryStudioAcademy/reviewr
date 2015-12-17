@@ -107,11 +107,6 @@ class ReviewRequestController extends Controller
         return Response::json($this->requestService->getPopularReviewRequests(), 200);
     }
 
-    public function highestRatedReviewRequests()
-    {
-        return Response::json($this->requestService->getHighestRatedReviewRequests(), 200);
-    }
-
     public function sortReviewRequestsByGroups($group_id)
     {
         return Response::json($this->requestService->getReviewRequestsByGroupId($group_id), 200);
@@ -121,26 +116,6 @@ class ReviewRequestController extends Controller
     {
         $users = $this->requestService->usersForRequest($request_id);
         return response()->json(['message'=> $users], 200);
-    }
-
-    public function reputationUp($request_id)
-    {
-        return Response::json($this->requestService->reputationUp($request_id, Auth::user()->id),200);
-    }
-
-    public function reputationDown($request_id)
-    {
-        return Response::json($this->requestService->reputationDown($request_id, Auth::user()->id),200);
-    }
-
-    public function checkVote($request_id) 
-    {   
-        return Response::json($this->requestService->checkVote($request_id, Auth::user()->id), 200);
-    }
-
-    public function getHeighRept($number)
-    {
-        return Response::json($this->requestService->getHighRept($number), 200);
     }
 
     public function upcomingReviewRequests()

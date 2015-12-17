@@ -89,11 +89,6 @@ class UserController extends Controller
         response()->json(['message'=> 'success'], 200);
     }
 
-    public function highRept()
-    {
-        return Response::json($this->requestService->getHighestReputationUsers(), 200);
-    }
-
     public function checkNotification()
     {
         $user = $this->guard->user();

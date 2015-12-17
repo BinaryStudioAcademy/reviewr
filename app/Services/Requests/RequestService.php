@@ -199,7 +199,6 @@ class RequestService implements RequestServiceInterface
         return $request;
     }
 
-
     public function checkUserForRequest($user_id, $req_id) {
         $user = $this->getOneUserById($user_id);
 
@@ -223,7 +222,6 @@ class RequestService implements RequestServiceInterface
         return $request->users()->wherePivot('isAccepted', 1)->get();
     }
 
-
     public function searchTagsByKeyWord($keyword)
     {
         return $this->tagRepository->searchByKeyWord($keyword);
@@ -239,39 +237,9 @@ class RequestService implements RequestServiceInterface
         return $this->requestRepository->getPopular();
     }
 
-    public function getHighestRatedReviewRequests()
-    {
-        return $this->requestRepository->getHighestRated();
-    }
-
     public function getReviewRequestsByGroupId($id)
     {
         return $this->requestRepository->getByGroupId($id);
-    }
-    
-    public function checkVote($request_id, $user_id)
-    {
-        return $this->requestRepository->checkVote($request_id, $user_id);
-    }
-
-    public function reputationUp($request_id, $user_id)
-    {
-        return $this->requestRepository->reputationUp($request_id, $user_id);
-    }
-
-    public function reputationDown($request_id, $user_id)
-    {
-        return $this->requestRepository->reputationDown($request_id, $user_id);
-    }
-
-    public function getHighestReputationUsers()
-    {
-        return $this->userRepository->getByHighestReputation();
-    }
-
-    public function getHighRept($number) 
-    {
-        return $this->requestRepository->getHighRept($number);
     }
 
     public function upcomingReviewRequests()

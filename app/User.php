@@ -51,11 +51,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                     ->withPivot('isAccepted', 'status');
     }
 
-    public function votesRequests()
-    {
-       return $this->belongsToMany('App\ReviewRequest', 'user_vote');
-    }
-
     public function badges()
     {
         return $this->belongsToMany('App\Badge');

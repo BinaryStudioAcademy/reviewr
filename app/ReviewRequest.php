@@ -12,7 +12,7 @@ class ReviewRequest extends Model
     protected $table = 'review_requests';
     public $timestamps = true;
 
-    protected $fillable = ['title', 'details', 'reputation', 'date_review',
+    protected $fillable = ['title', 'details', 'date_review',
     'user_id', 'group_id'];
 
     protected $hidden = ['updated_at', 'deleted_at'];
@@ -41,11 +41,6 @@ class ReviewRequest extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
-    }
-
-    public function votes()
-    {
-        return $this->belongsToMany('App\User', 'user_vote');
     }
 
     public function group()
