@@ -440,27 +440,15 @@ App.Views.RequestDetails = Backbone.View.extend({
                     minuteStep: 10
                 },
                 success: function (response, newValue) {
-                    var oldValue = new Date();
-                    oldValue.setSeconds(0);
-                    oldValue.setMilliseconds(0);
-                    newValue.setSeconds(0);
-                    newValue.setMilliseconds(0);
+                    var oldValue = self.model.roungToMinutes(new Date());
+                    newValue = self.model.roungToMinutes(newValue);
 
                     if (newValue.getTime() === oldValue.getTime()) {
                         self.showDateError();
                         return;
                     }
 
-                    var month = newValue.getMonth() + 1;
-                    var globalDateTime = newValue.getFullYear()
-                        + '-'
-                        + month
-                        + '-'
-                        + newValue.getDate()
-                        + ' '
-                        + newValue.getHours()
-                        + ':'
-                        + newValue.getMinutes();
+                    var globalDateTime = self.model.formatToGlobal(newValue);
                     self.model.save({date_review: globalDateTime}, {patch: true}); //update backbone model
                 }
             });
@@ -474,7 +462,8 @@ App.Views.RequestDetails = Backbone.View.extend({
 App.Views.CreateRequestForm = Backbone.View.extend({
     template: _.template($('#create-request-form-template').html()),
     events: {
-        'submit': 'storeRequest'
+        'submit': 'storeRequest',
+        'click .delete-date-review': 'clearDateReview'
     },
 
     bindings: {
@@ -515,7 +504,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             date_review: $('#date_review').val(),
         });
 
-        this.stopListening()
+        this.stopListening();
 
         if (this.model.isValid(true)) {
             this.model.save(null, {
@@ -527,7 +516,21 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         }
     },
 
+    clearDateReview: function () {
+        $('#date_review').val('');
+        $('#date_review_view').html('Select date of review request');
+    },
+
+    showDeleteButton: function () {
+        $('.delete-date-review').show();
+    },
+
+    hideDeleteButton: function () {
+        $('.delete-date-review').hide();
+    },
     render: function () {
+        var self = this;
+
         this.$el.html(this.template);
         var nowDate = new Date();
         var today = new Date(
@@ -540,9 +543,34 @@ App.Views.CreateRequestForm = Backbone.View.extend({
             0
         );
 
-        $("#date_review").datetimepicker({
+        $('#date_review_view').editable({
+            mode: 'popup',
+            type: 'datetime',
+            name: 'date_review',
+            display: false,
+            clear: 'Clear the date',
             autoclose: true,
-            startDate: today
+            placement: 'right',
+            setStartDate: new Date(),
+            datetimepicker: {
+                startDate: new Date(),
+                todayBtn: true,
+                minuteStep: 10
+            },
+            success: function (response, newValue) {
+                var oldValue = self.model.roungToMinutes(new Date());
+                newValue = self.model.roungToMinutes(newValue);
+
+                if (newValue.getTime() === oldValue.getTime()) {
+                    //self.showDateError();
+                    return;
+                    console.log('Datetime input error')
+                }
+
+                self.showDeleteButton();
+                $('#date_review').val(self.model.formatToGlobal(newValue));
+                $('#date_review_view').html(self.model.formatToString(newValue));
+            }
         });
 
         tags.fetch({
@@ -554,7 +582,7 @@ App.Views.CreateRequestForm = Backbone.View.extend({
                     tags: true,
                     placeholder: "Enter or select a tag for review",
                     tokenSeparators: [',', ' '],
-                    data: res,
+                    data: res
                 });
             }
         });

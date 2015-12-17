@@ -238,8 +238,10 @@
                             <div class="form-group">
                                 <label for="date_review" class="col-md-1 control-label">Date</label>
                                 <div class="col-md-11">
-                                    <input type="text" class="form-control" bootstrap-datepicker data-date-end-date="0d"
-                                           id="date_review" name="date_review" placeholder="Select date of review request">
+                                    <input type="text" class="form-control hidden" id="date_review" name="date_review">
+                                    <span id="date_review_view" bootstrap-datepicker data-date-end-date="0d">Select date of review request</span>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                     <span class="help-block hidden"></span>
                                 </div>
                             </div>
