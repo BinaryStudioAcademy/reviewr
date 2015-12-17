@@ -146,7 +146,9 @@ App.Models.User = Backbone.Model.extend({
         email: '',
         avatar: '',
         country: '',
-        city: ''
+        city: '',
+        department: undefined,
+        job: undefined
     }
 });
 

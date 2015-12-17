@@ -92,7 +92,6 @@ App.Views.UserProfile = Backbone.View.extend({
     el: '#popup',
     initialize: function () {
         this.template = _.template($('#user-profile-template').html());
-        this.model.on('change', this.render, this);
     },
     events: {
         'click .cancel-user': 'cancel'
@@ -495,7 +494,6 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         return this;
     }
 });
-
 
 /*
  *---------------------------------------------------

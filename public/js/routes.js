@@ -43,7 +43,10 @@ App.Router = Backbone.Router.extend({
     showUserProfile: function (id) {
         $('#spinner').show();
         var user = new App.Models.User({id: id});
-        user.fetch({wait: true}); // with id
+        user.fetch({
+            wait: true,
+            async: false
+        }); // with id
         new App.Views.UserProfile({model: user}).render();
     },
 

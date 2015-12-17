@@ -506,7 +506,7 @@
         </div>
         <div class="panel-body">
             <div class="thumbnail">
-                <img src="<%= avatar %>" alt="avatar" class="thumbnail big">
+                <img src="<%= avatar %>" alt="avatar" class="img-thumbnail big">
 
                 <div class="user-info caption">
                     <% if (department) { %>
