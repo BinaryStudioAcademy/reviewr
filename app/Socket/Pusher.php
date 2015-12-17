@@ -9,6 +9,7 @@
 namespace App\Socket;
 
 use App\Socket\Base\BasePusher;
+use Illuminate\Support\Facades\Log;
 
 class Pusher extends BasePusher
 {
@@ -39,7 +40,8 @@ class Pusher extends BasePusher
         $entryData = json_decode($jsonDataToSend, true);
         $subscribedTopics = $this->getSubscribedTopics();
 
-        if (!isset($entryData['topic_id']) || empty($entryData['topic_id'])) {
+        if (empty($entryData['topic_id'])) {
+            Log::error('There is no topic_id key in the enty data.');
             return;
         }
 

@@ -826,7 +826,7 @@ App.Views.CommentsList = Backbone.View.extend({
     },
 
     initialize: function (options) {
-        var that = this;
+        var self = this;
         this.options = options;
         this.collection.on('remove', this.render, this);
         this.collection.on('add', this.renderLastComment, this);
@@ -838,8 +838,8 @@ App.Views.CommentsList = Backbone.View.extend({
             'ws://' + window.location.hostname + ':' + App.websocketPort + '/' + App.prefix,
             function(session) {
                 //App.poller.stop();
-                session.subscribe('request/' + that.options.rid + '/comments', function(topic, data) {
-                    that.collection.add(data.data);
+                session.subscribe('request/' + self.options.rid + '/comments', function(topic, data) {
+                    self.collection.add(data.data);
                 });
             },
             function(code, reason, detail) {
@@ -894,7 +894,6 @@ App.Views.CommentsList = Backbone.View.extend({
     storeComment: function (e) {
         e.preventDefault();
         this.stopListening();
-
 
         this.model.set({
             id: null,
