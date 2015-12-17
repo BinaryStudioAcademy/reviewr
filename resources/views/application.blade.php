@@ -65,7 +65,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Main <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">
                                 <li><a href="#!/request/create">Create Review</a></li>
-                                <li><a href="#!/requests/my">My Review Request</a></li>
+                                <li><a href="#!/requests/my">My Review Requests</a></li>
                                 <li><a href="#!/requests/offered">My Offers</a></li>
                                 {{--<li class="divider"></li>--}}
                                 {{--<li><a href="#!/logout">LogOut</a></li>--}}
@@ -83,7 +83,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Groups <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-large"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">
                                 <li><a href="#!/requests/group/1">PHP</a></li>
-                                <li><a href="#!/requests/group/3">.NET</a></li>
+                                <li><a href="#!/requests/group/3">.Net</a></li>
                                 <li><a href="#!/requests/group/2">JS</a></li>
                             </ul>
                         </li>
@@ -273,7 +273,7 @@
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="group-input" value="2">
-                                            .NET
+                                            .Net
                                         </label>
                                     </div>
                                     <div class="radio">
@@ -378,7 +378,7 @@
                 <div class="col-md-8">
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        Chat is not available, because you not accepted
+                        Chat is not available, because your offer was not accepted
                     </div>
                 </div>
             </div>
