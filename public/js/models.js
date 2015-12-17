@@ -280,6 +280,7 @@ App.Models.Comment = Backbone.Model.extend(
         },
 
         initialize: function () {
+            this.attachFormattedDate(['created_at']);
             this.turnOnDateFormatting(['created_at']);
         }
     })
