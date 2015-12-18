@@ -69,7 +69,7 @@ class AuthController extends Controller
         $referer = url(env('APP_PREFIX', '') . '/');
 
         if ($request->has('redirect')) {
-            $referer = $referer . '/#' . $request->get('redirect');
+            $referer = $referer . '#' . $request->get('redirect');
         }
 
         $redirectToAuth = Response::json(
