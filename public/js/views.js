@@ -593,7 +593,7 @@ App.Views.Reviewer = Backbone.View.extend({
     events: {
         'click .accept': 'acceptOffer',
         'click .decline': 'declineOfferConfirm',
-        'click .user-inf': 'show',
+        'click .user-inf': 'show'
     },
     acceptOffer: function () {
         reviewers.url = App.getPrefix() + '/user/' + this.model.id + '/accept/' + this.request_id;
@@ -611,11 +611,11 @@ App.Views.Reviewer = Backbone.View.extend({
         return this;
     },
     declineOfferConfirm: function () {
-        var that = this;
+        var self = this;
         var confirmModal = new App.Views.ConfirmModal({
             cb: function () {
                 //use that to run functions for this view
-                that.declineOffer();
+                self.declineOffer();
             },
             body: "Decline this offer?"
         });
