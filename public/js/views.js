@@ -186,13 +186,16 @@ App.Views.Request = Backbone.View.extend({
         this.$el.find('.undo-offer-btn').removeClass('undo-offer-btn');
     },
     render: function () {
-        var data = {offer: this.model.toJSON()};
+        var data = {
+            offer: this.model.toJSON()
+        };
+
         for (var i = 0; i < this.offers.length; i++) {
             if (this.offers[i].id == this.model.get('id')) {
                 data.status = 'You send offer';
             }
         }
-        ;
+
         this.$el.html(this.template(data));
         return this;
     }
@@ -255,7 +258,13 @@ App.Views.RequestDetails = Backbone.View.extend({
     el: '#main-content',
     initialize: function () {
         this.template = _.template($('#review-request-details-template').html());
-        this.model.on('change:formatted_date_review', this.render, this);
+        this.model.on(
+            'change:formatted_date_review',
+            function () {
+                $('#date_review').html(this.model.get('formatted_date_review'));
+            },
+            this
+        );
     },
     events: {
         'click .back-request': 'back',
@@ -327,11 +336,13 @@ App.Views.RequestDetails = Backbone.View.extend({
 
         // Fetch All Request Details
         this.$el.html(this.template(this.model.toJSON()));
+
         // Render Request Author
         var author = new App.Models.User(this.model.get('user'));
-        this.$el.find('.requestor').html((new App.Views.Author({
-            model: author
-        })).render().el);
+        this.$el.find('.requestor').html(
+            (new App.Views.Author({
+                model: author
+            })).render().el);
 
         var tags = this.model.get('tags');
 
