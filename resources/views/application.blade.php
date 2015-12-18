@@ -310,10 +310,6 @@
                             </h2>
                         </div>
                         <div class="panel-body">
-                            <p>
-                                <small><span class="glyphicon glyphicon-time"
-                                             aria-hidden="true"></span> <%- formatted_created_at %></small>
-                            </p>
                             <div id="details"><%- details %></div>
 
                             <ul class="tags list-inline">Request Tags List</ul>
@@ -515,29 +511,22 @@
 
         </div>
         <div class="panel-body">
-            <div class="thumbnail">
-                <img src="<%= avatar %>" alt="avatar" class="img-thumbnail big">
+            <img src="<%= avatar %>" alt="avatar" class="img-thumbnail big">
 
-                <div class="user-info caption">
-                    <% if (department) { %>
-                    <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        <%- department.title %></p>
-                    <% } %>
+            <div class="user-info caption">
+                <% if (department) { %>
+                <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <%- department.title %></p>
+                <% } %>
 
-                    <% if (job) { %>
-                    <p>(<%- job.position %>)</p>
-                    <% } %>
+                <% if (job) { %>
+                <p>(<%- job.position %>)</p>
+                <% } %>
 
-                    <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        <a href="mailto:<%- email %>"><%- email %></a></p>
-                </div>
+                <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    <a href="mailto:<%- email %>"><%- email %></a></p>
             </div>
 
-        </div>
-        <div class="panel-footer">
-            <div class="text-center">
-                <button class="btn btn-primary show-user">Show Details</button>
-            </div>
         </div>
     </div>
 

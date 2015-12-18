@@ -544,3 +544,7 @@ ul.forAnimate li a:hover {
 .request-shot-info {
     min-height: 2em;
 }
+
+.user-inf {
+    cursor: pointer;
+}
