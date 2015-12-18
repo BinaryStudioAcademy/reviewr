@@ -211,6 +211,12 @@ App.Views.RequestsList = Backbone.View.extend({
         if (options && options.messageForEmptyView) {
             this.messageForEmptyView = options.messageForEmptyView;
         }
+
+        this.collection.on('remove', function (model, collection, options) {
+            if (!collection.length) {
+                this.render();
+            }
+        }, this);
     },
     render: function () {
         this.stopListening();
