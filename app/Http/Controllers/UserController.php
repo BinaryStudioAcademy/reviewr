@@ -52,7 +52,7 @@ class UserController extends Controller
     public function declineReviewRequest($author_id, $request_id)
     {
         $this->requestService->declineReviewRequest($author_id, $request_id);
-        return response()->json(['message'=> 'User mismatched'], 500);
+        return response()->json(['message'=> 'success'], 200);
     }
 
     public function offerOnReviewRequest($binary_id, $request_id)
