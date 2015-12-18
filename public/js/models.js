@@ -205,7 +205,7 @@ App.Models.CurrentUser = App.Models.User.extend(
 
         initialize: function (options) {
             this.options = options;
-            this.urlRoot = App.prefix + '/users/login';
+            this.urlRoot = App.getSitePrefix() + '/users/login';
         }
     })
 );
