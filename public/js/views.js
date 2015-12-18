@@ -433,7 +433,8 @@ App.Views.CreateRequestForm = Backbone.View.extend({
     template: _.template($('#create-request-form-template').html()),
     events: {
         'submit': 'storeRequest',
-        'click .delete-date-review': 'clearDateReview'
+        'click .delete-date-review': 'clearDateReview',
+        'keydown [name=title], [name=details]' : 'clearValidationMessages'
     },
 
     bindings: {
@@ -559,6 +560,14 @@ App.Views.CreateRequestForm = Backbone.View.extend({
         });
 
         return this;
+    },
+
+    clearValidationMessages: function(e) {
+        var errorMessages = $("span.help-block");
+        if (errorMessages.length > 0) {
+            $(e.currentTarget).siblings('.help-block').addClass('hidden');
+            $(e.currentTarget).parents('.form-group').removeClass('has-error');
+        }
     }
 });
 
@@ -630,7 +639,7 @@ App.Views.Reviewer = Backbone.View.extend({
                 data.status = 'You accepted';
             }
         }
-        ;
+
         this.$el.html(this.template(data));
 
         return this;
