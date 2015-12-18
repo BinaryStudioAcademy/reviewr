@@ -137,11 +137,17 @@
 <!-- END MAIN CONTAINER -->
 
 {{-- One Review Request card backbone template--}}
-
 <script type="text/template" id="request-card-template">
     <div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">
+                <% if(!_.isEqual(offer.offers_count, 0)) { %>
+                <span class="offers-count">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span class="badge"><%- offer.offers_count %></span>
+                </span>
+                <% } %>
+
                 <%- offer.title %>
                 <% if (typeof(offer.pivot) != 'undefined' && offer.pivot.isAccepted == 1) { %>
                 &nbsp;
@@ -151,24 +157,19 @@
         </div>
         <div class="panel-body">
             <p class="request-shot-info">
-                <% if(!_.isEqual(offer.offers_count, 0)) { %>
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <span class="badge">
-                    <%- offer.offers_count %>
-                </span>
-                <% } %>
-                &nbsp;
 
-                <% if(offer.formatted_date_review) { %>
                 <span class="date-review" title="Review date">
                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                    <%- offer.formatted_date_review %>
+                    <% if(offer.formatted_date_review) { %>
+                        <%- offer.formatted_date_review %>
+                    <% } else { %>
+                        Date is not assigned
+                    <% } %>
                 </span>
-                <% } %>
             </p>
 
             <div class="row user-data">
-                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 user-photo">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 user-photo">
                     <img src="<%= offer.user.avatar %>" class="img-thumbnail big" alt="">
                 </div>
                 <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 user-info">
@@ -314,8 +315,8 @@
 
                             <ul class="tags list-inline">Request Tags List</ul>
                             <span class="date-review">
-                                <b>Date of review: </b>
                                 <% if(formatted_date_review) { %>
+                                <b>Date of review: </b>
                                 <a href="#" id="date_review"><%- formatted_date_review %></a>
                                 &nbsp;
                                 <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
@@ -456,7 +457,7 @@
                     </div>
                     <!-- /input-group -->
                 </form>
-                <p class="text-muted">For add smile type ':' (colon)</p>
+                <p class="text-muted">To add smile type ':' (colon)</p>
             </div>
         </div>
     </div>
