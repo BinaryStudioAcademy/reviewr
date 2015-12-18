@@ -20,7 +20,7 @@ App.Router = Backbone.Router.extend({
     execute: function(callback, args, name) {
         if (!App.CurrentUser) {
             var currentUser = new App.Models.CurrentUser();
-            var urlToReturn = Backbone.history.fragment;
+            var urlToReturn = Backbone.history.getFragment();
 
             $.when(currentUser.getFromServer(urlToReturn)).done(function (user) {
                 App.CurrentUser = user;
