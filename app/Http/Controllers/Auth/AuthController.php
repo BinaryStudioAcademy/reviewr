@@ -43,7 +43,6 @@ class AuthController extends Controller
      */
     public function __construct(AuthServiceInterface $authService)
     {
-//        $this->middleware('guest', ['except' => 'getLogout']);
         $this->middleware('auth', ['only' => ['logout']]);
 
         $this->redirectAfterLogout = route('home');
@@ -67,7 +66,7 @@ class AuthController extends Controller
 
     public function getLogin(Request $request) {
         $cookie = $request->cookie('x-access-token');
-        $referer = url(env('SERVER_PREFIX', ''));
+        $referer = url(env('APP_PREFIX', '') . '/');
 
         if ($request->has('redirect')) {
             $referer = $referer . '/#' . $request->get('redirect');
