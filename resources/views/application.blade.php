@@ -151,18 +151,12 @@
         </div>
         <div class="panel-body">
             <p class="request-shot-info">
-            <p>
-                <% if(_.isEqual(offer.offers_count, 0)) { %>
+                <% if(!_.isEqual(offer.offers_count, 0)) { %>
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span class="badge">
                     <%- offer.offers_count %>
                 </span>
                 <% } %>
-                &nbsp;
-                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                <span class="badge">
-                    <%- offer.reputation %>
-                </span>
                 &nbsp;
 
                 <% if(offer.formatted_date_review) { %>
