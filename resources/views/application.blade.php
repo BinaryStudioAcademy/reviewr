@@ -359,7 +359,7 @@
             <div id="chat-region" class="row">
                 <!-- Chat View paste here -->
                 <div class="col-md-8">
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-info" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         Chat is not available, because your offer was not accepted
                     </div>
