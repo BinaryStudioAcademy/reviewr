@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
+use App\ReviewRequest;
 
 class ReviewRequestUserTableSeeder extends Seeder
 {
@@ -11,13 +13,16 @@ class ReviewRequestUserTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i < 12; $i++)
+        $requestsIds = ReviewRequest::lists('id')->toArray();
+        $userIds = User::lists('id')->toArray();
+
+        for ($i=1; $i < count($requestsIds) - 1; $i++)
         {
-            for ($k=1; $k < 6; $k++)
+            for ($k=1; $k < rand(0, 8); $k++)
             {
                 DB::table('review_request_user')->insert([
                     'review_request_id' => $i,
-                    'user_id' => $k,
+                    'user_id' => rand(1, count($userIds)),
                 ]);
             }
         }

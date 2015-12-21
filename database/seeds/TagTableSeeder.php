@@ -13,15 +13,79 @@ class TagTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
+        $tag_titles = [
+            'php',
+            'javascript',
+            'c#',
+            'design',
+            'css',
+            'forms',
+            'gulp',
+            'marionette',
+            'backbone',
+            'jquery',
+            'laravel',
+            'laravel5',
+            'f3',
+            'zend',
+            'zend2',
+            'yii',
+            'yii2',
+            'node-js',
+            'node',
+            'code-ignite',
+            'maven',
+            'symfony2',
+            'rest',
+            'email',
+            'unit-testing',
+            'mono',
+            'jade',
+            'express',
+            'tlp',
+            'underscore',
+            'pagination',
+            'mvc',
+            'bootstrap',
+            'documentation',
+            'popup',
+            'collection',
+            'mysql',
+            '.net',
+            'arrays',
+            'ajax',
+            'regex',
+            'json',
+            'angular',
+            'wordpress',
+            'string',
+            'html5',
+            'git',
+            'svn',
+            'apache',
+            'postgresql',
+            '.htaccess',
+            'function',
+            'file',
+            'image',
+            'gd',
+            'phantomjs',
+            'sorting',
+            'http',
+            'opencv',
+            'firefox',
+            'ubuntu',
+            'grep',
+            'gmail-api'
+        ];
 
-        foreach (range(1, 20) as $index) {
+        foreach ($tag_titles as $title) {
             Tag::create([
-                'title' => $faker->unique()->word,
+                'title' => $title,
             ]);
         }
 
         // Insert 3 random tag in every RR
-
         $tagIds    = Tag::lists('id')->toArray();
         $reviewIds = \App\ReviewRequest::lists('id')->toArray();
 
@@ -41,7 +105,5 @@ class TagTableSeeder extends Seeder
                 ]
             ]);
         }
-
-
     }
 }

@@ -12,6 +12,7 @@ class UserTableSeeder extends Seeder
         $faker = Faker\Factory::create();
         $jobIds = Job::lists('id')->toArray();
         $departmentIds = Department::lists('id')->toArray();
+        $password = bcrypt('123456');
 
         User::create([
             'first_name' => 'Alex',
@@ -20,7 +21,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
             'country' => $faker->country,
             'city' => $faker->city,
-            'password' => bcrypt('password'),
+            'password' => $password,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -32,7 +33,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
             'country' => $faker->country,
             'city' => $faker->city,
-            'password' => bcrypt('password'),
+            'password' => $password,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -44,7 +45,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
             'country' => $faker->country,
             'city' => $faker->city,
-            'password' => bcrypt('password'),
+            'password' => $password,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -57,7 +58,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
             'country' => $faker->country,
             'city' => $faker->city,
-            'password' => bcrypt('password'),
+            'password' => $password,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -69,7 +70,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
             'country' => $faker->country,
             'city' => $faker->city,
-            'password' => bcrypt('password'),
+            'password' => $password,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -81,7 +82,7 @@ class UserTableSeeder extends Seeder
             'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
             'country' => $faker->country,
             'city' => $faker->city,
-            'password' => bcrypt('password'),
+            'password' => $password,
             'job_id' => $faker->randomElement($jobIds),
             'department_id' => $faker->randomElement($departmentIds)
         ]);
@@ -91,11 +92,11 @@ class UserTableSeeder extends Seeder
             User::create([
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
-                'email' => $faker->unique()->email,
+                'email' => $faker->unique()->safeEmail,
                 'avatar' => 'http://www.gravatar.com/avatar/' . $faker->md5. '?d=identicon',
                 'country' => $faker->country,
                 'city' => $faker->city,
-                'password' => bcrypt('password'),
+                'password' => $password,
                 'job_id' => $faker->randomElement($jobIds),
                 'department_id' => $faker->randomElement($departmentIds)
             ]);
