@@ -525,7 +525,22 @@
                 <% } %>
 
                 <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                    <a href="mailto:<%- email %>"><%- email %></a></p>
+                    <a href="mailto:<%- email %>"><%- email %></a>
+                </p>
+
+                <% if (department) { %>
+                <p><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                    <%- department['title'] %></p>
+                <% } %>
+
+                <% if (job) { %>
+                <p>(<%- job['position'] %>)</p>
+                <% } %>
+
+                <% if (country && city) { %>
+                <p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <%- city %>, <%- country %></p>
+                <% } %>
             </div>
 
         </div>
