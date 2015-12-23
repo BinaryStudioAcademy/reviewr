@@ -286,10 +286,15 @@ App.Views.RequestDetails = Backbone.View.extend({
     clearDateReview: function () {
         this.model.set('date_review', null);
         this.model.save({date_review: null}, {patch: true}); //update backbone model
+        this.hideDeleteButton();
+        $('#date_review').html('Assign');
     },
 
     showDeleteButton: function () {
-        if (this.isAuthor(this.model.get('user_id'))) {
+        if (
+            this.isAuthor(this.model.get('user_id'))
+            && this.model.get('date_review')
+        ) {
             $('.delete-date-review').show();
         }
     },
