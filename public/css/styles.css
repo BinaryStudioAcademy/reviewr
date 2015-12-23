@@ -426,3 +426,8 @@ ul.forAnimate li a:hover {
 .user-inf {
     cursor: pointer;
 }
+
+#date_review.editable,
+#date_review_view {
+    cursor: pointer;
+}

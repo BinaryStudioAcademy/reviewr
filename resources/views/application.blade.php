@@ -318,11 +318,11 @@
                                 <% if(formatted_date_review) { %>
                                 <b>Date of review: </b>
                                 <span href="#" id="date_review"><%- formatted_date_review %></span>
-                                &nbsp;
-                                <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                 <% } else if (user_id == App.CurrentUser.get('id')) { %>
                                 <b>Date of review: </b><span href="#" id="date_review">Assign</span>
                                 <% } %>
+                                &nbsp;
+                                <button class="btn btn-danger btn-xs delete-date-review entry-control">Clear</button>
                                 <span class="help-block hidden">Please, check all components of the date</span>
                             </span>
                         </div>
