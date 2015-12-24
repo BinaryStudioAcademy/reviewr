@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Services\Requests\Contracts\RequestServiceInterface;
-use Illuminate\Support\Facades\Auth;
 
 class ReviewRequestController extends Controller
 {
@@ -15,6 +14,9 @@ class ReviewRequestController extends Controller
     {
         parent::__construct();
         $this->requestService = $requestService;
+        $this->middleware('auth', ['except' => [
+            'upcomingForPeriodReviewRequests',
+        ]]);
     }
 
     /**
