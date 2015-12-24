@@ -10,6 +10,13 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         User::create([
+            'first_name' => 'Admin',
+            'last_name'  => 'Adminovich',
+            'email'      => 'admin@example.com',
+            'binary_id'  => '567abd6670a3a2541ae74c9a'
+        ]);
+
+        User::create([
             'first_name' => 'Eduard',
             'last_name'  => 'Dolinsky',
             'email'      => 'eduard.dolinskyi@binary-studio.com',
@@ -20,7 +27,14 @@ class UserTableSeeder extends Seeder
             'first_name' => 'Oleksandr',
             'last_name'  => 'Kovalov',
             'email'      => 'kovalov.oleksandr@binary-studio.com',
-            'binary_id'  => '56782867215c82267c1a3cc1'
+            'binary_id'  => '567bded7460ceb1550867504'
+        ]);
+
+        User::create([
+            'first_name' => 'Andrey',
+            'last_name'  => 'Tarusin',
+            'email'      => 'andriy.tarusin@binary-studio.com',
+            'binary_id'  => '567a4f0f215c82267c1a3cc7'
         ]);
 
         User::create([
@@ -41,7 +55,7 @@ class UserTableSeeder extends Seeder
             'first_name' => 'Viktor',
             'last_name'  => 'Tolkushyn',
             'email'      => 'viktor@binary-studio.com',
-            'binary_id'  => '5679241f215c82267c1a3cc4'
+            'binary_id'  => '567bb46309b6341935ba07cc'
         ]);
     }
 }
