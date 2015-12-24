@@ -19,6 +19,11 @@ Route::group (['prefix' => env('APP_PREFIX', '')], function () {
         'uses' => 'Auth\AuthController@getLogout'
     ]);
 
+    Route::get('/users/current', [
+        'as'   => 'user',
+        'uses' => 'Auth\AuthController@getUser'
+    ]);
+
     // Auth mockups
     Route::get('/auth-mock', 'Mockups\AuthController@auth');
     Route::get('/auth-mock/logout', 'Mockups\AuthController@logout');

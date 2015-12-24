@@ -35,8 +35,10 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
+        if (!array_key_exists('x-access-token', $_COOKIE)) {}
+
         if ($this->auth->guest()) {
-            if ($request->ajax()) {
+            if ($request->ajax() && ) {
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('/');
